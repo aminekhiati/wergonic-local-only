@@ -10,116 +10,158 @@
 @font-face{font-family:'Inter';font-weight:700;src:url('file:///Users/mac/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-Bold-slnt=0.ttf');}
 @font-face{font-family:'Inter';font-weight:800;src:url('file:///Users/mac/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-ExtraBold-slnt=0.ttf');}
 
-:root{--blue:#1DBBF8;--ink:#14181b;--muted:#5b6670;--line:#e2e7ea;--soft:#f4f7f9;}
+:root{
+  --blue:#1DBBF8;--blue-deep:#0F97CE;--ink:#141a1e;--body:#33404a;--muted:#6b7681;
+  --line:#e4e9ec;--soft:#f5f8fa;--soft2:#eef4f7;--dark:#0d1214;
+}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-body{font-family:'Inter',sans-serif;color:var(--ink);font-size:10.4pt;line-height:1.5;}
-@page{size:A4;margin:20mm 18mm 16mm;}
+body{font-family:'Inter',sans-serif;color:var(--body);font-size:10.3pt;line-height:1.52;}
+@page{size:A4;margin:19mm 17mm 17mm;}
+@page:first{margin:0;}
 
-h1,h2,h3{line-height:1.2;}
-h2{font-size:17pt;font-weight:800;color:var(--ink);margin:0 0 4px;padding-top:2px;}
-h2 .num{color:var(--blue);}
-h3{font-size:11.5pt;font-weight:700;margin:16px 0 5px;color:var(--ink);}
-h4{font-size:10.4pt;font-weight:700;margin:11px 0 3px;color:var(--ink);}
+/* ---------- typography ---------- */
+h2{font-size:18pt;font-weight:800;color:var(--ink);letter-spacing:-.4px;line-height:1.1;}
+h3{font-size:11.5pt;font-weight:700;margin:17px 0 5px;color:var(--ink);}
+h4{font-size:10.3pt;font-weight:700;margin:12px 0 3px;color:var(--ink);}
 p{margin:0 0 8px;}
-ul,ol{margin:0 0 9px;padding-left:18px;}
+ul,ol{margin:0 0 9px;padding-left:17px;}
 li{margin:0 0 4px;}
-strong{font-weight:600;}
-.small{font-size:9pt;color:var(--muted);}
-.sect{page-break-before:always;padding-top:2px;}
-.rule{height:3px;width:46px;background:var(--blue);border-radius:2px;margin:6px 0 16px;}
-.lead{color:var(--muted);font-size:10.4pt;margin-bottom:14px;}
+li::marker{color:var(--blue-deep);}
+strong{font-weight:600;color:var(--ink);}
+em{color:#26313a;font-style:italic;}
+.small{font-size:8.8pt;color:var(--muted);}
+.lead{color:var(--muted);font-size:10.6pt;line-height:1.5;margin:2px 0 16px;max-width:92%;}
 
-/* cover */
-.cover{height:257mm;display:flex;flex-direction:column;justify-content:center;page-break-after:always;}
-.cover .logo{height:52px;margin-bottom:30px;}
-.cover .kick{color:var(--blue);font-weight:700;letter-spacing:2px;font-size:11pt;text-transform:uppercase;}
-.cover h1{font-size:40pt;font-weight:800;margin:8px 0 4px;letter-spacing:-.5px;}
-.cover .sub{font-size:15pt;color:var(--muted);font-weight:500;}
-.cover .meta{margin-top:40px;font-size:10pt;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;max-width:320px;}
-.cover .meta b{color:var(--ink);font-weight:600;}
+/* ---------- section header ---------- */
+.sect{page-break-before:always;}
+.shead{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.badge{width:34px;height:34px;border-radius:10px;background:var(--blue);color:#fff;
+  font-weight:800;font-size:15pt;display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+  box-shadow:0 3px 8px rgba(29,187,248,.35);}
+.shead h2{margin:0;}
+.eyebrow{font-size:8pt;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue-deep);margin-bottom:2px;}
 
-/* callouts */
-.note{background:var(--soft);border-left:3px solid var(--blue);padding:9px 13px;border-radius:0 6px 6px 0;margin:10px 0;font-size:9.6pt;}
+/* ---------- cover (full-bleed dark) ---------- */
+.cover{position:relative;width:210mm;min-height:297mm;padding:38mm 22mm;
+  background:radial-gradient(120% 80% at 78% 8%,#12303c 0%,#0d1214 55%);
+  color:#eef3f5;page-break-after:always;display:flex;flex-direction:column;overflow:hidden;}
+.cover::before{content:"";position:absolute;right:-90px;top:120px;width:360px;height:360px;border-radius:50%;
+  background:radial-gradient(circle,rgba(29,187,248,.20),transparent 62%);}
+.cover .glyph{position:absolute;right:24mm;bottom:22mm;width:230px;opacity:.10;}
+.cover .logo{height:44px;margin-bottom:auto;z-index:1;}
+.cover .block{z-index:1;margin-top:auto;}
+.cover .kick{color:var(--blue);font-weight:700;letter-spacing:3px;font-size:10.5pt;text-transform:uppercase;}
+.cover h1{font-size:46pt;font-weight:800;letter-spacing:-1px;line-height:1;margin:12px 0 10px;color:#fff;}
+.cover .sub{font-size:15pt;color:#aeb9c0;font-weight:400;max-width:420px;}
+.cover .accent{width:54px;height:4px;background:var(--blue);border-radius:3px;margin:26px 0;}
+.cover .meta{z-index:1;display:flex;gap:34px;font-size:9.5pt;color:#8b969d;margin-top:6px;}
+.cover .meta .l{color:#5f6a71;font-weight:600;text-transform:uppercase;font-size:7.6pt;letter-spacing:.8px;margin-bottom:2px;}
+.cover .meta .v{color:#e7eef2;font-size:11pt;font-weight:600;}
+.cover .foot{z-index:1;margin-top:30px;font-size:8.4pt;color:#5f6a71;border-top:1px solid rgba(255,255,255,.09);padding-top:12px;}
+
+/* ---------- TOC ---------- */
+.toc{margin-top:6px;}
+.toc a,.toc .row{display:flex;align-items:center;gap:14px;padding:11px 4px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;}
+.toc .n{width:28px;height:28px;border-radius:8px;background:var(--soft2);color:var(--blue-deep);
+  font-weight:800;font-size:11pt;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+.toc .t{font-weight:600;color:var(--ink);font-size:11pt;}
+.toc .d{margin-left:auto;color:var(--muted);font-size:9pt;}
+
+/* ---------- callouts ---------- */
+.note{background:var(--soft);border:1px solid var(--line);border-left:3px solid var(--blue);
+  padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;font-size:9.4pt;color:#3a454e;}
 .note b{color:var(--ink);}
-.tip{background:#eefaff;border-left:3px solid var(--blue);}
-.warn{background:#fff6e8;border-left:3px solid #F5A623;}
+.note.tip{background:#edf9ff;border-color:#cdeefc;border-left-color:var(--blue);}
+.note.warn{background:#fff7ea;border-color:#f6e4c2;border-left-color:#F2A93B;}
 
-/* screenshot figures */
-.shots{display:flex;gap:14px;margin:14px 0 4px;align-items:flex-start;justify-content:center;flex-wrap:wrap;}
-.shot{text-align:center;width:186px;}
-.shot img{width:100%;border-radius:16px;display:block;}
-.shot figcaption{font-size:8.6pt;color:var(--muted);margin-top:6px;line-height:1.3;}
-.shot .cn{display:inline-block;background:var(--blue);color:#fff;font-weight:700;font-size:8pt;border-radius:20px;padding:1px 8px;margin-right:4px;}
+/* ---------- screenshots ---------- */
+.shots{display:flex;gap:16px;margin:16px 0 6px;align-items:flex-start;justify-content:center;flex-wrap:wrap;}
+.shot{text-align:center;width:180px;}
+.shot .frame{background:linear-gradient(180deg,#f7fafb,#eef3f6);border:1px solid var(--line);
+  border-radius:20px;padding:8px 8px 4px;}
+.shot img{width:100%;border-radius:14px;display:block;}
+.shot figcaption{font-size:8.5pt;color:var(--muted);margin-top:8px;line-height:1.35;}
+.shot .cn{display:inline-flex;width:16px;height:16px;border-radius:50%;background:var(--blue);color:#fff;
+  font-weight:700;font-size:8pt;align-items:center;justify-content:center;margin-right:5px;vertical-align:-2px;}
 
-/* color-code chips */
-.chips{display:flex;flex-wrap:wrap;gap:6px 16px;margin:6px 0 10px;}
-.chip{display:flex;align-items:center;gap:7px;font-size:9.6pt;}
-.sw{width:13px;height:13px;border-radius:50%;border:1px solid rgba(0,0,0,.15);}
+/* ---------- colour-code chips ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px;}
+.chip{display:flex;align-items:center;gap:8px;font-size:9.3pt;font-weight:500;color:var(--ink);
+  background:var(--soft);border:1px solid var(--line);border-radius:20px;padding:4px 12px 4px 5px;}
+.sw{width:16px;height:16px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);flex:0 0 auto;}
 
-/* table */
-table{border-collapse:collapse;width:100%;font-size:9.6pt;margin:8px 0 12px;}
-th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
-th{background:var(--soft);font-weight:600;}
-td.k{font-weight:600;width:38%;}
+/* ---------- tables ---------- */
+table{border-collapse:collapse;width:100%;font-size:9.4pt;margin:9px 0 12px;
+  border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+th{background:var(--soft);font-weight:600;color:var(--ink);font-size:8.8pt;text-transform:uppercase;letter-spacing:.4px;}
+td.k{font-weight:600;color:var(--ink);width:34%;}
 
-/* toc */
-.toc{font-size:10pt;}
-.toc .row{display:flex;justify-content:space-between;border-bottom:1px dotted var(--line);padding:6px 0;}
-.toc .row b{color:var(--blue);width:26px;display:inline-block;}
-.grid2{display:flex;gap:22px;}
+/* ---------- misc ---------- */
+.rule{height:2px;background:linear-gradient(90deg,var(--blue),transparent);border-radius:2px;margin:6px 0 16px;}
+.grid2{display:flex;gap:26px;}
 .grid2>div{flex:1;}
-.faqq{font-weight:600;margin-top:9px;}
-.faqa{color:#374049;margin-bottom:4px;}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+.card h3{margin-top:0;}
+.faqq{font-weight:700;color:var(--ink);margin:12px 0 2px;}
+.faqa{color:#3a454e;margin-bottom:6px;}
+.riskdot{font-weight:700;}
+.kchips{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
 </style>
 </head>
 <body>
 
 <!-- ============ COVER ============ -->
 <section class="cover">
-  <img class="logo" src="file:///Users/mac/Projects/Wergonic/wergonic-flutter/assets/logo.png" style="filter:none;">
-  <div class="kick">Smart Workwear System</div>
-  <h1>User Manual</h1>
-  <div class="sub">Ergonomic risk assessment &amp; work technique training</div>
-  <div class="meta">
-    <div><b>Manual version</b> &nbsp; 3.0</div>
-    <div><b>Mobile app</b> &nbsp; Android v2.9.x</div>
-    <div><b>Applies to</b> &nbsp; Wergonic Mobile App &amp; Web Dashboard</div>
-    <div style="margin-top:8px;">© Wergonic AB — for authorised system users.</div>
+  <img class="logo" src="./manual_assets/logo_hires.png">
+  <img class="glyph" src="./manual_assets/wergonic_symbol.svg">
+  <div class="block">
+    <div class="kick">Smart Workwear System</div>
+    <h1>User<br>Manual</h1>
+    <div class="sub">Ergonomic risk assessment &amp; work technique training, powered by wearable motion sensors.</div>
+    <div class="accent"></div>
+    <div class="meta">
+      <div><div class="l">Manual</div><div class="v">Version 3.0</div></div>
+      <div><div class="l">Mobile App</div><div class="v">Android v5.1.7</div></div>
+      <div><div class="l">Covers</div><div class="v">App &amp; Web Dashboard</div></div>
+    </div>
+    <div class="foot">© Wergonic AB — for authorised system users. cloud.wergonic.com</div>
   </div>
 </section>
 
 <!-- ============ TOC ============ -->
 <section>
-  <h2>Contents</h2>
+  <div class="eyebrow">Contents</div>
+  <h2>What's inside</h2>
   <div class="rule"></div>
   <div class="toc">
-    <div class="row"><span><b>1</b> The Wergonic System</span><span>overview &amp; components</span></div>
-    <div class="row"><span><b>2</b> What's in the Kit</span><span>hardware checklist</span></div>
-    <div class="row"><span><b>3</b> Sensors &amp; What It Measures</span><span>IMUs, placement, metrics</span></div>
-    <div class="row"><span><b>4</b> System Setup</span><span>app, pairing, phone settings, tags</span></div>
-    <div class="row"><span><b>5</b> Running a Measurement</span><span>fit, session, calibration, live mode</span></div>
-    <div class="row"><span><b>6</b> Reviewing Results</span><span>in the app &amp; on the dashboard</span></div>
-    <div class="row"><span><b>7</b> Maintenance &amp; Return</span><span>cleaning, storage, return</span></div>
-    <div class="row"><span><b>8</b> Troubleshooting &amp; FAQ</span><span>common issues</span></div>
+    <div class="row"><span class="n">1</span><span class="t">The Wergonic System</span><span class="d">Overview &amp; components</span></div>
+    <div class="row"><span class="n">2</span><span class="t">What's in the Kit</span><span class="d">Hardware checklist</span></div>
+    <div class="row"><span class="n">3</span><span class="t">Sensors &amp; What It Measures</span><span class="d">IMUs, placement, metrics</span></div>
+    <div class="row"><span class="n">4</span><span class="t">System Setup</span><span class="d">App, pairing, phone, tags</span></div>
+    <div class="row"><span class="n">5</span><span class="t">Running a Measurement</span><span class="d">Fit, session, calibration, live</span></div>
+    <div class="row"><span class="n">6</span><span class="t">Reviewing Results</span><span class="d">In the app &amp; on the dashboard</span></div>
+    <div class="row"><span class="n">7</span><span class="t">Maintenance &amp; Return</span><span class="d">Cleaning, storage, return</span></div>
+    <div class="row"><span class="n">8</span><span class="t">Troubleshooting &amp; FAQ</span><span class="d">Common issues</span></div>
   </div>
 </section>
 
 <!-- ============ 1 OVERVIEW ============ -->
 <section class="sect">
-  <h2><span class="num">1.</span> The Wergonic System</h2>
-  <div class="rule"></div>
+  <div class="shead"><div class="badge">1</div><div><div class="eyebrow">Introduction</div><h2>The Wergonic System</h2></div></div>
   <p class="lead">Wergonic is a smart-workwear system for fast, accurate measurement of upper-body posture and motion during real work tasks — with results compared directly against recommended reference values.</p>
 
   <div class="grid2">
     <div>
       <h3>Smart Workwear</h3>
       <ul>
-        <li>Motion sensors fitted into garments for on/off use</li>
-        <li>Tracks trunk &amp; head, arms, and wrist</li>
+        <li>Motion sensors fitted into garments for easy on/off use</li>
+        <li>Tracks trunk &amp; head, arms and wrist</li>
         <li>Estimates reachability (hand's reach)</li>
       </ul>
-      <h3>Mobile App <span class="small">(Android)</span></h3>
+      <h3>Mobile App <span class="small">· Android</span></h3>
       <ul>
         <li>Streams and records sensor data over Bluetooth</li>
         <li>Real-time posture &amp; movement metrics</li>
@@ -144,36 +186,41 @@ td.k{font-weight:600;width:38%;}
 
 <!-- ============ 2 KIT ============ -->
 <section class="sect">
-  <h2><span class="num">2.</span> What's in the Kit</h2>
-  <div class="rule"></div>
+  <div class="shead"><div class="badge">2</div><div><div class="eyebrow">Hardware</div><h2>What's in the Kit</h2></div></div>
   <p class="lead">The Wergonic Smart Workwear is delivered as a standardised kit.</p>
-  <ul>
-    <li><strong>Six IMUs</strong> in colour-coded moulds</li>
-    <li><strong>Android phone</strong> with the Wergonic App installed and pre-paired</li>
-    <li><strong>Wergonic shirts</strong> in six sizes (XS–XXL)</li>
-    <li><strong>Wergonic glove</strong> and <strong>headband</strong></li>
-    <li><strong>Six CR2025</strong> coin-cell batteries and one <strong>phone charger</strong></li>
-    <li><strong>Heart-rate chest band</strong> with an extra mould-free IMU <span class="small">(optional)</span></li>
-  </ul>
-
-  <h3>Phone compatibility</h3>
-  <p>For best performance use an Android phone on <strong>Android 13 or newer</strong>. Bluetooth hardware quality affects data streaming. Thoroughly tested models:</p>
-  <ul>
-    <li>Samsung Galaxy S21 FE · Samsung Galaxy S21 Ultra</li>
-    <li>Google Pixel 6A · Google Pixel 7A</li>
-  </ul>
-  <p class="small"><strong>Compliance:</strong> CE, FCC, IC · Bluetooth 4.0/5.0 · RoHS, REACH.</p>
+  <div class="grid2">
+    <div>
+      <ul>
+        <li><strong>Six IMUs</strong> in colour-coded moulds</li>
+        <li><strong>Android phone</strong> with the Wergonic App installed and pre-paired</li>
+        <li><strong>Wergonic shirts</strong> in six sizes (XS–XXL)</li>
+        <li><strong>Wergonic glove</strong> and <strong>headband</strong></li>
+        <li><strong>Six CR2025</strong> coin-cell batteries + one <strong>phone charger</strong></li>
+        <li><strong>Heart-rate chest band</strong> with a mould-free IMU <span class="small">(optional)</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="card">
+        <h4 style="margin-top:0">Phone compatibility</h4>
+        <p style="margin-bottom:6px">Use an Android phone on <strong>Android 13 or newer</strong>. Bluetooth hardware quality affects streaming. Tested models:</p>
+        <ul style="margin-bottom:0">
+          <li>Samsung Galaxy S21 FE · S21 Ultra</li>
+          <li>Google Pixel 6A · Pixel 7A</li>
+        </ul>
+      </div>
+      <p class="small" style="margin-top:12px"><strong>Compliance:</strong> CE, FCC, IC · Bluetooth 4.0/5.0 · RoHS, REACH.</p>
+    </div>
+  </div>
 </section>
 
 <!-- ============ 3 SENSORS ============ -->
 <section class="sect">
-  <h2><span class="num">3.</span> Sensors &amp; What It Measures</h2>
-  <div class="rule"></div>
-  <p class="lead">The system uses six Movesense inertial measurement units (IMUs) held in colour-coded moulds for correct placement.</p>
+  <div class="shead"><div class="badge">3</div><div><div class="eyebrow">Measurement</div><h2>Sensors &amp; What It Measures</h2></div></div>
+  <p class="lead">The system uses six Movesense inertial measurement units (IMUs), held in colour-coded moulds for correct placement.</p>
 
   <div class="grid2">
     <div>
-      <h4>Sensor &amp; specs</h4>
+      <h4>Sensor &amp; specifications</h4>
       <ul>
         <li>9-axis motion (accelerometer, gyroscope, magnetometer) + temperature</li>
         <li>Accelerometer ±2/4/8/16 g · Gyroscope ±125–2000 °/s</li>
@@ -206,12 +253,11 @@ td.k{font-weight:600;width:38%;}
 
 <!-- ============ 4 SETUP ============ -->
 <section class="sect">
-  <h2><span class="num">4.</span> System Setup</h2>
-  <div class="rule"></div>
-  <p class="lead">You can use the provided phone (mostly pre-configured) or your own Android phone. Either way, finish by creating your tags on the dashboard.</p>
+  <div class="shead"><div class="badge">4</div><div><div class="eyebrow">Getting started</div><h2>System Setup</h2></div></div>
+  <p class="lead">Use the provided phone (mostly pre-configured) or your own Android phone. Either way, finish by creating your tags on the dashboard.</p>
 
   <h3>4.1 · Using the provided phone</h3>
-  <p>The kit phone already has the correct Android version, the latest Wergonic App, and pre-paired IMUs. Two steps remain:</p>
+  <p>The kit phone already has the correct Android version, the latest Wergonic App and pre-paired IMUs. Two steps remain:</p>
   <ol>
     <li><strong>Sign in to Google Play</strong> with a Gmail account so the app stays updated with new releases.</li>
     <li><strong>Create your tags</strong> on the dashboard (see 4.4).</li>
@@ -226,14 +272,14 @@ td.k{font-weight:600;width:38%;}
   </ol>
 
   <h3>4.3 · Pairing the IMUs</h3>
-  <p>Open <strong>Settings</strong> (gear icon, top-right of the home screen) and go to <strong>Sensors &amp; Hardware</strong>. Each body part has a <strong>Pair</strong> button; tap it and pick the sensor from the list. Identify a sensor by the last four digits of the serial number on its back. Once connected the row shows <strong>Paired</strong> in cyan with battery level and an <strong>Unpair</strong> option.</p>
+  <p>Open <strong>Settings</strong> (gear icon, top-right of the home screen) and go to <strong>Sensors &amp; Hardware</strong>. Each body part has a <strong>Pair</strong> button; tap it and pick the sensor from the list. Identify a sensor by the last four digits of the serial number on its back. Once connected, the row shows <strong>Paired</strong> in cyan with battery level and an <strong>Unpair</strong> option.</p>
 
   <div class="shots">
-    <figure class="shot"><img src="./manual_assets/02-settings-sensors.png"><figcaption><span class="cn">A</span>Settings → Sensors &amp; Hardware. Pair / Unpair each body part; "Head alignment" sits below.</figcaption></figure>
-    <figure class="shot"><img src="./manual_assets/03-pair-dialog.png"><figcaption><span class="cn">B</span>"Select a sensor to pair" — tap the matching serial number to connect it to that body part.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/02-settings-sensors.png"></div><figcaption><span class="cn">A</span>Settings → Sensors &amp; Hardware. Pair / Unpair each body part; "Head alignment" sits below.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/03-pair-dialog.png"></div><figcaption><span class="cn">B</span>"Select a sensor to pair" — tap the matching serial number to connect it to that body part.</figcaption></figure>
   </div>
 
-  <p><strong>Colour-code standard —</strong> Right arm&nbsp;Blue · Trunk&nbsp;Green · Head&nbsp;Black · Left arm&nbsp;Red · Hand&nbsp;Silver · Forearm&nbsp;Beige. The optional HR chest band pairs with the mould-free sensor.</p>
+  <p><strong>Colour-code standard —</strong> Right arm Blue · Trunk Green · Head Black · Left arm Red · Hand Silver · Forearm Beige. The optional HR chest band pairs with the mould-free sensor.</p>
   <div class="note"><b>Head alignment.</b> The head IMU can face either way. In Settings, set <b>Logo side facing forehead</b> (logo forward) or <b>Back side facing forehead</b> (logo backward) to match how you fit it.</div>
   <div class="note tip"><b>Test auto-pairing.</b> Log out, close and reopen the app — sensors should reconnect automatically. If you're not measuring right away, remove the batteries to save charge.</div>
 
@@ -256,8 +302,7 @@ td.k{font-weight:600;width:38%;}
 
 <!-- ============ 5 MEASUREMENT ============ -->
 <section class="sect">
-  <h2><span class="num">5.</span> Running a Measurement</h2>
-  <div class="rule"></div>
+  <div class="shead"><div class="badge">5</div><div><div class="eyebrow">Core workflow</div><h2>Running a Measurement</h2></div></div>
 
   <h3>5.1 · Prepare</h3>
   <ul>
@@ -279,100 +324,105 @@ td.k{font-weight:600;width:38%;}
   <p>On the home screen tap <strong>New measurement</strong>, then complete the two setup pages and confirm pairing before calibration.</p>
 
   <div class="shots">
-    <figure class="shot"><img src="./manual_assets/01-home.png"><figcaption><span class="cn">C</span>Home — tap <b>New measurement</b>. The folder icon opens history; the gear opens settings.</figcaption></figure>
-    <figure class="shot"><img src="./manual_assets/05-config.png"><figcaption><span class="cn">D</span>Page 1 — choose feedback type and <b>Measurement Type</b>: <b>Activity</b> or <b>Work Cycle</b>. Pick or search a worker.</figcaption></figure>
-    <figure class="shot"><img src="./manual_assets/06-profile.png"><figcaption><span class="cn">E</span>Page 2 — worker profile (workplace, ID, gender, dominant arm, age, weight). Tap <b>Next</b>.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/01-home.png"></div><figcaption><span class="cn">C</span>Home — tap <b>New measurement</b>. The folder icon opens history; the gear opens settings.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/05-config.png"></div><figcaption><span class="cn">D</span>Page 1 — choose feedback type and <b>Measurement Type</b>: <b>Activity</b> or <b>Work Cycle</b>. Pick or search a worker.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/06-profile.png"></div><figcaption><span class="cn">E</span>Page 2 — worker profile (workplace, ID, gender, dominant arm, age, weight). Tap <b>Next</b>.</figcaption></figure>
   </div>
   <div class="note small"><b>Online vs offline.</b> To load a pre-programmed <b>Work Cycle</b> or reuse a saved worker profile you must be online. Offline, create a new profile and sync later.</div>
 
-  <h3>5.4 · Confirm pairing</h3>
+  <h3>5.4 · Confirm pairing, then calibrate</h3>
   <p>The <strong>Pairing</strong> screen shows the shirt with each body part. Paired sensors show a <strong>cyan check</strong>; tap a body part to pair, or tap a paired one to unpair. When ready, tap <strong>Next</strong> (top-right) to calibrate.</p>
 
   <div class="shots">
-    <figure class="shot"><img src="./manual_assets/04-pairing.png"><figcaption><span class="cn">F</span>Pairing overview — connection cards show each sensor's serial and battery. Tap <b>Next</b> when all needed sensors are green.</figcaption></figure>
-    <figure class="shot"><img src="./manual_assets/07-calibration.png"><figcaption><span class="cn">G</span>Calibration — follow the numbered steps and demo video, then <b>Start Calibration</b> and hold the pose for 5&nbsp;seconds.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/04-pairing.png"></div><figcaption><span class="cn">F</span>Pairing overview — connection cards show each sensor's serial and battery. Tap <b>Next</b> when the sensors you need are green.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/07-calibration.png"></div><figcaption><span class="cn">G</span>Calibration — follow the numbered steps and demo video, then <b>Start Calibration</b> and hold the pose for 5&nbsp;seconds.</figcaption></figure>
   </div>
 
-  <h3>5.5 · Calibrate the IMUs</h3>
-  <p>Calibration is done per test person, in <strong>four steps</strong> — <strong>Back and head</strong>, <strong>Right arm</strong>, <strong>Left arm</strong>, and a <strong>Forward reference</strong>. Each step gives text, a demo video (with audio) and voice cues. The arm steps use the ~2 kg weight. Calibration is saved on the phone and can be reused for consecutive measurements on the same person <strong>if the IMUs have not moved</strong> — otherwise recalibrate.</p>
+  <p>Calibration is done per test person, in <strong>four steps</strong> — <strong>Back and head</strong>, <strong>Right arm</strong>, <strong>Left arm</strong>, and a <strong>Forward reference</strong>. Each step gives text, a demo video (with audio) and voice cues; the arm steps use the ~2 kg weight. Calibration is saved on the phone and can be reused for consecutive measurements on the same person <strong>if the IMUs have not moved</strong> — otherwise recalibrate.</p>
 
-  <h3>5.6 · Live mode &amp; recording</h3>
-  <p>After calibration you enter live mode. Metric squares update in real time and colour by risk — <span style="color:#22a06b;font-weight:600">green</span> (safe), <span style="color:#d98218;font-weight:600">orange</span>, <span style="color:#e0453d;font-weight:600">red</span>.</p>
-  <div class="shots">
-    <figure class="shot"><img src="./manual_assets/08-live.png"><figcaption><span class="cn">H</span>Live mode — <b>Start</b> to record, <b>Break</b> to pause, <b>Finish</b> to end. Long-press a square to choose which metrics show; the gear (at 00:00:00) recalibrates a body part.</figcaption></figure>
+  <h3>5.5 · Live mode &amp; recording</h3>
+  <p>After calibration you enter live mode. Metric squares update in real time and colour by risk — <span class="riskdot" style="color:#1a9e63">green</span> (safe), <span class="riskdot" style="color:#d3820f">orange</span>, <span class="riskdot" style="color:#dc4038">red</span>.</p>
+  <div class="grid2" style="align-items:flex-start">
+    <div>
+      <ul>
+        <li><strong>Choose metrics:</strong> long-press any square, tick the metrics you want, then <strong>Save</strong> (top-left).</li>
+        <li><strong>Recalibrate:</strong> before starting (timer at 00:00:00), tap the gear → a body part.</li>
+        <li><strong>Record:</strong> tap <strong>Start</strong>; use <strong>Break</strong> to pause; tap <strong>Finish</strong> to end and save.</li>
+        <li>When online you can also add activities during recording.</li>
+      </ul>
+    </div>
+    <div>
+      <figure class="shot" style="width:172px;margin:0 auto"><div class="frame"><img src="./manual_assets/08-live.png"></div><figcaption><span class="cn">H</span>Live mode — Start / Break / Finish controls, with risk-coloured metric squares.</figcaption></figure>
+    </div>
   </div>
-  <ul>
-    <li><strong>Choose metrics:</strong> long-press any square, tick the metrics you want, then <strong>Save</strong> (top-left).</li>
-    <li><strong>Recalibrate:</strong> before starting (timer at 00:00:00), tap the gear → a body part.</li>
-    <li><strong>Record:</strong> tap <strong>Start</strong>; use <strong>Break</strong> to pause; tap <strong>Finish</strong> to end and save. When online you can also add activities during recording.</li>
-  </ul>
 </section>
 
 <!-- ============ 6 RESULTS ============ -->
 <section class="sect">
-  <h2><span class="num">6.</span> Reviewing Results</h2>
-  <div class="rule"></div>
+  <div class="shead"><div class="badge">6</div><div><div class="eyebrow">Analysis</div><h2>Reviewing Results</h2></div></div>
   <p class="lead">Review a session directly in the app, or in full on the web dashboard.</p>
 
-  <div class="grid2">
+  <div class="grid2" style="align-items:flex-start">
     <div>
       <h3>In the app</h3>
-      <p>Tap the <strong>folder icon</strong> (home, top-right) to open your sessions. On a session, tap the <strong>⋮ menu → Report</strong>. The report opens as <strong>swipeable pages</strong> — one per body part — with the numbers in tables. Reference limits are shown in <span style="color:#1DBBF8;font-weight:600">blue</span>.</p>
+      <p>Tap the <strong>folder icon</strong> (home, top-right) to open your sessions. On a session, tap the <strong>⋮ menu → Report</strong>. The report opens as <strong>swipeable pages</strong> — one per body part — with the numbers in tables. Reference limits are shown in <span style="color:var(--blue-deep);font-weight:600">blue</span>.</p>
       <ul class="small">
-        <li>⋮ menu also offers <b>Sync measurement</b>, <b>Share</b> and <b>Delete</b>.</li>
+        <li>The ⋮ menu also offers <b>Sync measurement</b>, <b>Share</b> and <b>Delete</b>.</li>
         <li>Tapping a session opens its <b>timeline</b> (activities, breaks).</li>
       </ul>
     </div>
     <div>
-      <figure class="shot" style="width:170px;margin:0 auto;"><img src="./manual_assets/09-report.png"><figcaption><span class="cn">I</span>In-app report — per-body-part tables; blue values are recommended 8-hour limits.</figcaption></figure>
+      <figure class="shot" style="width:168px;margin:0 auto"><div class="frame"><img src="./manual_assets/09-report.png"></div><figcaption><span class="cn">I</span>In-app report — per-body-part tables; blue values are recommended 8-hour limits.</figcaption></figure>
     </div>
   </div>
 
   <h3>On the web dashboard</h3>
   <p>Online sessions upload automatically; offline sessions upload when you reconnect (may take a few minutes). Sign in at <strong>cloud.wergonic.com</strong>, open <strong>Finished Sessions</strong>, and click <strong>Details</strong> on a session. Results are shown as:</p>
   <ul>
-    <li><strong>Pie charts</strong> — posture (°) first, switch to <em>Speed of movement</em> for angular velocity (°/s). Export to Excel/PDF, or open <em>Show Detailed View</em> for time plots.</li>
+    <li><strong>Pie charts</strong> — posture (°) first; switch to <em>Speed of movement</em> for angular velocity (°/s). Export to Excel/PDF, or open <em>Show Detailed View</em> for time plots.</li>
     <li><strong>Tables</strong> — posture, an algorithm-based reach estimate, then speed of movement.</li>
   </ul>
 </section>
 
 <!-- ============ 7 MAINTENANCE ============ -->
 <section class="sect">
-  <h2><span class="num">7.</span> Maintenance &amp; Return</h2>
-  <div class="rule"></div>
+  <div class="shead"><div class="badge">7</div><div><div class="eyebrow">Care</div><h2>Maintenance &amp; Return</h2></div></div>
   <div class="grid2">
     <div>
-      <h3>Between sessions</h3>
-      <ul>
-        <li><strong>Remove the IMUs</strong>, then machine-wash garments at <strong>30&nbsp;°C</strong> with regular, perfume-free detergent (no disinfecting softener).</li>
-        <li><strong>Disinfect</strong> the removed IMUs.</li>
-        <li>Avoid fully discharging the phone.</li>
-      </ul>
+      <div class="card">
+        <h3>Between sessions</h3>
+        <ul style="margin-bottom:0">
+          <li><strong>Remove the IMUs</strong>, then machine-wash garments at <strong>30&nbsp;°C</strong> with regular, perfume-free detergent (no disinfecting softener).</li>
+          <li><strong>Disinfect</strong> the removed IMUs.</li>
+          <li>Avoid fully discharging the phone.</li>
+        </ul>
+      </div>
     </div>
     <div>
-      <h3>Returning the kit</h3>
-      <ul>
-        <li>Clean the workwear as above.</li>
-        <li>Batteries needn't be returned — recycle any you won't reuse.</li>
-        <li>Fully charge the phone.</li>
-        <li>Log out of Google Play and the Wergonic App.</li>
-      </ul>
+      <div class="card">
+        <h3>Returning the kit</h3>
+        <ul style="margin-bottom:0">
+          <li>Clean the workwear as above.</li>
+          <li>Batteries needn't be returned — recycle any you won't reuse.</li>
+          <li>Fully charge the phone.</li>
+          <li>Log out of Google Play and the Wergonic App.</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ============ 8 TROUBLESHOOTING ============ -->
 <section class="sect">
-  <h2><span class="num">8.</span> Troubleshooting &amp; FAQ</h2>
-  <div class="rule"></div>
+  <div class="shead"><div class="badge">8</div><div><div class="eyebrow">Support</div><h2>Troubleshooting &amp; FAQ</h2></div></div>
 
   <h3>Troubleshooting</h3>
   <table>
-    <tr><th style="width:42%">Problem</th><th>What to do</th></tr>
-    <tr><td>IMU won't blink / seems off</td><td>Moist fingers can discharge coin cells. Try a fresh battery; if it still won't start, contact Wergonic for a replacement.</td></tr>
-    <tr><td>IMU is slow to pair</td><td>Start the IMU <em>before</em> opening the app and wait ~1 minute. Don't repeatedly tap pair/unpair. Try another location — some environments disturb Bluetooth.</td></tr>
-    <tr><td>Battery lid won't open</td><td>Use only CR2025, inserted the right way up. Never use CR2032 — it can jam and damage the lid.</td></tr>
-    <tr><td>App stuck loading after calibration</td><td>Usually an offline network search. Enable flight mode <em>with Bluetooth on</em>, or work online for best stability.</td></tr>
+    <tr><th style="width:40%">Problem</th><th>What to do</th></tr>
+    <tr><td class="k">IMU won't blink / seems off</td><td>Moist fingers can discharge coin cells. Try a fresh battery; if it still won't start, contact Wergonic for a replacement.</td></tr>
+    <tr><td class="k">IMU is slow to pair</td><td>Start the IMU <em>before</em> opening the app and wait ~1 minute. Don't repeatedly tap pair/unpair. Try another location — some environments disturb Bluetooth.</td></tr>
+    <tr><td class="k">Battery lid won't open</td><td>Use only CR2025, inserted the right way up. Never use CR2032 — it can jam and damage the lid.</td></tr>
+    <tr><td class="k">App stuck loading after calibration</td><td>Usually an offline network search. Enable flight mode <em>with Bluetooth on</em>, or work online for best stability.</td></tr>
   </table>
 
   <h3>Frequently asked questions</h3>
@@ -381,7 +431,7 @@ td.k{font-weight:600;width:38%;}
   <p class="faqq">How far does Bluetooth reach?</p>
   <p class="faqa">Roughly 10 metres, but range depends on the environment where you measure.</p>
 
-  <div class="note tip" style="margin-top:20px;"><b>Need help?</b> Contact the Wergonic team for hardware replacements or support with setup and measurements.</div>
+  <div class="note tip" style="margin-top:20px"><b>Need help?</b> Contact the Wergonic team for hardware replacements or support with setup and measurements.</div>
 </section>
 
 </body>
