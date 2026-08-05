@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>How Wergonic's Numbers Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6; --ink: #181826; --slate: #5A6478; --muted: #98A1B3;
+    --line: #E9EBF0; --tint: #F4EFFD;
+    --amber: #B7791F; --amber-bg: #FFF8EC; --amber-line: #F2DFB8;
+    --red: #B42318; --red-bg: #FEF3F2; --red-line: #FDA29B;
+    --green: #1B7F5A; --green-bg: #ECFAF4; --green-line: #A9E0C9;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 18mm 16mm 16mm 16mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink); font-size: 10.5pt; line-height: 1.55;
+    -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+  }
+  h1, h2, h3, h4 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 14px 16px; margin-bottom: 18px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 24pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .lede { color: var(--slate); font-size: 10.5pt; max-width: 168mm; margin-top: 8px; }
+  .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; }
+
+  h2 {
+    font-size: 14pt; font-weight: 800; letter-spacing: -0.01em;
+    margin: 30px 0 6px; padding-bottom: 7px; border-bottom: 2px solid var(--purple);
+    break-after: avoid;
+  }
+  h2 .num { color: var(--purple); margin-right: 8px; }
+  h3 {
+    font-size: 11.5pt; font-weight: 700; color: var(--ink);
+    margin: 20px 0 4px; break-after: avoid;
+  }
+  h4 { font-size: 10pt; font-weight: 700; color: var(--slate); margin: 14px 0 3px; break-after: avoid; }
+  p { margin: 6px 0 0; color: var(--slate); }
+  p.tight { margin-top: 3px; }
+  strong { color: var(--ink); font-weight: 600; }
+  code {
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.8pt;
+    color: var(--ink); background: #F4F5F8; padding: 1px 4px; border-radius: 3px;
+  }
+
+  /* Key statement */
+  .key {
+    margin: 12px 0; padding: 12px 16px; background: var(--tint);
+    border-left: 4px solid var(--purple); border-radius: 0 7px 7px 0; break-inside: avoid;
+  }
+  .key p { margin: 0; color: var(--ink); font-size: 11pt; font-weight: 600; line-height: 1.5; }
+  .key p + p { margin-top: 6px; font-weight: 400; font-size: 10pt; color: var(--slate); }
+
+  .note {
+    margin: 10px 0; padding: 9px 13px; background: #FAFAFC;
+    border: 1px solid var(--line); border-radius: 7px; break-inside: avoid;
+  }
+  .note p { margin: 0; font-size: 9.5pt; }
+  .note .tag { display: block; font-size: 7.5pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--purple); margin-bottom: 3px; }
+  .note.warn { background: var(--amber-bg); border-color: var(--amber-line); }
+  .note.warn .tag { color: var(--amber); }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 9.5pt; break-inside: avoid; }
+  th {
+    text-align: left; font-weight: 700; font-size: 8pt; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted); border-bottom: 1.5px solid var(--line); padding: 6px 10px 6px 0;
+  }
+  td { padding: 6px 10px 6px 0; border-bottom: 1px solid #F2F3F7; color: var(--slate); vertical-align: top; }
+  td.hi { color: var(--ink); font-weight: 600; }
+  tr:last-child td { border-bottom: none; }
+  table.zebra tr:nth-child(even) td { background: #FBFBFD; }
+
+  .g { color: var(--green); font-weight: 700; }
+  .y { color: var(--amber); font-weight: 700; }
+  .r { color: var(--red); font-weight: 700; }
+
+  /* Example block */
+  .ex {
+    margin: 10px 0; padding: 10px 14px; background: #FBF9FE;
+    border-left: 3px solid #E3D5F7; border-radius: 0 6px 6px 0; break-inside: avoid;
+  }
+  .ex .tag { display: block; font-size: 7.5pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--purple); margin-bottom: 4px; }
+  .ex p { margin: 3px 0 0; font-size: 9.5pt; }
+  .ex table { margin-top: 6px; }
+
+  ul, ol { margin: 6px 0 0; padding-left: 18px; }
+  li { color: var(--slate); margin: 4px 0; }
+  li strong { color: var(--ink); font-weight: 600; }
+
+  .toc { margin-top: 10px; column-count: 2; column-gap: 22px; }
+  .toc div { font-size: 9.5pt; color: var(--slate); margin: 3px 0; break-inside: avoid; }
+  .toc div span { color: var(--purple); font-weight: 700; margin-right: 6px; font-family: "JetBrains Mono", monospace; font-size: 8.5pt; }
+
+  footer { margin-top: 30px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="eyebrow">Wergonic · Reference</div>
+  <h1>How Wergonic’s Numbers Work</h1>
+  <p class="lede">
+    Everything the product measures, how it decides something is dangerous, and what every number in a report means —
+    written in plain words, with no assumed knowledge of ergonomics or statistics.
+  </p>
+  <p class="lede">
+    This is a reminder document. If you open a report in six months and cannot remember what “P90” or “static minutes
+    per hour” means, section 4 and section 9 are the pages to turn to.
+  </p>
+  <div class="meta">27 July 2026 · describes the product as it behaves today, verified against the live code</div>
+</div>
+
+<div class="note">
+  <span class="tag">Contents</span>
+  <div class="toc">
+    <div><span>1</span>The idea in one page</div>
+    <div><span>2</span>What we measure</div>
+    <div><span>3</span>Calibration — why 0° means anything</div>
+    <div><span>4</span>How we decide it’s dangerous</div>
+    <div><span>5</span>Percentiles, medians and averages</div>
+    <div><span>6</span>What the worker sees live</div>
+    <div><span>7</span>The four risk assessments</div>
+    <div><span>8</span>TNO — holding versus moving</div>
+    <div><span>9</span>Reading a report, line by line</div>
+    <div><span>10</span>Heart rate</div>
+    <div><span>11</span>Where our numbers come from</div>
+    <div><span>12</span>Things worth knowing</div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2><span class="num">1</span>The idea in one page</h2>
+
+<p>
+  Sensors are strapped to a worker. They record how the body is positioned, many times a second, for the whole
+  recording. The phone shows live feedback. Afterwards the data is uploaded, the backend works out how much time was
+  spent in each posture, and a report gives a green, yellow or red verdict.
+</p>
+
+<div class="key">
+  <p>An angle is never dangerous by itself. It becomes dangerous when it is held for too much of the working day.</p>
+  <p>
+    Raising your arm to 70° is fine. Raising it to 70° for three hours is not. Every risk colour in the product is
+    really answering one question: <strong>what share of the recording was spent in the bad position?</strong>
+  </p>
+</div>
+
+<p>
+  That single idea explains almost everything else. The angles decide <em>which</em> bad position. The percentages
+  decide <em>how bad</em>. The assessments (RAMP, MEC, RULA, REBA) then wrap extra judgement around it — weights being
+  lifted, how often a motion repeats, what the worker says hurts.
+</p>
+
+<h3>The chain, start to finish</h3>
+<table>
+  <tr><td class="hi" style="width:38mm">1. Sensors</td><td>Measure orientation many times a second</td></tr>
+  <tr><td class="hi">2. Calibration</td><td>Establishes what “neutral” means for this worker</td></tr>
+  <tr><td class="hi">3. Angles</td><td>Each reading becomes an angle for each body part</td></tr>
+  <tr><td class="hi">4. Ranges</td><td>Each angle falls into a range, e.g. 30–60°</td></tr>
+  <tr><td class="hi">5. Time share</td><td>How much of the recording was spent in each range</td></tr>
+  <tr><td class="hi">6. Colour</td><td>The time share is compared against a limit → green, yellow or red</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2><span class="num">2</span>What we measure</h2>
+
+<p>Six raw quantities. Everything in every report is derived from these.</p>
+
+<table class="zebra">
+  <thead><tr><th style="width:44mm">Measurement</th><th>What it means in plain words</th><th style="width:38mm">0° means</th></tr></thead>
+  <tr><td class="hi">Arm elevation angle</td><td>How high the upper arm is lifted</td><td>Arm hanging straight down</td></tr>
+  <tr><td class="hi">Arm angular velocity</td><td>How fast the arm is moving</td><td>Not moving</td></tr>
+  <tr><td class="hi">Trunk forward bending</td><td>Leaning forward or back from the waist</td><td>Standing upright</td></tr>
+  <tr><td class="hi">Trunk side bending</td><td>Leaning left or right</td><td>Upright</td></tr>
+  <tr><td class="hi">Head forward bending</td><td>Head tilted down or up</td><td>Head level</td></tr>
+  <tr><td class="hi">Heart rate</td><td>From a chest strap</td><td>—</td></tr>
+</table>
+
+<p>
+  Head side bending and wrist speed are also measured. Hand distance from the body is <em>calculated</em> rather than
+  measured — see section 7.
+</p>
+
+<h3>How an angle is worked out</h3>
+
+<p>
+  <strong>For the arm, gravity is enough.</strong> The sensor always knows which way is down. Calibration recorded
+  which way down pointed when the arm hung by the side. During work, the sensor compares where down is now with where
+  it was then — and the difference between those two directions <em>is</em> the elevation angle.
+</p>
+
+<p>
+  <strong>For the trunk and head, gravity is not enough.</strong> Here we need two separate numbers: forward bending
+  and side bending. Gravity alone cannot tell them apart — tilting 20° forward and tilting 20° sideways shift gravity
+  by the same amount. To know which, you need to know which way the body is facing. So for these we track full
+  three-dimensional orientation, combining the gravity sensor with a rotation sensor.
+</p>
+
+<div class="key">
+  <p>Arms need one number, so gravity is enough. Trunk and head need two, so they need orientation.</p>
+</div>
+
+<h3>Speed is measured in degrees per second, not metres per second</h3>
+
+<p>
+  Because we measure rotation, not travel. The sensor does not know where the arm is in the room, only which way it is
+  pointing. As a rule of thumb, <strong>30 °/s is about the speed of raising your arm from your side to horizontal in
+  three seconds.</strong>
+</p>
+
+<div class="note warn">
+  <span class="tag">Worth knowing</span>
+  <p>
+    Arm speed is worked out two different ways in the product. The reports use the rate at which the arm rises and
+    falls, so purely sideways movement counts as zero. The phone uses total rotation in every direction. The two will
+    never produce the same number for the same session.
+  </p>
+</div>
+
+<!-- ============================================================ -->
+<h2><span class="num">3</span>Calibration — why 0° means anything</h2>
+
+<p>
+  A sensor on its own only knows which way gravity pulls. It has no idea where the body is. Calibration is what
+  connects the two.
+</p>
+
+<p>
+  The worker stands still in a neutral pose for <strong>six seconds</strong>. The app records the sensor’s orientation
+  and stores it as “zero”. Every angle afterwards is measured relative to that moment.
+</p>
+
+<p>
+  If the worker moves too much during those six seconds the calibration is rejected and they are asked to redo it. The
+  app watches how much the readings wobble and refuses anything above a set amount.
+</p>
+
+<div class="key">
+  <p>Without calibration, every angle in the recording is meaningless.</p>
+  <p>
+    This is the single biggest thing a user can get wrong. A sloppy calibration does not produce an error later — it
+    produces a report full of confident, wrong numbers.
+  </p>
+</div>
+
+<!-- ============================================================ -->
+<h2><span class="num">4</span>How we decide it’s dangerous</h2>
+
+<p>Always two steps. This is the core of the whole product.</p>
+
+<h3>Step 1 — sort every moment into a range</h3>
+
+<table class="zebra">
+  <thead><tr><th style="width:44mm">Body part</th><th>Ranges</th></tr></thead>
+  <tr><td class="hi">Arm elevation</td><td>up to 30° &nbsp;·&nbsp; 30–60° &nbsp;·&nbsp; above 60°</td></tr>
+  <tr><td class="hi">Trunk forward</td><td>Extension (past −5°) &nbsp;·&nbsp; −5 to 10° &nbsp;·&nbsp; 10–20° &nbsp;·&nbsp; 20–45° &nbsp;·&nbsp; above 45°</td></tr>
+  <tr><td class="hi">Head forward</td><td>Extension (past −5°) &nbsp;·&nbsp; −5 to 10° &nbsp;·&nbsp; 10–20° &nbsp;·&nbsp; 20–30° &nbsp;·&nbsp; above 30°</td></tr>
+  <tr><td class="hi">Side bending (trunk &amp; head)</td><td>0–10° &nbsp;·&nbsp; 10–30° &nbsp;·&nbsp; above 30°</td></tr>
+  <tr><td class="hi">Arm speed</td><td>0–15 &nbsp;·&nbsp; 15–30 &nbsp;·&nbsp; above 30 °/s</td></tr>
+  <tr><td class="hi">Wrist speed</td><td>0–10 &nbsp;·&nbsp; 10–20 &nbsp;·&nbsp; above 20 °/s</td></tr>
+</table>
+
+<div class="note">
+  <span class="tag">How to read a range</span>
+  <p>
+    <code>30° – 60°</code> means <strong>more than 30, up to and including 60</strong>. The lower edge is excluded,
+    the upper edge is included. So a reading of exactly 30.0° falls in the range below, and exactly 60.0° falls in
+    this one. If a value sits precisely on a boundary, it goes <strong>up</strong> into the higher range.
+  </p>
+</div>
+
+<div class="note">
+  <span class="tag">Deliberate, not a mistake</span>
+  <p>
+    The range shown as <strong>“0° – 10°”</strong> for the head and trunk actually covers <strong>−5° to 10°</strong>.
+    The −5° edge absorbs sensor and calibration noise, so a worker standing upright is not wrongly recorded as leaning
+    backwards. This is intentional.
+  </p>
+</div>
+
+<h3>Step 2 — colour it by how much time was spent there</h3>
+
+<p>
+  This table is the risk model. It lives in one file in the backend that describes itself as the single source of
+  truth. Everything else follows from it.
+</p>
+
+<table class="zebra">
+  <thead><tr><th>Risk factor</th><th style="width:30mm" class="g">Green</th><th style="width:30mm" class="y">Yellow</th><th style="width:30mm" class="r">Red</th></tr></thead>
+  <tr><td class="hi">Arm above 60°</td><td>up to 5%</td><td>5–10%</td><td>over 10%</td></tr>
+  <tr><td class="hi">Arm above 30°</td><td>up to 25%</td><td>25–50%</td><td>over 50%</td></tr>
+  <tr><td class="hi">Trunk past 45°</td><td>up to 6%</td><td>6–12%</td><td>over 12%</td></tr>
+  <tr><td class="hi">Trunk past 20°</td><td>up to 12%</td><td>12–25%</td><td>over 25%</td></tr>
+  <tr><td class="hi">Trunk backward past −10°</td><td>up to 1%</td><td>1–6%</td><td>over 6%</td></tr>
+  <tr><td class="hi">Head past 30°</td><td>up to 12%</td><td>12–25%</td><td>over 25%</td></tr>
+  <tr><td class="hi">Head backward past −10°</td><td>up to 1%</td><td>1–6%</td><td>over 6%</td></tr>
+  <tr><td class="hi">Arm speed (median)</td><td>up to 15 °/s</td><td>15–30 °/s</td><td>over 30 °/s</td></tr>
+  <tr><td class="hi">Wrist speed (median)</td><td>up to 10 °/s</td><td>10–20 °/s</td><td>over 20 °/s</td></tr>
+</table>
+
+<div class="key">
+  <p>Red on “Arm above 60°” does not mean the arm went above 60°.</p>
+  <p>
+    It means the arm was above 60° for <strong>more than 10% of the recording</strong>. This is the single most
+    common misreading of our reports.
+  </p>
+</div>
+
+<div class="note warn">
+  <span class="tag">A limitation to be aware of</span>
+  <p>
+    These are percentages of the recording, with no adjustment for how long the recording was. The published research
+    behind these numbers gives limits <strong>for an eight-hour workday</strong>, and the method assumes a recording
+    is a representative sample of the shift. If it is not — a very short recording, or one taken during an unusual
+    task — the percentages will still be calculated but the verdict will not mean what it appears to mean.
+  </p>
+</div>
+
+<!-- ============================================================ -->
+<h2><span class="num">5</span>Percentiles, medians and averages</h2>
+
+<p>
+  Reports are full of “P50” and “P90”. They are simpler than they look.
+</p>
+
+<div class="key">
+  <p>A percentile is: sort every reading from smallest to largest, then point at a position in that line.</p>
+</div>
+
+<p>
+  The sensors take roughly thirteen readings a second, so a ten-minute recording produces about eight thousand angle
+  values. Sort all eight thousand from smallest to largest, and:
+</p>
+
+<table>
+  <tr><td class="hi" style="width:26mm">P10</td><td>One tenth of the way along. The relaxed end.</td></tr>
+  <tr><td class="hi">P50</td><td>The middle. Half the readings are below it. <strong>“P50” and “median” are two names for the same number.</strong></td></tr>
+  <tr><td class="hi">P90</td><td>Nine tenths of the way along. One reading in ten is higher than this.</td></tr>
+  <tr><td class="hi">P99</td><td>Almost the very end. Near the worst moment of the recording.</td></tr>
+</table>
+
+<h3>Why not just use the average?</h3>
+
+<div class="ex">
+  <span class="tag">Ten readings of arm angle</span>
+  <p><code>5, 8, 10, 12, 15, 18, 20, 25, 60, 80</code></p>
+  <p><strong>Average = 25.3°</strong> — dragged upward by the two big values. Misleading: the arm was below 25° for eight of the ten readings.</p>
+  <p><strong>Median (P50) = 16.5°</strong> — “normally the arm sits around 16°.”</p>
+  <p><strong>P90 ≈ 60°</strong> — “one tenth of the time the arm was at 60° or above.”</p>
+</div>
+
+<p>
+  Injury comes from sustained high exposure, and the average hides it. Two workers can have an identical average — one
+  holding a steady 20° all day, another swinging between 0° and 40° — while their shoulders are under completely
+  different loads. Percentiles separate them.
+</p>
+
+<div class="key">
+  <p>P50 is the posture they work in normally. P90 is the posture they reach when it gets bad.</p>
+  <p>
+    If P50 looks fine but P90 is high, the job has bad moments inside an otherwise acceptable task. If P50 is already
+    high, the whole task is wrong.
+  </p>
+</div>
+
+<h3>An important thing percentiles do not do</h3>
+
+<p>
+  If the entire recording was spent in safe angles, then <strong>even P99 will be a safe angle</strong> — and that is
+  the correct answer. It tells you the worker never went extreme, not even in their worst 1%.
+</p>
+
+<p>
+  Percentiles answer <em>“how high did it get?”</em>. The risk colours answer <em>“how long was it too high?”</em>.
+  Two different questions, and the product uses both.
+</p>
+
+<div class="ex">
+  <span class="tag">Three workers</span>
+  <table>
+    <thead><tr><th>Worker</th><th>P50</th><th>P90</th><th>P99</th><th>Time above 60°</th><th>Verdict</th></tr></thead>
+    <tr><td class="hi">Arm at 20° all shift</td><td>20°</td><td>22°</td><td>25°</td><td>0%</td><td class="g">Safe</td></tr>
+    <tr><td class="hi">20° mostly, 15% at 80°</td><td>20°</td><td>80°</td><td>85°</td><td>15%</td><td class="r">Dangerous</td></tr>
+    <tr><td class="hi">20° all shift, one 2-second reach to 100°</td><td>20°</td><td>22°</td><td>25°</td><td>0.05%</td><td class="g">Safe</td></tr>
+  </table>
+  <p>
+    Note the third worker: <strong>even P99 does not see the 100° reach</strong>, because two seconds is far less than
+    1% of the readings. That is correct — a single brief reach is not an injury risk. Injury comes from repetition and
+    duration.
+  </p>
+</div>
+
+<!-- ============================================================ -->
+<h2><span class="num">6</span>What the worker sees live</h2>
+
+<p>
+  During recording, each body part has a tile that changes colour. There are two feedback modes.
+</p>
+
+<h4>Instant — reacts to the current moment</h4>
+<table class="zebra">
+  <thead><tr><th style="width:44mm">Body part</th><th>Grey</th><th>Orange</th><th>Red</th></tr></thead>
+  <tr><td class="hi">Arm elevation</td><td>up to 30°</td><td>30–60°</td><td>above 60°</td></tr>
+  <tr><td class="hi">Arm speed</td><td>0–30 °/s</td><td>30–60 °/s</td><td>above 60 °/s</td></tr>
+  <tr><td class="hi">Trunk / head bending</td><td>up to 20°</td><td>20–45°</td><td>above 45°</td></tr>
+  <tr><td class="hi">Heart rate</td><td colspan="3">Always grey — never coloured during recording</td></tr>
+</table>
+
+<h4>Accumulated — reacts to how the session is going so far</h4>
+<p>
+  A second mode that builds up over the recording. For arms it turns orange once more than 25% of the time has been
+  spent above 30° (or more than 5% above 60°), and red at more than 50% and 10%. Those are the same shapes as the risk
+  model in section 4.
+</p>
+
+<div class="note warn">
+  <span class="tag">Live feedback and the report do not always agree</span>
+  <p>
+    The phone holds its own copies of these thresholds, and several have drifted from the ones the reports use. A
+    worker can see green all day for a posture the report later flags. This is documented in the companion issues
+    document — treat live feedback as guidance, and the report as the verdict.
+  </p>
+</div>
+
+<!-- ============================================================ -->
+<h2><span class="num">7</span>The four risk assessments</h2>
+
+<p>
+  These sit on top of the sensor data and answer a broader question: <em>how bad is this job overall?</em>
+</p>
+
+<table class="zebra">
+  <thead><tr><th style="width:24mm">Assessment</th><th style="width:34mm">Automatic or manual?</th><th>What it is for</th></tr></thead>
+  <tr><td class="hi">RAMP</td><td>Half and half</td><td>The most complete picture — postures, lifting, pushing, environment, and what the worker reports</td></tr>
+  <tr><td class="hi">MEC</td><td>Fully automatic</td><td>Repetition and holding still, measured per hour</td></tr>
+  <tr><td class="hi">RULA</td><td>Fully manual</td><td>Classic paper method, upper body</td></tr>
+  <tr><td class="hi">REBA</td><td>Fully manual</td><td>Classic paper method, whole body</td></tr>
+</table>
+
+<h3>RAMP</h3>
+<p>
+  <em>Risk Assessment and Management tool for manual handling, Proactively.</em> Developed at KTH in Sweden. Seven
+  sections: postures, movements and repetition, lifting, pushing and pulling, influencing factors, strenuous work, and
+  the worker’s perceived discomfort.
+</p>
+<p>
+  <strong>Postures 1 to 6 are filled in automatically from the sensors.</strong> Everything else — weights, forces,
+  environment, what the worker says hurts — is entered by a human assessor.
+</p>
+
+<h4>How a posture question becomes a score</h4>
+<p class="tight">First we work out the share of time spent in the bad posture, then run it through a ladder:</p>
+<table>
+  <thead><tr><th style="width:40mm">Share of time</th><th>Score</th></tr></thead>
+  <tr><td>50% or more</td><td>7</td></tr>
+  <tr><td>37.5% or more</td><td>5</td></tr>
+  <tr><td>25% or more</td><td>3</td></tr>
+  <tr><td>12.5% or more</td><td>2</td></tr>
+  <tr><td>6.25% or more</td><td>1</td></tr>
+  <tr><td>1% or more</td><td>0.5</td></tr>
+  <tr><td>under 1%</td><td>0</td></tr>
+</table>
+<p class="tight">
+  Then the score becomes a colour: <span class="r">red at 3 or above</span>,
+  <span class="y">yellow at 1.5 to 2</span>, <span class="g">green below that</span>.
+</p>
+
+<h4>The angles RAMP uses are stricter than the general report</h4>
+<table class="zebra">
+  <thead><tr><th style="width:40mm">Posture</th><th>Trigger</th></tr></thead>
+  <tr><td class="hi">1 — Head</td><td>forward past 30°, or sideways past 10°</td></tr>
+  <tr><td class="hi">2 — Head backwards</td><td>past −5°</td></tr>
+  <tr><td class="hi">3 — Back, moderate</td><td>forward 20–45°, or sideways 10–29°</td></tr>
+  <tr><td class="hi">4 — Back, considerable</td><td>forward past 45°, sideways past 30°, or backward past −5°</td></tr>
+  <tr><td class="hi">5 — Upper arm</td><td>elevation past <strong>90°</strong></td></tr>
+  <tr><td class="hi">6 — Hand distance</td><td>more than 30 cm from the body</td></tr>
+</table>
+
+<h3>MEC</h3>
+<p>
+  <strong>Fully sensor-derived — no human input at all.</strong> It asks how often, and for how long, the worker sits
+  in a demanding position. Everything is expressed <em>per hour</em>, so recordings of different lengths can be
+  compared.
+</p>
+<p>Two numbers per question:</p>
+<ul>
+  <li><strong>Movements per hour</strong> — how often the motion repeats</li>
+  <li><strong>Static minutes per hour</strong> — how long the position is held still</li>
+</ul>
+
+<table class="zebra">
+  <thead><tr><th style="width:40mm">Arms</th><th class="g">Green</th><th class="y">Yellow</th><th class="r">Red</th></tr></thead>
+  <tr><td class="hi">Movements per hour</td><td>up to 15</td><td>15–60</td><td>over 60</td></tr>
+  <tr><td class="hi">Static minutes per hour</td><td>up to 4</td><td>4–8</td><td>over 8</td></tr>
+</table>
+
+<p>
+  MEC also works out <strong>where the hand is in space</strong> without a sensor on the hand. It treats the arm as two
+  rigid sticks — upper arm and forearm — and uses the two measured angles plus the limb lengths to calculate how far
+  the hand is from the body. That is how it can report “more than 30 cm” or “more than 50 cm”.
+</p>
+
+<h3>RULA and REBA</h3>
+<p>
+  <strong>Entirely manual.</strong> No sensor input. An assessor scores each body part by eye, adds points for muscle
+  use and load, then works through three lookup tables to reach a final score.
+</p>
+<table>
+  <thead><tr><th style="width:24mm">RULA score</th><th>Meaning</th></tr></thead>
+  <tr><td class="hi">1–2</td><td>Acceptable</td></tr>
+  <tr><td class="hi">3–4</td><td>Investigate further</td></tr>
+  <tr><td class="hi">5–6</td><td>Investigate and change soon</td></tr>
+  <tr><td class="hi">7</td><td>Investigate and change immediately</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2><span class="num">8</span>TNO — holding versus moving</h2>
+
+<p>
+  Named after the Dutch research institute. It answers a question the other measurements do not: <strong>was the
+  worker holding a position, or moving through it?</strong> Holding still and moving repeatedly cause different kinds
+  of strain.
+</p>
+
+<p>How it works:</p>
+<ol>
+  <li>Find the peaks and troughs in the angle signal over time</li>
+  <li>Group them into periods — a stretch where the angle stays within about 5°</li>
+  <li>A period lasting <strong>6 seconds or more</strong> is counted as <strong>static</strong> (holding); anything shorter is <strong>dynamic</strong> (moving)</li>
+  <li>Report static as a share of time, and dynamic as movements per minute — each broken down by the angle range it happened in</li>
+</ol>
+
+<div class="note warn">
+  <span class="tag">Read the companion issues document before using TNO figures</span>
+  <p>
+    A defect in the range-sorting means some angle ranges are never counted. This is the highest-priority item on the
+    issues list and it affects every TNO figure the product has produced.
+  </p>
+</div>
+
+<!-- ============================================================ -->
+<h2><span class="num">9</span>Reading a report, line by line</h2>
+
+<h3>There are three different reports</h3>
+<table class="zebra">
+  <thead><tr><th style="width:36mm">Report</th><th style="width:34mm">Produced by</th><th>How complete</th></tr></thead>
+  <tr><td class="hi">Word (.docx)</td><td>The backend</td><td><strong>The most complete.</strong> Risk verdicts, criteria text, references, appendices. This is the one to give a customer.</td></tr>
+  <tr><td class="hi">PDF</td><td>The web app</td><td>Similar data, different layout, seven pages</td></tr>
+  <tr><td class="hi">On-screen</td><td>The web app</td><td>The lightest — a working summary</td></tr>
+</table>
+<p class="tight">They do not contain the same things. Do not expect a number in one to appear in another.</p>
+
+<h3>The words you will see</h3>
+<table class="zebra">
+  <thead><tr><th style="width:46mm">Term</th><th>What it means</th></tr></thead>
+  <tr><td class="hi">Angle Range</td><td>A band of angles, e.g. 30–60°</td></tr>
+  <tr><td class="hi">Time Duration</td><td>Actual clock time spent there, as hours:minutes:seconds</td></tr>
+  <tr><td class="hi">Percent / Time %</td><td>Share of the recording spent there</td></tr>
+  <tr><td class="hi">Elevation Angle</td><td>How high the arm is lifted</td></tr>
+  <tr><td class="hi">Forward Bending</td><td>Leaning forward or back (trunk and head)</td></tr>
+  <tr><td class="hi">Side Bending</td><td>Leaning left or right. Left and right are pooled together</td></tr>
+  <tr><td class="hi">Extension</td><td>Leaning backwards past −5°</td></tr>
+  <tr><td class="hi">Velocity</td><td>Rotation speed in degrees per second</td></tr>
+  <tr><td class="hi">Back</td><td><strong>Means trunk.</strong> Same body part, different word</td></tr>
+  <tr><td class="hi">Percentile 10 / 50 / 90 / 99</td><td>See section 5</td></tr>
+  <tr><td class="hi">Mean</td><td>The average</td></tr>
+  <tr><td class="hi">Median</td><td>The middle value — same as P50</td></tr>
+  <tr><td class="hi">Activity</td><td>A named task within the recording</td></tr>
+  <tr><td class="hi">Static minutes per hour</td><td>How long a position was held still, scaled to an hour (MEC)</td></tr>
+  <tr><td class="hi">Dynamic movements per hour</td><td>How often a motion repeated, scaled to an hour (MEC)</td></tr>
+</table>
+
+<div class="key">
+  <p>Read the duration first, then the percentage.</p>
+  <p>
+    Every table gives you both. The colour is based on the percentage alone, so the duration is what tells you whether
+    the percentage is meaningful.
+  </p>
+</div>
+
+<h3>What is in the Word report, in order</h3>
+<table class="zebra">
+  <thead><tr><th style="width:52mm">Section</th><th>What it holds</th></tr></thead>
+  <tr><td class="hi">Summary</td><td>Prose overview</td></tr>
+  <tr><td class="hi">High and Moderate Risk Factors</td><td><strong>The verdict table.</strong> Only lists what came back yellow or red</td></tr>
+  <tr><td class="hi">Per-limb posture tables</td><td>One each for left arm, right arm, trunk, head. Angle range, duration, percent</td></tr>
+  <tr><td class="hi">Work Movements</td><td>Left arm, right arm and wrist speed, same three columns in °/s</td></tr>
+  <tr><td class="hi">Hand distance from body</td><td>Up to 30 cm, 30–50 cm, more than 50 cm, as durations</td></tr>
+  <tr><td class="hi">Task Percentiles</td><td>P10 / P50 / P90 / P99 broken down per activity</td></tr>
+  <tr><td class="hi">Session Percentiles</td><td>The same for the whole recording</td></tr>
+  <tr><td class="hi">Risk Assessment Criteria</td><td>The thresholds, printed out</td></tr>
+  <tr><td class="hi">Appendix C</td><td>Pie charts of the posture distribution</td></tr>
+  <tr><td class="hi">Appendix D</td><td>Methodology, definitions, references, limitations</td></tr>
+</table>
+
+<div class="note">
+  <span class="tag">About hand distance</span>
+  <p>
+    This is calculated, not measured, and it needs <strong>both</strong> the upper-arm and forearm sensors. If one
+    recorded for less time than the other the estimate is incomplete — the report prints a warning with each sensor’s
+    actual duration when this happens.
+  </p>
+</div>
+
+<h3>The charts</h3>
+<table class="zebra">
+  <thead><tr><th style="width:34mm">Chart</th><th style="width:28mm">Across</th><th style="width:28mm">Up</th><th>One point is</th></tr></thead>
+  <tr><td class="hi">Line chart</td><td>Time</td><td>Angle</td><td>The average angle for <strong>one whole minute</strong></td></tr>
+  <tr><td class="hi">Bar chart</td><td>Angle</td><td>Share of time</td><td>How often that angle occurred</td></tr>
+  <tr><td class="hi">Donut chart</td><td>—</td><td>—</td><td>Share of time in each range</td></tr>
+</table>
+
+<div class="note warn">
+  <span class="tag">A trap in the line chart</span>
+  <p>
+    The line chart shows <strong>one point per minute</strong>, not per reading. A three-second reach overhead almost
+    disappears into that minute’s average. Use the bar chart or the percentage tables to find peaks — the line chart
+    shows trends, not spikes.
+  </p>
+</div>
+
+<p>
+  <strong>Multi-session comparison</strong> places sessions side by side as columns. It does not merge them into one
+  combined figure.
+</p>
+
+<!-- ============================================================ -->
+<h2><span class="num">10</span>Heart rate</h2>
+
+<p>
+  The heart rate block is the most jargon-heavy part of any report. All of it comes from a standard, well-established
+  analysis library rather than our own maths.
+</p>
+
+<div class="key">
+  <p>A healthy heart does not beat like a metronome.</p>
+  <p>
+    The tiny variations between beats show the nervous system adapting. <strong>More variation means more recovery
+    capacity. Less variation means more stress or fatigue.</strong> Almost every number below is a different way of
+    measuring that variation.
+  </p>
+</div>
+
+<table class="zebra">
+  <thead><tr><th style="width:36mm">Term</th><th>What it means</th><th style="width:44mm">Direction</th></tr></thead>
+  <tr><td class="hi">Mean RR</td><td>Average milliseconds between two heartbeats</td><td>Lower = working harder</td></tr>
+  <tr><td class="hi">Mean HR</td><td>Average beats per minute</td><td>Higher = working harder</td></tr>
+  <tr><td class="hi">SDNN</td><td>Overall variation between beats</td><td>Higher is better</td></tr>
+  <tr><td class="hi">RMSSD</td><td>Beat-to-beat variation, short term</td><td><strong>Higher is better</strong> — recovery</td></tr>
+  <tr><td class="hi">NN50 / pNN50</td><td>How many consecutive beats differ by more than 50 ms</td><td>Higher = more recovery</td></tr>
+  <tr><td class="hi">SD1</td><td>Short-term variation</td><td>Higher is better</td></tr>
+  <tr><td class="hi">SD2</td><td>Long-term variation</td><td>Higher is better</td></tr>
+  <tr><td class="hi">SD2/SD1</td><td>Ratio of the two</td><td>Around 2–3 is typical</td></tr>
+  <tr><td class="hi">SampEn</td><td>How irregular and complex the rhythm is</td><td>Higher is healthier</td></tr>
+  <tr><td class="hi">CSI</td><td>“Fight or flight” activity</td><td><strong>Higher = more stress</strong></td></tr>
+  <tr><td class="hi">CVI</td><td>“Rest and digest” activity</td><td>Higher = better recovery</td></tr>
+</table>
+
+<div class="key">
+  <p>If you only remember two: RMSSD for recovery, CSI for stress.</p>
+</div>
+
+<p>
+  The product also calculates <strong>how long the worker was above a third of their heart-rate capacity</strong>
+  (capacity being 220 minus their age, minus their resting rate) and <strong>how much genuine recovery time</strong>
+  they got — stretches of five minutes or more back near resting.
+</p>
+
+<div class="note warn">
+  <span class="tag">Worth knowing</span>
+  <p>
+    None of the heart-rate numbers have risk thresholds. They are shown as raw values with no colour, so a customer
+    has no way to know whether their figure is good or bad from the report alone.
+  </p>
+</div>
+
+<!-- ============================================================ -->
+<h2><span class="num">11</span>Where our numbers come from</h2>
+
+<p>The thresholds are not invented. The product cites:</p>
+
+<table class="zebra">
+  <thead><tr><th style="width:56mm">Source</th><th>What it gives us</th></tr></thead>
+  <tr><td class="hi">Arvidsson et al. (2017), AMM Syd, Sweden</td><td>Arm limits and the arm velocity threshold</td></tr>
+  <tr><td class="hi">Hansson et al. (2016)</td><td>The eight-hour recommended limits shown as reference values</td></tr>
+  <tr><td class="hi">Lind et al. (2020)</td><td>Trunk limits</td></tr>
+  <tr><td class="hi">Rose, Lind &amp; Forsman (2024), KTH</td><td>The RAMP II method itself</td></tr>
+  <tr><td class="hi">Forsman et al. (2022)</td><td>Converting IMU sensor readings into comparable posture measurements</td></tr>
+</table>
+
+<h3>Two deliberate deviations, both documented in the report</h3>
+<ol>
+  <li>
+    <strong>Trunk backward bending.</strong> The original RAMP method uses 0°. We use <strong>−10°</strong>, because
+    of sensor sensitivity and our calibration method, to avoid overstating backward-bending risk.
+  </li>
+  <li>
+    <strong>Arm velocity.</strong> The original AMM Syd method uses 60 °/s. We use <strong>30 °/s</strong>, because
+    IMU sensors estimate speed more accurately than the accelerometer-only sensors the original research used.
+  </li>
+</ol>
+<p class="tight">
+  Both are printed in the Word report where a customer can read them. That is good practice and worth preserving.
+</p>
+
+<div class="note warn">
+  <span class="tag">Not traceable</span>
+  <p>
+    The heart-rate thresholds, the recovery percentages and the TNO cut-offs have <strong>no published source cited
+    anywhere in the product</strong>. They may well be sound, but we currently cannot show where they came from if
+    asked.
+  </p>
+</div>
+
+<!-- ============================================================ -->
+<h2><span class="num">12</span>Things worth knowing</h2>
+
+<p>Short answers to questions that come up repeatedly.</p>
+
+<table class="zebra">
+  <thead><tr><th style="width:62mm">Question</th><th>Answer</th></tr></thead>
+  <tr><td class="hi">Do we measure head side bending?</td><td>Yes, in the same ranges as the trunk. But it has no risk band of its own — it only feeds a RAMP score</td></tr>
+  <tr><td class="hi">Do we measure speed for every body part?</td><td>Arms and wrist have risk bands. Trunk and head speed is recorded and shown, but no threshold is applied to it</td></tr>
+  <tr><td class="hi">Is the risk model configurable per customer?</td><td>No. The posture thresholds are fixed in code. MEC alone lets the assessor set a few sensitivity parameters</td></tr>
+  <tr><td class="hi">Does the risk depend on the worker’s age or weight?</td><td>Only for heart rate, where capacity is calculated from age. Posture thresholds are the same for everyone</td></tr>
+  <tr><td class="hi">Which assessments use the sensors?</td><td>MEC entirely; RAMP for postures 1 to 6 only; RULA and REBA not at all</td></tr>
+  <tr><td class="hi">What happens to negative arm angles?</td><td>They are removed before the distribution and risk calculations, but <em>not</em> before the percentiles</td></tr>
+  <tr><td class="hi">Are left and right side bending separated?</td><td>No. The size of the lean is used and the direction is discarded</td></tr>
+  <tr><td class="hi">Why does the phone sometimes disagree with the report?</td><td>The phone keeps its own copies of the thresholds, and several have drifted. See the companion issues document</td></tr>
+</table>
+
+<div class="note">
+  <span class="tag">Companion document</span>
+  <p>
+    <strong>Calculations — Possible Issues to Confirm</strong> lists twenty places where the product may disagree with
+    itself, each with the facts, the case for and against it being a defect, and how to settle it. This reference
+    document describes how things behave today; that one describes what may need to change.
+  </p>
+</div>
+
+<footer>
+  Wergonic · How Wergonic’s Numbers Work · 27 July 2026<br />
+  Verified against backend <code>staging</code>, mobile <code>main</code> and web <code>dev</code>. Describes actual
+  behaviour, including behaviour that may be under review. Update this document whenever a threshold changes.
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Product Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6;
+    --purple-dk: #4A09A0;
+    --ink: #181826;
+    --slate: #5A6478;
+    --muted: #98A1B3;
+    --line: #E9EBF0;
+    --line-soft: #F2F3F7;
+    --tint: #F4EFFD;
+    --code-bg: #F7F8FB;
+    --green: #1F7A4D;
+    --green-bg: #EEF9F2;
+    --amber: #B7791F;
+    --amber-bg: #FFF8EC;
+    --red: #B42318;
+    --red-bg: #FEF3F2;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 16mm 15mm 15mm 15mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    font-size: 10pt;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  h1, h2, h3, h4 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  /* ---------- cover ---------- */
+  .cover { height: 252mm; display: flex; flex-direction: column; justify-content: space-between; break-after: page; }
+  .cover-top { border-left: 5px solid var(--purple); padding: 2px 0 0 18px; margin-top: 40mm; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--purple); margin-bottom: 10px; }
+  .cover h1 { font-size: 34pt; font-weight: 800; letter-spacing: -0.025em; line-height: 1.05; border: 0; padding: 0; margin: 0; break-before: auto; }
+  .cover .lede { color: var(--slate); font-size: 11pt; max-width: 150mm; margin-top: 14px; }
+  .cover-meta { display: flex; gap: 30px; border-top: 1px solid var(--line); padding-top: 14px; }
+  .cover-meta div { flex: none; }
+  .cover-meta .k { font-size: 7.5pt; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .cover-meta .v { font-size: 10pt; font-weight: 600; margin-top: 3px; }
+
+  /* ---------- toc ---------- */
+  .toc { break-after: page; }
+  .toc h2 { font-size: 15pt; border: 0; margin: 0 0 14px; padding: 0; }
+  .toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+  .toc li { display: flex; align-items: baseline; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line-soft); font-size: 10.5pt; }
+  .toc li .n { font-family: "Hanken Grotesk", sans-serif; font-weight: 800; color: var(--purple); width: 22px; flex: none; }
+  .toc li .t { font-weight: 600; }
+  .toc li .sub { color: var(--muted); font-size: 9pt; font-weight: 400; margin-left: auto; text-align: right; max-width: 95mm; }
+
+  /* ---------- headings ---------- */
+  h1 {
+    font-size: 20pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15;
+    margin: 0 0 4px; padding: 0 0 10px 0;
+    border-bottom: 2.5px solid var(--purple);
+    break-before: page; break-after: avoid;
+  }
+  h1 + p, h1 + ul, h1 + h2 { margin-top: 14px; }
+  h2 {
+    font-size: 13pt; font-weight: 700; letter-spacing: -0.01em; color: var(--ink);
+    margin: 24px 0 6px; padding-bottom: 5px;
+    border-bottom: 1px solid var(--line);
+    break-after: avoid;
+  }
+  h3 { font-size: 10.8pt; font-weight: 700; color: var(--purple-dk); margin: 16px 0 2px; break-after: avoid; }
+  h4 { font-size: 9.8pt; font-weight: 700; color: var(--slate); margin: 12px 0 2px; text-transform: uppercase; letter-spacing: 0.05em; break-after: avoid; }
+
+  p { margin: 6px 0 0; }
+  strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--purple); text-decoration: none; }
+  hr { display: none; }
+
+  ul, ol { margin: 6px 0 0; padding-left: 18px; }
+  li { margin: 2.5px 0; }
+  li::marker { color: var(--muted); }
+  ul ul, ol ol, ul ol, ol ul { margin: 2px 0; }
+
+  /* ---------- tables ---------- */
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 2px; break-inside: avoid; }
+  th, td { text-align: left; vertical-align: top; padding: 7px 9px; font-size: 9pt; border-bottom: 1px solid var(--line); }
+  th { font-size: 7.8pt; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); border-bottom: 1.5px solid var(--line); background: var(--line-soft); }
+  tbody tr:last-child td { border-bottom: 1.5px solid var(--line); }
+  td strong { font-weight: 600; }
+
+  /* ---------- code ---------- */
+  code {
+    font-family: "JetBrains Mono", ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 8.6pt; background: var(--tint); color: var(--purple-dk);
+    padding: 1px 5px; border-radius: 4px; overflow-wrap: break-word;
+  }
+  pre {
+    background: var(--code-bg); border: 1px solid var(--line); border-left: 3px solid var(--purple);
+    border-radius: 6px; padding: 11px 13px; margin: 10px 0 0;
+    overflow-x: auto; break-inside: avoid;
+  }
+  pre code {
+    background: none; color: var(--ink); padding: 0; font-size: 8pt; line-height: 1.5;
+    white-space: pre; display: block;
+  }
+  th code, td code, li code { font-size: 8.2pt; }
+
+  blockquote {
+    margin: 10px 0 0; padding: 10px 14px; border-left: 3px solid var(--amber);
+    background: var(--amber-bg); color: var(--slate); border-radius: 0 6px 6px 0; break-inside: avoid;
+  }
+  blockquote p { margin: 0; }
+
+  footer { margin-top: 30px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; break-before: avoid; }
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div class="cover-top">
+    <div class="eyebrow">Wergonic · Product</div>
+    <h1>Product Documentation</h1>
+    <p class="lede">A complete feature map of the Wergonic platform — mobile app, web client panel and admin panel — including user roles, flows, route maps, and the known gaps found in the code.</p>
+  </div>
+  <div class="cover-meta">
+    <div><div class="k">Document</div><div class="v">Product reference</div></div>
+    <div><div class="k">Generated</div><div class="v">17 March 2026</div></div>
+    <div><div class="k">Source</div><div class="v">Branch <code>dev</code> — all 3 repositories</div></div>
+  </div>
+</section>
+
+<section class="toc">
+  <h2>Contents</h2>
+  <ol>
+      <li>
+        <span class="n">1</span>
+        <span class="t">Platform Overview</span>
+        <span class="sub">What is Wergonic · User Roles · The 3 Interfaces · Supported Languages</span>
+      </li>
+      <li>
+        <span class="n">2</span>
+        <span class="t">Authentication &amp; User Management</span>
+        <span class="sub">Login Methods · Password Reset Flow · Session/Token Management · Organization Management · …</span>
+      </li>
+      <li>
+        <span class="n">3</span>
+        <span class="t">Mobile App — Complete Feature Map</span>
+        <span class="sub">Onboarding &amp; Setup · Session Recording · Lite Mode · Sensor Management · …</span>
+      </li>
+      <li>
+        <span class="n">4</span>
+        <span class="t">Web Client Panel (cloud.wergonic.com) — Complete Feature Map</span>
+        <span class="sub">Dashboard (/dashboard) · Sessions (/dashboard/sessions) · Assessments (/dashboard/assessments) · Reports &amp; AI Generation · …</span>
+      </li>
+      <li>
+        <span class="n">5</span>
+        <span class="t">Admin Panel — Complete Feature Map</span>
+        <span class="sub">Routes · Organization Management · User Management · Device Management · …</span>
+      </li>
+      <li>
+        <span class="n">6</span>
+        <span class="t">Notifications &amp; Feedback Systems</span>
+        <span class="sub">In-App Notifications (Mobile) · Web Notifications · Snackbar Notifications (Web) · Error Messages · …</span>
+      </li>
+      <li>
+        <span class="n">7</span>
+        <span class="t">Known Issues &amp; Gaps (from code analysis)</span>
+        <span class="sub">Unfinished Features · Placeholder/Dummy Elements · Dead Code · Statistics &amp; Metrics Concerns · …</span>
+      </li>
+      <li>
+        <span class="n">8</span>
+        <span class="t">Complete Route Map</span>
+        <span class="sub">Web Client Panel Routes · Admin Panel Routes · Mobile App Routes</span>
+      </li>
+  </ol>
+</section>
+
+<h1 id="1-platform-overview">Platform Overview</h1>
+<h2>What is Wergonic</h2>
+<p>Wergonic is an ergonomic risk assessment platform that combines smart workwear sensors (Movesense 9-axis IMU via Bluetooth Low Energy), a Flutter mobile app for field recording, a React web dashboard for analysis, and a Django backend for data processing and AI-powered reporting. The platform enables ergonomists and occupational health professionals to objectively measure and assess workplace ergonomic risks using standardized methods (RAMP, RULA, REBA, MEC) with real-time sensor data, rather than relying solely on manual observation.</p>
+<h2>User Roles</h2>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Description</th>
+<th>Access</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>WERGONIC_ADMIN</strong> (Superadmin)</td>
+<td>Platform-level administrator</td>
+<td>Admin Panel + Client Panel + full backend access</td>
+</tr>
+<tr>
+<td><strong>ORG_ADMIN</strong></td>
+<td>Organization administrator</td>
+<td>Client Panel — manage users, sessions, assessments for their org</td>
+</tr>
+<tr>
+<td><strong>ERGONOMIST</strong></td>
+<td>Ergonomic assessor / consultant</td>
+<td>Client Panel — record sessions, create assessments, generate reports</td>
+</tr>
+<tr>
+<td><strong>WORKER</strong></td>
+<td>Field worker being assessed</td>
+<td>Mobile App only — cannot access web Client Panel</td>
+</tr>
+</tbody></table>
+<h2>The 3 Interfaces</h2>
+<ol>
+<li><strong>Admin Panel</strong> (<code>wergonic-admin</code>) — Superadmin-only. Manages organizations, users across orgs, devices, firmware.</li>
+<li><strong>Client Panel</strong> (<code>client-panel</code> / cloud.wergonic.com) — Main user-facing web app for ORG_ADMIN and ERGONOMIST roles. Sessions, assessments, reports, work cycles, user management.</li>
+<li><strong>Mobile App</strong> (<code>wergonic-flutter</code> / ergotech) — Flutter app for field workers and ergonomists. Sensor pairing, calibration, session recording, offline data collection, sync.</li>
+</ol>
+<h2>Supported Languages</h2>
+<p>From i18n configuration across all apps:</p>
+<ul>
+<li><strong>English</strong> (en) — default/fallback</li>
+<li><strong>Swedish</strong> (sv)</li>
+<li><strong>German</strong> (de)</li>
+<li><strong>Spanish</strong> (es)</li>
+<li><strong>Dutch</strong> (nl / nl-NL)</li>
+</ul>
+<hr>
+<h1 id="2-authentication-amp-user-management">Authentication &amp; User Management</h1>
+<h2>Login Methods</h2>
+<h3>Email Magic Link (Passwordless)</h3>
+<ul>
+<li>User enters email on login page</li>
+<li>Backend sends a sign-in link via email (Firebase Auth)</li>
+<li>User clicks link → redirected to <code>/auth/process-login?link=&lt;encoded&gt;</code></li>
+<li>Frontend completes Firebase sign-in, receives ID token</li>
+<li>Token used for all subsequent API calls</li>
+<li>Mobile app has its own magic link endpoint (<code>/users/auth/mobile-passwordless-signin/</code>)</li>
+</ul>
+<h3>Email + Password</h3>
+<ul>
+<li>Standard email/password login via Firebase Auth</li>
+<li>Available on both web and mobile</li>
+</ul>
+<h3>Worker Account Creation</h3>
+<ul>
+<li>Public endpoint at <code>/users/create-worker-account/</code></li>
+<li>Web form at <code>/auth/signup</code> (AccountCreationPage)</li>
+<li>Creates a WORKER role user</li>
+</ul>
+<p><strong>Worker Blocking on Web:</strong> If a WORKER logs into the Client Panel, they are immediately signed out with error message &quot;Workers cannot access this application.&quot; Workers can only use the mobile app.</p>
+<h2>Password Reset Flow</h2>
+<ol>
+<li>User visits <code>/auth/password-reset</code> → enters email</li>
+<li>Backend sends reset email via Firebase</li>
+<li>User clicks link → <code>/auth/password-reset/new</code></li>
+<li>User enters new password → backend updates Firebase + Django password</li>
+<li>Confirmation email sent</li>
+</ol>
+<h2>Session/Token Management</h2>
+<ul>
+<li>Firebase Authentication manages tokens</li>
+<li>ID tokens automatically refreshed by Firebase SDK</li>
+<li>Axios interceptor attaches <code>Authorization: Bearer {idToken}</code> to every API request</li>
+<li>Backend verifies Firebase token on each request, updates <code>last_seen</code> timestamp</li>
+<li>Custom claims on Firebase token include: <code>{role, organization_id}</code></li>
+</ul>
+<h2>Organization Management</h2>
+<h3>Multi-Organization Support</h3>
+<ul>
+<li>Users can belong to multiple organizations via <code>UserOrganization</code> join table</li>
+<li>Each membership has its own role (a user can be ERGONOMIST in one org, ORG_ADMIN in another)</li>
+<li>One organization is &quot;active&quot; at a time — user can switch active org</li>
+<li>Switching active org: POST <code>/users/organizations/{orgId}/change-to-active/</code></li>
+</ul>
+<h3>Organization Registration</h3>
+<ul>
+<li>Public endpoint at <code>/organizations/register/</code></li>
+<li>Creates organization + admin user in one step</li>
+</ul>
+<h3>Organization Fields</h3>
+<ul>
+<li>Name (unique), Country, Address, Industry (A-U industry codes)</li>
+<li>Contact phone, Company registration number</li>
+<li>Logo (URL, uploaded to Firebase Storage)</li>
+<li>Subscription info: <code>current_subscription</code>, <code>license_expiration</code></li>
+<li>Limits: <code>max_number_workers</code> (default 500), <code>max_number_admins</code> (default 5), <code>max_number_sessions_month</code> (default 3000), <code>max_number_assessments_month</code> (default 3000)</li>
+<li>AI engine selection: Gemini (default) or Chat-button-001</li>
+<li>Hardware kit access: OWN, BORROWED, NO_ACCESS</li>
+</ul>
+<h3>Invitation System</h3>
+<ul>
+<li>Admin sends invitation to email with role assignment</li>
+<li>Invitation has 7-day expiration</li>
+<li>Accept: POST <code>/organizations/invitation/{invitationId}/</code></li>
+<li>Creates UserOrganization record + Profile if needed</li>
+<li>Sends welcome email</li>
+</ul>
+<h2>User Profile</h2>
+<h3>User Fields</h3>
+<ul>
+<li>Email, first name, last name, role, unit</li>
+<li>Profile image (URL)</li>
+<li>Personal number (employee ID)</li>
+<li>Subject ID (research/study ID)</li>
+<li>Locale preference</li>
+<li>AI consent flag</li>
+<li>RAMP limit display preference (TIME or PERCENTAGE)</li>
+</ul>
+<h3>Worker Profile (Extended)</h3>
+<ul>
+<li>Weight, resting heart rate</li>
+<li>Gender (Male, Female, Other)</li>
+<li>Dominant arm (Right, Left)</li>
+<li>Date of birth, age</li>
+<li>Comment field</li>
+<li>Consultant assignment (FK to another user — the ergonomist managing this worker)</li>
+<li><code>is_main</code> flag (primary profile)</li>
+</ul>
+<h2>Role Permissions</h2>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th align="center">WERGONIC_ADMIN</th>
+<th align="center">ORG_ADMIN</th>
+<th align="center">ERGONOMIST</th>
+<th align="center">WORKER</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Access Admin Panel</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">No</td>
+</tr>
+<tr>
+<td>Access Client Panel</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+</tr>
+<tr>
+<td>Access Mobile App</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+</tr>
+<tr>
+<td>Manage organizations (create/archive)</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">No</td>
+</tr>
+<tr>
+<td>Manage org users</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+<td align="center">No</td>
+</tr>
+<tr>
+<td>Deactivate users</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+<td align="center">No</td>
+</tr>
+<tr>
+<td>Create/edit sessions</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+</tr>
+<tr>
+<td>View sessions (own org)</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Own only</td>
+</tr>
+<tr>
+<td>Create assessments</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+</tr>
+<tr>
+<td>Generate AI reports</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+</tr>
+<tr>
+<td>Manage devices/firmware</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">No</td>
+</tr>
+<tr>
+<td>Manage work cycles</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+</tr>
+<tr>
+<td>Manage categories/labels</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="3-mobile-app-complete-feature-map">Mobile App — Complete Feature Map</h1>
+<h2>3.1 Onboarding &amp; Setup</h2>
+<h3>First Launch Experience</h3>
+<ol>
+<li><strong>Splash Screen</strong> (<code>/</code>) — App initialization, Firebase auth check</li>
+<li>If not logged in → <strong>Login Page</strong> (<code>/login</code>)<ul>
+<li>OAuth provider buttons</li>
+<li>&quot;Login with Email&quot; option → <code>/login_with_email</code></li>
+</ul>
+</li>
+<li>Post-login → <strong>Welcome Screen</strong> (<code>/welcome</code>)<ul>
+<li>Checks for firmware updates</li>
+<li>Organization selection if user belongs to multiple orgs</li>
+</ul>
+</li>
+</ol>
+<h3>Sensor Pairing Process</h3>
+<ol>
+<li>Navigate to <strong>Pairing Screen</strong> (<code>/work_session_config/pairing</code>)</li>
+<li>App scans for Movesense sensors via MDS SDK</li>
+<li>Discovered sensors listed with name/ID</li>
+<li>User selects sensor → assigns to a limb (rightArm, leftArm, trunk, head, hand, forearm, chestStrap)</li>
+<li>MDS establishes BLE connection → receives serial number confirmation</li>
+<li>Sensor stored in local database with limb assignment</li>
+<li>Multiple sensors can be paired — one per limb, up to 7 total</li>
+</ol>
+<h3>Calibration Process</h3>
+<p><strong>Full Calibration</strong> (<code>/sensor-calibration</code> — LimbsCalibrationPage):</p>
+<p>For each connected limb (2-4 steps depending on limb type):</p>
+<p><strong>Step 1 — Pre-Establish Streams:</strong></p>
+<ul>
+<li>Opens IMU data streams for all devices</li>
+<li>Reduces latency during actual calibration</li>
+</ul>
+<p><strong>Step 2 — Device Validation:</strong></p>
+<ul>
+<li>Verifies all expected devices are connected and receiving data</li>
+</ul>
+<p><strong>Step 3 — Natural Position Capture:</strong></p>
+<ul>
+<li>User holds limb in neutral/relaxed posture</li>
+<li>System captures ~2 seconds of IMU data</li>
+<li>Computes quaternion orientation reference</li>
+</ul>
+<p><strong>Step 4 — Bent Position Capture (trunk/head only):</strong></p>
+<ul>
+<li>User bends to maximum comfortable range</li>
+<li>System captures ~2 seconds</li>
+<li>Creates second reference point for range-of-motion</li>
+</ul>
+<p><strong>Calibration storage:</strong> CalibrationDataEntity saved per limb with quaternion + posture state + timestamp.</p>
+<p><strong>Per-Limb Recalibration</strong> (<code>/recalibration</code> — LimbsRecalibrationPage):</p>
+<ul>
+<li>Allows recalibrating a single limb without redoing all</li>
+</ul>
+<h3>Organization Selection</h3>
+<ul>
+<li><strong>Switch Organization</strong> (<code>/settings/switch_oranization</code>)</li>
+<li>Lists all organizations user belongs to</li>
+<li>Switching changes active org context for all operations</li>
+</ul>
+<h2>3.2 Session Recording</h2>
+<h3>Work Session Configuration (<code>/work_session_config</code>)</h3>
+<ul>
+<li>Select session type: Work Task or Work Cycle</li>
+<li>Select worker profile (who is being assessed)</li>
+<li>Select workplace/tag</li>
+<li>Select which limbs to record (via SelectableLimbsCubit)</li>
+<li>Connect sensors → go to pairing if needed</li>
+<li>Calibrate → go to calibration if needed</li>
+</ul>
+<h3>Work Task Sessions</h3>
+<p><strong>Full flow:</strong></p>
+<ol>
+<li>Configure session (worker, limbs, workplace)</li>
+<li>Connect &amp; calibrate sensors</li>
+<li>Start recording → <strong>Work Session Recording Screen</strong> (<code>/work_session</code>)</li>
+<li>Live metrics displayed during recording (see below)</li>
+<li>User can add work tasks/breaks via <strong>Work Tasks Screen</strong> (<code>/work_session/WorkTasks</code>)</li>
+<li>Pause/resume as needed</li>
+<li>End session → data saved locally → sync to cloud</li>
+</ol>
+<h3>Work Cycle Sessions</h3>
+<ul>
+<li>Pre-defined cycle from Factory → Line → Workstation → Task hierarchy</li>
+<li>Select cycle via <strong>Work Cycle Screen</strong> (<code>/work_session_config/work-cycle-screen</code>)</li>
+<li>Select specific tasks via <strong>Work Cycle Tasks List</strong> (<code>/work_session_config/work-cycle-task-screen</code>)</li>
+<li>Auto-advance between tasks (if <code>timeBasedWorkCycles</code> enabled, advances every <code>newWorkCycleFrequency</code> minutes, default 180)</li>
+<li>Same recording UI as Work Task, but with structured task progression</li>
+</ul>
+<h3>Data Collected During Recording</h3>
+<ul>
+<li><strong>Per limb (BLE sensors):</strong> Accelerometer (3-axis), Gyroscope (3-axis), computed Quaternion, Elevation Angle, Angular Velocity, Pitch, Roll, Yaw, Temperature</li>
+<li><strong>Heart rate (chestStrap):</strong> BPM, confidence, RR intervals</li>
+<li><strong>Location (if enabled):</strong> GPS latitude, longitude, altitude, accuracy, speed</li>
+<li><strong>Activity recognition:</strong> Walking, running, driving, still, biking (via phone sensors)</li>
+<li><strong>Session events:</strong> Task start/end, break start/end (user-marked)</li>
+</ul>
+<h3>Live Metrics During Recording</h3>
+<p>The recording screen shows real-time:</p>
+<ul>
+<li><strong>Elevation Angle</strong> — current angle + yellow/red threshold indicators</li>
+<li><strong>Angular Velocity</strong> — current speed + accumulated over intervals</li>
+<li><strong>Trunk Bending</strong> — forward and side angles</li>
+<li><strong>Heart Rate</strong> — BPM (if chestStrap connected)</li>
+<li><strong>Vibration Detection</strong> — confidence percentage for hand tremor/shaking</li>
+<li><strong>Activity Mode</strong> — walking/driving/still/running/biking icon</li>
+<li><strong>Session Timer</strong> — elapsed recording time</li>
+<li><strong>Sensor Status</strong> — connection state per limb (connected/disconnected/reconnecting)</li>
+<li><strong>Battery Level</strong> — per sensor (checked every <code>batteryCheckIntervalSeconds</code>, default 10s)</li>
+</ul>
+<h3>Voice/Audio Feedback</h3>
+<ul>
+<li>Configurable voice guidance intervals (10-60 seconds)</li>
+<li>Announces posture warnings when thresholds exceeded</li>
+<li>Controlled by <code>isAudioFeedbackEnabled</code> and <code>voiceFeedbackIntervals</code> settings</li>
+<li>Limb feedback priority configurable via <code>limbsFeedbackOrder</code></li>
+</ul>
+<h3>Pause/Resume Behavior</h3>
+<p><strong>Pause:</strong></p>
+<ul>
+<li>Timer stops</li>
+<li>BLE subscriptions suspended</li>
+<li>CSV writes stop queuing</li>
+<li>UI shows pause state with resume button</li>
+</ul>
+<p><strong>Resume:</strong></p>
+<ul>
+<li>Timer resumes from paused time</li>
+<li>Re-establishes BLE subscriptions</li>
+<li>CSV writes resume</li>
+<li>Time gap handled (no data loss, just a jump)</li>
+</ul>
+<h3>Session Events (Tasks &amp; Breaks)</h3>
+<ul>
+<li>During recording, user can mark task start/end and break start/end</li>
+<li>Each event creates a <code>SessionEventEntity</code> with:<ul>
+<li>Event type: taskEvent or breakEvent</li>
+<li>Event name (user-entered or from work label)</li>
+<li>Phase: start or finish</li>
+<li>Timestamp</li>
+</ul>
+</li>
+<li>Events are synced to backend and used for per-task analysis</li>
+</ul>
+<h3>Background Execution</h3>
+<ul>
+<li>Android foreground service keeps recording when app is backgrounded</li>
+<li>Notification shows &quot;Recording in progress&quot;</li>
+<li>Battery optimization exemption requested (<code>disable_battery_optimization</code>)</li>
+<li>BLE connections maintained via MDS SDK</li>
+<li><strong>Screen lock:</strong> Recording continues (foreground service)</li>
+<li><strong>Device reboot:</strong> Session data saved to local DB, but active recording is lost. Session remains in local storage for later sync.</li>
+</ul>
+<h3>Session End</h3>
+<ol>
+<li>All CSV writers flushed (force write buffered data)</li>
+<li>File handles closed</li>
+<li>Session directory compressed into ZIP</li>
+<li>Local database updated: <code>syncStatus → createdNotSynced</code></li>
+<li>Session saved to local DB with all metadata</li>
+<li><strong>Session Summary Page</strong> (<code>/session_summary</code>) shown with:<ul>
+<li>Duration</li>
+<li>Connected devices summary</li>
+<li>Sync status</li>
+<li>Option to view report or sync immediately</li>
+</ul>
+</li>
+</ol>
+<h2>3.3 Lite Mode</h2>
+<h3>What is Lite Mode</h3>
+<p>Phone-based recording using the device&#39;s built-in accelerometer and gyroscope instead of external Movesense BLE sensors.</p>
+<h3>How It Differs from Full Mode</h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Full Mode (BLE)</th>
+<th>Lite Mode (Phone)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Sensors</td>
+<td>External Movesense</td>
+<td>Phone accelerometer/gyroscope</td>
+</tr>
+<tr>
+<td>Limbs</td>
+<td>Up to 7 simultaneously</td>
+<td>1 only (phone placement)</td>
+</tr>
+<tr>
+<td>Accuracy</td>
+<td>High (calibrated IMU)</td>
+<td>Lower (consumer phone sensors)</td>
+</tr>
+<tr>
+<td>Heart Rate</td>
+<td>Via chestStrap</td>
+<td>Manual entry only</td>
+</tr>
+<tr>
+<td>Calibration</td>
+<td>Multi-step per limb</td>
+<td>Single 5-second phone calibration</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>Requires sensor hardware</td>
+<td>No additional hardware</td>
+</tr>
+</tbody></table>
+<h3>Lite Mode Calibration (<code>/liteMode</code>)</h3>
+<ol>
+<li>User places phone on chest/torso</li>
+<li>Stand still in natural position for ~5 seconds</li>
+<li>System captures reference quaternion from phone sensors</li>
+<li>Single-point calibration stored</li>
+</ol>
+<h3>Limitations</h3>
+<ul>
+<li>Only 1 limb tracked at a time</li>
+<li>No multi-sensor reference data (hand/forearm)</li>
+<li>Lower accuracy from consumer-grade phone sensors</li>
+<li>No heart rate without manual input</li>
+<li>Sampling rate depends on phone hardware (typically 50-100 Hz vs consistent 104 Hz from Movesense)</li>
+</ul>
+<h2>3.4 Sensor Management</h2>
+<h3>Sensor Discovery &amp; Pairing</h3>
+<ul>
+<li>BLE scan using MDS SDK (<code>MdsAsync.startScan()</code>)</li>
+<li>Scans for Movesense sensors by advertised name</li>
+<li>DFU mode: Separate scan using flutter_blue_plus filtering for &quot;dfu&quot; names</li>
+<li>Discovered sensors show: name, ID, signal strength</li>
+</ul>
+<h3>Connection Per Sensor</h3>
+<ol>
+<li>Stop scanning</li>
+<li><code>Mds.connect(id)</code> → MDS SDK handles connection</li>
+<li>Callback receives serial number on success</li>
+<li>BLE connection parameters set: min interval 48.75ms, max 100ms</li>
+<li>Device stored in local DB with limb assignment</li>
+</ol>
+<h3>Multi-Sensor Support</h3>
+<ul>
+<li><strong>Supported limbs:</strong> rightArm, leftArm, trunk, head, hand, forearm, chestStrap (7 total)</li>
+<li><strong>Typical usage:</strong> 3-5 sensors (both arms + trunk, optionally head + hand/forearm)</li>
+<li><strong>Limit:</strong> One sensor per limb, up to 7 simultaneous connections</li>
+<li>Managed via <code>SensorConnectionCubit</code> tracking <code>Map&lt;Limbs, BleDeviceEntity&gt;</code></li>
+</ul>
+<h3>Sensor Status Indicators</h3>
+<ul>
+<li><strong>Connected</strong> — green, actively receiving data</li>
+<li><strong>Disconnected</strong> — red, no data</li>
+<li><strong>Reconnecting</strong> — yellow/orange, attempting reconnection</li>
+<li><strong>Scanning</strong> — blue, discovery in progress</li>
+</ul>
+<h3>Battery Information</h3>
+<ul>
+<li>Checked periodically during sessions (default every 10 seconds)</li>
+<li>Tracked per device via <code>SensorBatteryCubit</code></li>
+<li>Displayed as percentage</li>
+</ul>
+<h3>Firmware Information</h3>
+<ul>
+<li>Device firmware version retrieved via MDS <code>/Info</code> path</li>
+<li>Available firmware listed from backend (<code>/devices/firmwares/</code>)</li>
+<li><strong>Firmware Update Screen</strong> (<code>/firmware</code>) — DFU via Nordic DFU library</li>
+<li><code>firmware_update_available_dialog.dart</code> — prompts user when update available</li>
+</ul>
+<blockquote>
+<p><code>flag: Firmware update dialog flow appears incomplete (TODO in code)</code></p>
+</blockquote>
+<h3>Disconnect Behavior</h3>
+<ul>
+<li>MDS callback fires on disconnect</li>
+<li><code>SensorConnectionCubit</code> updates state to disconnected</li>
+<li>During recording: automatic reconnection attempted</li>
+</ul>
+<h3>Reconnection Behavior</h3>
+<ul>
+<li><code>reconnectMissingDevices()</code> called periodically during recording</li>
+<li>Up to 3 retries per device, 10-second intervals</li>
+<li>Clears Android GATT cache before retry</li>
+<li>Re-initiates full <code>Mds.connect()</code> flow</li>
+<li>Manual reconnection available from settings</li>
+</ul>
+<h2>3.5 Offline Mode</h2>
+<h3>What Works Offline</h3>
+<ul>
+<li>Full session recording (BLE + lite mode)</li>
+<li>Sensor pairing and calibration</li>
+<li>Session history viewing (locally stored sessions)</li>
+<li>Past reports (if previously cached)</li>
+<li>All settings changes</li>
+<li>Work label/task creation for session events</li>
+</ul>
+<h3>What Doesn&#39;t Work Offline</h3>
+<ul>
+<li>Session sync/upload to cloud</li>
+<li>Work cycle download/refresh</li>
+<li>Work category refresh</li>
+<li>New user login (requires Firebase auth)</li>
+<li>AI report generation</li>
+<li>Firmware download</li>
+</ul>
+<h3>Sync When Back Online</h3>
+<ul>
+<li><code>InternetCubit</code> monitors connectivity state</li>
+<li>Sessions marked <code>notSynced</code> or <code>createdNotSynced</code> in queue</li>
+<li>User can manually trigger sync from session history</li>
+<li>No automatic retry with delay — relies on user action or background check on reconnect</li>
+</ul>
+<h3>Visual Indicators</h3>
+<ul>
+<li>Online/offline state shown in UI</li>
+<li>Sessions show sync status badge:<ul>
+<li><code>notSynced</code> — local only, not yet uploaded</li>
+<li><code>createdNotSynced</code> — remote session created, files not uploaded</li>
+<li><code>historyNotSynced</code> — old session needing resync</li>
+<li><code>fullySynced</code> — fully synced to cloud</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><code>flag: No automatic retry mechanism for failed syncs. User must manually trigger.</code></p>
+</blockquote>
+<h2>3.6 Data &amp; History</h2>
+<h3>Session List / History (<code>/sessions_listing</code> and <code>/session_history</code>)</h3>
+<ul>
+<li>Lists all sessions (local + synced)</li>
+<li>Shows: worker name, date, duration, sync status, limbs recorded</li>
+<li>Filter/sort capabilities</li>
+</ul>
+<h3>Session Summary (<code>/session_summary</code>)</h3>
+<ul>
+<li>Quick stats view post-session</li>
+<li>Duration, connected devices, sync status</li>
+<li>Navigation to full report</li>
+</ul>
+<h3>Report Viewing (<code>/report</code>)</h3>
+<ul>
+<li>Full session analysis report</li>
+<li>Risk data per limb: arm angular velocity, arm elevation angle, trunk bending, head bending, HR</li>
+<li>Charts and visualizations</li>
+<li>Color-coded risk levels</li>
+</ul>
+<h3>TNO Report (<code>/tnoReport</code>)</h3>
+<ul>
+<li>Task-based ergonomic risk assessment</li>
+<li>Joint angle analysis results</li>
+<li>Static vs dynamic movement breakdown</li>
+<li>Time spent in each angle range per limb</li>
+</ul>
+<h3>Data Export</h3>
+<ul>
+<li>Session data exported as ZIP (CSV files per limb)</li>
+<li>Export happens during sync process</li>
+<li>No standalone export-to-phone feature visible</li>
+</ul>
+<h2>3.7 Settings &amp; Configuration</h2>
+<h3>All Mobile App Settings</h3>
+<p><strong>Measurement Settings:</strong></p>
+<ul>
+<li><code>feedbackType</code> — Immediate vs Accumulated feedback</li>
+<li><code>voiceFeedbackIntervals</code> — 10-60 seconds between voice alerts</li>
+<li><code>feedbackRefreshRate</code> — 50-200 ms (controls UI feedback latency)</li>
+<li><code>standardImuRate</code> — 52, 104, or 200 Hz (BLE sample rate)</li>
+<li><code>refImuRate</code> — 52, 104, or 200 Hz (reference limb rate)</li>
+</ul>
+<p><strong>Sensor Settings:</strong></p>
+<ul>
+<li><code>gyroRange</code> — Gyroscope full-scale: ±250, ±500, ±1000, ±2000 °/s</li>
+<li><code>accRange</code> — Accelerometer full-scale: ±2, ±4, ±8, ±16 G</li>
+<li><code>integralGainValue</code> — Mahony filter integral gain (default 0.0)</li>
+<li><code>proportionalGainValue</code> — Mahony filter proportional gain (default ~2.0)</li>
+<li><code>headSensorPosition</code> — chestOriented vs trunkOriented</li>
+</ul>
+<p><strong>Session Settings:</strong></p>
+<ul>
+<li><code>workSessionType</code> — WorkTask vs WorkCycle</li>
+<li><code>timeBasedWorkCycles</code> — Auto-advance cycles by time</li>
+<li><code>newWorkCycleFrequency</code> — Minutes between auto-advance (default 180)</li>
+<li><code>sessionDurationLimit</code> — Max session hours (default 8)</li>
+<li><code>tnoArchiveGeneration</code> — Auto-compute TNO after session</li>
+</ul>
+<p><strong>Calibration:</strong></p>
+<ul>
+<li><code>isTwoPointCalibrationEnabled</code> — Toggle 2-point vs 1-point calibration</li>
+</ul>
+<p><strong>Vibration Detection:</strong></p>
+<ul>
+<li><code>isVibrationDetectionEnabled</code> — Detect hand tremor/shaking</li>
+<li><code>useImprovedVibrationDetection</code> — Physics-based vs simple variance</li>
+<li><code>confidenceThresholdHigh</code> / <code>confidenceThresholdLow</code> — Detection sensitivity</li>
+</ul>
+<p><strong>System:</strong></p>
+<ul>
+<li><code>liteMode</code> — Enable phone sensor mode</li>
+<li><code>isHrActive</code> — Enable heart rate tracking</li>
+<li><code>offlineMode</code> — Disable cloud sync</li>
+<li><code>autoStartSession</code> — Auto-begin recording on app launch</li>
+<li><code>enableLocation</code> — Track GPS during session</li>
+<li><code>appLanguage</code> — EN, NL, SV, DE, ES</li>
+<li><code>batteryCheckIntervalSeconds</code> — 5-60 seconds (default 10)</li>
+<li><code>limbsFeedbackOrder</code> — Priority list for feedback</li>
+</ul>
+<h3>Developer Mode Features</h3>
+<ul>
+<li>Performance overlay (FPS, memory, frame time)</li>
+<li>CSV performance benchmarking</li>
+<li>Sensor data logs (raw IMU output)</li>
+<li>Shake gesture → Report Bug Sheet</li>
+<li><code>useNewCsvSystem</code> — Toggle between legacy and new CSV writer</li>
+<li><code>showExtraTiles</code> — Show advanced measurement tiles</li>
+<li><code>isPerformanceOverlayEnabled</code> — FPS counter</li>
+</ul>
+<h3>Report Problem (<code>/reportProblem</code>)</h3>
+<ul>
+<li>Bug/issue reporting form</li>
+<li>Creates ticket via <code>/tickets/</code> endpoint</li>
+<li>Attachments supported</li>
+</ul>
+<hr>
+<h1 id="4-web-client-panel-cloud-wergonic-com-complete-feature-map">Web Client Panel (cloud.wergonic.com) — Complete Feature Map</h1>
+<h2>4.1 Dashboard (<code>/dashboard</code>)</h2>
+<h3>What&#39;s on the Dashboard</h3>
+<ul>
+<li><strong>WelcomeCard</strong> — Greeting with user name</li>
+<li><strong>UsersStatistics</strong> — User count metrics for the organization</li>
+<li><strong>SessionsStatistics</strong> — Session metrics with date range filtering</li>
+<li><strong>LicenseStatistics</strong> — License usage and expiration info</li>
+</ul>
+<h3>Data Source</h3>
+<ul>
+<li>All dashboard data fetched via <code>useRetrieveActiveOrganizationStatsQuery</code></li>
+<li>Calls: GET <code>/organizations/stats/?user_start_date&amp;user_end_date&amp;session_start_date&amp;session_end_date&amp;RAMP_start_date&amp;RAMP_end_date</code></li>
+<li>Date range parameters allow filtering statistics by time period</li>
+</ul>
+<h3>Stats Available</h3>
+<ul>
+<li>Total users in org</li>
+<li>Total sessions (filtered by date range)</li>
+<li>License info: expiration date, usage counts vs limits</li>
+<li>Number of admins vs max allowed</li>
+<li>Number of sessions per month vs monthly limit</li>
+<li>Number of assessments per month vs monthly limit</li>
+</ul>
+<blockquote>
+<p><code>flag: Stats endpoint returns pre-computed values. Cannot verify from code alone whether these are accurately calculated or stale. The organization model computes some stats as properties (e.g., number_of_sessions_per_month) which recalculates on every call — could be slow for large orgs.</code></p>
+</blockquote>
+<h2>4.2 Sessions (<code>/dashboard/sessions</code>)</h2>
+<h3>Session List</h3>
+<ul>
+<li><strong>3 tabs:</strong> Active, Finished, Archived</li>
+<li>Each tab has its own table component with independent data fetching</li>
+<li><strong>Columns:</strong> Worker name, Date, Duration, Status, Limbs, Tags, Actions</li>
+<li><strong>Filters:</strong> Search, worker_id, limbs, status</li>
+<li><strong>Sorting:</strong> By any column</li>
+<li><strong>Pagination:</strong> Page-based, configurable page_size</li>
+</ul>
+<h3>Session Statuses</h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ONGOING</td>
+<td>Currently being recorded on mobile</td>
+</tr>
+<tr>
+<td>PAUSED</td>
+<td>Recording paused on mobile</td>
+</tr>
+<tr>
+<td>FINISHED</td>
+<td>Recording completed, data uploaded</td>
+</tr>
+<tr>
+<td>FAILED</td>
+<td>Recording or processing failed</td>
+</tr>
+<tr>
+<td>INTERRUPTED</td>
+<td>Recording aborted mid-session</td>
+</tr>
+</tbody></table>
+<h3>Session Detail Page (<code>/dashboard/sessions/:sessionId/details</code>)</h3>
+<p><strong>Data fetched:</strong></p>
+<ul>
+<li>Session metadata: GET <code>/sessions/{sessionId}/</code></li>
+<li>Session stats: GET <code>/sessions/{sessionId}/stats/</code></li>
+<li>Detailed stats: GET <code>/sessions/{sessionId}/stats/details/</code></li>
+<li>TNO stats: GET <code>/sessions/{sessionId}/stats/tno/</code></li>
+<li>HR stats: GET <code>/sessions/{sessionId}/stats/hr/</code></li>
+<li>Temperature stats: GET <code>/sessions/{sessionId}/stats/temperature/</code></li>
+<li>Task stats: GET <code>/sessions/{sessionId}/stats/tasks/</code></li>
+<li>Percentile stats: GET <code>/sessions/{sessionId}/stats/percentiles/</code></li>
+<li>Session logs: GET <code>/sessions/{sessionId}/logs/</code></li>
+<li>Assigned labels: GET <code>/sessions/{sessionId}/assigned-labels/</code></li>
+</ul>
+<p><strong>What&#39;s shown:</strong></p>
+<ul>
+<li>Worker info, duration, date, status, devices used</li>
+<li>Posture charts (elevation angles, bending)</li>
+<li>Speed of movement (angular velocity)</li>
+<li>Wrist distance zones (&lt;30cm, 30-50cm, &gt;50cm)</li>
+<li>HR/HRV data (if available)</li>
+<li>Temperature data per limb</li>
+<li>TNO analysis (static/dynamic movement breakdown)</li>
+<li>Task-by-task breakdown (if events were logged)</li>
+<li>Session logs (notes, media)</li>
+</ul>
+<h3>Available Actions on a Session</h3>
+<ul>
+<li><strong>Delete:</strong> DELETE <code>/sessions/delete/{sessionId}/</code></li>
+<li><strong>Archive:</strong> POST <code>/sessions/archive-multiple/</code> (bulk)</li>
+<li><strong>Export Excel:</strong> GET <code>/sessions/{sessionId}/stats/export/excel/</code></li>
+<li><strong>Export Raw CSV:</strong> GET <code>/sessions/{sessionId}/stats/export/</code></li>
+<li><strong>Export Word Report:</strong> GET <code>/sessions/{sessionId}/export-word/</code> with options for what to include (metadata, duration, worker, recorder, posture, percentile_stats, temperature_data, risk_assessment, appendix, task_id)</li>
+<li><strong>Recalculate Stats:</strong> POST <code>/sessions/{sessionId}/stats/recalculate/</code></li>
+<li><strong>Generate MEC Assessment:</strong> POST <code>/sessions/{sessionId}/assesments/mappings/</code></li>
+<li><strong>Generate AI Analysis:</strong> POST <code>/sessions/{sessionId}/generate-gemini-analysis/</code></li>
+<li><strong>Merge Sessions:</strong> POST <code>/sessions/merge/</code> (combine multiple sessions)</li>
+<li><strong>Add Log Entry:</strong> POST <code>/sessions/{sessionId}/logs/</code></li>
+<li><strong>Upload ZIP:</strong> POST <code>/sessions/{sessionId}/upload-zip/</code></li>
+</ul>
+<h3>Multi-Session Comparison (<code>/dashboard/sessions/details</code>)</h3>
+<ul>
+<li>Select multiple sessions via checkboxes</li>
+<li>Navigate to comparison view with tabs:<ul>
+<li><strong>Table of Results</strong> — side-by-side metrics comparison</li>
+<li><strong>TNO Results</strong> — compared TNO analysis</li>
+<li><strong>Heart Rate Data</strong> — compared HR/HRV</li>
+<li><strong>Temperature</strong> — compared temperature data</li>
+</ul>
+</li>
+<li>Export comparison: GET <code>/sessions/stats/compare/excel/?ids</code></li>
+</ul>
+<h3>Session Archiving</h3>
+<ul>
+<li>Bulk archive via POST <code>/sessions/archive-multiple/</code></li>
+<li>Per-user archiving settings: GET/PATCH/POST/DELETE <code>/sessions/users/{userId}/archiving-settings/</code></li>
+<li>Archived sessions visible in &quot;Archived&quot; tab</li>
+<li>Can be unarchived</li>
+</ul>
+<h2>4.3 Assessments (<code>/dashboard/assessments</code>)</h2>
+<h3>Assessment Types</h3>
+<p><strong>RAMP (Rapid Assessment of Musculoskeletal Posture)</strong></p>
+<ul>
+<li><strong>Source:</strong> Manual (user fills forms) or Generated (from sensor data + AI)</li>
+<li><strong>7-step form process:</strong><ol>
+<li><strong>Postures</strong> — 8 posture questions with body diagrams</li>
+<li><strong>Movements and Repetition</strong> — Repetitive movement assessment</li>
+<li><strong>Lifting Work</strong> — Lifting assessment (weights, frequency, posture)</li>
+<li><strong>Pushing and Pulling</strong> — Push/pull force assessment</li>
+<li><strong>Influencing Factors</strong> — Environmental factors (vibration, cold, stress)</li>
+<li><strong>Strenuous Work</strong> — Strenuous activity assessment</li>
+<li><strong>Perceived Physical Discomfort</strong> — Body map for discomfort marking</li>
+</ol>
+</li>
+<li><strong>Results page:</strong> Risk score with color coding, detailed breakdown, comments</li>
+<li><strong>AI Continuation:</strong> <code>GeneratedRAMPResultsPage</code> at <code>/continue</code> sub-route uses Gemini AI to auto-fill/suggest assessment values based on session sensor data</li>
+<li><strong>Routes:</strong><ul>
+<li>List: <code>/dashboard/ramp-assessments</code></li>
+<li>Detail: <code>/dashboard/ramp-assessments/:id</code> (redirects to postures step)</li>
+<li>Results: <code>/dashboard/ramp-assessments/:id/results</code></li>
+<li>Multi-compare: <code>/dashboard/ramp-assessments/results</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>RULA (Rapid Upper Limb Assessment)</strong></p>
+<ul>
+<li><strong>3-section form:</strong><ol>
+<li><strong>Left Side</strong> — Left arm/hand/wrist analysis</li>
+<li><strong>Right Side</strong> — Right arm/hand/wrist analysis</li>
+<li><strong>Neck, Trunk and Legs</strong> — Head, trunk, leg assessment</li>
+</ol>
+</li>
+<li>Each section computes individual scores → combined final score</li>
+<li><strong>Routes:</strong><ul>
+<li>List: <code>/dashboard/rula-assessments</code></li>
+<li>Detail: <code>/dashboard/rula-assessments/:id</code> (redirects to right side)</li>
+<li>Results: <code>/dashboard/rula-assessments/:id/results</code></li>
+<li>Multi-compare: <code>/dashboard/rula-assessments/results</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>REBA (Rapid Entire Body Assessment)</strong></p>
+<ul>
+<li>Similar structure to RULA but assesses whole body</li>
+<li><strong>Routes:</strong><ul>
+<li>List: <code>/dashboard/reba-assessments</code></li>
+<li>Detail: <code>/dashboard/reba-assessments/:id</code></li>
+<li>Results: <code>/dashboard/reba-assessments/:id/results</code></li>
+<li>Multi-compare: <code>/dashboard/reba-assessments/results</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>MEC (Metabolic Energy Cost)</strong></p>
+<ul>
+<li>Generated from session sensor data via POST <code>/sessions/{sessionId}/assesments/mappings/</code></li>
+<li>Calculates metabolic cost based on:<ul>
+<li>Arm postures (dominant arm + forearm analysis)</li>
+<li>Wrist position using geometric calculations</li>
+<li>6 work posture models for different arm elevation ranges</li>
+<li>Frequency analysis of arm movements</li>
+</ul>
+</li>
+<li>MEC-specific threshold configuration</li>
+<li><strong>Routes:</strong><ul>
+<li>Results: <code>/dashboard/mec-assessments/:id/results</code></li>
+<li>Multi-compare: <code>/dashboard/mec-assessments/results</code></li>
+</ul>
+</li>
+</ul>
+<h3>Assessment Statuses</h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>COMPLETED</td>
+<td>Assessment fully filled and results available</td>
+</tr>
+<tr>
+<td>IN_PROGRESS</td>
+<td>Assessment partially filled (draft)</td>
+</tr>
+<tr>
+<td>PROCESSING</td>
+<td>Assessment being generated/calculated</td>
+</tr>
+<tr>
+<td>FAILED</td>
+<td>Assessment generation/calculation failed</td>
+</tr>
+</tbody></table>
+<h3>Assessment Sources</h3>
+<ul>
+<li><strong>manual</strong> — User manually filled the form</li>
+<li><strong>generated</strong> — Auto-generated from sensor data (MEC) or AI-assisted (RAMP via Gemini)</li>
+</ul>
+<h3>Assessment Actions</h3>
+<ul>
+<li>Create: POST <code>/assesments/</code></li>
+<li>View/Edit: GET/PATCH <code>/assesments/{id}/</code></li>
+<li>Delete (bulk): DELETE <code>/assesments/</code></li>
+<li>Fetch multiple for comparison: GET <code>/assesments/multi/?ids</code></li>
+<li>Export AVIX format: POST <code>/assesments/avix-export/</code></li>
+</ul>
+<h2>4.4 Reports &amp; AI Generation</h2>
+<h3>Gemini AI Analysis</h3>
+<ul>
+<li><strong>Trigger:</strong> POST <code>/sessions/{sessionId}/generate-gemini-analysis/</code></li>
+<li><strong>Input:</strong> Session data + language + optional work label tags</li>
+<li><strong>What the AI receives (prompt):</strong><ul>
+<li>Worker profile (age, weight, dominant arm)</li>
+<li>Measurement duration with extrapolation caveat</li>
+<li>Posture &amp; movement data with risk zone thresholds</li>
+<li>Arm elevation analysis (50th/90th percentile limits)</li>
+<li>Trunk bending analysis (20-45° and &gt;45° thresholds)</li>
+<li>Wrist angular velocity data</li>
+<li>HR/HRV stress indicators</li>
+</ul>
+</li>
+<li><strong>Risk Zone Thresholds in Prompt:</strong><ul>
+<li>ARM ELEVATION: Green &lt;25%, Yellow 25-50%, Red &gt;50%</li>
+<li>TRUNK BENDING 20-45°: Green &lt;12.5%, Yellow 12.5-25%, Red &gt;25%</li>
+<li>TRUNK BENDING &gt;45°: Green &lt;6%, Yellow 6-12.5%, Red &gt;12.5%</li>
+</ul>
+</li>
+<li><strong>Output:</strong> Actionable ergonomic recommendations in the requested language</li>
+<li><strong>Languages:</strong> Full localized prompts in EN, SV, DE, ES, NL</li>
+<li><strong>Stored:</strong> In <code>Session.ai_report</code> JSONField</li>
+<li><strong>Retrieve cached:</strong> GET <code>/sessions/{sessionId}/generate-gemini-analysis/</code></li>
+<li><strong>AI usage tracked:</strong> <code>AIRequestLog</code> model records org + timestamp</li>
+</ul>
+<h3>Report Templates</h3>
+<ul>
+<li>Users can create custom report templates defining what to include</li>
+<li>CRUD via <code>/users/{userId}/report-templates/</code></li>
+<li>Templates specify: metadata, duration, worker, recorder, posture, percentile stats, temperature, risk assessment, appendix</li>
+</ul>
+<h3>Word Report Export</h3>
+<ul>
+<li>GET <code>/sessions/{sessionId}/export-word/?metadata=true&amp;duration=true&amp;...</code></li>
+<li>Granular control over sections included</li>
+<li>Returns downloadable Word document (blob)</li>
+</ul>
+<h3>Excel Export</h3>
+<ul>
+<li>Single session: GET <code>/sessions/{sessionId}/stats/export/excel/</code></li>
+<li>Multi-session comparison: GET <code>/sessions/stats/compare/excel/?ids</code></li>
+</ul>
+<h3>Raw Data Export</h3>
+<ul>
+<li>GET <code>/sessions/{sessionId}/stats/export/</code> — Downloads raw measurement CSV data</li>
+</ul>
+<h3>PDF Generation</h3>
+<ul>
+<li>Client-side PDF generation via <code>@react-pdf/renderer</code></li>
+<li>Used for assessment results rendering</li>
+</ul>
+<h2>4.5 Tags / Configuration System</h2>
+<h3>Category &amp; Label System</h3>
+<p><strong>Categories:</strong></p>
+<ul>
+<li>Hierarchical tree structure (MPTT — Modified Preorder Tree Traversal)</li>
+<li>Types: <code>WORK_TASK</code>, <code>WORK_LABEL</code></li>
+<li>Belong to an organization</li>
+<li>Can be nested (parent/child relationships)</li>
+</ul>
+<p><strong>Labels:</strong></p>
+<ul>
+<li>Belong to a category</li>
+<li>Can be public or private (<code>is_private</code>)</li>
+<li>Owner tracked</li>
+<li>Can be favorited by users (<code>favorited_by</code> M2M)</li>
+<li>Optional repeat interval</li>
+</ul>
+<p><strong>Events:</strong></p>
+<ul>
+<li>Link labels to specific time ranges in a session</li>
+<li>Each event has: start_time, end_time, labels (M2M), created_by</li>
+<li>Used for task-by-task analysis</li>
+</ul>
+<p><strong>CRUD Routes:</strong></p>
+<ul>
+<li>Categories: GET/POST <code>/categories/organizations/{orgId}/category-with-labels/</code></li>
+<li>Labels: GET/POST <code>/categories/{categoryId}/labels/</code></li>
+<li>Events: GET/POST <code>/categories/labels/events/sessions/{sessionId}/</code></li>
+</ul>
+<h3>Work Cycles (Factory Hierarchy)</h3>
+<p><strong>Structure:</strong> Factory → Line → Workstation → TaskModel → Task</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Description</th>
+<th>Unique Per</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Factory</td>
+<td>Physical factory/site</td>
+<td>Organization</td>
+</tr>
+<tr>
+<td>Line</td>
+<td>Production line within factory</td>
+<td>Factory</td>
+</tr>
+<tr>
+<td>Workstation</td>
+<td>Work station within line</td>
+<td>Line</td>
+</tr>
+<tr>
+<td>TaskModel</td>
+<td>Task template at a workstation</td>
+<td>Workstation (via Operator in web)</td>
+</tr>
+<tr>
+<td>Task</td>
+<td>Specific task instance</td>
+<td>TaskModel</td>
+</tr>
+</tbody></table>
+<p><strong>Each Task has:</strong> name, description, duration, created_at</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Full CRUD on each level</li>
+<li>Full hierarchy view: GET <code>/workcycles/factories/full-hierarchy/</code></li>
+<li>Import from AVIX file: POST <code>/workcycles/import/</code></li>
+<li>Import from Excel: POST <code>/workcycles/import-excel/</code></li>
+<li>Work cycles linked to sessions via <code>Session.workcycle_task</code> FK</li>
+</ul>
+<h2>4.6 User &amp; Organization Management</h2>
+<h3>User Management (<code>/dashboard/users</code>)</h3>
+<ul>
+<li>List users with filters: role, active status, search, ordering</li>
+<li>Add new user to organization</li>
+<li>Update user details (name, role, email, personal number)</li>
+<li>Deactivate user (soft disable, not delete)</li>
+<li>Delete user (hard delete — admin only)</li>
+<li>Bulk operations</li>
+</ul>
+<h3>Work Profiles (<code>/dashboard/work-profiles</code>)</h3>
+<ul>
+<li>List worker profiles</li>
+<li>Manage extended profile info: weight, heart rate, gender, DOB, dominant arm</li>
+<li>Assign consultant (ergonomist) to worker</li>
+</ul>
+<h3>Organization Settings</h3>
+<ul>
+<li>View/edit org details (name, country, industry, etc.)</li>
+<li>Upload/change organization logo</li>
+<li>View license info and limits</li>
+<li>View AI request usage per month: GET <code>/organizations/{orgId}/ai-requests-per-month/</code></li>
+</ul>
+<h2>4.7 Charts &amp; Analytics</h2>
+<h3>Chart Library</h3>
+<ul>
+<li><strong>Nivo 0.83.0</strong> — ResponsiveLine, ResponsiveBar, ResponsivePie, ResponsiveDonut</li>
+</ul>
+<h3>Charts Available</h3>
+<p><strong>Session Detail Charts:</strong></p>
+<ul>
+<li><strong>Posture Line Chart</strong> (PaginatedLineChart) — Time-series elevation angle data per limb with zoom, pagination, downsampling, and log event markers</li>
+<li><strong>Angular Velocity Line Chart</strong> — Speed of movement over time</li>
+<li><strong>Donut Charts</strong> — Distribution of time in risk zones (green/yellow/red)</li>
+<li><strong>Trunk Bending Charts</strong> — Forward and side bending angles over time</li>
+<li><strong>Wrist Distance Zones</strong> — Pie chart: &lt;30cm, 30-50cm, &gt;50cm distribution</li>
+<li><strong>Heart Rate Chart</strong> — BPM over time with HRV metrics</li>
+<li><strong>Temperature Chart</strong> — Per-limb temperature trends</li>
+<li><strong>TNO Charts</strong> — Static/dynamic movement breakdown per angle range</li>
+</ul>
+<p><strong>Dashboard Charts:</strong></p>
+<ul>
+<li>UsersStatistics cards — Numeric metrics</li>
+<li>SessionsStatistics cards — Session counts with date filtering</li>
+<li>LicenseStatistics cards — Usage vs limits</li>
+</ul>
+<p><strong>Multi-Session Comparison:</strong></p>
+<ul>
+<li>Side-by-side bar charts for risk scores</li>
+<li>Comparison tables</li>
+</ul>
+<h3>Data Transformation</h3>
+<ul>
+<li>Raw API data consumed directly</li>
+<li>Large datasets downsampled via <code>downsample()</code> utility to prevent overplotting</li>
+<li>Custom tooltips show X/Y values + associated log events</li>
+<li>Color coding from theme system</li>
+</ul>
+<h2>4.8 Data Export</h2>
+<h3>Export Options</h3>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>From</th>
+<th>Endpoint</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Excel (.xlsx)</td>
+<td>Single session stats</td>
+<td><code>/sessions/{id}/stats/export/excel/</code></td>
+</tr>
+<tr>
+<td>Excel (.xlsx)</td>
+<td>Multi-session comparison</td>
+<td><code>/sessions/stats/compare/excel/?ids</code></td>
+</tr>
+<tr>
+<td>Word (.docx)</td>
+<td>Session report</td>
+<td><code>/sessions/{id}/export-word/</code></td>
+</tr>
+<tr>
+<td>CSV</td>
+<td>Raw measurement data</td>
+<td><code>/sessions/{id}/stats/export/</code></td>
+</tr>
+<tr>
+<td>AVIX</td>
+<td>Assessments</td>
+<td><code>/assesments/avix-export/</code></td>
+</tr>
+<tr>
+<td>PDF</td>
+<td>Assessment results</td>
+<td>Client-side via @react-pdf/renderer</td>
+</tr>
+</tbody></table>
+<h3>Word Export Options</h3>
+<p>Granular control — each section toggleable:</p>
+<ul>
+<li>Metadata, Duration, Worker info, Recorder info</li>
+<li>Posture data, Percentile stats</li>
+<li>Temperature data, Risk assessment</li>
+<li>Appendix, Task-specific data</li>
+</ul>
+<h2>4.9 Notifications</h2>
+<h3>Notification System</h3>
+<ul>
+<li>Backend creates notifications for events: MEC_ASSESSMENT, SESSION, RAMP_ASSESSMENT</li>
+<li>Pushed to Firestore on creation (signal handler)</li>
+<li>Web fetches via REST: GET <code>/notifications/?page&amp;page_size</code></li>
+<li>Mark as read: POST <code>/notifications/mark-as-read/</code></li>
+<li>Delete: DELETE <code>/notifications/{id}/</code></li>
+<li>Each notification has: title, message, type, created_at, read_at, foreign_key (link to related object)</li>
+</ul>
+<h2>4.10 Support Tickets</h2>
+<ul>
+<li>Create support tickets: POST <code>/tickets/</code></li>
+<li>Types: bug, feature, suggestion, help</li>
+<li>Help subtypes: account, billing, other</li>
+<li>Fields: subject, message, attachments</li>
+<li>List tickets: GET <code>/tickets/</code></li>
+</ul>
+<hr>
+<h1 id="5-admin-panel-complete-feature-map">Admin Panel — Complete Feature Map</h1>
+<p><strong>Access:</strong> WERGONIC_ADMIN role only</p>
+<h2>Routes</h2>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Page</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/login</code></td>
+<td>LoginPage</td>
+<td>Admin login</td>
+</tr>
+<tr>
+<td><code>/organizations</code></td>
+<td>OrganizationsPage</td>
+<td>List/manage all organizations</td>
+</tr>
+<tr>
+<td><code>/users</code></td>
+<td>UsersPage</td>
+<td>List/manage all users across orgs</td>
+</tr>
+<tr>
+<td><code>/devices</code></td>
+<td>DevicesPage</td>
+<td>List/manage all devices</td>
+</tr>
+<tr>
+<td><code>/firmwares</code></td>
+<td>FirmwarePage</td>
+<td>Manage firmware versions</td>
+</tr>
+</tbody></table>
+<h2>Organization Management</h2>
+<ul>
+<li>List all organizations with filters: country, active status, archived status, license expiration range</li>
+<li>Search and sort</li>
+<li>Create new organization (with FormData for logo upload)</li>
+<li>Edit organization details</li>
+<li>Archive/unarchive organizations (bulk): POST <code>/organizations/change-to-archive/</code></li>
+<li>View all org names: GET <code>/organizations/names</code></li>
+</ul>
+<h2>User Management</h2>
+<ul>
+<li>List all users across all organizations</li>
+<li>Filter by: organization, role, search term</li>
+<li>Add users to specific organizations</li>
+<li>Deactivate users from organizations</li>
+<li>View user-organization relationships</li>
+</ul>
+<h2>Device Management</h2>
+<ul>
+<li>List all registered devices: GET <code>/devices/?search&amp;page&amp;page_size</code></li>
+<li>View device details: serial, firmware, organization, worker assignment</li>
+</ul>
+<h2>Firmware Management</h2>
+<ul>
+<li>List firmware versions: GET <code>/devices/firmwares/?search&amp;page&amp;page_size&amp;is_current</code></li>
+<li>Create new firmware entry: POST <code>/devices/firmwares/</code></li>
+<li>Update firmware details: PATCH <code>/devices/firmwares/{id}/</code></li>
+<li>Mark firmware as current (<code>is_current</code> flag)</li>
+<li>Firmware fields: description, mobile_version, release_date, file_size, firmware_version, firmware_url</li>
+</ul>
+<hr>
+<h1 id="6-notifications-amp-feedback-systems">Notifications &amp; Feedback Systems</h1>
+<h2>In-App Notifications (Mobile)</h2>
+<ul>
+<li>Firebase push notifications via Firestore</li>
+<li>Notification written to Firestore on backend event (post_save signal)</li>
+<li>Path: <code>organizations/{orgId}/users/{userId}/notifications/{notificationId}/</code></li>
+<li>Notification types: MEC_ASSESSMENT, SESSION, RAMP_ASSESSMENT</li>
+<li>Each contains: title + associated object ID (foreign_key)</li>
+</ul>
+<h2>Web Notifications</h2>
+<ul>
+<li>REST-based polling via GET <code>/notifications/</code></li>
+<li>Paginated list with read/unread status</li>
+<li>Mark as read functionality</li>
+<li>No WebSocket/real-time push on web (Channels installed but not implemented)</li>
+</ul>
+<h2>Snackbar Notifications (Web)</h2>
+<ul>
+<li>notistack library for toast-style notifications</li>
+<li>Success/error/info messages for CRUD operations</li>
+<li>Auth error messages (e.g., worker can&#39;t access)</li>
+</ul>
+<h2>Error Messages</h2>
+<ul>
+<li>API errors converted to user-friendly messages</li>
+<li>Mobile: <code>ApiException</code> with localized display messages (401 → &quot;Session expired&quot;, 403 → &quot;No permission&quot;, etc.)</li>
+<li>Web: Axios interceptor returns Promise.reject, component-level error handling via React Query error states</li>
+</ul>
+<h2>Email Notifications</h2>
+<ul>
+<li>Session processing completion email (with elapsed time)</li>
+<li>Invitation emails (7-day expiry)</li>
+<li>Password reset emails</li>
+<li>Welcome emails after invitation acceptance</li>
+<li>Magic link emails for passwordless login</li>
+</ul>
+<hr>
+<h1 id="7-known-issues-amp-gaps-from-code-analysis">Known Issues &amp; Gaps (from code analysis)</h1>
+<h2>Unfinished Features</h2>
+<h3>Vibration Detection Display (Mobile)</h3>
+<ul>
+<li>Backend processing exists</li>
+<li>Mobile has <code>isVibrationDetectionEnabled</code> setting and improved detection algorithm</li>
+<li>UI panels exist but have TODOs: &quot;Implement time display + limb toggle&quot; at <code>vibration_detection_panel.dart:65,85</code></li>
+</ul>
+<h3>Firmware Update Flow (Mobile)</h3>
+<ul>
+<li>DFU library integrated (nordic_dfu)</li>
+<li>Firmware screen exists (<code>/firmware</code>)</li>
+<li>Update dialog present but TODO: &quot;Start update flow incomplete&quot; at <code>firmware_update_available_dialog.dart:25</code></li>
+</ul>
+<h3>Sensor Pairing Actions (Mobile)</h3>
+<ul>
+<li><code>sensor_vibration_list_item.dart:122,137,149</code> — Unpair/Pair/Disconnect button handlers not implemented (TODO comments)</li>
+</ul>
+<h3>Work Cycle Auto-Advance (Mobile)</h3>
+<ul>
+<li>Timer logic exists via <code>timeBasedWorkCycles</code> setting</li>
+<li>Default frequency 180 minutes</li>
+<li>UI for auto-advance not fully wired</li>
+</ul>
+<h3>WebSocket Support (Backend)</h3>
+<ul>
+<li>Django Channels 4.1.0 installed</li>
+<li>ASGI configuration exists</li>
+<li>No WebSocket consumers or routing implemented</li>
+<li>Real-time features rely on Firestore instead</li>
+</ul>
+<h2>Placeholder/Dummy Elements</h2>
+<h3>Testing Pages (Web)</h3>
+<ul>
+<li><code>TestingNewComponentsPage</code> — Empty dev testing page (hidden behind feature flag)</li>
+<li><code>IconsPage</code> — Icon showcase (hidden behind feature flag)</li>
+<li>Both only accessible in development mode</li>
+</ul>
+<h3>Legacy API Routes (Web)</h3>
+<ul>
+<li><code>legacyApiRoutes.ts</code> — 17KB file of apparently unused routes from old architecture</li>
+<li>Candidate for cleanup</li>
+</ul>
+<h2>Dead Code</h2>
+<h3>Commented Proxy Models (Backend)</h3>
+<ul>
+<li><code>workerModel.py</code>, <code>ergonomistModel.py</code>, <code>orgAdminModel.py</code> — All commented out proxy model files</li>
+<li>Were supposed to be role-specific model extensions but abandoned</li>
+</ul>
+<h3>Test Runner (Backend)</h3>
+<ul>
+<li><code>test_runner.py</code> — Commented out test runner configuration</li>
+</ul>
+<h3>Unused Imports (Mobile)</h3>
+<ul>
+<li>Some unused imports not cleaned up across Flutter codebase</li>
+</ul>
+<h2>Statistics &amp; Metrics Concerns</h2>
+<h3>Organization Stats Calculation</h3>
+<ul>
+<li><code>number_of_sessions_per_month</code> and <code>number_of_assessments_per_month</code> are computed as model properties</li>
+<li>Recalculated on every API call — no caching</li>
+<li>Could be slow for organizations with many sessions</li>
+</ul>
+<h3>Session Processing Pipeline</h3>
+<ul>
+<li>Uses Python <code>Thread</code> for background processing (not a proper task queue)</li>
+<li>No retry logic or dead-letter handling</li>
+<li>If processing fails, session stays in unprocessed state with no automatic recovery</li>
+</ul>
+<h2>Security Concerns</h2>
+<h3>ALLOWED_HOSTS</h3>
+<ul>
+<li><code>settings.py:24</code> — <code>ALLOWED_HOSTS = [&quot;*&quot;]</code> (accepts requests from any host)</li>
+</ul>
+<h3>Password in Email</h3>
+<ul>
+<li><code>organizationView.py:347</code> — Password emailed during user creation</li>
+</ul>
+<h3>Magic Link Exposure</h3>
+<ul>
+<li>URL-encoded magic link passed as query parameter — could be logged by proxies</li>
+</ul>
+<h3>Missing Rate Limiting</h3>
+<ul>
+<li>Only <code>custom_post: 10/minute</code> throttle exists</li>
+<li>No rate limiting on login or password reset endpoints</li>
+</ul>
+<h2>Missing Translations</h2>
+<ul>
+<li>i18n configured for 5 languages but completeness of translations not verified</li>
+<li>Some assessment forms may have untranslated labels</li>
+</ul>
+<h2>TODO/FIXME/HACK Items</h2>
+<h3>Backend</h3>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Session_post_save</code> signal</td>
+<td>Spawns Thread without task queue — no retry, no monitoring</td>
+</tr>
+<tr>
+<td><code>firebase_auth/authentication.py:49</code></td>
+<td>Bare <code>except:</code> clause with no specificity</td>
+</tr>
+<tr>
+<td><code>user_sessions/models.py:262-275</code></td>
+<td>Commented multiprocessing approach for TNO</td>
+</tr>
+<tr>
+<td>Cron config <code>settings.py:295-296</code></td>
+<td>Hardcoded <code>/usr/local/bin/python3</code> path</td>
+</tr>
+</tbody></table>
+<h3>Mobile</h3>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sensor_vibration_list_item.dart:122,137,149</code></td>
+<td>Unpair/Pair/Disconnect not implemented</td>
+</tr>
+<tr>
+<td><code>firmware_update_available_dialog.dart:25</code></td>
+<td>Start update flow incomplete</td>
+</tr>
+<tr>
+<td><code>work_label_model.dart:25</code></td>
+<td>Replace name with ID mapping</td>
+</tr>
+<tr>
+<td><code>switch_organization_section.dart:34</code></td>
+<td>Review code quality</td>
+</tr>
+<tr>
+<td><code>sensors_settings_section.dart:208</code></td>
+<td>Restore deferred feature</td>
+</tr>
+<tr>
+<td><code>feedback_display_panel.dart:123</code></td>
+<td>Move logic elsewhere</td>
+</tr>
+<tr>
+<td><code>vibration_detection_panel.dart:65,85</code></td>
+<td>Implement time display + limb toggle</td>
+</tr>
+<tr>
+<td><code>session.remote.datasource.dart:112,146</code></td>
+<td>Review logic + error handling</td>
+</tr>
+</tbody></table>
+<h3>Web</h3>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>apiRoutes.ts:1</code> (client-panel)</td>
+<td><code>// todo delete all comments</code> — hundreds of cleanup comments</td>
+</tr>
+<tr>
+<td><code>TestingNewComponentsPage:12</code></td>
+<td><code>console.log(allDataIsValid)</code> left in</td>
+</tr>
+<tr>
+<td><code>auth.ts:61</code> (admin)</td>
+<td><code>console.error</code> instead of proper logging</td>
+</tr>
+</tbody></table>
+<h2>Inconsistencies</h2>
+<h3>Naming</h3>
+<ul>
+<li><code>assesment_category</code> field name (typo — should be &quot;assessment&quot;) throughout backend</li>
+<li><code>switchOranization</code> route name (typo — should be &quot;Organization&quot;) in mobile</li>
+<li>Mixed snake_case and camelCase in JSON fields between backend and frontend</li>
+<li><code>VITE_API_BASE_URl</code> env variable (typo — &quot;URl&quot; instead of &quot;URL&quot;)</li>
+</ul>
+<h3>Data Consistency</h3>
+<ul>
+<li>Firestore data not always synced with PostgreSQL on session updates</li>
+<li>CSV file references in Session can become orphaned if Firebase Storage file is deleted</li>
+<li>No cascade delete validation</li>
+</ul>
+<hr>
+<h1 id="8-complete-route-map">Complete Route Map</h1>
+<h2>Web Client Panel Routes</h2>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Page</th>
+<th>Auth</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/auth/login</code></td>
+<td>LoginPage</td>
+<td>Public</td>
+</tr>
+<tr>
+<td><code>/auth/login/email</code></td>
+<td>EmailLoginPage</td>
+<td>Public</td>
+</tr>
+<tr>
+<td><code>/auth/signup</code></td>
+<td>AccountCreationPage</td>
+<td>Public</td>
+</tr>
+<tr>
+<td><code>/auth/password-reset</code></td>
+<td>InitialPasswordResetPage</td>
+<td>Public</td>
+</tr>
+<tr>
+<td><code>/auth/password-reset/new</code></td>
+<td>PasswordResetPage</td>
+<td>Public</td>
+</tr>
+<tr>
+<td><code>/auth/process-login</code></td>
+<td>ProcessEmailLinkLogin</td>
+<td>Public</td>
+</tr>
+<tr>
+<td><code>/auth/mobile-redirect</code></td>
+<td>Mobile redirect</td>
+<td>Public</td>
+</tr>
+<tr>
+<td><code>/dashboard</code></td>
+<td>HomePage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/users</code></td>
+<td>UsersPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/work-profiles</code></td>
+<td>WorkProfilesPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/workcycles</code></td>
+<td>WorkCyclesPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/sessions</code></td>
+<td>SessionsPage (3 tabs)</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/sessions/:id/details</code></td>
+<td>SessionDetailsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/sessions/details</code></td>
+<td>MultiSessionDetailsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/assessments</code></td>
+<td>AssessmentsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/category-and-labels</code></td>
+<td>CategoryAndLabelsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/ramp-assessments</code></td>
+<td>RAMPAssessmentsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/ramp-assessments/:id</code></td>
+<td>RAMPDetailPage (7 sub-routes)</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/ramp-assessments/:id/results</code></td>
+<td>RAMPResultsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/ramp-assessments/results</code></td>
+<td>MultiRAMPResultsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/rula-assessments</code></td>
+<td>RULAAssessmentsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/rula-assessments/:id</code></td>
+<td>RULADetailPage (3 sub-routes)</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/rula-assessments/:id/results</code></td>
+<td>RULAResultsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/rula-assessments/results</code></td>
+<td>MultiRULAResultsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/reba-assessments</code></td>
+<td>REBAAssessmentsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/reba-assessments/:id</code></td>
+<td>REBADetailPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/reba-assessments/:id/results</code></td>
+<td>REBAResultsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/reba-assessments/results</code></td>
+<td>MultiREBAResultsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/mec-assessments/:id/results</code></td>
+<td>MECResultsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/mec-assessments/results</code></td>
+<td>MultiMECResultsPage</td>
+<td>Auth Required</td>
+</tr>
+<tr>
+<td><code>/dashboard/test</code></td>
+<td>TestingNewComponentsPage</td>
+<td>Dev Only</td>
+</tr>
+<tr>
+<td><code>/dashboard/icons</code></td>
+<td>IconsPage</td>
+<td>Dev Only</td>
+</tr>
+<tr>
+<td><code>/privacy-policy</code></td>
+<td>PrivacyPolicyPage</td>
+<td>Public</td>
+</tr>
+<tr>
+<td><code>/privacy-and-data-deletion-policy</code></td>
+<td>PrivacyAndDataDeletionPolicyPage</td>
+<td>Public</td>
+</tr>
+<tr>
+<td><code>/invitations/:id</code></td>
+<td>InvitationPage</td>
+<td>Public</td>
+</tr>
+<tr>
+<td><code>/error</code></td>
+<td>ErrorPage</td>
+<td>Public</td>
+</tr>
+</tbody></table>
+<h2>Admin Panel Routes</h2>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Page</th>
+<th>Auth</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/login</code></td>
+<td>LoginPage</td>
+<td>Public</td>
+</tr>
+<tr>
+<td><code>/organizations</code></td>
+<td>OrganizationsPage</td>
+<td>WERGONIC_ADMIN</td>
+</tr>
+<tr>
+<td><code>/users</code></td>
+<td>UsersPage</td>
+<td>WERGONIC_ADMIN</td>
+</tr>
+<tr>
+<td><code>/devices</code></td>
+<td>DevicesPage</td>
+<td>WERGONIC_ADMIN</td>
+</tr>
+<tr>
+<td><code>/firmwares</code></td>
+<td>FirmwarePage</td>
+<td>WERGONIC_ADMIN</td>
+</tr>
+<tr>
+<td><code>/error</code></td>
+<td>ErrorPage</td>
+<td>Public</td>
+</tr>
+</tbody></table>
+<h2>Mobile App Routes</h2>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Screen</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/</code></td>
+<td>SplashScreen</td>
+<td>Init/auth check</td>
+</tr>
+<tr>
+<td><code>/login</code></td>
+<td>LoginPage</td>
+<td>OAuth login</td>
+</tr>
+<tr>
+<td><code>/login_with_email</code></td>
+<td>LoginWithEmailPage</td>
+<td>Email login</td>
+</tr>
+<tr>
+<td><code>/reset_password</code></td>
+<td>ResetPasswordScreen</td>
+<td>Password reset request</td>
+</tr>
+<tr>
+<td><code>/check_reset_password</code></td>
+<td>CheckLinkResetPasswordScreen</td>
+<td>Email link validation</td>
+</tr>
+<tr>
+<td><code>/link_expired_reset_password</code></td>
+<td>LinkExpiredResetPasswordScreen</td>
+<td>Expired link</td>
+</tr>
+<tr>
+<td><code>/create_reset_password</code></td>
+<td>CreateNewPasswordScreen</td>
+<td>New password creation</td>
+</tr>
+<tr>
+<td><code>/welcome</code></td>
+<td>WelcomeScreen</td>
+<td>Post-login intro</td>
+</tr>
+<tr>
+<td><code>/settings</code></td>
+<td>SettingScreen</td>
+<td>All settings</td>
+</tr>
+<tr>
+<td><code>/settings/languages</code></td>
+<td>LanguagesSettingsPage</td>
+<td>Language picker</td>
+</tr>
+<tr>
+<td><code>/settings/value-picker</code></td>
+<td>ValuePickerScreen</td>
+<td>Generic value picker</td>
+</tr>
+<tr>
+<td><code>/settings/switch_oranization</code></td>
+<td>SwitchOrganizationScreen</td>
+<td>Org switcher</td>
+</tr>
+<tr>
+<td><code>/limbsFeedbackOrder</code></td>
+<td>LimbsFeedbackPriorityScreen</td>
+<td>Feedback priority</td>
+</tr>
+<tr>
+<td><code>/work_session_config</code></td>
+<td>WorkSessionConfig</td>
+<td>Session setup</td>
+</tr>
+<tr>
+<td><code>/work_session_config/work-cycle-screen</code></td>
+<td>WorkCycleScreen</td>
+<td>Work cycle selection</td>
+</tr>
+<tr>
+<td><code>/work_session_config/work-cycle-task-screen</code></td>
+<td>WorkCycleTasksListScreen</td>
+<td>Work cycle tasks</td>
+</tr>
+<tr>
+<td><code>/work_session_config/pairing</code></td>
+<td>PairingScreen</td>
+<td>BLE sensor pairing</td>
+</tr>
+<tr>
+<td><code>/firmware</code></td>
+<td>FirmwareScreen</td>
+<td>Firmware management</td>
+</tr>
+<tr>
+<td><code>/recalibration</code></td>
+<td>LimbsRecalibrationPage</td>
+<td>Per-limb recalibration</td>
+</tr>
+<tr>
+<td><code>/sensor-calibration</code></td>
+<td>LimbsCalibrationPage</td>
+<td>Full calibration</td>
+</tr>
+<tr>
+<td><code>/work_session</code></td>
+<td>WorkSessionRecordingScreen</td>
+<td>Session recording</td>
+</tr>
+<tr>
+<td><code>/work_session/WorkTasks</code></td>
+<td>WorkTasksScreen</td>
+<td>Task selection</td>
+</tr>
+<tr>
+<td><code>/sessions_listing</code></td>
+<td>WorkSessionListPage</td>
+<td>All sessions</td>
+</tr>
+<tr>
+<td><code>/session_summary</code></td>
+<td>SessionSummaryPage</td>
+<td>Post-session summary</td>
+</tr>
+<tr>
+<td><code>/session_history</code></td>
+<td>SessionHistoryPage</td>
+<td>Past sessions + sync</td>
+</tr>
+<tr>
+<td><code>/session_history/add_work_label</code></td>
+<td>AddWorkLabelToSessionHistoryScreen</td>
+<td>Add task/label</td>
+</tr>
+<tr>
+<td><code>/report</code></td>
+<td>ReportScreen</td>
+<td>Session analysis</td>
+</tr>
+<tr>
+<td><code>/tnoReport</code></td>
+<td>TnoReportPage</td>
+<td>TNO risk report</td>
+</tr>
+<tr>
+<td><code>/reportProblem</code></td>
+<td>ReportProblemScreen</td>
+<td>Bug reporting</td>
+</tr>
+<tr>
+<td><code>/liteMode</code></td>
+<td>LiteModeCalibrationPage</td>
+<td>Phone-based setup</td>
+</tr>
+</tbody></table>
+
+<footer>Wergonic — internal documentation. Generated from codebase analysis of the <code>dev</code> branch (backend, web apps, mobile) on 17 March 2026.</footer>
+</body>
+</html>

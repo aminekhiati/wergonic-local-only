@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wergonic — How We Do QA</title>
+<style>
+  :root {
+    --ink: #1a1d23; --muted: #5b6472; --line: #e3e7ee;
+    --brand: #1f6feb; --brand-dark: #12325f; --bg-soft: #f6f8fb;
+    --green: #1a7f5a; --amber: #b7791f; --red: #c0392b;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Segoe UI","Helvetica Neue",Arial,sans-serif; color: var(--ink); font-size: 12.5px; line-height: 1.6; margin: 0; }
+  .page { padding: 46px 54px; }
+  .page-break { page-break-before: always; }
+  h1,h2,h3 { line-height: 1.2; margin: 0; }
+  h2 { font-size: 18px; color: var(--brand-dark); margin: 0 0 4px; padding-bottom: 7px; border-bottom: 2px solid var(--brand); }
+  h3 { font-size: 13.5px; color: var(--ink); margin: 18px 0 6px; }
+  p { margin: 8px 0; }
+  .muted { color: var(--muted); }
+  .lead { color: var(--muted); font-size: 12.5px; margin: 4px 0 16px; }
+  ul { margin: 6px 0; padding-left: 18px; }
+  li { margin: 4px 0; }
+  code { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; font-size: 11px; font-family: "Consolas",monospace; }
+  strong { color: var(--ink); }
+  .cover { padding: 150px 54px 0; }
+  .cover .kicker { color: var(--brand); font-weight: 700; letter-spacing: 2px; font-size: 12px; text-transform: uppercase; }
+  .cover h1 { font-size: 40px; color: var(--brand-dark); margin: 14px 0 10px; letter-spacing: -0.5px; }
+  .cover .sub { font-size: 15px; color: var(--muted); max-width: 560px; }
+  .cover .meta { margin-top: 42px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; width: 340px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 11.5px; }
+  th { background: var(--brand-dark); color: #fff; text-align: left; padding: 8px 10px; font-weight: 600; }
+  td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--bg-soft); }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 20px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+  .pill.bad { background: #fdecea; color: var(--red); }
+  .pill.warn { background: #fdf3e2; color: var(--amber); }
+  .pill.ok { background: #e6f4ee; color: var(--green); }
+  .callout { background: var(--bg-soft); border-left: 3px solid var(--brand); border-radius: 0 6px 6px 0; padding: 12px 16px; margin: 14px 0; }
+  .callout .t { font-weight: 700; color: var(--brand-dark); }
+  .cols { display: flex; gap: 22px; }
+  .cols > div { flex: 1; }
+  svg { display: block; margin: 8px auto; }
+  .caption { text-align: center; font-size: 10.5px; color: var(--muted); margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="kicker">Wergonic · Quality</div>
+  <h1>How We Do QA</h1>
+  <div class="sub">A plain-language guide to how we test our products and catch problems before our users do — across the website apps, the backend, and the mobile app.</div>
+  <div class="meta">
+    Audience: Quality (QA) team &amp; new hires<br>
+    Products: backend · web apps · mobile app<br>
+    Purpose: shared understanding of our testing approach
+  </div>
+</div>
+
+<!-- 1. THE GOAL -->
+<div class="page page-break">
+  <h2>1 · The goal, in one line</h2>
+  <p class="lead">Find problems ourselves — quickly and automatically — before a real user ever runs into them.</p>
+
+  <p>Every product has bugs. The question is <strong>who finds them first</strong>: us, or the customer. Our whole approach is built so that the moment a developer changes the code, a set of automatic checks runs and tells us if something broke. If it did, that change is blocked from going live until it's fixed.</p>
+
+  <p>A quick vocabulary so the rest of this document is easy to read:</p>
+  <table>
+    <thead><tr><th style="width:26%">Word</th><th>What it means (plain)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A test</strong></td><td>A small piece of code (or a checklist for a human) that confirms one thing works the way it should.</td></tr>
+      <tr><td><strong>Automatic checks</strong></td><td>A system connected to our code that runs all our tests by itself every time code changes. (The technical name is "CI/CD" — you'll hear it, but you can just think "the automatic checker".)</td></tr>
+      <tr><td><strong>Manual testing</strong></td><td>A human using the app by hand to confirm it looks and behaves correctly.</td></tr>
+      <tr><td><strong>Bug ticket</strong></td><td>A written record of a problem you found, so the team knows what to fix.</td></tr>
+      <tr><td><strong>Staging / Production</strong></td><td>"Staging" is a private copy of the app for testing. "Production" is the real live app that customers use.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="t">Where we are today (honest starting point).</span> Right now we have very few automatic tests, so most problems are only found by chance or by users. Building this testing system — and having QA cover the rest by hand — is exactly the job we're setting up.
+  </div>
+</div>
+
+<!-- 2. THE SIMPLE RULE -->
+<div class="page page-break">
+  <h2>2 · The simple rule: many small tests, few big ones</h2>
+  <p class="lead">Small tests are fast and cheap, so we write lots of them. Big tests are slow and fragile, so we keep them for the few most important journeys.</p>
+
+  <svg width="580" height="250" viewBox="0 0 580 250">
+    <polygon points="290,20 345,80 235,80" fill="#12325f"/>
+    <polygon points="235,80 345,80 400,150 180,150" fill="#1f6feb"/>
+    <polygon points="180,150 400,150 455,220 125,220" fill="#7cb5f5"/>
+    <text x="290" y="58" font-size="9.5" fill="#fff" text-anchor="middle">Full-journey tests</text>
+    <text x="290" y="120" font-size="10" fill="#fff" text-anchor="middle" font-weight="700">Server tests</text>
+    <text x="290" y="190" font-size="10" fill="#12325f" text-anchor="middle" font-weight="700">Small logic tests</text>
+    <text x="415" y="52" font-size="9" fill="#5b6472">few · slow</text>
+    <text x="470" y="120" font-size="9" fill="#5b6472">the sweet spot</text>
+    <text x="470" y="190" font-size="9" fill="#5b6472">many · fast</text>
+  </svg>
+  <div class="caption">Figure 1 — Fewer tests as you go up; each one is bigger and slower.</div>
+
+  <p>There are really only four kinds of testing you need to know. Here they are, from smallest to biggest, with a real example from our products:</p>
+
+  <table>
+    <thead><tr><th style="width:20%">Type</th><th style="width:42%">What it checks</th><th>Example from us</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Small logic test</strong></td><td>One small piece of logic on its own — usually a calculation.</td><td>"Given these sensor angles, does the posture score come out correct?"</td></tr>
+      <tr><td><strong>Server test</strong></td><td>Does the backend answer the app correctly and save the right data?</td><td>"When the app asks to create a work session, does the server save it and send it back?"</td></tr>
+      <tr><td><strong>Full-journey test</strong></td><td>Acts like a real user clicking through several screens.</td><td>"Log in → start a session → open the report — does the whole flow work?"</td></tr>
+      <tr><td><strong>Manual test</strong></td><td>A human checks things a machine can't easily judge — look, feel, and real hardware.</td><td>"Does the report page look right, and does the real sensor connect?"</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="t">Why the middle matters most.</span> The "server tests" are our best investment because all three products — the two websites and the mobile app — depend on the same backend. One bug there can break everything at once, so that's where we test the hardest.
+  </div>
+</div>
+
+<!-- 3. WHEN TESTS RUN -->
+<div class="page page-break">
+  <h2>3 · When do the tests run?</h2>
+  <p class="lead">Not all at once. Fast checks run constantly; slow checks run less often. This is how we get quick answers without waiting forever.</p>
+
+  <svg width="640" height="300" viewBox="0 0 640 300">
+    <defs><marker id="arw" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5b6472"/></marker></defs>
+    <g font-size="11">
+      <rect x="20" y="14" width="168" height="42" rx="7" fill="#12325f"/>
+      <text x="104" y="32" fill="#fff" text-anchor="middle" font-weight="700">1 · On the developer's PC</text>
+      <text x="104" y="47" fill="#c9def8" text-anchor="middle" font-size="9.5">instant, before sharing code</text>
+      <text x="200" y="38" font-size="9.5" fill="#5b6472">quick checks catch typos and obvious mistakes early</text>
+
+      <rect x="20" y="66" width="168" height="42" rx="7" fill="#1f6feb"/>
+      <text x="104" y="84" fill="#fff" text-anchor="middle" font-weight="700">2 · When code is uploaded</text>
+      <text x="104" y="99" fill="#dbe9fc" text-anchor="middle" font-size="9.5">under 5 minutes</text>
+      <text x="200" y="83" font-size="9.5" fill="#5b6472">all the small + server tests run automatically</text>
+      <text x="200" y="97" font-size="9.5" fill="#c0392b" font-weight="700">← if anything fails, the code is blocked</text>
+
+      <rect x="20" y="118" width="168" height="42" rx="7" fill="#3b8ff0"/>
+      <text x="104" y="136" fill="#fff" text-anchor="middle" font-weight="700">3 · Before merging</text>
+      <text x="104" y="151" fill="#eaf3fd" text-anchor="middle" font-size="9.5">under 15 minutes</text>
+      <text x="200" y="135" font-size="9.5" fill="#5b6472">the few full-journey tests run on a private copy</text>
+      <text x="200" y="149" font-size="9.5" fill="#5b6472">+ a preview link to click and check by hand</text>
+
+      <rect x="20" y="170" width="168" height="42" rx="7" fill="#7cb5f5"/>
+      <text x="104" y="188" fill="#12325f" text-anchor="middle" font-weight="700">4 · After merging (goes live)</text>
+      <text x="104" y="203" fill="#12325f" text-anchor="middle" font-size="9.5">staging first, then production</text>
+      <text x="200" y="195" font-size="9.5" fill="#5b6472">ship to staging, re-check, then release to customers</text>
+
+      <rect x="20" y="222" width="168" height="42" rx="7" fill="#b9d6f7"/>
+      <text x="104" y="240" fill="#12325f" text-anchor="middle" font-weight="700">5 · Overnight</text>
+      <text x="104" y="255" fill="#12325f" text-anchor="middle" font-size="9.5">scheduled, once a day</text>
+      <text x="200" y="247" font-size="9.5" fill="#5b6472">the slow, heavy tests run while nobody's waiting</text>
+
+      <rect x="20" y="274" width="168" height="20" rx="4" fill="#e6f4ee" stroke="#1a7f5a"/>
+      <text x="104" y="288" fill="#1a7f5a" text-anchor="middle" font-weight="700" font-size="10">Always · live monitoring</text>
+      <text x="200" y="288" font-size="9.5" fill="#5b6472">a tool called Sentry alerts us if a real user hits an error</text>
+    </g>
+    <line x1="104" y1="56" x2="104" y2="65" stroke="#5b6472" stroke-width="1.3" marker-end="url(#arw)"/>
+    <line x1="104" y1="108" x2="104" y2="117" stroke="#5b6472" stroke-width="1.3" marker-end="url(#arw)"/>
+    <line x1="104" y1="160" x2="104" y2="169" stroke="#5b6472" stroke-width="1.3" marker-end="url(#arw)"/>
+    <line x1="104" y1="212" x2="104" y2="221" stroke="#5b6472" stroke-width="1.3" marker-end="url(#arw)"/>
+    <line x1="104" y1="264" x2="104" y2="273" stroke="#5b6472" stroke-width="1.3" marker-end="url(#arw)"/>
+  </svg>
+  <div class="caption">Figure 2 — The same tests, run at different moments, from fastest to always-on.</div>
+</div>
+
+<!-- 4. WHAT WE TEST -->
+<div class="page page-break">
+  <h2>4 · What we test in each product</h2>
+  <p class="lead">Same idea everywhere, adapted to each product.</p>
+
+  <table>
+    <thead><tr><th style="width:20%">Product</th><th style="width:40%">Main focus</th><th>Tools used</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Backend</strong><br><span class="muted">the shared server</span></td><td>Server tests on the important actions (create a session, register a company, manage users), plus small tests on the calculations.</td><td>pytest</td></tr>
+      <tr><td><strong>Web apps</strong><br><span class="muted">client panel + admin</span></td><td>Small tests on forms and logic, plus a handful of full-journey tests for the main flows.</td><td>Vitest, Playwright</td></tr>
+      <tr><td><strong>Mobile app</strong><br><span class="muted">phone + sensors</span></td><td>Small tests on the data calculations, some automated flows on a phone simulator, and hands-on checks with a real device.</td><td>Flutter test, manual</td></tr>
+    </tbody>
+  </table>
+
+  <p>Alongside all of this, QA does <strong>manual testing</strong> — using each product by hand, feature by feature, and writing a bug ticket for anything that's wrong. Manual testing and automatic tests are partners: the automatic tests guard against old bugs coming back, and the manual testing finds the new ones.</p>
+</div>
+
+<!-- 5. SENSORS -->
+<div class="page page-break">
+  <h2>5 · The mobile sensors — the tricky part, made simple</h2>
+  <p class="lead">The phone app talks to real body-worn motion sensors over Bluetooth. You can't fully automate real hardware — but you can automate far more of it than people expect.</p>
+
+  <p>The trick: the <em>hard, bug-prone part</em> isn't the Bluetooth connection itself — it's what the app <em>does with the sensor data</em> afterwards (the calculations, the posture scores, saving and syncing). That part is just code, and code can be tested automatically. So we split sensor testing into three levels:</p>
+
+  <svg width="640" height="180" viewBox="0 0 640 180">
+    <rect x="10" y="20" width="196" height="140" rx="8" fill="#e6f4ee" stroke="#1a7f5a"/>
+    <text x="108" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#1a7f5a">Level 1 — Automatic</text>
+    <text x="108" y="58" text-anchor="middle" font-size="9.5" fill="#1a7f5a">no device needed</text>
+    <text x="24" y="82" font-size="9.5" fill="#1a1d23">We record real sensor data</text>
+    <text x="24" y="97" font-size="9.5" fill="#1a1d23">once, then replay it into the</text>
+    <text x="24" y="112" font-size="9.5" fill="#1a1d23">app forever to check the</text>
+    <text x="24" y="127" font-size="9.5" fill="#1a1d23">calculations stay correct.</text>
+    <text x="24" y="149" font-size="9" fill="#5b6472" font-style="italic">most of the testing</text>
+
+    <rect x="222" y="20" width="196" height="140" rx="8" fill="#eaf3fd" stroke="#1f6feb"/>
+    <text x="320" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#12325f">Level 2 — Simulator</text>
+    <text x="320" y="58" text-anchor="middle" font-size="9.5" fill="#12325f">fake phone, no Bluetooth</text>
+    <text x="236" y="82" font-size="9.5" fill="#1a1d23">We run the app on a</text>
+    <text x="236" y="97" font-size="9.5" fill="#1a1d23">simulated phone with a</text>
+    <text x="236" y="112" font-size="9.5" fill="#1a1d23">pretend sensor, to check</text>
+    <text x="236" y="127" font-size="9.5" fill="#1a1d23">the screens and flow.</text>
+    <text x="236" y="149" font-size="9" fill="#5b6472" font-style="italic">runs overnight</text>
+
+    <rect x="434" y="20" width="196" height="140" rx="8" fill="#fdf3e2" stroke="#b7791f"/>
+    <text x="532" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#8a5a12">Level 3 — By hand</text>
+    <text x="532" y="58" text-anchor="middle" font-size="9.5" fill="#8a5a12">real sensor, real phone</text>
+    <text x="448" y="82" font-size="9.5" fill="#1a1d23">A person uses a real sensor:</text>
+    <text x="448" y="97" font-size="9.5" fill="#1a1d23">pairing, reconnecting,</text>
+    <text x="448" y="112" font-size="9.5" fill="#1a1d23">battery, firmware updates.</text>
+    <text x="448" y="127" font-size="9.5" fill="#1a1d23">Follows a short checklist.</text>
+    <text x="448" y="149" font-size="9" fill="#5b6472" font-style="italic">before each release</text>
+  </svg>
+  <div class="caption">Figure 3 — Automate the data (Levels 1–2); test the physical connection by hand (Level 3).</div>
+
+  <p>So sensors are <strong>not</strong> "all manual". Only the physical Bluetooth connection really needs a person with a real device, and that becomes a short, repeatable checklist done before each mobile release — not guesswork.</p>
+</div>
+
+<!-- 6. ROLLOUT -->
+<div class="page page-break">
+  <h2>6 · How we build this, step by step</h2>
+  <p class="lead">We don't do everything at once. Each step adds real protection before the next begins.</p>
+
+  <table>
+    <thead><tr><th style="width:8%">Step</th><th style="width:34%">What we do</th><th>Why it's first / next</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1</strong></td><td>Turn on the "block bad code" rule and set up the automatic checker properly.</td><td>Right now a broken change can still go live. This stops that.</td></tr>
+      <tr><td><strong>2</strong></td><td>Write the first real tests for the backend (the shared server).</td><td>Biggest payoff — it protects all three products at once.</td></tr>
+      <tr><td><strong>3</strong></td><td>Add tests for the main website flows and forms.</td><td>Covers what customers touch most.</td></tr>
+      <tr><td><strong>4</strong></td><td>Set up the mobile tests, including the sensor-data replay.</td><td>Makes the hardest product testable without hardware.</td></tr>
+      <tr><td><strong>5</strong></td><td>Add preview links, staging checks, and live monitoring.</td><td>Confidence before and after each release.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="t">The whole idea in one sentence.</span> Many quick checks on every change, strong tests on the shared server, a few full user-journey tests, sensor calculations tested by replaying recordings, and a live alarm (Sentry) if a real user hits an error.
+  </div>
+</div>
+
+</body>
+</html>

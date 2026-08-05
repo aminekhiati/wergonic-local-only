@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wergonic — QA Onboarding & Study Guide</title>
+<style>
+  :root {
+    --ink: #1a1d23; --muted: #5b6472; --line: #e3e7ee;
+    --brand: #1f6feb; --brand-dark: #12325f; --bg-soft: #f6f8fb;
+    --green: #1a7f5a; --amber: #b7791f; --red: #c0392b;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Segoe UI","Helvetica Neue",Arial,sans-serif; color: var(--ink); font-size: 12.5px; line-height: 1.6; margin: 0; }
+  .page { padding: 46px 54px; }
+  .page-break { page-break-before: always; }
+  h1,h2,h3 { line-height: 1.2; margin: 0; }
+  h2 { font-size: 18px; color: var(--brand-dark); margin: 0 0 4px; padding-bottom: 7px; border-bottom: 2px solid var(--brand); }
+  h3 { font-size: 13.5px; color: var(--brand-dark); margin: 18px 0 6px; }
+  p { margin: 8px 0; }
+  .muted { color: var(--muted); }
+  .lead { color: var(--muted); font-size: 12.5px; margin: 4px 0 16px; }
+  ul { margin: 6px 0; padding-left: 18px; }
+  ol { margin: 6px 0; padding-left: 20px; }
+  li { margin: 4px 0; }
+  code { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; font-size: 11px; font-family: "Consolas",monospace; }
+  strong { color: var(--ink); }
+  .cover { padding: 140px 54px 0; }
+  .cover .kicker { color: var(--brand); font-weight: 700; letter-spacing: 2px; font-size: 12px; text-transform: uppercase; }
+  .cover h1 { font-size: 38px; color: var(--brand-dark); margin: 14px 0 10px; letter-spacing: -0.5px; }
+  .cover .sub { font-size: 15px; color: var(--muted); max-width: 580px; }
+  .cover .meta { margin-top: 42px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; width: 340px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 11.5px; }
+  th { background: var(--brand-dark); color: #fff; text-align: left; padding: 8px 10px; font-weight: 600; }
+  td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--bg-soft); }
+  .callout { background: var(--bg-soft); border-left: 3px solid var(--brand); border-radius: 0 6px 6px 0; padding: 12px 16px; margin: 14px 0; }
+  .callout.green { border-left-color: var(--green); }
+  .callout.amber { border-left-color: var(--amber); }
+  .callout .t { font-weight: 700; color: var(--brand-dark); }
+  .card { border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; margin: 10px 0; }
+  .card h4 { margin: 0 0 4px; font-size: 12.5px; color: var(--brand-dark); }
+  .card .num { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; background: var(--brand); color: #fff; border-radius: 50%; font-weight: 700; font-size: 11px; margin-right: 6px; }
+  .phase-tag { font-size: 10px; color: var(--muted); font-weight: 600; }
+  .ticket { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin: 12px 0; }
+  .ticket .row { display: flex; border-bottom: 1px solid var(--line); }
+  .ticket .row:last-child { border-bottom: none; }
+  .ticket .k { width: 130px; background: var(--bg-soft); padding: 7px 12px; font-weight: 700; font-size: 11px; color: var(--brand-dark); border-right: 1px solid var(--line); }
+  .ticket .v { padding: 7px 12px; font-size: 11.5px; flex: 1; }
+  .sev td:first-child { font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="kicker">Wergonic · Quality Team</div>
+  <h1>QA Onboarding &amp;<br>Study Guide</h1>
+  <div class="sub">Welcome aboard. This guide explains what your job is, what to study first, and exactly how you'll work with us — step by step, starting from the basics.</div>
+  <div class="meta">
+    For: our new QA team member<br>
+    Level: entry — no prior testing experience needed<br>
+    Read this first, then keep it as a reference
+  </div>
+</div>
+
+<!-- 1. WELCOME + ROLE -->
+<div class="page page-break">
+  <h2>1 · Welcome — what your job really is</h2>
+  <p class="lead">Don't worry about knowing everything on day one. This is a learn-as-you-go role, and this guide is your map.</p>
+
+  <p>Your mission in one sentence: <strong>use our products, find the things that are broken or confusing, and report them clearly so the developers can fix them</strong> — while gradually helping us build a library of automatic tests so those bugs never come back.</p>
+
+  <p>You are the person who cares about quality more than anyone else. Developers build features fast and sometimes miss things — that's normal. Your job is to be the safety net: the calm, careful person who tries every button, every form, every weird situation, and catches problems before our customers do.</p>
+
+  <div class="callout green">
+    <span class="t">Two things make a great QA — and neither needs a computer-science degree:</span>
+    <ul style="margin-bottom:0">
+      <li><strong>Curiosity</strong> — always asking "what happens if I do this instead?"</li>
+      <li><strong>Care</strong> — writing down problems clearly, with enough detail that someone else can understand and fix them.</li>
+    </ul>
+  </div>
+
+  <p>You'll do <strong>two kinds of work</strong>, and you'll grow into the second one over time:</p>
+  <ul>
+    <li><strong>Manual testing (start here, day one):</strong> using the app by hand, feature by feature, and writing a bug ticket for anything wrong. You can do this immediately, no coding needed.</li>
+    <li><strong>Automatic tests (grow into this):</strong> writing small pieces of code that check the app for us automatically. You won't do this alone — you'll use <strong>Claude</strong> (our AI coding assistant) to help you write them, and you'll learn as you go. Some tests are already set up as examples for you to follow.</li>
+  </ul>
+</div>
+
+<!-- 2. GLOSSARY -->
+<div class="page page-break">
+  <h2>2 · The words you'll hear (keep this handy)</h2>
+  <p class="lead">You'll hear these every day. You don't need to memorize them — just refer back here whenever one confuses you.</p>
+
+  <table>
+    <thead><tr><th style="width:24%">Word</th><th>Plain meaning</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Bug</strong></td><td>Something in the app that doesn't work the way it should.</td></tr>
+      <tr><td><strong>Feature</strong></td><td>A thing the app can do (e.g. "log in", "start a session", "download a report").</td></tr>
+      <tr><td><strong>Test case</strong></td><td>A written step-by-step: "do these steps, expect this result." Your main manual-testing tool.</td></tr>
+      <tr><td><strong>Manual test</strong></td><td>You, a human, using the app and checking it by hand.</td></tr>
+      <tr><td><strong>Automatic test</strong></td><td>Code that checks the app for you, in seconds, over and over.</td></tr>
+      <tr><td><strong>Small logic test</strong></td><td>An automatic test for one small calculation. (Developers call this a "unit test".)</td></tr>
+      <tr><td><strong>Full-journey test</strong></td><td>An automatic test that clicks through the app like a real user. (Called an "end-to-end" or "E2E" test.)</td></tr>
+      <tr><td><strong>The automatic checker</strong></td><td>The system that runs all our tests automatically whenever code changes. (Real name: "CI/CD" or "the pipeline".)</td></tr>
+      <tr><td><strong>Regression</strong></td><td>When something that used to work breaks again. Our tests exist mainly to catch these.</td></tr>
+      <tr><td><strong>Staging</strong></td><td>A private copy of the app where we test safely before customers see it.</td></tr>
+      <tr><td><strong>Production</strong></td><td>The real, live app that customers use. Never test experiments here.</td></tr>
+      <tr><td><strong>Git</strong></td><td>The tool developers use to store and share code. You'll learn just enough to get the code and run the app.</td></tr>
+      <tr><td><strong>Ticket</strong></td><td>A task or bug written down in our project tool, so the team can track and fix it.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 3. STUDY PATH -->
+<div class="page page-break">
+  <h2>3 · What to study — your learning path</h2>
+  <p class="lead">Go in order. Don't jump ahead to code before you're comfortable with the basics. Spend real time on each phase.</p>
+
+  <div class="card">
+    <h4><span class="num">1</span> Testing fundamentals &nbsp;<span class="phase-tag">START HERE · ~1–2 weeks</span></h4>
+    Learn what testing is, the types of tests, how to design a test case, and how to report a bug well. This is the single most important phase — it's the core of your job and needs no coding.
+    <ul style="margin-bottom:0">
+      <li><strong>ISTQB Foundation</strong> — the standard entry-level QA syllabus. Read it and consider the certificate later. (istqb.org)</li>
+      <li><strong>Test Automation University</strong> — free courses, start with the manual/fundamentals track. (testautomationu.applitools.com)</li>
+      <li><strong>Ministry of Testing</strong> — friendly community and beginner articles. (ministryoftesting.com)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4><span class="num">2</span> Learn our products by using them &nbsp;<span class="phase-tag">~2–4 weeks, overlaps with the rest</span></h4>
+    Get accounts for our web apps and the mobile app. Use every feature like a curious customer. Start filing bug tickets immediately — this is real, valuable work from week one. Ask the team for a feature list so you know what to cover.
+  </div>
+
+  <div class="card">
+    <h4><span class="num">3</span> How the web works + a little Git &nbsp;<span class="phase-tag">~2 weeks</span></h4>
+    Just enough to understand what you're testing and to run the apps yourself.
+    <ul style="margin-bottom:0">
+      <li><strong>How websites work</strong> (client, server, and the "API" that connects them) — MDN "How the web works". (developer.mozilla.org)</li>
+      <li><strong>Git basics</strong> — how to get the code and switch versions. Try "Learn Git Branching". (learngitbranching.js.org)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4><span class="num">4</span> Writing automatic tests (with Claude's help) &nbsp;<span class="phase-tag">~from week 5, ongoing</span></h4>
+    Now you start adding automatic tests. You are <em>not</em> expected to write these from scratch alone — you'll read the examples already set up, then use <strong>Claude</strong> to help you write more. Learn the basics so you can read, run, and fix what Claude produces.
+    <ul style="margin-bottom:0">
+      <li><strong>A little JavaScript/TypeScript</strong> (our web apps) — freeCodeCamp basics. (freecodecamp.org)</li>
+      <li><strong>Playwright</strong> — the tool for full-journey web tests; its "Getting Started" is beginner-friendly. (playwright.dev)</li>
+      <li><strong>A little Python + pytest</strong> (our backend) — come to this last, once the web side feels comfortable.</li>
+    </ul>
+  </div>
+
+  <div class="callout amber">
+    <span class="t">Pace yourself.</span> Phases 1 and 2 make you useful in your first weeks. Phases 3 and 4 turn you into a strong QA over the following months. It's completely fine if the coding parts take time — everyone starts here.
+  </div>
+</div>
+
+<!-- 4. RESPONSIBILITIES -->
+<div class="page page-break">
+  <h2>4 · Your day-to-day responsibilities</h2>
+  <p class="lead">This is the loop you'll repeat, feature by feature, until every part of every product is covered.</p>
+
+  <table>
+    <thead><tr><th style="width:30%">Responsibility</th><th>What it looks like in practice</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Test features by hand</strong></td><td>Go through the app methodically (see Section 6). Try the normal path, then try to break it.</td></tr>
+      <tr><td><strong>File a bug ticket for every problem</strong></td><td>One ticket per bug, clear and detailed (see Section 5). This is your most important output.</td></tr>
+      <tr><td><strong>Write automatic tests</strong></td><td>With Claude's help, turn the important checks into automatic tests so they run forever.</td></tr>
+      <tr><td><strong>Re-test after fixes</strong></td><td>When a developer says a bug is fixed, confirm it yourself before closing the ticket.</td></tr>
+      <tr><td><strong>Track coverage</strong></td><td>Keep a simple list of every feature and whether you've tested it, so nothing is forgotten.</td></tr>
+      <tr><td><strong>Watch for regressions</strong></td><td>After each release, quickly re-check the main flows to make sure nothing old broke.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>The core loop</h3>
+  <p style="margin-bottom:4px"><strong>Pick a feature → test it every way you can → find a bug → write a clear ticket → developer fixes it → you confirm the fix → move to the next feature.</strong></p>
+  <p>Repeat until you've covered everything. Then start again on the next release. Quality is never "done" — it's a habit.</p>
+
+  <div class="callout green">
+    <span class="t">Good news: a lot is already set up for you.</span> The automatic checker (the pipeline) and a few example tests are ready. You're not building from an empty page — you're following patterns that already exist and expanding them.
+  </div>
+</div>
+
+<!-- 5. BUG TICKETS -->
+<div class="page page-break">
+  <h2>5 · How to write a great bug ticket</h2>
+  <p class="lead">A bug ticket is only useful if someone else can understand and reproduce it. This is a skill — and it's the one that makes people respect a QA.</p>
+
+  <p>The golden rule: <strong>a developer should be able to read your ticket and reproduce the bug without asking you a single question.</strong> Always include what you did, what happened, and what you expected instead.</p>
+
+  <div class="ticket">
+    <div class="row"><div class="k">Title</div><div class="v">Short and specific. "Report page crashes when session has no data" — not "report broken".</div></div>
+    <div class="row"><div class="k">Product</div><div class="v">Which app: client panel / admin / mobile / backend.</div></div>
+    <div class="row"><div class="k">Steps to reproduce</div><div class="v">Numbered steps, exactly what you did: 1) Log in as X. 2) Open Sessions. 3) Click an empty session.</div></div>
+    <div class="row"><div class="k">What happened</div><div class="v">The actual (wrong) result: "The page went blank and showed an error."</div></div>
+    <div class="row"><div class="k">What you expected</div><div class="v">"The page should show an empty report with a 'no data' message."</div></div>
+    <div class="row"><div class="k">Evidence</div><div class="v">A screenshot or short screen recording. Always attach one if you can.</div></div>
+    <div class="row"><div class="k">Environment</div><div class="v">Where you saw it: browser + version, or phone model, and staging vs production.</div></div>
+    <div class="row"><div class="k">Severity</div><div class="v">How bad it is — see the table below.</div></div>
+  </div>
+
+  <h3>Severity — how urgent is it?</h3>
+  <table class="sev">
+    <thead><tr><th style="width:18%">Level</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td>Critical</td><td>App is unusable or data is lost. Customers are blocked. Report immediately.</td></tr>
+      <tr><td>High</td><td>A key feature is broken, but there's a workaround.</td></tr>
+      <tr><td>Medium</td><td>Something works wrong but doesn't block the user.</td></tr>
+      <tr><td>Low</td><td>Small issue — a typo, a slightly-off color, a cosmetic glitch.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="t">Before you file it:</span> try to reproduce the bug a second time. If it happens again, you've got a solid ticket. If it doesn't, note "happened once, couldn't reproduce" — that's still useful, just say so honestly.
+  </div>
+</div>
+
+<!-- 6. HOW TO TEST -->
+<div class="page page-break">
+  <h2>6 · How to actually test a feature</h2>
+  <p class="lead">Testing isn't random clicking. Here's a simple, repeatable method for any feature you're handed.</p>
+
+  <ol>
+    <li><strong>The normal path first ("happy path").</strong> Use the feature the way it's meant to be used. Does it work? Example: fill a form correctly and submit — does it save?</li>
+    <li><strong>The edges.</strong> Try the boundaries: empty fields, very long text, the number 0, huge numbers, special characters, dates in the past/future.</li>
+    <li><strong>The wrong input.</strong> Deliberately do it "wrong": letters where numbers go, a bad email, skipping required fields. A good app should show a clear, friendly error — not crash.</li>
+    <li><strong>Interruptions and weird situations.</strong> What if you lose internet halfway? Refresh mid-action? Click the button twice fast? Press "back"?</li>
+    <li><strong>Different conditions.</strong> Try another browser, a phone screen size, a different user role (admin vs normal user).</li>
+    <li><strong>Check it looks right.</strong> Is text readable, aligned, translated? Nothing overlapping or cut off?</li>
+  </ol>
+
+  <div class="callout">
+    <span class="t">The QA mindset.</span> Developers test that a feature <em>works</em>. Your extra value is testing that it <em>doesn't break</em> when someone uses it unexpectedly. Always ask: "what would a confused or careless user do here?"
+  </div>
+
+  <h3>Using Claude to write your automatic tests</h3>
+  <p>When you've manually confirmed how a feature <em>should</em> behave, you can turn that into an automatic test with Claude. A good way to ask:</p>
+  <ul>
+    <li>"Here's the feature and the steps a user takes. Write a Playwright test that logs in, does these steps, and checks this result."</li>
+    <li>Then <strong>run the test yourself</strong> and confirm it passes. If it fails, paste the error back to Claude and ask it to fix it.</li>
+    <li>Start by copying an existing example test and changing it — that's the fastest way to learn the pattern.</li>
+  </ul>
+  <p>Over time you'll read these tests comfortably and know when Claude got it right. That's exactly the growth we're expecting from you.</p>
+
+  <div class="callout green">
+    <span class="t">Your first month, simply:</span> learn the basics (Section 3), use every feature by hand, and file clear bug tickets. Do that well and you're already doing the most important part of the job. The automatic tests will come naturally after.
+  </div>
+</div>
+
+</body>
+</html>

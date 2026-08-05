@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Client Panel — v1 Restructure Tasks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6;
+    --ink: #181826;
+    --slate: #5A6478;
+    --muted: #98A1B3;
+    --line: #E9EBF0;
+    --tint: #F4EFFD;
+    --canvas: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 18mm 16mm 16mm 16mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    font-size: 10.5pt;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-variant-numeric: tabular-nums;
+  }
+  h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  /* Masthead */
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 14px 16px; margin-bottom: 22px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 24pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .lede { color: var(--slate); font-size: 10.5pt; max-width: 165mm; margin-top: 8px; }
+  .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; }
+
+  /* Section */
+  h2 {
+    font-size: 13pt; font-weight: 700; letter-spacing: -0.01em;
+    margin: 22px 0 4px; padding-bottom: 6px;
+    border-bottom: 1.5px solid var(--line);
+    break-after: avoid;
+  }
+  h2 .count { font-family: "Inter", sans-serif; font-size: 8.5pt; font-weight: 600; color: var(--muted); float: right; padding-top: 5px; }
+
+  /* Task */
+  .task { padding: 9px 0 9px 14px; border-left: 2px solid var(--line); margin-top: 8px; break-inside: avoid; }
+  .task:hover { } /* print: noop */
+  h3 { font-size: 11pt; font-weight: 700; color: var(--ink); }
+  .task p { margin: 3px 0 0; color: var(--slate); font-size: 10pt; }
+
+  /* Deferred box */
+  .deferred {
+    margin-top: 26px; border: 1px solid var(--line); border-radius: 8px;
+    background: #FAFAFC; padding: 14px 18px; break-inside: avoid;
+  }
+  .deferred h2 { border: 0; margin: 0 0 6px; padding: 0; font-size: 12pt; }
+  .deferred ul { margin: 6px 0 0; padding-left: 18px; }
+  .deferred li { color: var(--slate); font-size: 10pt; margin: 4px 0; }
+  .deferred .note { margin-top: 12px; font-size: 9pt; color: var(--muted); font-style: italic; }
+  strong { color: var(--ink); font-weight: 600; }
+</style>
+</head>
+<body>
+
+  <div class="masthead">
+    <div class="eyebrow">Wergonic · Client Panel</div>
+    <h1>v1 Restructure Tasks</h1>
+    <p class="lede">These tasks bring the real client-panel app in line with the agreed prototype. The prototype is the spec for flow, what data each section shows, and terminology. Tasks are sized to roughly half a day each. The deferred list at the end is intentionally out of scope.</p>
+    <div class="meta">34 tasks · 9 areas · prepared 18 June 2026</div>
+  </div>
+
+  <h2>Navigation &amp; structure <span class="count">4 tasks</span></h2>
+  <div class="task"><h3>Reorganize the sidebar</h3><p>Group the menu into Overview, Measurements, Risk, Workers, Setup and Administration, and show items by role. Ergonomists see everything except Team; admins see all. Leave out Actions and Risk overview for now.</p></div>
+  <div class="task"><h3>Merge measurement views into one page</h3><p>Replace the separate measurement menu items with a single Measurements page that has Active, Finished and Archived tabs, opening on Finished by default.</p></div>
+  <div class="task"><h3>Rename Worker profiles to Workers and Users to Team</h3><p>Update the menu labels, page titles and routes to match.</p></div>
+  <div class="task"><h3>Move Work cycles into Work Library</h3><p>Work cycles is no longer its own menu item. It becomes the first tab inside Work Library.</p></div>
+
+  <h2>Home <span class="count">3 tasks</span></h2>
+  <div class="task"><h3>Build a role-based Home</h3><p>Show a different Home per role. Ergonomists get their personal worklist; admins get the oversight view, including license usage.</p></div>
+  <div class="task"><h3>Add the Home inbox</h3><p>Add one combined list of measurements that need attention and assessments to review, each with a quick action to open it.</p></div>
+  <div class="task"><h3>Scope recent activity by role</h3><p>Admins see the whole organization's recent activity; ergonomists see only their own.</p></div>
+
+  <h2>Measurements list <span class="count">4 tasks</span></h2>
+  <div class="task"><h3>Clean up the active measurements list</h3><p>Remove the Recorded by column and remove the View logs action from active sessions.</p></div>
+  <div class="task"><h3>Add a needs-attention filter</h3><p>Add a filter on the Measurements page to show only measurements that failed or were interrupted.</p></div>
+  <div class="task"><h3>Link methods to their assessments</h3><p>Make the RAMP and MEC chips on a measurement open the Risk assessments list filtered to that measurement and method.</p></div>
+  <div class="task"><h3>Add bulk actions on finished measurements</h3><p>Let users select several finished measurements to compare, archive, delete or generate one combined report.</p></div>
+
+  <h2>Measurement detail <span class="count">6 tasks</span></h2>
+  <div class="task"><h3>Group the signal tabs</h3><p>Replace the flat list of signals with grouped tabs: Movement, Physiological, Muscular rest, Distribution and Exposure limits.</p></div>
+  <div class="task"><h3>Lead each signal with a summary</h3><p>Each signal shows summary metric cards first and hides the full time series behind a "View full time series" expander.</p></div>
+  <div class="task"><h3>Fix the measurement metrics wording</h3><p>Show Median instead of Mean, rename Mean rest to Median rest, and drop the Peak metric.</p></div>
+  <div class="task"><h3>Add the Exposure limits tab</h3><p>Add a tab showing each body part's exposure against the recommended limits, with zone dots and percentiles.</p></div>
+  <div class="task"><h3>Add P95 and P99 percentiles</h3><p>Include the 95th and 99th percentiles in the distribution data and point heavy raw curves to the research export.</p></div>
+  <div class="task"><h3>Add the risk summary band</h3><p>Show the measurement's overall risk as a band at the top, based on the worst zone from its assessments.</p></div>
+
+  <h2>Risk assessments <span class="count">6 tasks</span></h2>
+  <div class="task"><h3>Show results as zones, not scores</h3><p>Show RAMP and MEC results as green, yellow and red zones per factor. The overall level is the worst zone present, with the red, yellow and green counts shown.</p></div>
+  <div class="task"><h3>Remove score and action-limit wording</h3><p>Drop the 47/100 score and the "within/above action limit" wording. Use the zone label plus a measured-versus-guideline detail.</p></div>
+  <div class="task"><h3>Make the assessment page status-aware</h3><p>Reflect the assessment status (draft, needs review, complete) in the layout and remove the Duplicate action.</p></div>
+  <div class="task"><h3>Move report generation off the assessment page</h3><p>Remove the generate-report button and replace it with a quiet link to generate the report from the measurement.</p></div>
+  <div class="task"><h3>Clean up the MEC assessment</h3><p>Remove the Answers tab for MEC and add a comparison-to-action-limits table.</p></div>
+  <div class="task"><h3>Define which methods auto-generate</h3><p>Allow only RAMP and MEC to be generated from a measurement. RULA and REBA stay manual, created from the Risk assessments page.</p></div>
+
+  <h2>Reports <span class="count">3 tasks</span></h2>
+  <div class="task"><h3>Apply the new report model</h3><p>A report only packages data that already exists and never runs an analysis. It is generated from the measurement, or from a standalone manual assessment.</p></div>
+  <div class="task"><h3>One-click report with optional sections</h3><p>Default to a single Wergonic risk assessment report template, with the section picker behind a Customize sections toggle.</p></div>
+  <div class="task"><h3>Build the report sections</h3><p>Build the report from Measurement info, Data analysis, Risk assessments, AI analysis and Appendix. The report is download-only.</p></div>
+
+  <h2>Workers &amp; privacy <span class="count">3 tasks</span></h2>
+  <div class="task"><h3>Anonymize workers to Worker IDs</h3><p>Identify measured workers only by an anonymized Worker ID such as W-001 everywhere. Staff keep their names and operators become Operator N.</p></div>
+  <div class="task"><h3>Simplify the worker edit dialog</h3><p>Use the Worker ID and remove the name and date-of-birth fields.</p></div>
+  <div class="task"><h3>Add the worker detail page</h3><p>Add a worker page listing that worker's measurement and assessment history.</p></div>
+
+  <h2>Work Library <span class="count">3 tasks</span></h2>
+  <div class="task"><h3>Build the Work Library</h3><p>Create one Work Library with three tabs — Work cycles, Activities and Conditions. It is the shared vocabulary used to describe and group every measurement.</p></div>
+  <div class="task"><h3>Define the Activities and Conditions vocabularies</h3><p>Activities is a closed list of motions like Lifting and Fastening that recorders pick from. Conditions are whole-measurement circumstances like shift and environment, set as single or multiple choice. Line, station and factory come from Structure, not here.</p></div>
+  <div class="task"><h3>Add vocabulary maintenance</h3><p>Let admins rename, merge and retire vocabulary items, and flag rarely-used ones to keep the list clean.</p></div>
+
+  <h2>Cross-cutting <span class="count">2 tasks</span></h2>
+  <div class="task"><h3>Make AI a report section only</h3><p>Remove standalone AI views. AI analysis appears only as a section inside the generated report.</p></div>
+  <div class="task"><h3>Unify status colors</h3><p>Use one status color system across the app and show the Generated status as amber "Needs review".</p></div>
+
+  <div class="deferred">
+    <h2>Deferred to v2 — no tasks now</h2>
+    <ul>
+      <li><strong>Organisation risk index</strong> on Home, and the View risk overview entry point.</li>
+      <li>The entire <strong>Actions</strong> feature — the Home inbox keeps only needs-attention and to-review.</li>
+      <li>The entire <strong>Risk Overview</strong> page and its menu item.</li>
+      <li>Any <strong>worker-specific risk</strong> on the worker page — both current risk and risk trend over time.</li>
+    </ul>
+    <p class="note">REBA and RULA body drawings and RAMP's demonstrations stay. They are not removed; the restructure is about flow, data and terminology only.</p>
+  </div>
+
+</body>
+</html>

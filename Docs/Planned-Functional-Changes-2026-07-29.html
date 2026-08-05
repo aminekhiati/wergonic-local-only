@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Planned Functional Changes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6;
+    --ink: #181826;
+    --slate: #5A6478;
+    --muted: #98A1B3;
+    --line: #E9EBF0;
+    --tint: #F4EFFD;
+    --amber: #B7791F;
+    --amber-bg: #FFF8EC;
+    --amber-line: #F2DFB8;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 18mm 16mm 16mm 16mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    font-size: 10.5pt;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 14px 16px; margin-bottom: 6px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 23pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .lede { color: var(--slate); font-size: 10.5pt; max-width: 165mm; margin-top: 9px; }
+  .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; }
+
+  h2 {
+    font-size: 13pt; font-weight: 700; letter-spacing: -0.01em;
+    margin: 26px 0 2px; padding-bottom: 6px;
+    border-bottom: 1.5px solid var(--line);
+    break-after: avoid;
+  }
+  .sectionnote { color: var(--muted); font-size: 9pt; margin: 7px 0 0; break-after: avoid; }
+
+  .item { margin-top: 15px; break-inside: avoid; }
+  .item h3 { font-size: 11pt; font-weight: 700; color: var(--ink); margin: 0 0 3px; break-after: avoid; }
+  .item h3 .where {
+    font-size: 7.5pt; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--purple); background: var(--tint); padding: 2px 6px; border-radius: 4px;
+    margin-left: 8px; vertical-align: 2px;
+  }
+  .item p { margin: 0; color: var(--slate); }
+  .item p + p { margin-top: 5px; }
+  .item strong { color: var(--ink); font-weight: 600; }
+
+  .box {
+    margin-top: 20px; border: 1px solid var(--amber-line); border-radius: 8px;
+    background: var(--amber-bg); padding: 14px 18px; break-inside: avoid;
+  }
+  .box .tag { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 4px; }
+  .box h3 { margin: 0 0 5px; font-size: 11.5pt; color: var(--amber); }
+  .box p { margin: 0; color: var(--slate); font-size: 9.8pt; }
+
+  footer { margin-top: 30px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="eyebrow">Wergonic · Product</div>
+  <h1>Planned functional changes</h1>
+  <p class="lede">
+    What customers and users will see change over the next two weeks, across the web platform and the mobile app.
+    Team: <strong>two web developers and one mobile developer</strong>.
+  </p>
+  <p class="meta">29 July 2026</p>
+</div>
+
+<h2>Web platform</h2>
+<p class="sectionnote">The referral feature is the largest item of the two weeks; the rest of the web work is sized around it.</p>
+
+<div class="item">
+  <h3>Referral registration <span class="where">Web</span></h3>
+  <p>An approved company gets a link they can share. Companies they refer register through that link and start using Wergonic immediately, with no manual approval step from us.</p>
+</div>
+
+<div class="item">
+  <h3>Graphs and full time series open by default <span class="where">Web</span></h3>
+  <p>Users currently have to expand them manually every time they open a report. Small change, immediately noticeable.</p>
+</div>
+
+<div class="item">
+  <h3>Correct the "Measured this month" figure <span class="where">Web</span></h3>
+  <p>The Workers page always shows zero today, so customers are looking at a number we know is wrong.</p>
+</div>
+
+<div class="item">
+  <h3>Demo organization <span class="where">Web</span></h3>
+  <p>A ready-made company for showing the product to prospects. It comes preloaded with the setup data — activities, conditions, profiles and similar.</p>
+  <p>It will <strong>not</strong> come with ready-made risk assessments or measurements. Our testing is focused on whether new measurements and assessments are created correctly, which tells us far more than reviewing pre-made ones that already show sensible numbers. Instead we will add a script that cleans the demo organization periodically so it never fills up.</p>
+</div>
+
+<div class="item">
+  <h3>Session cleanup <span class="where">Web</span></h3>
+  <p>Clear the junk and test sessions out of production so demos and customer views show real data.</p>
+</div>
+
+<h2>Mobile app</h2>
+
+<div class="item">
+  <h3>Quick start reuses the last calibration <span class="where">Mobile</span></h3>
+  <p>Skip calibration when we already have valid data from the previous session, with a warning to re-calibrate if the sensors or the t-shirt have moved. This removes the slowest step of starting a measurement.</p>
+</div>
+
+<div class="item">
+  <h3>Clearer sensor combination message <span class="where">Mobile</span></h3>
+  <p>Today the app says the combination is impossible. It needs to say plainly that both the forearm and hand sensors are required.</p>
+</div>
+
+<div class="item">
+  <h3>Default condition sets <span class="where">Mobile</span></h3>
+  <p>Ready-made General and Industrial conditions, so a new customer does not start from an empty list.</p>
+</div>
+
+<div class="item">
+  <h3>Updated manual with screenshots <span class="where">Mobile</span></h3>
+  <p>Including what actually happens when a sensor loses connection and how long we keep retrying, which customers keep asking about.</p>
+</div>
+
+<h2>Design</h2>
+<p class="sectionnote">These are design deliverables for this period. The build of each one comes after the design is signed off.</p>
+
+<div class="item">
+  <h3>User tour</h3>
+  <p>The design may be finished within this period.</p>
+</div>
+
+<div class="item">
+  <h3>Dark theme</h3>
+  <p>Design for a dark theme across the client panel.</p>
+</div>
+
+<div class="item">
+  <h3>Session comparison and combined Excel reports</h3>
+  <p>Design for comparing sessions against each other, and for the combined Excel report that comes out of it.</p>
+</div>
+
+<div class="item">
+  <h3>Email templates</h3>
+  <p>Updated design for the emails our customers receive from us.</p>
+</div>
+
+<h2>Dependencies and open items</h2>
+
+<div class="item">
+  <h3>Video-based analysis (MediaPipe) — waiting on you</h3>
+  <p>I need a recorded video together with its measurement data before I can continue on this. Nothing moves until that arrives.</p>
+</div>
+
+<div class="item">
+  <h3>Strength signal stability</h3>
+  <p>We will have time to look at it, but I cannot give an estimate on this one until we know what is causing it.</p>
+</div>
+
+<div class="item">
+  <h3>Activity logging — walking, running, cycling, driving</h3>
+  <p>Depends on phone permissions we have not verified yet. Needs investigation before we commit to it.</p>
+</div>
+
+<div class="item">
+  <h3>Voice commands for hands-free calibration</h3>
+  <p>A real feature, but it does not fit this period and needs its own planning.</p>
+</div>
+
+<div class="item">
+  <h3>Declaring an idle hour mid-measurement</h3>
+  <p>There is no way today to mark an hour that had no break and no activity. Planned for the next cycle.</p>
+</div>
+
+<div class="box">
+  <span class="tag">Important</span>
+  <h3>This list covers functional changes only</h3>
+  <p>Our top priority right now is the technical debt we created by rushing the last large release, particularly on the web side. That work does not appear above because it is not visible as a feature, but it is where a significant part of the team's time is going.</p>
+</div>
+
+<footer>
+  Wergonic · Planned functional changes · 29 July 2026
+</footer>
+
+</body>
+</html>

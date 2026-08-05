@@ -1,0 +1,204 @@
+=== TASKS (2026-03-30 to 2026-05-01 | statuses: Testing; Ready to Deploy; Deployed) — 164 row(s) ===
+task_id,parent_task_id,title,description,status,priority,type,platform,assignees,assignee_emails,total_hours_in_period,total_hours_all_time,latest_log_date,start_date,due_date,end_date,comment_count,file_count,created_by_name,created_at,updated_at
+WH-194,,Extract AbstractTimestampModel,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-05-01,,,,0,0,Assia Madani,2026-05-03T23:26:36.410Z,2026-05-03T23:26:36.410Z
+WH-193,,Test web app ,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-05-01,,,,0,0,Assia Madani,2026-05-03T23:24:52.133Z,2026-05-03T23:24:52.133Z
+WH-192,,Extract a CalculationService ,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,3.5,3.5,2026-05-01,,,,0,0,Assia Madani,2026-05-03T23:21:44.259Z,2026-05-04T21:46:26.393Z
+WH-191,,updated the landing page assets ,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,2,2,2026-05-01,,2026-05-01,,0,0,Khadidja Cheurfi,2026-05-01T22:34:40.747Z,2026-05-01T22:34:40.747Z
+WH-190,,finished updating landing page,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,2,2,2026-05-01,,2026-05-01,,0,0,Khadidja Cheurfi,2026-05-01T22:33:53.533Z,2026-05-01T22:33:53.533Z
+WH-188,,add printing and logs to determin why the cascading happen,,Testing,urgent,research,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,4,4,2026-05-01,,,,0,0,Sidali Bedrani,2026-05-01T14:28:04.125Z,2026-05-04T16:32:50.453Z
+WH-187,,"Centralize ""is in active org"" check into a custom DRF permission",,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-30,,,,0,0,Assia Madani,2026-04-30T23:22:48.558Z,2026-04-30T23:22:48.558Z
+WH-186,,Migrate URL routing to DRF DefaultRouter for ViewSets	,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,3,3,2026-04-30,,,,0,0,Assia Madani,2026-04-30T23:21:31.397Z,2026-05-03T23:20:17.401Z
+WH-185,,Move M2M event-creation logic out of EventCreateSerializer.create,,Ready to Deploy,low,improvement,General,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-30,,,,0,0,Assia Madani,2026-04-30T23:18:55.243Z,2026-04-30T23:18:55.243Z
+WH-183,,updated the rula continue template ,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,2,2,2026-04-30,,2026-04-30,,0,0,Khadidja Cheurfi,2026-04-30T23:02:47.704Z,2026-04-30T23:02:47.704Z
+WH-176,,test which reconnected limb provoke the reconnection,,Ready to Deploy,urgent,research,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,2,2,2026-04-30,,,,0,0,Sidali Bedrani,2026-04-30T10:09:33.072Z,2026-04-30T11:41:25.145Z
+WH-174,,updated the prototype dark mode ,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,3,3,2026-04-30,,2026-04-29,,0,0,Khadidja Cheurfi,2026-04-29T14:16:32.611Z,2026-04-29T14:16:32.611Z
+WH-172,,"Move Firebase calls into a FirebaseService, out of serializers",,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1.5,1.5,2026-04-30,,,,0,0,Assia Madani,2026-04-27T23:40:40.246Z,2026-04-30T23:20:26.879Z
+WH-167,,fix the recovering of the stream when the limb reconnect,,Testing,urgent,feature,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,6,6,2026-04-30,,,,0,0,Sidali Bedrani,2026-04-27T19:49:21.875Z,2026-04-30T15:00:09.965Z
+WH-182,,Offload heavy StatsView calculations to Celery,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,2,2,2026-04-29,,,,0,0,Assia Madani,2026-04-30T23:02:45.263Z,2026-04-30T23:02:45.263Z
+WH-181,,"Add DB indexes: Session(organization, started_at, status), RAMPAssessment(organization, date), User(email)",,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-29,,,,0,0,Assia Madani,2026-04-30T22:42:04.159Z,2026-04-30T22:42:04.159Z
+WH-180,,Replace bare except Exception: blocks with specific exceptions + logging ,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-29,,,,0,0,Assia Madani,2026-04-30T22:33:47.239Z,2026-04-30T22:33:47.239Z
+WH-179,,Remove db.sqlite3 from repo,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-29,,,,0,0,Assia Madani,2026-04-30T22:32:31.258Z,2026-04-30T22:32:31.258Z
+WH-177,,Break up oversized view files,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-29,,,,0,0,Assia Madani,2026-04-30T10:34:42.871Z,2026-04-30T10:34:42.871Z
+WH-175,,clean duplicated imports,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.25,0.25,2026-04-29,,,,0,0,Assia Madani,2026-04-30T09:58:25.777Z,2026-04-30T09:58:25.777Z
+WH-173,,finished updating the assets for home page,made assets ( he used images) in figma,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,4,4,2026-04-29,,2026-04-28,,0,0,Khadidja Cheurfi,2026-04-28T13:51:31.312Z,2026-04-28T13:52:37.772Z
+WH-171,,Move Firebase storage.bucket().list_blobs() out of serializer to async/Celery,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-27,,,,0,0,Assia Madani,2026-04-27T23:39:56.362Z,2026-04-27T23:39:56.362Z
+WH-170,,Wrap Event get_or_create in transaction.atomic + select_for_update	,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-27,,,,0,0,Assia Madani,2026-04-27T23:38:08.327Z,2026-04-27T23:38:08.327Z
+WH-169,,Add select_related/prefetch_related on RAMPAssessmentListCreateView	,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-27,,,,0,0,Assia Madani,2026-04-27T23:36:33.361Z,2026-04-27T23:36:33.361Z
+WH-168,,Fix N+1 in CategoryViewSerializer.get_labels / get_used	,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-27,,,,0,0,Assia Madani,2026-04-27T23:35:52.478Z,2026-04-27T23:35:52.478Z
+WH-165,,fix the reconnection throw all the app ,,Ready to Deploy,medium,bug,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,3,3,2026-04-27,,,,0,0,Sidali Bedrani,2026-04-27T19:48:13.093Z,2026-04-28T19:34:42.490Z
+WH-164,,adding interactions and updating the assets for the home page,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,2,2,2026-04-27,,2026-04-27,,0,0,Khadidja Cheurfi,2026-04-27T15:26:13.803Z,2026-04-27T15:26:13.803Z
+WH-163,,updating the landing page ( home page),,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,1.5,1.5,2026-04-27,,2026-04-27,,0,0,Khadidja Cheurfi,2026-04-27T15:10:05.694Z,2026-04-27T15:10:05.694Z
+WH-161,,Fix Firebase appcheck 403,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,2.5,2.5,2026-04-27,,,,0,0,Assia Madani,2026-04-27T09:49:30.165Z,2026-04-27T23:24:36.315Z
+WH-157,,Fix problems related to react table upgrade,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,4,4,2026-04-27,,,,0,0,Assia Madani,2026-04-24T22:06:35.433Z,2026-04-27T23:24:54.405Z
+WH-160,,Remove full lodash imports,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-24,,,,0,0,Assia Madani,2026-04-27T08:39:00.725Z,2026-04-27T08:39:00.725Z
+WH-159,,Add QueryBoundary with loading and error states ,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-24,,,,0,0,Assia Madani,2026-04-27T08:37:49.943Z,2026-04-27T08:37:49.943Z
+WH-158,,"Add rel=""noopener noreferrer"" to all external links",,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-24,,,,0,0,Assia Madani,2026-04-26T15:57:20.801Z,2026-04-26T15:57:20.801Z
+WH-156,,"added the template for the mec , ramp",,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,3,3,2026-04-24,,2026-04-24,,0,0,Khadidja Cheurfi,2026-04-24T21:04:26.371Z,2026-04-24T21:04:26.371Z
+WH-155,,"added the continue assessment templates for rula , reba",design + prototype,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,3,3,2026-04-24,,2026-04-24,,0,0,Khadidja Cheurfi,2026-04-24T21:02:52.970Z,2026-04-24T21:03:13.199Z
+WH-154,,add visual to calibration and recording to always check if the sensors are connected,,Ready to Deploy,medium,improvement,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,4,4,2026-04-24,,,,0,0,Sidali Bedrani,2026-04-24T14:49:30.136Z,2026-04-28T19:34:40.213Z
+WH-144,,fix in calibration when the pairing of errored sensors why they disconnect the other limbs,,Ready to Deploy,urgent,bug,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,5,5,2026-04-24,,,,0,0,Sidali Bedrani,2026-04-22T21:30:18.454Z,2026-04-28T19:33:22.934Z
+WH-140,,fix when sensor is paired and remove battery then put it on again it's not discoverable,,Ready to Deploy,medium,bug,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,3,3,2026-04-24,,,,0,0,Sidali Bedrani,2026-04-21T20:20:36.585Z,2026-04-28T19:33:33.626Z
+WH-153,,"Upgrade axios, xlsx, and firebase to latest version",,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1.5,1.5,2026-04-23,,,,0,0,Assia Madani,2026-04-23T22:14:25.216Z,2026-04-23T22:14:25.216Z
+WH-151,,Migrate react-table v7 ==> TanStack Table v8,,Ready to Deploy,medium,improvement,Web,Assia Madani,assia.madani@wergonic.com,4,4,2026-04-23,,,,0,0,Assia Madani,2026-04-23T22:12:13.297Z,2026-04-24T22:05:42.609Z
+WH-150,,fixed some issues in the dark mode,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,2,2,2026-04-23,,2026-04-23,,0,0,Khadidja Cheurfi,2026-04-23T21:37:31.598Z,2026-04-23T21:37:31.598Z
+WH-149,,React Query v4 → v5 migration,,Ready to Deploy,medium,improvement,Web,Assia Madani,assia.madani@wergonic.com,1.5,1.5,2026-04-23,,,,0,0,Assia Madani,2026-04-22T23:17:51.474Z,2026-04-23T22:05:34.674Z
+WH-148,,Replace a batch of @ts-ignore / as any with real types,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,2,2,2026-04-22,,,,0,0,Assia Madani,2026-04-22T23:15:00.497Z,2026-04-22T23:15:00.497Z
+WH-147,,Sentry DSN: remove hardcoded fallback in prod;,,Ready to Deploy,low,bug,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-22,,,,0,0,Assia Madani,2026-04-22T23:14:05.170Z,2026-04-22T23:14:05.170Z
+WH-146,,Search and test new updates,,Ready to Deploy,low,research,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-22,,,,0,0,Assia Madani,2026-04-22T23:10:19.198Z,2026-04-22T23:10:19.198Z
+WH-143,,Extract repeated patterns from ui and document in Storybook,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,2,2,2026-04-22,,,,0,0,Assia Madani,2026-04-22T18:04:47.308Z,2026-04-24T22:06:55.783Z
+WH-142,,narrow down the pairing of errored sensors why they disconnect the other limbs,,Ready to Deploy,medium,research,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,6,6,2026-04-22,,,,0,0,Sidali Bedrani,2026-04-22T14:27:06.853Z,2026-04-28T19:33:25.207Z
+WH-139,,updated the dashboard page,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,2,2,2026-04-21,,2026-04-21,,0,0,Khadidja Cheurfi,2026-04-21T19:50:51.879Z,2026-04-21T22:05:48.830Z
+WH-138,,BLE stack fixes done ,"Komposti disable failure is now visible in Sentry
+Retry state doesn't survive session boundary
+Stale-GATT retry loop is gone
+Calibration timers are cancellable
+Pairing pipeline cannot hang the global lock",Ready to Deploy,high,bug,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,2,2,2026-04-21,,,,0,0,Sidali Bedrani,2026-04-21T15:11:25.093Z,2026-04-28T19:33:37.206Z
+WH-137,,analyze and created a report for the branch farhad_claude,,Deployed,high,bug,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,2,2,2026-04-21,,,,0,0,Sidali Bedrani,2026-04-21T13:18:20.591Z,2026-04-21T13:18:24.345Z
+WH-129,,fix reconnection and subscription in calibration and pairing,,Ready to Deploy,urgent,bug,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,4,4,2026-04-21,,,,0,0,Sidali Bedrani,2026-04-18T19:07:15.210Z,2026-04-28T19:33:55.452Z
+WH-141,,added the icons library,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,1,1,2026-04-20,,2026-04-20,,0,0,Khadidja Cheurfi,2026-04-21T22:07:18.028Z,2026-04-21T22:07:18.028Z
+WH-136,,Backend refactoring research ,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-20,,,,0,0,Assia Madani,2026-04-20T17:34:40.475Z,2026-04-20T17:34:40.475Z
+WH-135,,updating dark mode,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,3,3,2026-04-20,,2026-04-20,,0,0,Khadidja Cheurfi,2026-04-20T16:45:49.001Z,2026-04-21T22:06:16.315Z
+WH-134,,New Design Preview,,Ready to Deploy,low,research,Design,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-20,,,,0,0,Assia Madani,2026-04-20T10:04:43.203Z,2026-04-20T10:04:43.203Z
+WH-110,,find and clean backend dirty code,,Ready to Deploy,medium,improvement,Web,Assia Madani,assia.madani@wergonic.com,9,9,2026-04-20,,,,0,0,Assia Madani,2026-04-15T10:30:07.024Z,2026-04-27T23:25:17.255Z
+WH-128,,add timeout when sensor has no power and auto reconnect when his ready to connect,,Ready to Deploy,urgent,improvement,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,1,1,2026-04-18,,,,0,0,Sidali Bedrani,2026-04-18T15:50:32.920Z,2026-04-28T19:33:57.871Z
+WH-127,,add app level connection status for sensor,,Ready to Deploy,medium,improvement,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,2,2,2026-04-18,,,,0,0,Sidali Bedrani,2026-04-18T14:02:51.093Z,2026-04-28T19:34:02.937Z
+WH-118,,fix bond established at OS level + GATT session when sensor loose power,if the sensor loose power or the battery is disconnected remove the auto reconnect that is not exposed as an abstraction function use kotlin to set it to false,Ready to Deploy,urgent,bug,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,2,2,2026-04-18,,,,0,0,Sidali Bedrani,2026-04-17T15:53:48.341Z,2026-04-28T19:34:06.167Z
+WH-131,,Fix Image in home page,,Ready to Deploy,medium,improvement,Web,Assia Madani,assia.madani@wergonic.com,2,2,2026-04-17,,,,0,0,Assia Madani,2026-04-19T23:08:36.168Z,2026-04-19T23:08:36.168Z
+WH-121,,improve the tags pages,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,1,1,2026-04-17,,2026-04-17,,0,0,Khadidja Cheurfi,2026-04-18T09:24:51.553Z,2026-04-18T09:24:51.553Z
+WH-120,,improving the layout for the processes design ,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,1,1,2026-04-17,,2026-04-17,,0,0,Khadidja Cheurfi,2026-04-18T09:23:59.305Z,2026-04-18T09:23:59.305Z
+WH-119,,adding the dark mode to the prototype,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,3,3,2026-04-17,,2026-04-17,,0,0,Khadidja Cheurfi,2026-04-18T09:22:47.922Z,2026-04-18T09:22:47.922Z
+WH-117,,Fix CI/CD frontend pipeline,,Ready to Deploy,medium,improvement,Web,Assia Madani,assia.madani@wergonic.com,2,2,2026-04-17,,,,0,0,Assia Madani,2026-04-17T14:50:33.256Z,2026-04-17T14:50:33.256Z
+WH-116,,Fix Landing page margins,,Testing,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,3.5,3.5,2026-04-17,,,,0,0,Assia Madani,2026-04-16T21:18:12.498Z,2026-04-20T15:27:03.218Z
+WH-71,,tested the app with new changes and try reproduce the bug,,Ready to Deploy,medium,research,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,14,14,2026-04-17,,,,0,0,Sidali Bedrani,2026-04-09T19:12:43.868Z,2026-04-28T19:34:27.612Z
+WH-123,,made the design system for the dark mode ,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,3,3,2026-04-16,,2026-04-16,,0,0,Khadidja Cheurfi,2026-04-18T09:33:17.659Z,2026-04-18T09:33:17.659Z
+WH-122,,adding compare  assessments to the prototype,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,3,3,2026-04-16,,2026-04-16,,0,0,Khadidja Cheurfi,2026-04-18T09:32:04.729Z,2026-04-18T09:32:04.729Z
+WH-115,,Fix User invite issue,,Ready to Deploy,low,bug,Web,Assia Madani,assia.madani@wergonic.com,2,2,2026-04-16,,,,0,0,Assia Madani,2026-04-16T21:17:29.698Z,2026-04-16T21:17:29.698Z
+WH-114,,deconnection of the sensor during recording,,Testing,medium,bug,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,2,2,2026-04-16,,,,0,0,Sidali Bedrani,2026-04-16T20:14:36.991Z,2026-04-18T14:02:57.857Z
+WH-113,,ed cache checking before pairing to not pair in the place of another sensor,,Ready to Deploy,medium,improvement,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,2,2,2026-04-16,,,,0,0,Sidali Bedrani,2026-04-16T20:13:55.083Z,2026-04-28T19:34:21.266Z
+WH-112,,fix the finishing measurment hang,due to a completer that hang,Ready to Deploy,urgent,bug,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,2,2,2026-04-16,,,,0,0,Sidali Bedrani,2026-04-16T11:38:52.089Z,2026-04-16T20:17:27.328Z
+WH-111,,simplfy the paring ,,Ready to Deploy,urgent,bug,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,3,3,2026-04-16,,,,0,0,Sidali Bedrani,2026-04-16T11:37:47.747Z,2026-04-16T20:17:25.005Z
+WH-132,,clean github ,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.3,0.3,2026-04-14,,,,0,0,Assia Madani,2026-04-19T23:27:42.448Z,2026-04-19T23:27:42.448Z
+WH-124,,made the design for the compare Sessions ( 3 and 4 Sessions ),,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,4,4,2026-04-14,,2026-04-14,,0,0,Khadidja Cheurfi,2026-04-18T09:35:01.576Z,2026-04-18T09:35:01.576Z
+WH-109,,Remove 2 nd UI version in landing page,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-14,,,,0,0,Assia Madani,2026-04-15T10:28:05.331Z,2026-04-15T10:28:05.331Z
+WH-108,,Enhance Landing page Data protection,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-14,,,,0,0,Assia Madani,2026-04-15T10:25:36.815Z,2026-04-15T10:25:36.815Z
+WH-107,,Enhance Landing page footer,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.3,0.3,2026-04-14,,,,0,0,Assia Madani,2026-04-15T10:24:34.136Z,2026-04-15T10:24:34.136Z
+WH-106,,Added to Finish and break buttons try catch to make them not stuck when offline/online switch,,Ready to Deploy,medium,bug,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,2,2,2026-04-14,,,,0,0,Sidali Bedrani,2026-04-14T16:41:09.727Z,2026-04-16T20:17:35.948Z
+WH-105,,Ehnace Landing About page,,Ready to Deploy,medium,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-14,,,,0,0,Assia Madani,2026-04-14T16:33:03.027Z,2026-04-15T10:23:51.240Z
+WH-104,,Enhance Landing Products page,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-14,,,,0,0,Assia Madani,2026-04-14T16:32:18.834Z,2026-04-14T16:32:18.834Z
+WH-103,,Enhance Landing DPA page,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1.5,1.5,2026-04-14,,,,0,0,Assia Madani,2026-04-14T16:31:40.963Z,2026-04-14T16:31:40.963Z
+WH-100,,Fix landing page Contact page,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-14,,,,0,0,Assia Madani,2026-04-13T16:54:57.580Z,2026-04-14T16:32:25.951Z
+WH-96,,add a check if the sensor is reachable and not in sleep mode when the pairing start,,Ready to Deploy,urgent,research,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,5,5,2026-04-14,,,,0,0,Sidali Bedrani,2026-04-13T12:27:27.054Z,2026-04-17T15:51:47.942Z
+WH-125,,updating the settings page,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,2,2,2026-04-13,,2026-04-13,,0,0,Khadidja Cheurfi,2026-04-18T09:37:03.147Z,2026-04-18T09:37:03.147Z
+WH-102,,finished the prototype,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,1,1,2026-04-13,,2026-04-13,,0,0,Khadidja Cheurfi,2026-04-14T09:06:59.092Z,2026-04-14T09:06:59.092Z
+WH-101,,finished updating all the details pages ,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,1,1,2026-04-13,,2026-04-13,,0,0,Khadidja Cheurfi,2026-04-14T09:06:00.354Z,2026-04-14T09:06:00.354Z
+WH-99,,Fix landing home page,,Ready to Deploy,medium,improvement,Web,Assia Madani,assia.madani@wergonic.com,2,2,2026-04-13,,,,0,0,Assia Madani,2026-04-13T16:54:01.180Z,2026-04-13T16:54:01.180Z
+WH-98,,create a feature flag to manually reconnect saved sensors,,Ready to Deploy,urgent,feature,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,1,1,2026-04-13,,,,0,0,Sidali Bedrani,2026-04-13T15:20:15.114Z,2026-04-16T20:17:39.830Z
+WH-92,,improve the layout + add new interactions to the ui,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,6,6,2026-04-13,,2026-04-08,,0,0,Khadidja Cheurfi,2026-04-13T07:17:18.820Z,2026-04-18T11:31:57.389Z
+WH-88,,Updated the ui ( layout and components ),,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,3,3,2026-04-13,,2026-04-06,,0,0,Khadidja Cheurfi,2026-04-13T06:12:56.517Z,2026-04-13T06:12:56.517Z
+WH-87,,Testing backend performance,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,2,2,2026-04-13,,,,0,0,Assia Madani,2026-04-12T22:30:36.264Z,2026-04-13T16:53:26.350Z
+WH-126,,charts in the dashboard prototype,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,1,1,2026-04-10,,2026-04-10,,0,0,Khadidja Cheurfi,2026-04-18T10:30:09.945Z,2026-04-18T10:30:09.945Z
+WH-86,,Implement lazy-loaded dashboard pages,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-10,,,,0,0,Assia Madani,2026-04-12T22:23:27.436Z,2026-04-12T22:24:24.099Z
+WH-85,,Test frontend and search for other possible enhancements,,Ready to Deploy,low,research,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-10,,,,0,0,Assia Madani,2026-04-10T19:50:14.225Z,2026-04-12T22:17:12.049Z
+WH-84,,"Fix stuck ""no more data"" state after filter/limit changes",,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-10,,,,0,0,Assia Madani,2026-04-10T19:49:15.543Z,2026-04-10T19:49:15.543Z
+WH-83,,Guard active sessions live listener against invalid paths,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-10,,,,0,0,Assia Madani,2026-04-10T19:48:24.478Z,2026-04-10T19:48:24.478Z
+WH-82,,Fix Firestore queries firing with undefined organizationI,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-10,,,,0,0,Assia Madani,2026-04-10T19:47:28.197Z,2026-04-10T19:50:50.949Z
+WH-81,,Fix wrong error context strings,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.3,0.3,2026-04-10,,,,0,0,Assia Madani,2026-04-10T19:46:41.262Z,2026-04-10T19:46:41.262Z
+WH-80,,Fixe stale charts when switching session tabs,,Ready to Deploy,low,bug,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-10,,,,0,0,Assia Madani,2026-04-10T19:45:56.479Z,2026-04-10T19:45:56.479Z
+WH-79,,General backend code cleaning,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-10,,,,0,0,Assia Madani,2026-04-10T19:23:51.647Z,2026-04-10T19:23:51.647Z
+WH-78,,fixe the work cycle sync bug,,Ready to Deploy,medium,bug,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,2,2,2026-04-10,,,,0,0,Sidali Bedrani,2026-04-10T16:22:15.380Z,2026-04-28T19:34:25.522Z
+WH-76,,updating the compare sessions + sections layout ,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,3,3,2026-04-10,,2026-04-10,,0,0,Khadidja Cheurfi,2026-04-10T13:34:53.259Z,2026-04-18T10:28:20.839Z
+WH-58,,investigate pairing problem if it can be solved,,Ready to Deploy,urgent,research,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,10,10,2026-04-10,,,,0,0,Sidali Bedrani,2026-04-08T13:14:21.367Z,2026-04-28T19:34:28.938Z
+WH-95,,Update the Review Work Session,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,1,1,2026-04-09,,2026-04-09,,0,0,Khadidja Cheurfi,2026-04-13T07:21:02.771Z,2026-04-13T07:21:02.771Z
+WH-94,,update the setting pages + processes design,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,2,2,2026-04-09,,2026-04-09,,0,0,Khadidja Cheurfi,2026-04-13T07:20:19.293Z,2026-04-13T07:20:19.293Z
+WH-93,,improve the layout in the Compare Sessions prototype,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,1,1,2026-04-09,,2026-04-09,,0,0,Khadidja Cheurfi,2026-04-13T07:18:30.868Z,2026-04-13T07:18:30.868Z
+WH-74,,Remove the celery-beat service,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-09,,,,0,0,Assia Madani,2026-04-09T22:15:53.274Z,2026-04-10T19:23:13.035Z
+WH-73,,Remove redundant verbose connection management,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-09,,,,0,0,Assia Madani,2026-04-09T22:14:59.484Z,2026-04-09T22:14:59.484Z
+WH-72,,Add sanitize for json data,,Ready to Deploy,medium,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-09,,,,0,0,Assia Madani,2026-04-09T22:14:01.946Z,2026-04-09T22:14:01.946Z
+WH-70,,Session Stuck in processing ,,Ready to Deploy,medium,bug,Web,Assia Madani,assia.madani@wergonic.com,1.5,1.5,2026-04-09,,,,0,0,Assia Madani,2026-04-09T17:56:29.191Z,2026-04-09T22:13:22.197Z
+WH-68,,separate more the conneting step and add translation and more step to pin point the problem,,Ready to Deploy,high,improvement,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,2,2,2026-04-09,,,,0,0,Sidali Bedrani,2026-04-09T13:31:01.906Z,2026-04-09T13:31:06.063Z
+WH-67,,Fix N+1 Firebase fetches,,Ready to Deploy,medium,bug,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-09,,,,0,0,Assia Madani,2026-04-09T13:15:18.508Z,2026-04-09T17:56:05.598Z
+WH-66,,Test and search for other possible enhancements,,Ready to Deploy,low,research,Web,Assia Madani,assia.madani@wergonic.com,2,2,2026-04-09,,,,0,0,Assia Madani,2026-04-09T09:17:39.417Z,2026-04-09T13:14:42.737Z
+WH-62,,Fix: merge Sessions,,Ready to Deploy,low,bug,Web,Assia Madani,assia.madani@wergonic.com,2,2,2026-04-08,,,,0,0,Assia Madani,2026-04-08T22:35:46.351Z,2026-04-08T22:35:46.351Z
+WH-61,,Improved Backend CI/CD Pipeline,,Ready to Deploy,medium,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-08,,,,0,0,Assia Madani,2026-04-08T22:34:48.796Z,2026-04-08T22:34:48.796Z
+WH-60,,Optmize DB queries for session Stats calculations,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,2,2,2026-04-08,,,,0,0,Assia Madani,2026-04-08T22:32:59.572Z,2026-04-08T22:32:59.572Z
+WH-59,,Improve caching with Redis,,Ready to Deploy,medium,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-08,,,,0,0,Assia Madani,2026-04-08T22:31:55.287Z,2026-04-08T22:31:55.287Z
+WH-57,,retest and recheck the PR's from abdelkader,,Deployed,urgent,improvement,Web,Sidali Bedrani,sidali.bedrani@wergonic.com,3,3,2026-04-08,,,,0,0,Sidali Bedrani,2026-04-08T13:02:49.666Z,2026-04-08T13:02:49.666Z
+WH-28,,Move Excel/Word to Celery task + downloadable link,,Ready to Deploy,low,feature,Web,Assia Madani,assia.madani@wergonic.com,4,4,2026-04-08,,,,0,0,Assia Madani,2026-04-01T18:38:29.511Z,2026-04-08T22:30:25.355Z
+WH-91,,updated the design system ,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,1,1,2026-04-07,,2026-04-07,,0,0,Khadidja Cheurfi,2026-04-13T07:15:53.291Z,2026-04-18T11:32:31.865Z
+WH-90,,added the detailed pages to the prototype ,,Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,1,1,2026-04-07,,2026-04-07,,0,0,Khadidja Cheurfi,2026-04-13T07:14:31.778Z,2026-04-13T07:14:31.778Z
+WH-89,,started the prototype in claude ,"made the main pages (dashboard. sessions , assessments ...)",Deployed,medium,improvement,Design,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,4,4,2026-04-06,,2026-04-06,,0,0,Khadidja Cheurfi,2026-04-13T07:12:36.471Z,2026-04-13T07:12:36.471Z
+WH-44,,Handle Delete users cases,,Ready to Deploy,low,bug,Web,Assia Madani,assia.madani@wergonic.com,1.5,1.5,2026-04-05,,,,0,0,Assia Madani,2026-04-05T19:16:15.298Z,2026-04-05T19:16:15.298Z
+WH-43,,Prevent Task based report generation for sessions with no tasks,,Ready to Deploy,medium,improvement,Web,Assia Madani,assia.madani@wergonic.com,1.5,1.5,2026-04-05,,,,0,0,Assia Madani,2026-04-05T19:15:02.150Z,2026-04-05T19:15:02.150Z
+WH-42,,NotificationButton null bug,,Ready to Deploy,low,bug,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-05,,,,0,0,Assia Madani,2026-04-05T19:11:56.895Z,2026-04-05T19:11:56.895Z
+WH-41,,React packages improvement,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-05,,,,0,0,Assia Madani,2026-04-05T19:10:59.823Z,2026-04-05T19:10:59.823Z
+WH-40,,Firebase fix ,,Ready to Deploy,low,bug,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-05,,,,0,0,Assia Madani,2026-04-05T19:10:24.322Z,2026-04-05T19:10:24.322Z
+WH-39,,Fix loose equality != -> !== in codebase.,,Ready to Deploy,medium,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-05,,,,0,0,Assia Madani,2026-04-05T19:09:21.973Z,2026-04-05T19:09:21.973Z
+WH-38,,Remove dead break after return in translateRole.ts.,,Ready to Deploy,medium,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-05,,,,0,0,Assia Madani,2026-04-05T19:08:45.981Z,2026-04-05T19:09:36.559Z
+WH-48,,"checked, tested, merged the code of abdelkade",,Deployed,high,feature,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,4,4,2026-04-03,,,,0,0,Sidali Bedrani,2026-04-07T09:07:33.682Z,2026-04-07T09:07:33.682Z
+WH-37,,Merge and Fix conficts in PR#381 and test PR #373,"- Fix conficts in PR#381 and test PR #373
+- Merge PRs  #381 and #373",Ready to Deploy,low,feature,Mobile,"Abdelkader Barhoumi, Sidali Bedrani","abdelkader.barhoumi@wergonic.com, sidali.bedrani@wergonic.com",2,2,2026-04-03,,2026-04-03,,0,0,Abdelkader Barhoumi,2026-04-03T16:07:42.788Z,2026-04-03T16:07:56.174Z
+WH-36,,"Enforce correct error handling pattern across session, session_report, and session_sync ",,Ready to Deploy,low,improvement,Mobile,Abdelkader Barhoumi,abdelkader.barhoumi@wergonic.com,6,6,2026-04-03,,2026-04-03,,0,0,Abdelkader Barhoumi,2026-04-03T16:05:49.652Z,2026-04-29T22:10:09.313Z
+WH-11,,add visual to see how many session are synced and not synced ,"in session listing add metrics of synced and none synced session
+in welcome screen add a sort of notification of how many not synced session are there",Ready to Deploy,medium,improvement,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,2.5,2.5,2026-04-03,,,,0,0,Sidali Bedrani,2026-04-01T10:12:19.663Z,2026-04-02T16:10:10.289Z
+WH-34,,Zip deleted on failure,,Ready to Deploy,medium,bug,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,2,2,2026-04-02,,,,0,0,Sidali Bedrani,2026-04-02T16:09:49.061Z,2026-04-28T19:34:35.008Z
+WH-33,,Connectivity check pings to our backend for better connection check,,Ready to Deploy,medium,bug,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,1,1,2026-04-02,,,,0,0,Sidali Bedrani,2026-04-02T16:08:52.193Z,2026-04-16T20:17:52.458Z
+WH-32,,update test imports and rename test/sessions to test/session,,Ready to Deploy,low,improvement,Mobile,Abdelkader Barhoumi,abdelkader.barhoumi@wergonic.com,1.5,1.5,2026-04-02,,2026-04-02,,0,0,Abdelkader Barhoumi,2026-04-02T13:50:20.325Z,2026-04-29T22:10:11.235Z
+WH-31,,replace hardcoded sizes with AppSizes constants ,"- replace hardcoded sizes with AppSizes constants in session_sync_metrics widget 
+- replace hardcoded sizes with AppSizes constants in welcome unsynced banner widget",Ready to Deploy,low,improvement,Mobile,Abdelkader Barhoumi,abdelkader.barhoumi@wergonic.com,0.5,0.5,2026-04-02,,2026-04-02,,0,0,Abdelkader Barhoumi,2026-04-02T13:44:30.849Z,2026-04-29T22:10:10.387Z
+WH-30,,resolve all lint issues in the 3 session feature,"- resolve all lint issues in session feature
+- resolve all lint issues in session_report feature
+- resolve all lint issues in session_sync feature",Ready to Deploy,low,improvement,Mobile,Abdelkader Barhoumi,abdelkader.barhoumi@wergonic.com,1.5,1.5,2026-04-02,,2026-04-02,,0,0,Abdelkader Barhoumi,2026-04-02T13:43:25.419Z,2026-04-29T22:10:12.801Z
+WH-22,,refactore the session feature,"even if i somewhat refactored a little bit it still need a lot of work. 
+it's the messiest feature in the app and it could be at least be split into 3 separate features ( session, data saving/syncing, worker )",Deployed,medium,improvement,Mobile,"Abdelkader Barhoumi, Sidali Bedrani","abdelkader.barhoumi@wergonic.com, sidali.bedrani@wergonic.com",4.5,4.5,2026-04-02,,,,0,0,Sidali Bedrani,2026-04-01T10:29:00.813Z,2026-04-08T13:45:05.695Z
+WH-65,,Fix Single LOGGING dict in settings,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-04-01,,,,0,0,Assia Madani,2026-04-08T22:46:41.951Z,2026-04-08T22:46:41.951Z
+WH-64,,Fix Session list N+1 (prefetch assessments),,Ready to Deploy,low,bug,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-04-01,,,,0,0,Assia Madani,2026-04-08T22:44:54.054Z,2026-04-08T22:44:54.054Z
+WH-63,,Switch to channels_redis.core.RedisChannelLayer,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,1.5,1.5,2026-04-01,,,,0,0,Assia Madani,2026-04-08T22:43:05.226Z,2026-04-08T22:43:05.226Z
+WH-24,,rename typos in method and class names across codebase,"Rename throwFirebaseExeption -> throwFirebaseException
+Rename CheckWorkCategoriesExistanceUsecase CheckWorkCategoriesExistenceUsecase
+Rename logininWithEmail -> loginWithEmail
+Rename checkExpriedLinkResetPassword -> checkExpiredLinkResetPassword
+Rename formatTimeToDiffrence -> formatTimeToDifference",Ready to Deploy,low,improvement,Mobile,Abdelkader Barhoumi,abdelkader.barhoumi@wergonic.com,0.5,0.5,2026-04-01,,2026-04-01,,0,0,Abdelkader Barhoumi,2026-04-01T14:00:49.125Z,2026-04-29T22:10:12.038Z
+WH-23,,Hardcoded Strings -> Localization,"- Fix hardcoded string 
+- Remove unused strings keys in all the app",Ready to Deploy,low,improvement,Mobile,Abdelkader Barhoumi,abdelkader.barhoumi@wergonic.com,2.5,2.5,2026-04-01,,2026-04-01,,0,0,Abdelkader Barhoumi,2026-04-01T13:08:25.865Z,2026-04-29T22:10:14.859Z
+WH-10,,research for a good offline/online strategy,,Deployed,urgent,research,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,3,3,2026-04-01,,,,0,0,Sidali Bedrani,2026-04-01T09:46:42.182Z,2026-04-01T14:25:50.855Z
+WH-5,,Add `buildWhen` to BlocBuilder/BlocConsumer,"Add `buildWhen` to BlocBuilder/BlocConsumer  to reduces unnecessary widget rebuilds, improves FPS many BlocBuilder instances across the app, didn't use `buildWhen`",Ready to Deploy,medium,improvement,Mobile,Abdelkader Barhoumi,abdelkader.barhoumi@wergonic.com,4.5,4.5,2026-04-01,,2026-03-31,,0,0,Abdelkader Barhoumi,2026-03-31T14:37:42.691Z,2026-04-29T22:10:13.599Z
+WH-47,,planning a new way to solve the issue,,Deployed,urgent,feature,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,4,4,2026-03-31,,,,0,0,Sidali Bedrani,2026-04-07T09:03:06.532Z,2026-04-07T09:03:21.848Z
+WH-46,,Start Analyzing the whole code and working on a report on fixes priorities as requested,"explored the new app 
+finished analyzing the code for potential Issues
+created a report for the issues found",Deployed,urgent,research,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,6,6,2026-03-31,,,,0,0,Sidali Bedrani,2026-04-07T09:02:08.825Z,2026-04-07T09:05:23.543Z
+WH-8,,Duplicate Firebase downloads,,Ready to Deploy,,improvement,Web,Assia Madani,assia.madani@wergonic.com,1,1,2026-03-31,,,,0,0,Assia Madani,2026-03-31T16:24:45.337Z,2026-04-01T18:39:03.426Z
+WH-7,,Celery tuning,,Ready to Deploy,,feature,Web,Assia Madani,assia.madani@wergonic.com,0.5,0.5,2026-03-31,,,,0,0,Assia Madani,2026-03-31T16:23:31.629Z,2026-04-01T14:05:35.623Z
+WH-6,,Security Improvements in frontend,,Ready to Deploy,,improvement,Web,Assia Madani,assia.madani@wergonic.com,3,3,2026-03-31,,,,0,0,Assia Madani,2026-03-31T16:12:46.463Z,2026-04-01T18:39:17.516Z
+WH-4,,Create Code Improvements Backlog ,Code Improvements Backlog ,Ready to Deploy,low,improvement,Mobile,Abdelkader Barhoumi,abdelkader.barhoumi@wergonic.com,1.5,1.5,2026-03-31,,2026-03-31,,0,0,Abdelkader Barhoumi,2026-03-31T14:36:14.230Z,2026-04-29T22:10:15.918Z
+WH-3,,"refactor: remove firebase_crashlytics, organize pubspec.yaml dependencies into logical groups","- Removed firebase_crashlytics dependency (Sentry handles all error tracking now)
+- Organized 70+ dependencies into 12 logical groups:
+  Flutter SDK, State Management, Firebase, Error Tracking, Networking,
+  Local Storage, Bluetooth & Sensors, UI & Icons, Media & Files,
+  Localization, Notifications & Feedback, Device & Platform, Utilities
+",Ready to Deploy,low,improvement,Mobile,Abdelkader Barhoumi,abdelkader.barhoumi@wergonic.com,1,1,2026-03-31,,2026-03-31,,0,0,Abdelkader Barhoumi,2026-03-31T14:24:13.744Z,2026-04-29T22:10:16.788Z
+WH-2,,add ErrorReporter singleton wrapper for centralized Sentry,"- Add ErrorReporter singleton wrapper for centralized Sentry reporting
+- Create GlobalErrorHandler (lib/core/services/global_error_handler.dart)
+- Create SentryMixin for cubits (lib/core/mixins/sentry_mixin.dart)
+- Update main.dart -- remove Crashlytics, use GlobalErrorHandler + Sentry only
+- Scan & fix data sources -- remove direct Sentry calls, stop swallowing errors",Ready to Deploy,low,improvement,Mobile,Abdelkader Barhoumi,abdelkader.barhoumi@wergonic.com,4.5,4.5,2026-03-31,,,,2,0,Abdelkader Barhoumi,2026-03-31T12:37:37.882Z,2026-04-29T22:10:17.724Z
+WH-56,,check proposed refactoring and enhancement,,Ready to Deploy,low,research,Web,Assia Madani,assia.madani@wergonic.com,1.5,1.5,2026-03-30,,,,0,0,Assia Madani,2026-04-08T08:50:46.794Z,2026-04-08T08:50:46.794Z
+WH-55,,Added Errorfallback to avoid infinite loops,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.3,0.6,2026-03-30,,,,0,0,Assia Madani,2026-04-08T08:41:37.666Z,2026-04-08T08:41:37.666Z
+WH-54,,added try/catch when missing,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.3,0.6,2026-03-30,,,,0,0,Assia Madani,2026-04-08T08:39:57.245Z,2026-04-08T08:39:57.245Z
+WH-53,,Upgrad from nginx:1.23.3-alpine to nginx:1.27-alpine,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,1,2026-03-30,,,,0,0,Assia Madani,2026-04-08T08:39:06.703Z,2026-04-08T08:39:06.703Z
+WH-52,,Upgrad from node:18 to node:20-alpine ,,Ready to Deploy,low,improvement,Web,Assia Madani,assia.madani@wergonic.com,0.5,1,2026-03-30,,,,0,0,Assia Madani,2026-04-08T08:38:32.955Z,2026-04-08T08:38:32.955Z
+WH-51,,Add concurrency control,,Ready to Deploy,low,improvement,Web,,,1.5,1.5,2026-03-30,,,,0,0,Assia Madani,2026-04-08T08:38:00.983Z,2026-04-08T08:38:00.983Z
+WH-50,,Fix script injection vulnerability,,Ready to Deploy,low,bug,Web,Assia Madani,assia.madani@wergonic.com,1.5,2.5,2026-03-30,,,,0,0,Assia Madani,2026-04-08T08:37:32.590Z,2026-04-08T08:37:32.590Z
+WH-49,,Test the web app,,Ready to Deploy,low,research,Web,Assia Madani,assia.madani@wergonic.com,2,4,2026-03-30,,2026-03-02,,0,0,Assia Madani,2026-04-08T08:36:46.120Z,2026-04-08T08:36:46.120Z
+WH-45,,Analyze of the offline/online strategies how it’s implemented,,Deployed,high,research,Mobile,Sidali Bedrani,sidali.bedrani@wergonic.com,5,5,2026-03-30,,,,0,0,Sidali Bedrani,2026-04-07T09:01:03.182Z,2026-04-07T09:01:33.869Z
+
+=== TEAM MEMBERS (25 weekday(s) in period) — 3 member(s) ===
+user_name,user_email,employment_type,weekly_hours,monthly_leave_accrual,leave_balance,expected_hours_in_period,leave_adjusted_expected_hours,logged_hours_in_period
+Assia Madani,assia.madani@wergonic.com,Full-time,30,2,5,150,132,114.75
+Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,Part-time,20,1,-7,100,100,72.5
+Sidali Bedrani,sidali.bedrani@wergonic.com,Full-time,40,2,5,200,176,165.5
+
+"=== LEAVE DAYS (2026-03-30 to 2026-05-01, weekdays only) — 3 dev(s) ==="
+user_id,user_name,user_email,role,total_days,vacation_days,sick_days,other_days
+60fdcba4-bc1f-4a1e-a317-34e4e166a7a2,Assia Madani,assia.madani@wergonic.com,member,3,0,0,3
+373f45c1-e373-4f47-9ff1-c29fad01d1db,Khadidja Cheurfi,khadidja.cheurfi@wergonic.com,member,0,0,0,0
+ab18fca1-4b73-4f3b-8e05-c164f72797de,Sidali Bedrani,sidali.bedrani@wergonic.com,member,3,0,0,3

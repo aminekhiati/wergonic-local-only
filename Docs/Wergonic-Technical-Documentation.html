@@ -1,0 +1,3247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Technical Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6;
+    --purple-dk: #4A09A0;
+    --ink: #181826;
+    --slate: #5A6478;
+    --muted: #98A1B3;
+    --line: #E9EBF0;
+    --line-soft: #F2F3F7;
+    --tint: #F4EFFD;
+    --code-bg: #F7F8FB;
+    --green: #1F7A4D;
+    --green-bg: #EEF9F2;
+    --amber: #B7791F;
+    --amber-bg: #FFF8EC;
+    --red: #B42318;
+    --red-bg: #FEF3F2;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 16mm 15mm 15mm 15mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    font-size: 10pt;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  h1, h2, h3, h4 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  /* ---------- cover ---------- */
+  .cover { height: 252mm; display: flex; flex-direction: column; justify-content: space-between; break-after: page; }
+  .cover-top { border-left: 5px solid var(--purple); padding: 2px 0 0 18px; margin-top: 40mm; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--purple); margin-bottom: 10px; }
+  .cover h1 { font-size: 34pt; font-weight: 800; letter-spacing: -0.025em; line-height: 1.05; border: 0; padding: 0; margin: 0; break-before: auto; }
+  .cover .lede { color: var(--slate); font-size: 11pt; max-width: 150mm; margin-top: 14px; }
+  .cover-meta { display: flex; gap: 30px; border-top: 1px solid var(--line); padding-top: 14px; }
+  .cover-meta div { flex: none; }
+  .cover-meta .k { font-size: 7.5pt; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .cover-meta .v { font-size: 10pt; font-weight: 600; margin-top: 3px; }
+
+  /* ---------- toc ---------- */
+  .toc { break-after: page; }
+  .toc h2 { font-size: 15pt; border: 0; margin: 0 0 14px; padding: 0; }
+  .toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+  .toc li { display: flex; align-items: baseline; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line-soft); font-size: 10.5pt; }
+  .toc li .n { font-family: "Hanken Grotesk", sans-serif; font-weight: 800; color: var(--purple); width: 22px; flex: none; }
+  .toc li .t { font-weight: 600; }
+  .toc li .sub { color: var(--muted); font-size: 9pt; font-weight: 400; margin-left: auto; text-align: right; max-width: 95mm; }
+
+  /* ---------- headings ---------- */
+  h1 {
+    font-size: 20pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15;
+    margin: 0 0 4px; padding: 0 0 10px 0;
+    border-bottom: 2.5px solid var(--purple);
+    break-before: page; break-after: avoid;
+  }
+  h1 + p, h1 + ul, h1 + h2 { margin-top: 14px; }
+  h2 {
+    font-size: 13pt; font-weight: 700; letter-spacing: -0.01em; color: var(--ink);
+    margin: 24px 0 6px; padding-bottom: 5px;
+    border-bottom: 1px solid var(--line);
+    break-after: avoid;
+  }
+  h3 { font-size: 10.8pt; font-weight: 700; color: var(--purple-dk); margin: 16px 0 2px; break-after: avoid; }
+  h4 { font-size: 9.8pt; font-weight: 700; color: var(--slate); margin: 12px 0 2px; text-transform: uppercase; letter-spacing: 0.05em; break-after: avoid; }
+
+  p { margin: 6px 0 0; }
+  strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--purple); text-decoration: none; }
+  hr { display: none; }
+
+  ul, ol { margin: 6px 0 0; padding-left: 18px; }
+  li { margin: 2.5px 0; }
+  li::marker { color: var(--muted); }
+  ul ul, ol ol, ul ol, ol ul { margin: 2px 0; }
+
+  /* ---------- tables ---------- */
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 2px; break-inside: avoid; }
+  th, td { text-align: left; vertical-align: top; padding: 7px 9px; font-size: 9pt; border-bottom: 1px solid var(--line); }
+  th { font-size: 7.8pt; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); border-bottom: 1.5px solid var(--line); background: var(--line-soft); }
+  tbody tr:last-child td { border-bottom: 1.5px solid var(--line); }
+  td strong { font-weight: 600; }
+
+  /* ---------- code ---------- */
+  code {
+    font-family: "JetBrains Mono", ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 8.6pt; background: var(--tint); color: var(--purple-dk);
+    padding: 1px 5px; border-radius: 4px; overflow-wrap: break-word;
+  }
+  pre {
+    background: var(--code-bg); border: 1px solid var(--line); border-left: 3px solid var(--purple);
+    border-radius: 6px; padding: 11px 13px; margin: 10px 0 0;
+    overflow-x: auto; break-inside: avoid;
+  }
+  pre code {
+    background: none; color: var(--ink); padding: 0; font-size: 8pt; line-height: 1.5;
+    white-space: pre; display: block;
+  }
+  th code, td code, li code { font-size: 8.2pt; }
+
+  blockquote {
+    margin: 10px 0 0; padding: 10px 14px; border-left: 3px solid var(--amber);
+    background: var(--amber-bg); color: var(--slate); border-radius: 0 6px 6px 0; break-inside: avoid;
+  }
+  blockquote p { margin: 0; }
+
+  footer { margin-top: 30px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; break-before: avoid; }
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div class="cover-top">
+    <div class="eyebrow">Wergonic · Engineering</div>
+    <h1>Technical Documentation</h1>
+    <p class="lede">System architecture, data models, API surface, mobile and web internals, the end-to-end data pipeline, and the technical debt register — reconstructed from the codebase.</p>
+  </div>
+  <div class="cover-meta">
+    <div><div class="k">Document</div><div class="v">Engineering reference</div></div>
+    <div><div class="k">Generated</div><div class="v">17 March 2026</div></div>
+    <div><div class="k">Source</div><div class="v">Branch <code>dev</code> — all 3 repositories</div></div>
+  </div>
+</section>
+
+<section class="toc">
+  <h2>Contents</h2>
+  <ol>
+      <li>
+        <span class="n">1</span>
+        <span class="t">Architecture Overview</span>
+        <span class="sub">High-Level System Diagram · Tech Stack · Deployment Architecture · Environment Configuration</span>
+      </li>
+      <li>
+        <span class="n">2</span>
+        <span class="t">Backend (Django)</span>
+        <span class="sub">Project Structure · Data Models (Complete Schema) · API Endpoints (Complete Map) · Business Logic &amp; Services · …</span>
+      </li>
+      <li>
+        <span class="n">3</span>
+        <span class="t">Frontend / Web Applications</span>
+        <span class="sub">Project Structure · State Management · Component Architecture · API Integration · …</span>
+      </li>
+      <li>
+        <span class="n">4</span>
+        <span class="t">Mobile App (Flutter)</span>
+        <span class="sub">Project Structure · State Management · Local Database (Drift/SQLite) · BLE / Sensor Layer · …</span>
+      </li>
+      <li>
+        <span class="n">5</span>
+        <span class="t">Data Pipeline (End to End)</span>
+        <span class="sub">Complete Flow: Sensor → Screen · Data Formats at Each Step · Where Data Can Be Lost</span>
+      </li>
+      <li>
+        <span class="n">6</span>
+        <span class="t">Third-Party Integrations</span>
+        <span class="sub"></span>
+      </li>
+      <li>
+        <span class="n">7</span>
+        <span class="t">Deployment &amp; Infrastructure</span>
+        <span class="sub">Backend · Web Apps · Mobile App · Monitoring</span>
+      </li>
+      <li>
+        <span class="n">8</span>
+        <span class="t">Technical Debt Register</span>
+        <span class="sub">Critical Issues · High Priority · Medium Priority · Low Priority · …</span>
+      </li>
+      <li>
+        <span class="n">9</span>
+        <span class="t">Dependencies Analysis</span>
+        <span class="sub">Backend (166 packages) · Web Apps · Mobile (Flutter)</span>
+      </li>
+  </ol>
+</section>
+
+<h1 id="1-architecture-overview">Architecture Overview</h1>
+<h2>High-Level System Diagram</h2>
+<pre><code>                                    ┌──────────────────────┐
+                                    │   Wergonic Admin      │
+                                    │   (React/Vite)        │
+                                    │   Port: 443           │
+                                    └──────────┬───────────┘
+                                               │
+┌──────────────────────┐          ┌────────────▼────────────┐          ┌──────────────────────┐
+│   Mobile App          │          │   Django REST API        │          │   Client Panel        │
+│   (Flutter/Dart)      │◄────────►│   (Gunicorn/WSGI)       │◄────────►│   (React/Vite)        │
+│   Android/iOS         │   REST   │   PostgreSQL+TimescaleDB │   REST   │   cloud.wergonic.com  │
+└──────────┬───────────┘          └────────────┬────────────┘          └──────────────────────┘
+           │                                   │
+           │ BLE                               │
+┌──────────▼───────────┐          ┌────────────▼────────────┐
+│   Movesense Sensors   │          │   Firebase Platform      │
+│   (9-axis IMU)        │          │   ├─ Auth (tokens)       │
+│   via MDS SDK         │          │   ├─ Firestore (realtime)│
+│                       │          │   ├─ Storage (CSV/ZIP)   │
+└──────────────────────┘          │   └─ Analytics           │
+                                    └────────────┬────────────┘
+                                                 │
+                                    ┌────────────▼────────────┐
+                                    │   Google Gemini 2.0      │
+                                    │   (AI Report Generation) │
+                                    └──────────────────────────┘
+</code></pre>
+<p><strong>Data Flow:</strong></p>
+<ol>
+<li>Movesense sensors → BLE → Mobile App (Flutter)</li>
+<li>Mobile App → processes IMU data → writes CSV files locally</li>
+<li>Mobile App → uploads ZIP (CSV files) → Firebase Storage</li>
+<li>Mobile App → creates/updates session → Django REST API</li>
+<li>Django Backend → fetches CSV from Firebase Storage → parses → stores in TimescaleDB</li>
+<li>Django Backend → computes stats, assessments, TNO analysis</li>
+<li>Django Backend → sends session data to Gemini → receives AI analysis</li>
+<li>Web Client Panel → fetches processed data → displays charts/tables/reports</li>
+<li>Firestore used for real-time session status + push notifications</li>
+</ol>
+<h2>Tech Stack</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Technology</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Backend</strong></td>
+<td>Django + DRF</td>
+<td>5.0.9 / 3.15.2</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>PostgreSQL + TimescaleDB</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Frontend</strong></td>
+<td>React + TypeScript + Vite</td>
+<td>18.2.0 / 4.9.3 / 4.1.1</td>
+</tr>
+<tr>
+<td><strong>Mobile</strong></td>
+<td>Flutter/Dart</td>
+<td>SDK ≥3.3.1</td>
+</tr>
+<tr>
+<td><strong>State (Web)</strong></td>
+<td>Jotai + TanStack React Query</td>
+<td>2.0.2 / 4.24.10</td>
+</tr>
+<tr>
+<td><strong>State (Mobile)</strong></td>
+<td>BLoC/Cubit (flutter_bloc)</td>
+<td>8.1.2</td>
+</tr>
+<tr>
+<td><strong>UI (Web)</strong></td>
+<td>Material-UI 5 + Emotion</td>
+<td>5.11.9</td>
+</tr>
+<tr>
+<td><strong>Charts (Web)</strong></td>
+<td>Nivo</td>
+<td>0.83.0</td>
+</tr>
+<tr>
+<td><strong>BLE</strong></td>
+<td>flutter_blue_plus + MDS SDK</td>
+<td>1.35.3 / 2.3.1</td>
+</tr>
+<tr>
+<td><strong>Local DB (Mobile)</strong></td>
+<td>Drift (SQLite)</td>
+<td>2.28.2</td>
+</tr>
+<tr>
+<td><strong>Auth</strong></td>
+<td>Firebase Auth</td>
+<td>9.17.1 (web) / latest (mobile)</td>
+</tr>
+<tr>
+<td><strong>Storage</strong></td>
+<td>Firebase Storage</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Realtime</strong></td>
+<td>Cloud Firestore</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>AI</strong></td>
+<td>Google Generative AI (Gemini)</td>
+<td>0.7.2</td>
+</tr>
+<tr>
+<td><strong>Error Tracking</strong></td>
+<td>Sentry</td>
+<td>7.40.0 (web) / 8.14.1 (mobile)</td>
+</tr>
+<tr>
+<td><strong>Monorepo (Web)</strong></td>
+<td>Turborepo + Yarn</td>
+<td>1.8.1 / 1.22.19</td>
+</tr>
+<tr>
+<td><strong>WSGI Server</strong></td>
+<td>Gunicorn</td>
+<td>22.0.0</td>
+</tr>
+</tbody></table>
+<h2>Deployment Architecture</h2>
+<ul>
+<li><strong>Backend:</strong> Gunicorn WSGI server, PostgreSQL with TimescaleDB extension</li>
+<li><strong>Web Apps:</strong> Vite-built static sites, Docker containerized (ports 443, 8443)</li>
+<li><strong>Mobile:</strong> Flutter app, built via Codemagic CI/CD</li>
+<li><strong>Firebase:</strong> Auth, Firestore, Storage, Analytics, Crashlytics — Google Cloud hosted</li>
+<li><strong>Error Tracking:</strong> Sentry (separate DSNs for web and mobile)</li>
+<li><strong>Environment tiers:</strong> DEV, STAGING, PROD — each with own database and Firebase project</li>
+</ul>
+<h2>Environment Configuration</h2>
+<p>Backend uses <code>python-decouple</code> with environment-prefixed variables:</p>
+<ul>
+<li><code>{ENVIRONMENT}_DATABASE_NAME/USER/PASSWORD/HOST/PORT</code> — per-tier DB config</li>
+<li><code>{ENVIRONMENT}_project_id</code>, <code>private_key</code>, etc. — per-tier Firebase credentials</li>
+<li><code>{ENVIRONMENT}_FRONTEND_BASE_URL</code> — per-tier frontend URL for magic links</li>
+<li><code>GEMINI_API_KEY</code> — Google Generative AI key</li>
+<li><code>sentry_dsn</code> — Error tracking</li>
+<li><code>slack_token</code> — Slack notifications</li>
+<li><code>EMAIL_HOST/USER/PASSWORD</code> — SMTP (port 465, SSL)</li>
+</ul>
+<p>Web apps use Vite env vars:</p>
+<ul>
+<li><code>VITE_API_BASE_URl</code> + <code>VITE_API_VERSION</code> — Backend API URL</li>
+<li><code>VITE_API_KEY</code>, <code>VITE_AUTH_DOMAIN</code>, <code>VITE_PROJECT_ID</code>, <code>VITE_STORAGE_BUCKET</code> — Firebase config</li>
+<li><code>VITE_RECAPTCHA_SITE_KEY</code> — reCAPTCHA v3 for AppCheck</li>
+<li><code>MODE</code> — development/production</li>
+</ul>
+<hr>
+<h1 id="2-backend-django">Backend (Django)</h1>
+<h2>2.1 Project Structure</h2>
+<pre><code>wergonic-django-backend/
+├── core/                      # Main Django project
+│   ├── settings.py            # Configuration (env-aware)
+│   ├── urls.py                # Root URL routing
+│   ├── cdn/conf.py            # Firebase Storage/CDN config
+│   ├── pagination.py          # DRF pagination (PAGE_SIZE=20)
+│   └── test_setup.py          # Test fixtures
+├── users/                     # User management app
+├── firebase_auth/             # Firebase authentication backend
+├── user_sessions/             # Session recording &amp; calculations
+├── organizations/             # Organization management
+├── ramp/                      # RAMP/RULA/MEC/REBA assessments
+├── devices/                   # Device &amp; sensor management
+├── tickets/                   # Support tickets
+├── work_tags/                 # Work task/label taxonomy (MPTT)
+├── tno/                       # Task/movement analysis (TNO)
+├── notifications/             # User notifications
+├── workcycles/                # Factory hierarchy
+├── utils/                     # Shared utilities
+└── requirements.txt           # 166 dependencies
+</code></pre>
+<h3>App Responsibilities</h3>
+<table>
+<thead>
+<tr>
+<th>App</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>users</code></td>
+<td>Custom User model (AbstractBaseUser), Profile, UserOrganization, Invitation, registration, password management</td>
+</tr>
+<tr>
+<td><code>firebase_auth</code></td>
+<td>Firebase ID token verification DRF authentication backend</td>
+</tr>
+<tr>
+<td><code>user_sessions</code></td>
+<td>Session model, Measurement/MeasurementData (TimescaleDB), HRData, SessionStats, Log, AIRequestLog, session lifecycle, CSV processing, stats calculation</td>
+</tr>
+<tr>
+<td><code>organizations</code></td>
+<td>Organization model, org CRUD, user-org management, stats, invitations</td>
+</tr>
+<tr>
+<td><code>ramp</code></td>
+<td>RAMPAssessment model (covers RAMP, RULA, REBA, MEC), assessment CRUD</td>
+</tr>
+<tr>
+<td><code>devices</code></td>
+<td>Device, Sensor, Firmware models and management</td>
+</tr>
+<tr>
+<td><code>tickets</code></td>
+<td>Ticket model for support requests</td>
+</tr>
+<tr>
+<td><code>work_tags</code></td>
+<td>Category (MPTT tree), Label, Event models — hierarchical tagging system</td>
+</tr>
+<tr>
+<td><code>tno</code></td>
+<td>TNO calculation engine — joint angle analysis, peak classification</td>
+</tr>
+<tr>
+<td><code>notifications</code></td>
+<td>Notification model + Firestore push on creation</td>
+</tr>
+<tr>
+<td><code>workcycles</code></td>
+<td>Factory → Line → Workstation → TaskModel → Task hierarchy</td>
+</tr>
+<tr>
+<td><code>utils</code></td>
+<td>Shared utilities, search filters</td>
+</tr>
+</tbody></table>
+<h2>2.2 Data Models (Complete Schema)</h2>
+<h3>Users Domain</h3>
+<h4>User (Custom AbstractBaseUser)</h4>
+<pre><code>Field                   Type                    Constraints
+─────────────────────────────────────────────────────────────
+email                   EmailField              unique
+user_name               CharField(150)          unique (Firebase UID)
+first_name              CharField(50)
+last_name               CharField(50)
+unit                    CharField               nullable
+image                   URLField                nullable
+start_date              DateTimeField           default=now
+role                    CharField               choices=[WERGONIC_ADMIN, ORG_ADMIN, ERGONOMIST, WORKER]
+personal_number         CharField               nullable
+subject_ID              PositiveIntegerField    nullable
+is_active               BooleanField            default=True
+is_verified             BooleanField            default=False
+is_staff                BooleanField            default=False
+user_locale             CharField               default=&#39;en&#39;
+organizations           ManyToMany(Organization) via UserOrganization
+organization            ForeignKey(Organization) nullable (current/primary)
+last_seen               DateTimeField           nullable
+ai_consent              BooleanField            default=False
+ramp_limit_display      CharField               choices=[TIME, PERCENTAGE]
+</code></pre>
+<p><strong>Custom Manager:</strong> <code>UserManager</code> — <code>create_user()</code>, <code>create_superuser()</code>
+<strong>Signals:</strong> <code>pre_save</code> creates Firebase user + sets custom claims; <code>pre_delete</code> deletes Firebase user</p>
+<h4>Profile</h4>
+<pre><code>Field                   Type                    Constraints
+─────────────────────────────────────────────────────────────
+user                    ForeignKey(User)
+consultant              ForeignKey(User)        nullable (assigned ergonomist)
+weight                  CharField
+resting_heart_rate      CharField
+gender                  CharField               choices=[MALE, FEMALE, OTHER]
+dominant_arm            CharField               choices=[RIGHT, LEFT]
+date_of_birth           DateField               nullable
+age                     CharField
+comment                 CharField
+first_name              CharField
+last_name               CharField
+unit                    CharField
+image                   URLField                nullable
+personal_number         CharField               nullable
+is_main                 BooleanField            default=False
+</code></pre>
+<h4>UserOrganization</h4>
+<pre><code>Field                   Type                    Constraints
+─────────────────────────────────────────────────────────────
+user                    ForeignKey(User)
+organization            ForeignKey(Organization)
+role                    CharField               choices from User.Role
+is_active               BooleanField
+is_deactivated          BooleanField
+</code></pre>
+<p><strong>Constraint:</strong> <code>unique_together = (user, organization)</code></p>
+<h4>Invitation</h4>
+<pre><code>Field                   Type                    Constraints
+─────────────────────────────────────────────────────────────
+sender                  ForeignKey(User)
+recipient               ForeignKey(User)
+organization            ForeignKey(Organization)
+role                    CharField
+is_accepted             BooleanField            default=False
+expiration_date         DateTimeField           default=now + 7 days
+</code></pre>
+<h3>Organizations Domain</h3>
+<h4>Organization</h4>
+<pre><code>Field                          Type                    Constraints
+─────────────────────────────────────────────────────────────────────
+name                           CharField               unique
+country                        CharField               nullable
+address                        CharField               nullable
+type                           CharField               choices=[Company, Private]
+industry                       CharField               choices=[A-U industry codes]
+cnr                            CharField               nullable
+contact_phone                  CharField               nullable
+max_number_workers             PositiveIntegerField    default=500
+max_number_admins              PositiveIntegerField    default=5
+max_number_sessions_month      PositiveIntegerField    default=3000
+max_number_assessments_month   PositiveIntegerField    default=3000
+logo                           URLField                nullable
+current_subscription           CharField
+referral_source                CharField
+license_expiration             DateField               nullable
+is_archived                    BooleanField
+is_active                      BooleanField
+ai_engine                      CharField               choices=[Gemini, Chat-button-001], default=Gemini
+hw_kit_access                  CharField               choices=[OWN, BORROWED, NO_ACCESS]
+</code></pre>
+<p><strong>Computed Properties:</strong> <code>employees</code>, <code>number_of_employees</code>, <code>number_of_admins</code>, <code>number_of_sessions_per_month</code>, <code>number_of_assessments_per_month</code></p>
+<h3>Sessions Domain</h3>
+<h4>Session</h4>
+<pre><code>Field                       Type                    Constraints
+─────────────────────────────────────────────────────────────────
+started_at                  DateTimeField
+ended_at                    DateTimeField
+updated_at                  DateTimeField           auto_now
+status                      CharField               choices=[ONGOING, PAUSED, FAILED, FINISHED, INTERRUPTED]
+worker                      ForeignKey(Profile)
+recorded_by                 ForeignKey(Profile)     (the ergonomist/admin)
+organization                ForeignKey(Organization)
+tag                         CharField
+assessment_type             CharField
+workplace                   CharField
+mobile_app_version          CharField
+measurments_csv             URLField                (Firebase Storage URL)
+duration                    PositiveBigIntegerField (seconds)
+max_duration_minutes        IntegerField            default=480
+devices_json                JSONField
+calculations                JSONField               (posture/movement stats)
+tno_calculations            JSONField               (TNO analysis results)
+temperature_calculations    JSONField
+heart_rate_calculations     JSONField               (HRV analysis)
+tasks_percentiles_calculations JSONField
+tasks                       JSONField               (event list)
+calculation_details         JSONField
+ai_report                   JSONField               (Gemini analysis)
+calculations_completed      BooleanField
+processing                  BooleanField
+is_new_calculations         BooleanField
+has_all_limbs               BooleanField
+workcycle_task              ForeignKey(Task)        nullable
+</code></pre>
+<p><strong>Signals:</strong> <code>post_save</code> triggers async calculation pipeline when FINISHED; <code>pre_save</code> updates duration, sets status, deletes Firestore doc</p>
+<h4>Measurement</h4>
+<pre><code>Field          Type                    Constraints
+───────────────────────────────────────────────────
+session        ForeignKey(Session)
+name           CharField               (limb name)
+environment    CharField
+version        CharField
+</code></pre>
+<h4>MeasurementData (TimescaleDB hypertable)</h4>
+<pre><code>Field                   Type                    Constraints
+─────────────────────────────────────────────────────────────
+measurement             ForeignKey(Measurement)
+event                   ForeignKey(Event)       nullable
+time                    TimescaleDateTimeField  interval=&quot;8 hours&quot;
+timestamp_node          IntegerField
+timestamp_android       IntegerField
+time_delta              FloatField
+acc_x                   FloatField              accelerometer X
+acc_y                   FloatField              accelerometer Y
+acc_z                   FloatField              accelerometer Z
+gyro_x                  FloatField              gyroscope X
+gyro_y                  FloatField              gyroscope Y
+gyro_z                  FloatField              gyroscope Z
+elevation_angle         FloatField
+angular_velocity        FloatField
+gyro_angular_velocity   FloatField
+side_bending            FloatField
+forward_bending         FloatField
+flexion                 FloatField
+abduction               FloatField
+pitch                   FloatField
+temperature             FloatField
+</code></pre>
+<p><strong>Managers:</strong> <code>objects</code> (default), <code>timescale</code> (TimescaleManager)</p>
+<h4>HRData (TimescaleDB hypertable)</h4>
+<pre><code>Field              Type                    Constraints
+───────────────────────────────────────────────────────
+measurement        ForeignKey(Measurement)
+event              ForeignKey(Event)       nullable
+time               TimescaleDateTimeField
+time_delta         PositiveIntegerField
+heart_rate         FloatField
+rr                 FloatField              (R-R interval)
+heart_rate_reserve FloatField
+</code></pre>
+<h4>SessionStats</h4>
+<pre><code>Field              Type                    Constraints
+───────────────────────────────────────────────────────
+session            ForeignKey(Session)
+posture            ManyToMany(PostureData)
+speed_of_movement  ManyToMany(SpeedData)
+wrist_distance     ManyToMany(WristData)
+</code></pre>
+<p><strong>Method:</strong> <code>get_zone_counts()</code> — aggregate wrist distance zones</p>
+<h4>Log</h4>
+<pre><code>Field          Type              Constraints
+──────────────────────────────────────────────
+created_at     DateTimeField     default=now
+session        ForeignKey(Session)
+description    CharField
+media          CharField         (Firebase Storage path)
+</code></pre>
+<h4>AIRequestLog</h4>
+<pre><code>Field          Type                    Constraints
+───────────────────────────────────────────────────
+organization   ForeignKey(Organization)
+timestamp      DateTimeField           default=now
+</code></pre>
+<h3>Assessments Domain</h3>
+<h4>RAMPAssessment</h4>
+<pre><code>Field                    Type                    Constraints
+──────────────────────────────────────────────────────────────
+assessment_name          CharField
+worker                   CharField
+work_task                CharField
+date                     DateField
+assessment_type          CharField
+site                     CharField               nullable
+country                  CharField               nullable
+unit                     CharField               nullable
+company_representative   CharField               nullable
+assessment_completed_by  CharField
+comment                  TextField
+assessment               JSONField               (actual RAMP/RULA/MEC/REBA data)
+status                   CharField               choices=[COMPLETED, IN_PROGRESS, PROCESSING]
+assesment_category       CharField               choices=[RAMP, RULA, MEC, REBA]
+results_comment          CharField
+source                   CharField               choices=[generated, manual]
+created_by               ForeignKey(User)
+organization             ForeignKey(Organization)
+session                  ForeignKey(Session)     nullable
+start_time               TimeField               nullable
+end_time                 TimeField               nullable
+</code></pre>
+<h3>Devices Domain</h3>
+<h4>Device</h4>
+<pre><code>Field              Type                    Constraints
+───────────────────────────────────────────────────────
+created_at         DateTimeField
+serial             CharField               unique
+firmware_version   CharField
+organization       ForeignKey(Organization) nullable
+worker             ForeignKey(User)        nullable
+locale             CharField
+device_model       CharField
+sensors            ManyToMany(Sensor)
+</code></pre>
+<h4>Sensor</h4>
+<pre><code>Field       Type        Constraints
+──────────────────────────────────────
+sensor_id   CharField   unique
+limb        CharField   nullable
+</code></pre>
+<h4>Firmware</h4>
+<pre><code>Field              Type           Constraints
+───────────────────────────────────────────────
+description        TextField
+mobile_version     CharField
+release_date       DateTimeField
+file_size          CharField
+firmware_version   CharField
+firmware_url       URLField
+is_current         BooleanField   default=False
+</code></pre>
+<h3>Work Tags Domain (MPTT)</h3>
+<h4>Category (MPTTModel)</h4>
+<pre><code>Field           Type                      Constraints
+────────────────────────────────────────────────────────
+parent          TreeForeignKey(self)       nullable
+organization    ForeignKey(Organization)
+category_name   CharField
+category_type   CharField                 choices=[WORK_TASK, WORK_LABEL]
+created_at      DateTimeField
+</code></pre>
+<p><strong>Meta:</strong> <code>order_insertion_by = [&quot;-created_at&quot;]</code></p>
+<h4>Label</h4>
+<pre><code>Field            Type                    Constraints
+───────────────────────────────────────────────────────
+label_name       CharField
+label_category   ForeignKey(Category)
+is_private       BooleanField
+owner            ForeignKey(User)
+favorited_by     ManyToMany(User)
+repeat_interval  CharField               nullable
+created_at       DateTimeField
+</code></pre>
+<h4>Event</h4>
+<pre><code>Field        Type                    Constraints
+──────────────────────────────────────────────────
+session      ForeignKey(Session)
+start_time   TimeField               nullable
+end_time     TimeField               nullable
+labels       ManyToMany(Label)
+created_by   ForeignKey(User)
+</code></pre>
+<h3>Workcycles Domain</h3>
+<h4>Factory</h4>
+<pre><code>Field          Type                      Constraints
+──────────────────────────────────────────────────────
+name           CharField
+organization   ForeignKey(Organization)
+</code></pre>
+<p><strong>Constraint:</strong> Unique name per organization</p>
+<h4>Line</h4>
+<pre><code>Field     Type                  Constraints
+─────────────────────────────────────────────
+name      CharField
+factory   ForeignKey(Factory)
+</code></pre>
+<p><strong>Constraint:</strong> Unique name per factory</p>
+<h4>Workstation</h4>
+<pre><code>Field   Type                Constraints
+──────────────────────────────────────────
+name    CharField
+line    ForeignKey(Line)
+</code></pre>
+<p><strong>Constraint:</strong> Unique name per line</p>
+<h4>TaskModel</h4>
+<pre><code>Field        Type                      Constraints
+──────────────────────────────────────────────────────
+name         CharField
+workstation  ForeignKey(Workstation)
+</code></pre>
+<p><strong>Constraint:</strong> Unique name per workstation</p>
+<h4>Task</h4>
+<pre><code>Field        Type                    Constraints
+───────────────────────────────────────────────────
+name         CharField
+task_model   ForeignKey(TaskModel)
+description  TextField               nullable
+duration     FloatField              nullable
+created_at   DateTimeField
+</code></pre>
+<p><strong>Constraint:</strong> Unique name per task_model
+<strong>Meta:</strong> <code>ordering = [&quot;-created_at&quot;]</code></p>
+<h3>Notifications Domain</h3>
+<h4>Notification</h4>
+<pre><code>Field              Type                      Constraints
+────────────────────────────────────────────────────────────
+recipient          ForeignKey(User)
+title              CharField
+message            TextField
+created_at         DateTimeField             auto_now_add
+read_at            DateTimeField             nullable
+notification_type  CharField                 choices=[MEC_ASSESSMENT, SESSION, RAMP_ASSESSMENT]
+organization       ForeignKey(Organization)  nullable
+foreign_key        PositiveIntegerField      nullable (ID of related object)
+</code></pre>
+<p><strong>Signal:</strong> <code>post_save</code> pushes to Firestore <code>organizations/{orgId}/users/{userId}/notifications/</code></p>
+<h3>Tickets Domain</h3>
+<h4>Ticket</h4>
+<pre><code>Field        Type                Constraints
+──────────────────────────────────────────────
+created_at   DateTimeField
+sender       ForeignKey(User)
+subject      CharField
+type         CharField           choices=[bug, feature, suggestion, help]
+help_type    CharField           choices=[account, billing, other], nullable
+message      TextField
+attachments  CharField
+</code></pre>
+<h2>2.3 API Endpoints (Complete Map)</h2>
+<h3>Base URL: <code>/api/v1/</code></h3>
+<h3>Users (<code>/users/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET, POST</td>
+<td><code>/users/</code></td>
+<td>Auth</td>
+<td>List all users / Create user</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/users/admins/</code></td>
+<td>Auth</td>
+<td>List org admins</td>
+</tr>
+<tr>
+<td>GET, PUT, DELETE</td>
+<td><code>/users/&lt;id&gt;/</code></td>
+<td>Auth</td>
+<td>CRUD single user</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/users/current/</code></td>
+<td>Auth</td>
+<td>Get authenticated user with full display data</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/users/password/reset/</code></td>
+<td>Auth</td>
+<td>Reset password (updates Firebase + Django)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/users/auth/passwordless-signin/</code></td>
+<td>Public</td>
+<td>Send email magic link (web)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/users/auth/mobile-passwordless-signin/</code></td>
+<td>Public</td>
+<td>Send email magic link (mobile)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/users/superuser/</code></td>
+<td>Auth</td>
+<td>Create admin user</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/users/email/check/</code></td>
+<td>Public</td>
+<td>Check if email exists</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/users/personal_number/check/</code></td>
+<td>Public</td>
+<td>Check if personal number exists</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/users/organizations/</code></td>
+<td>Auth</td>
+<td>List user&#39;s organizations</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/users/organizations/&lt;orgId&gt;/change-to-active/</code></td>
+<td>Auth</td>
+<td>Switch active organization</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/users/create-worker-account/</code></td>
+<td>Public</td>
+<td>Register worker account</td>
+</tr>
+</tbody></table>
+<h3>Organizations (<code>/organizations/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET, POST</td>
+<td><code>/organizations/</code></td>
+<td>LevelZero</td>
+<td>List/Create organization</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/organizations/names</code></td>
+<td>Auth</td>
+<td>Get all org names</td>
+</tr>
+<tr>
+<td>GET, PUT, DELETE</td>
+<td><code>/organizations/&lt;id&gt;/</code></td>
+<td>Auth</td>
+<td>CRUD organization</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/organizations/stats/</code></td>
+<td>LevelOne</td>
+<td>Organization statistics (date-filtered)</td>
+</tr>
+<tr>
+<td>GET, POST</td>
+<td><code>/organizations/users/</code></td>
+<td>Auth</td>
+<td>List/create org users</td>
+</tr>
+<tr>
+<td>GET, PUT, DELETE</td>
+<td><code>/organizations/users/&lt;userId&gt;/</code></td>
+<td>Auth</td>
+<td>CRUD org user</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/organizations/users/&lt;userId&gt;/deactivate/</code></td>
+<td>Auth</td>
+<td>Deactivate user from org</td>
+</tr>
+<tr>
+<td>GET, POST</td>
+<td><code>/organizations/users/&lt;userId&gt;/profiles/</code></td>
+<td>Auth</td>
+<td>Manage user profiles</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/organizations/profiles/</code></td>
+<td>Auth</td>
+<td>List all profiles in org</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/organizations/invitation/&lt;invitationId&gt;/</code></td>
+<td>Auth</td>
+<td>Accept invitation</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/organizations/change-to-archive/</code></td>
+<td>Auth</td>
+<td>Archive/unarchive orgs</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/organizations/&lt;orgId&gt;/ai-requests-per-month/</code></td>
+<td>Auth</td>
+<td>AI usage stats</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/organizations/register/</code></td>
+<td>Public</td>
+<td>Register new org + admin</td>
+</tr>
+</tbody></table>
+<h3>Sessions (<code>/sessions/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET, POST</td>
+<td><code>/sessions/organizations/&lt;orgId&gt;/</code></td>
+<td>Auth</td>
+<td>Create/list sessions</td>
+</tr>
+<tr>
+<td>GET, PUT, DELETE</td>
+<td><code>/sessions/&lt;id&gt;/</code></td>
+<td>SessionCrud</td>
+<td>Update/view/delete session</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/sessions/&lt;id&gt;/stats/</code></td>
+<td>SessionCrud</td>
+<td>Session statistics</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/sessions/stats/compare/</code></td>
+<td>Auth</td>
+<td>Compare multiple sessions</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/sessions/stats/compare/excel/</code></td>
+<td>Auth</td>
+<td>Export comparison Excel</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/sessions/&lt;id&gt;/stats/tno/</code></td>
+<td>SessionCrud</td>
+<td>TNO analysis</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/sessions/&lt;id&gt;/stats/temperature/</code></td>
+<td>SessionCrud</td>
+<td>Temperature data</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/sessions/&lt;id&gt;/stats/hr/</code></td>
+<td>SessionCrud</td>
+<td>HR/HRV data</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/sessions/&lt;id&gt;/stats/tasks/</code></td>
+<td>SessionCrud</td>
+<td>Task percentiles</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/sessions/&lt;id&gt;/stats/details/</code></td>
+<td>SessionCrud</td>
+<td>Detailed stats</td>
+</tr>
+<tr>
+<td>GET, POST</td>
+<td><code>/sessions/&lt;id&gt;/logs/</code></td>
+<td>SessionCrud</td>
+<td>Upload/list logs</td>
+</tr>
+<tr>
+<td>GET, PUT, DELETE</td>
+<td><code>/sessions/&lt;sessionId&gt;/logs/&lt;id&gt;/</code></td>
+<td>SessionCrud</td>
+<td>CRUD log entry</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/sessions/&lt;id&gt;/stats/export/</code></td>
+<td>SessionCrud</td>
+<td>Export raw CSV</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/sessions/&lt;id&gt;/stats/export/excel/</code></td>
+<td>SessionCrud</td>
+<td>Export Excel</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/sessions/&lt;id&gt;/stats/recalculate/</code></td>
+<td>SessionCrud</td>
+<td>Recalculate stats</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/sessions/&lt;sessionId&gt;/assesments/mappings/</code></td>
+<td>Auth</td>
+<td>Generate MEC assessment</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/sessions/merge/</code></td>
+<td>Auth</td>
+<td>Merge sessions</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/sessions/delete/&lt;sessionId&gt;/</code></td>
+<td>SessionCrud</td>
+<td>Delete session</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/sessions/&lt;id&gt;/generate-gemini-analysis/</code></td>
+<td>Auth</td>
+<td>Generate AI report</td>
+</tr>
+</tbody></table>
+<h3>Assessments (<code>/assesments/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET, POST</td>
+<td><code>/assesments/</code></td>
+<td>Auth</td>
+<td>List/create assessment</td>
+</tr>
+<tr>
+<td>GET, PUT, DELETE</td>
+<td><code>/assesments/&lt;id&gt;/</code></td>
+<td>Auth</td>
+<td>CRUD assessment</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/assesments/multi/</code></td>
+<td>Auth</td>
+<td>Fetch multiple by IDs</td>
+</tr>
+</tbody></table>
+<h3>Devices (<code>/devices/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET, POST</td>
+<td><code>/devices/</code></td>
+<td>Auth</td>
+<td>List/create device</td>
+</tr>
+<tr>
+<td>GET, PUT, DELETE</td>
+<td><code>/devices/&lt;id&gt;/</code></td>
+<td>AdminOrReadOnly</td>
+<td>CRUD device</td>
+</tr>
+<tr>
+<td>GET, POST</td>
+<td><code>/devices/firmwares/</code></td>
+<td>AdminOrReadOnly</td>
+<td>List/create firmware</td>
+</tr>
+<tr>
+<td>PUT, PATCH</td>
+<td><code>/devices/firmwares/&lt;id&gt;/</code></td>
+<td>AdminOrReadOnly</td>
+<td>Update firmware</td>
+</tr>
+<tr>
+<td>GET, POST</td>
+<td><code>/devices/sensors/</code></td>
+<td>Auth</td>
+<td>List/create sensor</td>
+</tr>
+<tr>
+<td>GET, PUT, DELETE</td>
+<td><code>/devices/sensors/&lt;id&gt;/</code></td>
+<td>AdminOrReadOnly</td>
+<td>CRUD sensor</td>
+</tr>
+</tbody></table>
+<h3>Work Tags (<code>/categories/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET, POST</td>
+<td><code>/categories/organizations/&lt;orgId&gt;/</code></td>
+<td>Auth</td>
+<td>List/create categories</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/categories/organizations/&lt;orgId&gt;/labels/</code></td>
+<td>Auth</td>
+<td>List org labels</td>
+</tr>
+<tr>
+<td>GET, POST</td>
+<td><code>/categories/organizations/&lt;orgId&gt;/category-with-labels/</code></td>
+<td>Auth</td>
+<td>Nested category+labels</td>
+</tr>
+<tr>
+<td>GET, PATCH</td>
+<td><code>/categories/organizations/&lt;orgId&gt;/category-with-labels/&lt;id&gt;/</code></td>
+<td>Auth</td>
+<td>Update nested</td>
+</tr>
+<tr>
+<td>GET, DELETE</td>
+<td><code>/categories/&lt;id&gt;/organizations/&lt;orgId&gt;/</code></td>
+<td>Auth</td>
+<td>Category detail</td>
+</tr>
+<tr>
+<td>GET, POST</td>
+<td><code>/categories/&lt;categoryId&gt;/labels/</code></td>
+<td>Auth</td>
+<td>List/create labels</td>
+</tr>
+<tr>
+<td>GET, POST</td>
+<td><code>/categories/labels/events/sessions/&lt;sessionId&gt;/</code></td>
+<td>Auth</td>
+<td>List/create events</td>
+</tr>
+<tr>
+<td>GET, PUT, DELETE</td>
+<td><code>/categories/labels/&lt;id&gt;/</code></td>
+<td>Auth</td>
+<td>CRUD label</td>
+</tr>
+<tr>
+<td>GET, PUT, DELETE</td>
+<td><code>/categories/labels/events/&lt;id&gt;/</code></td>
+<td>Auth</td>
+<td>CRUD event</td>
+</tr>
+</tbody></table>
+<h3>Work Cycles (<code>/workcycles/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET, POST</td>
+<td><code>/workcycles/factories/</code></td>
+<td>Auth</td>
+<td>List/create factories</td>
+</tr>
+<tr>
+<td>GET, PUT, PATCH, DELETE</td>
+<td><code>/workcycles/factories/&lt;id&gt;/</code></td>
+<td>Auth</td>
+<td>CRUD factory</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/workcycles/factories/full-hierarchy/</code></td>
+<td>Auth</td>
+<td>Full tree</td>
+</tr>
+<tr>
+<td>GET, POST</td>
+<td><code>/workcycles/lines/</code></td>
+<td>Auth</td>
+<td>List/create lines</td>
+</tr>
+<tr>
+<td>GET, PUT, PATCH, DELETE</td>
+<td><code>/workcycles/lines/&lt;id&gt;/</code></td>
+<td>Auth</td>
+<td>CRUD line</td>
+</tr>
+<tr>
+<td>GET, POST</td>
+<td><code>/workcycles/workstations/</code></td>
+<td>Auth</td>
+<td>List/create workstations</td>
+</tr>
+<tr>
+<td>GET, PUT, PATCH, DELETE</td>
+<td><code>/workcycles/workstations/&lt;id&gt;/</code></td>
+<td>Auth</td>
+<td>CRUD workstation</td>
+</tr>
+<tr>
+<td>GET, POST</td>
+<td><code>/workcycles/models/</code></td>
+<td>Auth</td>
+<td>List/create task models</td>
+</tr>
+<tr>
+<td>GET, PUT, PATCH, DELETE</td>
+<td><code>/workcycles/models/&lt;id&gt;/</code></td>
+<td>Auth</td>
+<td>CRUD task model</td>
+</tr>
+<tr>
+<td>GET, POST</td>
+<td><code>/workcycles/tasks/</code></td>
+<td>Auth</td>
+<td>List/create tasks</td>
+</tr>
+<tr>
+<td>GET, PUT, PATCH, DELETE</td>
+<td><code>/workcycles/tasks/&lt;id&gt;/</code></td>
+<td>Auth</td>
+<td>CRUD task</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/workcycles/import/</code></td>
+<td>Auth</td>
+<td>Import work cycles (AVIX)</td>
+</tr>
+</tbody></table>
+<h3>Notifications (<code>/notifications/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET</td>
+<td><code>/notifications/</code></td>
+<td>Auth</td>
+<td>List notifications (paginated)</td>
+</tr>
+<tr>
+<td>PUT, DELETE</td>
+<td><code>/notifications/&lt;id&gt;/</code></td>
+<td>Auth</td>
+<td>Update/delete notification</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/notifications/mark-as-read/</code></td>
+<td>Auth</td>
+<td>Mark all as read</td>
+</tr>
+</tbody></table>
+<h3>TNO (<code>/tno/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>POST</td>
+<td><code>/tno/</code></td>
+<td>Auth</td>
+<td>Calculate TNO (accepts ZIP with CSV)</td>
+</tr>
+</tbody></table>
+<h3>Tickets (<code>/tickets/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET, POST</td>
+<td><code>/tickets/</code></td>
+<td>Auth</td>
+<td>List/create tickets</td>
+</tr>
+<tr>
+<td>GET, DELETE</td>
+<td><code>/tickets/&lt;id&gt;/</code></td>
+<td>Auth</td>
+<td>View/delete ticket</td>
+</tr>
+</tbody></table>
+<h2>2.4 Business Logic &amp; Services</h2>
+<h3>Session Lifecycle (State Machine)</h3>
+<pre><code>                    ┌─────────────┐
+        Create ───► │   PAUSED    │ ◄─── Pause action
+                    └──────┬──────┘
+                           │ Resume
+                    ┌──────▼──────┐
+                    │   ONGOING   │ ◄─── Recording
+                    └──────┬──────┘
+                     ┌─────┼─────┐
+                     │     │     │
+              ┌──────▼┐ ┌──▼───┐ ┌▼──────────┐
+              │ FAILED│ │FINISH│ │INTERRUPTED │
+              └───────┘ └──┬───┘ └────────────┘
+                           │ post_save signal
+                    ┌──────▼──────┐
+                    │ PROCESSING  │ (calculations_completed=False)
+                    └──────┬──────┘
+                           │ Pipeline complete
+                    ┌──────▼──────┐
+                    │  COMPLETE   │ (calculations_completed=True)
+                    └─────────────┘
+</code></pre>
+<blockquote>
+<p><code>flag: Session status transitions are not enforced in code. Any status can be set to any other status via API.</code></p>
+</blockquote>
+<h3>Data Processing Pipeline (Async)</h3>
+<p>Triggered by <code>Session_post_save</code> signal when <code>status=FINISHED</code> and <code>calculations_completed=False</code>:</p>
+<p><strong>Implementation:</strong> Spawns a Python <code>Thread</code> (not Celery/task queue).</p>
+<p><strong>Steps (sequential):</strong></p>
+<ol>
+<li><p><strong>CSV Processing</strong> (<code>process_csv_and_create_measurement</code>):</p>
+<ul>
+<li>Fetch ZIP from Firebase Storage at <code>Session.measurments_csv</code></li>
+<li>Extract CSV files (one per limb)</li>
+<li>Parse columns: time, acc_x/y/z, gyro_x/y/z, angles, temperature</li>
+<li>Create Measurement record per limb</li>
+<li>Bulk create MeasurementData records in TimescaleDB (interval=&quot;8 hours&quot;)</li>
+<li>Link to events if <code>session.tasks</code> provided</li>
+</ul>
+</li>
+<li><p><strong>Posture/Pie Data</strong> (<code>Calculate_pie_data</code>):</p>
+<ul>
+<li>Compute posture percentages per limb</li>
+<li>Movement range distribution</li>
+<li>Stored in <code>session.calculations</code> JSONField</li>
+</ul>
+</li>
+<li><p><strong>Temperature Data</strong> (<code>Calculate_temperature_data</code>):</p>
+<ul>
+<li>Mean, max, min, median temperature per limb</li>
+<li>Global + per-event aggregation</li>
+<li>Stored in <code>session.temperature_calculations</code></li>
+</ul>
+</li>
+<li><p><strong>HR/HRV Analysis</strong> (<code>Calculate_hr_data</code>):</p>
+<ul>
+<li>Uses <code>hrvanalysis</code> library</li>
+<li>Time domain: SDNN, RMSSD</li>
+<li>Frequency domain: LF/HF ratio</li>
+<li>Geometrical features</li>
+<li>CSI/CVI features (Cardiac Sympathetic/Vagal Index)</li>
+<li>Stored in <code>session.heart_rate_calculations</code></li>
+</ul>
+</li>
+<li><p><strong>Chart Data</strong> (<code>Calculate_charts_data</code>):</p>
+<ul>
+<li>Posture line data (elevation angle, bending over time)</li>
+<li>Speed of movement (angular velocity distributions)</li>
+<li>Wrist distance zones (&lt;30cm, 30-50cm, &gt;50cm)</li>
+<li>Creates SessionStats record with M2M relationships</li>
+</ul>
+</li>
+<li><p><strong>TNO Calculation</strong> (<code>Calculate_tno_data</code>):</p>
+<ul>
+<li>Joint angle analysis per limb</li>
+<li>Peak classification (find movement peaks)</li>
+<li>Static vs dynamic movement characterization</li>
+<li>Time in angle ranges: &gt;60°, 20-60°, -10-20°, &lt;-10°</li>
+<li>Static duration threshold: 6 seconds</li>
+<li>Angle threshold: 5 degrees</li>
+<li>Stored in <code>session.tno_calculations</code></li>
+</ul>
+</li>
+<li><p><strong>Email Notification</strong> (<code>stats_end_notification</code>):</p>
+<ul>
+<li>Sends completion email to session recorder</li>
+<li>Includes elapsed processing time</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p><code>flag: Uses Thread-based async without retry, dead-letter, or monitoring. If processing fails, session stays unprocessed with no recovery mechanism.</code></p>
+</blockquote>
+<h3>MEC Assessment Calculation</h3>
+<p><strong>CreateAssessmentView</strong> generates RAMPAssessment from session sensor data:</p>
+<ol>
+<li>Fetch MeasurementData for the specified time range (start_time → end_time)</li>
+<li><strong>Arm Posture Analysis</strong> (<code>analyze_arm_postures</code>):<ul>
+<li>Frequency analysis of dominant arm + forearm movements</li>
+<li>Classify into elevation ranges</li>
+</ul>
+</li>
+<li><strong>Wrist Position Calculation</strong> (<code>calculate_wrist_position</code>):<ul>
+<li>2D geometric calculation from arm and forearm angles</li>
+<li>Uses arm length assumptions</li>
+</ul>
+</li>
+<li><strong>Work Posture Models</strong> (6 models):<ul>
+<li><code>calculate_postures_1</code> through <code>calculate_postures_6</code></li>
+<li>Each handles different arm elevation ranges</li>
+<li>Computes time-weighted risk scores</li>
+</ul>
+</li>
+<li>Generate assessment JSON with risk scores per posture</li>
+<li>Create RAMPAssessment with <code>status=COMPLETED</code>, <code>assesment_category=MEC</code></li>
+</ol>
+<h3>TNO Calculation Engine</h3>
+<p><strong><code>tno_calculate()</code></strong> in <code>tno/</code> app:</p>
+<ol>
+<li><strong>Peak Classification</strong> — Find movement peaks in angle time series</li>
+<li><strong>Movement Characteristics:</strong><ul>
+<li>Static duration (time held at one angle)</li>
+<li>Upward/downward movement tracking</li>
+</ul>
+</li>
+<li><strong>Task Characteristics per angle range:</strong><ul>
+<li>static_&gt;60°, static_20-60°, static_-10-20°, static_&lt;-10°</li>
+<li>dynamic_&gt;60°, dynamic_20-60°, dynamic_-10-20°, dynamic_&lt;-10°</li>
+</ul>
+</li>
+<li><strong>Constants:</strong><ul>
+<li>staticDurThreshold = 6 seconds</li>
+<li>angleThreshold = 5 degrees</li>
+<li>Angle boundaries: [60, 20, 10] degrees</li>
+</ul>
+</li>
+</ol>
+<h3>AI Report Generation (Gemini)</h3>
+<p><strong>Pipeline:</strong></p>
+<ol>
+<li><code>GenerateGeminiAnalysisView</code> receives POST with language + optional tags</li>
+<li>Calls <code>get_gemini_analysis()</code> with session data</li>
+<li>Constructs prompt from <code>prompts.py</code>:</li>
+</ol>
+<p><strong>Prompt Structure:</strong></p>
+<ul>
+<li>Role: &quot;You are an ergonomist and H&amp;S expert&quot;</li>
+<li>Worker context: age, weight, dominant arm</li>
+<li>Duration context with extrapolation caveat</li>
+<li>Full session measurements JSON</li>
+<li>Risk zone thresholds:<ul>
+<li>ARM ELEVATION: Green &lt;25%, Yellow 25-50%, Red &gt;50%</li>
+<li>TRUNK BENDING 20-45°: Green &lt;12.5%, Yellow 12.5-25%, Red &gt;25%</li>
+<li>TRUNK BENDING &gt;45°: Green &lt;6%, Yellow 6-12.5%, Red &gt;12.5%</li>
+</ul>
+</li>
+<li>Request: Actionable recommendations</li>
+</ul>
+<p><strong>Languages:</strong> Fully localized prompts in EN, SV, DE, ES, NL</p>
+<p><strong>Response:</strong> Stored in <code>session.ai_report</code> JSONField</p>
+<p><strong>Tracking:</strong> Each request creates an <code>AIRequestLog</code> record</p>
+<h3>Session Merge</h3>
+<p><strong><code>MergeSessions</code></strong> view:</p>
+<ul>
+<li>Accepts list of session IDs</li>
+<li>Combines: calculations, tno_calculations, heart_rate_calculations, temperature_calculations, tasks data</li>
+<li>Merges events and devices_json</li>
+<li>Merges measurement files from Firebase Storage</li>
+<li>Creates single combined session</li>
+</ul>
+<blockquote>
+<p><code>flag: Does not use transaction.atomic() — partial merge possible on failure.</code></p>
+</blockquote>
+<h2>2.5 Authentication &amp; Authorization</h2>
+<h3>Firebase Authentication Backend</h3>
+<p><strong><code>FirebaseAuthentication</code> (DRF auth class):</strong></p>
+<pre><code class="language-python">def authenticate(request):
+    1. Extract token from Authorization: Bearer &lt;token&gt;
+    2. firebase_admin.auth.verify_id_token(token)
+    3. Extract Firebase UID from decoded token
+    4. Get or create User where user_name=uid
+    5. Update user.last_seen
+    6. Return (user, token)
+</code></pre>
+<blockquote>
+<p><code>flag: Line 49 has bare except: clause — catches all exceptions silently.</code></p>
+</blockquote>
+<h3>Custom Firebase Claims</h3>
+<p>Set on User <code>pre_save</code> signal:</p>
+<pre><code class="language-python">firebase_admin.auth.set_custom_user_claims(uid, {
+    &#39;role&#39;: user.role,
+    &#39;organization_id&#39;: user.organization_id
+})
+</code></pre>
+<h3>Permission Classes</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Access</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>LevelZeroPermission</code></td>
+<td>WERGONIC_ADMIN only, or allowlisted users</td>
+</tr>
+<tr>
+<td><code>LevelOnePermission</code></td>
+<td>ORG_ADMIN or ERGONOMIST in active organization</td>
+</tr>
+<tr>
+<td><code>SessionCrudPermission</code></td>
+<td>Session owner (worker) OR ORG_ADMIN/ERGONOMIST in same org OR superuser</td>
+</tr>
+<tr>
+<td><code>IsWergonicAdminOrReadOnly</code></td>
+<td>WERGONIC_ADMIN = full, others = read-only</td>
+</tr>
+</tbody></table>
+<h3>Magic Link Implementation</h3>
+<ol>
+<li>POST email to <code>/users/auth/passwordless-signin/</code> (or mobile variant)</li>
+<li>Backend calls <code>firebase_admin.auth.generate_sign_in_with_email_link(email, action_code_settings)</code></li>
+<li>ActionCodeSettings points to frontend callback URL</li>
+<li>Link URL-encoded and appended to callback: <code>{FRONTEND_URL}/auth/process-login?link={encoded_link}</code></li>
+<li>Email sent with link</li>
+<li>Frontend receives link, calls <code>firebase.auth.signInWithEmailLink(email, link)</code></li>
+<li>Firebase returns ID token</li>
+</ol>
+<h3>Throttling</h3>
+<ul>
+<li><code>custom_post</code>: 10 requests/minute (only on specific endpoints)</li>
+<li>No global throttle on auth endpoints</li>
+</ul>
+<h2>2.6 Firebase Integration</h2>
+<h3>Firestore Document Structure</h3>
+<pre><code>organizations/
+  {org_id}/
+    sessions/
+      {session_id}/           # Active session status doc
+        status, worker_id, started_at...
+        (DELETED when session finishes — pre_save signal)
+    users/
+      {user_id}/
+        notifications/
+          {notification_id}/  # Push notification docs
+            title, message, type, created_at
+</code></pre>
+<h3>Firebase Storage Paths</h3>
+<table>
+<thead>
+<tr>
+<th>Content</th>
+<th>Path Pattern</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Session CSV ZIP</td>
+<td><code>organizations/{orgId}/sessions/{sessionId}/zip/session.zip</code></td>
+</tr>
+<tr>
+<td>Session logs media</td>
+<td><code>Logs/{sessionId}/{filename}</code></td>
+</tr>
+<tr>
+<td>Measurements</td>
+<td><code>Measurments/{username}/{filename}</code></td>
+</tr>
+<tr>
+<td>Org logos</td>
+<td><code>/logos/{orgName}/{filename}</code></td>
+</tr>
+<tr>
+<td>Firmware files</td>
+<td><code>/firmware/{version}/{filename}</code></td>
+</tr>
+</tbody></table>
+<p><strong>Signed URLs:</strong> Generated with 2-hour expiration (7200s) for media access in LogSerializer.</p>
+<h3>Firebase Admin SDK Usage</h3>
+<ul>
+<li><code>firebase_admin.auth</code> — Token verification, user management, custom claims, sign-in links</li>
+<li><code>firebase_admin.firestore</code> — Document CRUD for sessions and notifications</li>
+<li><code>firebase_admin.storage</code> — File upload/download, signed URL generation</li>
+</ul>
+<h2>2.7 Background Tasks &amp; Scheduling</h2>
+<h3>Thread-Based Processing</h3>
+<p>Session calculations run in a Python <code>Thread</code> spawned from <code>post_save</code> signal:</p>
+<pre><code class="language-python">def Session_post_save(sender, instance, **kwargs):
+    if instance.status == &#39;FINISHED&#39; and not instance.calculations_completed:
+        thread = Thread(target=process_session, args=(instance.id,))
+        thread.start()
+</code></pre>
+<blockquote>
+<p><code>flag: No task queue (Celery not configured despite being a dependency). No retry logic, no monitoring, no dead-letter queue. Thread silently dies on exception.</code></p>
+</blockquote>
+<h3>Cron Jobs (django-crontab)</h3>
+<pre><code class="language-python">CRONJOBS = [
+    (&quot;* * * * *&quot;, &quot;python manage.py session_check &gt;&gt; /tmp/session_check.log 2&gt;&amp;1&quot;),
+    (&quot;* * * * *&quot;, &quot;python manage.py session_status_check &gt;&gt; /tmp/session_status_check.log 2&gt;&amp;1&quot;),
+]
+</code></pre>
+<ul>
+<li><code>session_check</code>: Runs every minute — monitors session states</li>
+<li><code>session_status_check</code>: Runs every minute — checks session processing status</li>
+</ul>
+<blockquote>
+<p><code>flag: Cron commands use hardcoded /usr/local/bin/python3 path.</code></p>
+</blockquote>
+<hr>
+<h1 id="3-frontend-web-applications">Frontend / Web Applications</h1>
+<h2>3.1 Project Structure</h2>
+<p><strong>Monorepo:</strong> Turborepo + Yarn workspaces</p>
+<pre><code>wergonic-web-apps/
+├── apps/
+│   ├── client-panel/          # Main client-facing app
+│   │   ├── src/
+│   │   │   ├── api/           # 10 files — API endpoint definitions
+│   │   │   ├── atoms/         # 6 files — Jotai state atoms
+│   │   │   ├── components/    # Shared components
+│   │   │   ├── features/      # 13 feature modules
+│   │   │   │   ├── auth/
+│   │   │   │   ├── RAMP/
+│   │   │   │   ├── RULA/
+│   │   │   │   ├── REBA/
+│   │   │   │   ├── MEC/
+│   │   │   │   ├── sessions/
+│   │   │   │   ├── statistics/
+│   │   │   │   ├── dashboard/
+│   │   │   │   ├── workcycles/
+│   │   │   │   ├── users/
+│   │   │   │   ├── workProfiles/
+│   │   │   │   └── CategoriesAndLabels/
+│   │   │   ├── hooks/         # 7 custom hooks
+│   │   │   ├── pages/         # 31 page components
+│   │   │   ├── providers/     # Global providers
+│   │   │   ├── routes/        # Routing config
+│   │   │   ├── services/      # Firebase, Axios
+│   │   │   ├── types/         # 15 type definition files
+│   │   │   └── utils/         # i18n, utilities
+│   │   └── vite.config.ts
+│   └── wergonic-admin/        # Admin panel
+│       ├── src/
+│       │   ├── api/           # 6 files
+│       │   ├── atoms/         # Auth + theme
+│       │   ├── features/      # 6 feature modules
+│       │   │   ├── auth/
+│       │   │   ├── dashboard/
+│       │   │   ├── organizations/
+│       │   │   ├── users/
+│       │   │   ├── devices/
+│       │   │   └── firmware/
+│       │   ├── hooks/
+│       │   ├── pages/         # 4 pages
+│       │   ├── providers/
+│       │   ├── routes/
+│       │   ├── services/
+│       │   └── types/
+│       └── vite.config.ts
+├── packages/
+│   ├── ui/                    # Shared UI component library
+│   ├── eslint-config-custom/  # Shared ESLint config
+│   └── tsconfig/              # Shared TS config
+├── turbo.json
+└── package.json
+</code></pre>
+<p><strong>Total:</strong> ~1,599 TypeScript files in client-panel alone</p>
+<h2>3.2 State Management</h2>
+<h3>Jotai (Atomic State)</h3>
+<p><strong>Key atoms:</strong></p>
+<pre><code class="language-typescript">// Auth
+authAtom            // Current Firebase User + WergonicUser
+pendingAuthStateAtom // Auth initialization flag
+
+// Feature flags
+featureFlagsAtom    // { enable_TestingNewComponentsPage: DEV, enable_IconsPage: DEV }
+
+// UI
+themeAtom           // Dark/light theme toggle
+isDrawerOpenAtom    // Mobile drawer state
+settingsModalOpenAtom // Modal visibility
+
+// Data
+selectedAssessmentRowsAtom // Multi-row selection in assessment tables
+</code></pre>
+<h3>TanStack React Query (Server State)</h3>
+<p><strong>Configuration:</strong></p>
+<pre><code class="language-typescript">new QueryClient({
+  defaultOptions: {
+    queries: {
+      keepPreviousData: true,
+      retry: false,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 15,  // 15 minutes
+    },
+  },
+})
+</code></pre>
+<p><strong>Key Query Hooks:</strong></p>
+<ul>
+<li><code>useRetrieveActiveOrganizationStatsQuery()</code> — Dashboard statistics</li>
+<li><code>useRetrieveSessionQuery()</code> — Single session data</li>
+<li><code>useListOrganizationSessionsQuery()</code> — Session list with filters</li>
+<li><code>useListAssessmentsQuery()</code> — Assessment list</li>
+<li><code>useSingleAssessmentQueryCache()</code> — Cached assessment</li>
+<li><code>useGetAssessmentInfoFormatedData()</code> — Formatted assessment display</li>
+<li><code>useListMultiAssessmentsQuery()</code> — Multiple assessment comparison</li>
+</ul>
+<h2>3.3 Component Architecture</h2>
+<h3>Shared UI Library (<code>packages/ui/</code>)</h3>
+<ul>
+<li><code>GlobalLoader</code> — Loading skeleton</li>
+<li><code>PaginatedTableV2</code> — Reusable paginated table with sorting/filtering</li>
+<li><code>Tabs/TabPanel</code> — Tab navigation</li>
+<li>Chart wrappers (Nivo): ResponsiveLine, ResponsiveBar, ResponsivePie</li>
+<li>Form components: Input, Select, Checkbox</li>
+<li>Icon library: MUI icons + custom</li>
+<li>Theme definitions: <code>lightTheme</code>, <code>darktheme</code></li>
+</ul>
+<h3>Styling Approach</h3>
+<ul>
+<li><strong>Primary:</strong> Material-UI 5 with Emotion styled-components</li>
+<li><strong>Pattern:</strong> <code>styled()</code> from <code>@mui/material/styles</code> + <code>sx</code> prop</li>
+<li><strong>Theme:</strong> Custom color system with <code>color_system.text.primary</code>, <code>divider</code>, <code>status.infos</code>, etc.</li>
+<li><strong>Responsive:</strong> MUI Box with responsive sx values + Flexbox layouts</li>
+<li><strong>Global:</strong> CssBaseline from MUI for CSS reset</li>
+</ul>
+<h2>3.4 API Integration</h2>
+<h3>HTTP Client: Axios</h3>
+<p><strong>Setup:</strong></p>
+<pre><code class="language-typescript">// Request interceptor
+axios.interceptors.request.use(async (config) =&gt; {
+    const user = firebase.auth().currentUser;
+    if (user) {
+        const token = await user.getIdToken();
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+</code></pre>
+<p><strong>Base URL:</strong> <code>${VITE_API_BASE_URl}${VITE_API_VERSION}</code> (e.g., <code>https://api.wergonic.com/v1/</code>)</p>
+<p><strong>Error Handling:</strong> Minimal — <code>Promise.reject</code> returned, component-level handling via React Query error states.</p>
+<p><strong>Standard Paginated Response:</strong></p>
+<pre><code class="language-typescript">{
+  results: T[],
+  count: string,
+  next: string,
+  previous: string,
+  num_pages: number
+}
+</code></pre>
+<h2>3.5 Charts &amp; Visualization</h2>
+<p><strong>Library:</strong> Nivo 0.83.0</p>
+<table>
+<thead>
+<tr>
+<th>Chart Type</th>
+<th>Component</th>
+<th>Data Source</th>
+<th>Features</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Session time-series</td>
+<td>PaginatedLineChart (ResponsiveLine)</td>
+<td><code>/sessions/{id}/stats/</code></td>
+<td>Zoom, pagination, downsampling, log event markers, custom tooltip</td>
+</tr>
+<tr>
+<td>Distribution donut</td>
+<td>DonutChartCard (ResponsiveDonut)</td>
+<td>Session stats</td>
+<td>Custom center content, tooltip</td>
+</tr>
+<tr>
+<td>Temperature trend</td>
+<td>ResponsiveLine</td>
+<td><code>/sessions/{id}/stats/temperature/</code></td>
+<td>Per-limb time series</td>
+</tr>
+<tr>
+<td>Heart rate trend</td>
+<td>ResponsiveLine</td>
+<td><code>/sessions/{id}/stats/hr/</code></td>
+<td>BPM + HRV</td>
+</tr>
+<tr>
+<td>Percentile distribution</td>
+<td>ResponsiveLine</td>
+<td><code>/sessions/{id}/stats/percentiles/</code></td>
+<td>Statistical distribution</td>
+</tr>
+<tr>
+<td>Multi-assessment compare</td>
+<td>Bar charts + tables</td>
+<td><code>/assesments/multi/?ids</code></td>
+<td>Side-by-side</td>
+</tr>
+</tbody></table>
+<p><strong>Data Transformation:</strong></p>
+<ul>
+<li>Large datasets downsampled via <code>downsample()</code> utility</li>
+<li>Color coding from theme system</li>
+<li>Custom axis label formatting via date-fns</li>
+</ul>
+<hr>
+<h1 id="4-mobile-app-flutter">Mobile App (Flutter)</h1>
+<h2>4.1 Project Structure</h2>
+<p><strong>Package:</strong> <code>ergotech</code> v4.0.2+273 (build 273)
+<strong>Architecture:</strong> Clean Architecture with feature-based modules</p>
+<pre><code>lib/
+├── features/
+│   ├── auth/
+│   │   ├── domain/     (entities, repos, usecases)
+│   │   ├── data/       (models, datasources, repo impls)
+│   │   └── presentation/ (pages, cubits, widgets)
+│   ├── bluetooth/
+│   ├── measurements/
+│   ├── sessions/
+│   ├── settings/
+│   ├── work_cycle/
+│   ├── work_labels/
+│   ├── tickets/
+│   └── internet_connectivity/
+├── core/
+│   ├── database/       (Drift DB, DAOs, migrations)
+│   ├── constants/      (app constants, BLE paths)
+│   ├── enums/          (limbs, roles, sync status)
+│   ├── errors/         (exception types)
+│   ├── functions/      (utilities)
+│   ├── network/        (Dio client, interceptors)
+│   ├── services/       (Firebase, analytics)
+│   └── utils/          (formatting, conversions)
+└── main.dart
+</code></pre>
+<p><strong>Dependency Injection:</strong> GetIt + injectable (annotation-based registration)</p>
+<h2>4.2 State Management</h2>
+<h3>Pattern: BLoC/Cubit (flutter_bloc v8.1.2)</h3>
+<p>All state managed via Cubit (Bloc without events):</p>
+<ul>
+<li>State classes generated with <code>freezed</code></li>
+<li>Transitions via <code>.emit(newState)</code></li>
+<li>Stream-based for real-time UI updates</li>
+</ul>
+<h3>Key Cubits</h3>
+<table>
+<thead>
+<tr>
+<th>Cubit</th>
+<th>Purpose</th>
+<th>Key States</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>LoginCubit</code></td>
+<td>Auth flow</td>
+<td>initial, loading, success, error</td>
+</tr>
+<tr>
+<td><code>UserCubit</code></td>
+<td>Current user</td>
+<td>initial, loaded(user), error</td>
+</tr>
+<tr>
+<td><code>UserProfileCubit</code></td>
+<td>Profile CRUD</td>
+<td>initial, loaded, creating, error</td>
+</tr>
+<tr>
+<td><code>OrganizationCubit</code></td>
+<td>Org list/switch</td>
+<td>initial, loaded(orgs), switching</td>
+</tr>
+<tr>
+<td><code>SensorConnectionCubit</code></td>
+<td>BLE device management</td>
+<td>disconnected, scanning, connecting, connected(Map&lt;Limbs, Device&gt;), reconnecting</td>
+</tr>
+<tr>
+<td><code>SensorScanCubit</code></td>
+<td>BLE discovery</td>
+<td>initial, scanning(devices), stopped</td>
+</tr>
+<tr>
+<td><code>SensorBatteryCubit</code></td>
+<td>Per-device battery</td>
+<td>tracking(Map&lt;Device, int&gt;)</td>
+</tr>
+<tr>
+<td><code>BluetoothAdapterStatusCubit</code></td>
+<td>BLE on/off</td>
+<td>on, off, unavailable</td>
+</tr>
+<tr>
+<td><code>WorkSessionCubit</code></td>
+<td>Active session</td>
+<td>initial, created, recording, paused, ended, syncing, synced, error</td>
+</tr>
+<tr>
+<td><code>SessionTimerCubit</code></td>
+<td>Elapsed time</td>
+<td>ticking(seconds)</td>
+</tr>
+<tr>
+<td><code>SessionEventCubit</code></td>
+<td>Task/break events</td>
+<td>initial, events(list)</td>
+</tr>
+<tr>
+<td><code>SessionHistoryCubit</code></td>
+<td>Past sessions</td>
+<td>initial, loaded(sessions)</td>
+</tr>
+<tr>
+<td><code>CalibrationCubit</code></td>
+<td>Calibration progress</td>
+<td>initial, ongoing(step), complete(data), error</td>
+</tr>
+<tr>
+<td><code>InternalMeasurementsCubit</code></td>
+<td>Phone sensor data</td>
+<td>initial, measuring(data), error</td>
+</tr>
+<tr>
+<td><code>MeasurementsManagerCubit</code></td>
+<td>Coordinates all measurements</td>
+<td>initial, streaming, stopped</td>
+</tr>
+<tr>
+<td><code>ReportCubit</code></td>
+<td>Session analysis</td>
+<td>initial, computing, loaded(report), error</td>
+</tr>
+<tr>
+<td><code>WorkSessionListingCubit</code></td>
+<td>Session CRUD</td>
+<td>initial, loaded(sessions), error</td>
+</tr>
+<tr>
+<td><code>SelectableLimbsCubit</code></td>
+<td>Limb selection</td>
+<td>loaded(Map&lt;Limb, bool&gt;)</td>
+</tr>
+<tr>
+<td><code>SettingsCubit</code></td>
+<td>All settings</td>
+<td>loaded(settings)</td>
+</tr>
+<tr>
+<td><code>DevModeCubit</code></td>
+<td>Developer features</td>
+<td>enabled/disabled</td>
+</tr>
+<tr>
+<td><code>WorkCategoriesCubit</code></td>
+<td>Task categories</td>
+<td>loaded(categories)</td>
+</tr>
+<tr>
+<td><code>WorkCycleCubit</code></td>
+<td>Work cycle models</td>
+<td>loaded(hierarchy)</td>
+</tr>
+<tr>
+<td><code>InternetCubit</code></td>
+<td>Connectivity</td>
+<td>online, offline</td>
+</tr>
+<tr>
+<td><code>TicketsCubit</code></td>
+<td>Issue reporting</td>
+<td>initial, submitting, submitted</td>
+</tr>
+<tr>
+<td><code>LocationMeasurementsCubit</code></td>
+<td>GPS tracking</td>
+<td>initial, tracking(locations)</td>
+</tr>
+</tbody></table>
+<h2>4.3 Local Database (Drift/SQLite)</h2>
+<h3>Engine</h3>
+<ul>
+<li><strong>Library:</strong> Drift v2.28.2 (code-generated SQLite ORM)</li>
+<li><strong>File:</strong> <code>ergonomy_db.db</code> in app documents directory</li>
+<li><strong>Generated code</strong> via <code>build_runner</code></li>
+</ul>
+<h3>Complete Schema</h3>
+<p><strong>Auth &amp; User Tables:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Fields</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ConsultantTable</code></td>
+<td>id (PK), name, email, phone</td>
+</tr>
+<tr>
+<td><code>ProfileTable</code></td>
+<td>id (PK), userId (FK), name, role, organization, createdAt</td>
+</tr>
+<tr>
+<td><code>UserTable</code></td>
+<td>id (PK), uid (unique), email, firstName, lastName, role (enum), organization (FK), active, createdAt, updatedAt</td>
+</tr>
+</tbody></table>
+<p><strong>Bluetooth Devices:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Fields</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>BleDevicesTable</code></td>
+<td>id (PK), localId (unique), serial, name, mac, limb (enum), firmware (FK), status (enum: connected/disconnected), pairedAt, lastConnectedAt, battery (%), metadata (JSON)</td>
+</tr>
+<tr>
+<td><code>FirmwareTable</code></td>
+<td>id (PK), deviceId (FK), version, releaseDate, filename, fileSize, checksum, downloadUrl, installed (bool)</td>
+</tr>
+</tbody></table>
+<p><strong>Sessions &amp; Recording:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Fields</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>WorkSessionsTable</code></td>
+<td>id (PK), userId (FK), workerProfileId (FK), remoteSessionId (FK: unique), firstName, lastName, gender (enum), dominantArm (enum), age, weight, workplace, organizationId (FK), comment, syncStatus (enum), startedAt, createdAt, endedAt</td>
+</tr>
+<tr>
+<td><code>SessionEventsTable</code></td>
+<td>id (PK), sessionId (FK), eventType (enum: taskEvent/breakEvent), eventName, phase (enum: start/finish), timestamp</td>
+</tr>
+<tr>
+<td><code>SessionDevicesTable</code></td>
+<td>id (PK), sessionId (FK), deviceId (FK), limb (enum), connectedAt, disconnectedAt, samplingRate</td>
+</tr>
+<tr>
+<td><code>TimeIntervalsTable</code></td>
+<td>id (PK), sessionId (FK), startTime, endTime, riskLevel (enum)</td>
+</tr>
+<tr>
+<td><code>TimePercentageTable</code></td>
+<td>id (PK), sessionId (FK), riskLevel (enum), percentage, minutes</td>
+</tr>
+</tbody></table>
+<p><strong>Risk Data (computed):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Fields</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ArmAngularVelocityRiskDataTable</code></td>
+<td>id (PK), reportId (FK), limb, avgVelocity, maxVelocity, occurrences, percentage, riskLevel</td>
+</tr>
+<tr>
+<td><code>ArmElevationAngleRiskDataTable</code></td>
+<td>id (PK), reportId (FK), limb, time0_30, time30_60, time60_90, percentage, riskLevel</td>
+</tr>
+<tr>
+<td><code>TrunkBendingRiskDataTable</code></td>
+<td>id (PK), reportId (FK), bendingType (forward/side), angle20_45, angle45_plus, percentage, riskLevel</td>
+</tr>
+<tr>
+<td><code>HeadBendingRiskDataTable</code></td>
+<td>id (PK), reportId (FK), pitchAngle, rollAngle, percentage, riskLevel</td>
+</tr>
+<tr>
+<td><code>HrRiskDataTable</code></td>
+<td>id (PK), reportId (FK), avgHr, maxHr, restingHr, percentage, riskLevel</td>
+</tr>
+</tbody></table>
+<p><strong>Reports:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Fields</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>SessionReportTable</code></td>
+<td>id (PK), sessionId (FK), remoteReportId, duration, totalTime, activeTime, riskScore, postureScore, movementScore, reportData (JSON)</td>
+</tr>
+<tr>
+<td><code>ReportDataTable</code></td>
+<td>id (PK), reportId (FK), metric, value, threshold, status</td>
+</tr>
+<tr>
+<td><code>TNOReportTable</code></td>
+<td>id (PK), sessionId (FK), remoteReportId, nmsScore, riskLevel, feedback (JSON), timestamp</td>
+</tr>
+</tbody></table>
+<p><strong>Work Cycles:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Fields</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>WorkCycleFactoryTable</code></td>
+<td>id, factoryId, name, location, remoteId</td>
+</tr>
+<tr>
+<td><code>WorkCycleLineTable</code></td>
+<td>id, lineId, factoryId (FK), name, remoteId</td>
+</tr>
+<tr>
+<td><code>WorkCycleModelTable</code></td>
+<td>id, modelId, lineId (FK), name, active, remoteId</td>
+</tr>
+<tr>
+<td><code>WorkCycleStationTable</code></td>
+<td>id, stationId, modelId (FK), stationName, remoteId</td>
+</tr>
+<tr>
+<td><code>WorkCycleTasksTable</code></td>
+<td>id, taskId, stationId (FK), taskName, cycleTime, remoteId</td>
+</tr>
+</tbody></table>
+<p><strong>Configuration:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Fields</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>WorkCategoryTable</code></td>
+<td>id, categoryId, organizationId (FK), categoryName, categoryType (enum), remoteId</td>
+</tr>
+<tr>
+<td><code>WorkLabelTable</code></td>
+<td>id, labelId, categoryId (FK), labelName, color, remoteId</td>
+</tr>
+<tr>
+<td><code>SettingsTable</code></td>
+<td>id, userId (FK), liteMode, isHrActive, feedbackType, voiceFeedbackIntervals, feedbackRefreshRate, gyroRange, accRange, integralGainValue, proportionalGainValue, standardImuRate, refImuRate, headSensorPosition, workSessionType, timeBasedWorkCycles, newWorkCycleFrequency, sessionDurationLimit, tnoArchiveGeneration, appLanguage, offlineMode, limbsFeedbackOrder, isTwoPointCalibrationEnabled, isVibrationDetectionEnabled, batteryCheckIntervalSeconds, autoStartSession, enableLocation, isPerformanceOverlayEnabled, useNewCsvSystem, useImprovedVibrationDetection, confidenceThresholdHigh/Low, accThresholdHigh, gyroThresholdHigh, primaryWeight, ratioWeight, showExtraTiles</td>
+</tr>
+<tr>
+<td><code>UserSelectableLimbConfigurationTable</code></td>
+<td>id, userId (FK), limb (enum), enabled (bool), calibrationDate, calibrationData (JSON)</td>
+</tr>
+<tr>
+<td><code>OrganizationTable</code></td>
+<td>id, orgId, name, country, industry, remoteId, active, createdAt</td>
+</tr>
+</tbody></table>
+<h3>DAO Layer</h3>
+<p>Each table has a corresponding DAO handling:</p>
+<ul>
+<li>CRUD operations</li>
+<li>Complex queries with joins and filtering</li>
+<li>Transaction management</li>
+<li>Relationship loading</li>
+</ul>
+<h2>4.4 BLE / Sensor Layer</h2>
+<h3>Library Stack</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Library</th>
+<th>Version</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>System BLE</td>
+<td>flutter_blue_plus</td>
+<td>1.35.3</td>
+<td>Android BLE integration, DFU mode scanning</td>
+</tr>
+<tr>
+<td>Movesense SDK</td>
+<td>mdsflutter (MDS)</td>
+<td>2.3.1</td>
+<td>Sensor communication protocol</td>
+</tr>
+<tr>
+<td>Firmware update</td>
+<td>nordic_dfu</td>
+<td>6.1.2</td>
+<td>Over-the-air firmware updates</td>
+</tr>
+</tbody></table>
+<h3>Connection Management</h3>
+<p><strong>Scan:</strong></p>
+<pre><code class="language-dart">// Normal mode: MDS-based scan
+MdsAsync.startScan((device) =&gt; emit(device));
+
+// DFU mode: flutter_blue_plus scan
+FlutterBluePlus.startScan(withNames: [&quot;dfu&quot;]);
+</code></pre>
+<p><strong>Connect:</strong></p>
+<pre><code class="language-dart">Mds.connect(
+  deviceId,
+  onConnect: (serial) =&gt; { /* store device */ },
+  onDisconnect: () =&gt; { /* handle reconnection */ },
+  onError: (error) =&gt; { /* log + retry */ },
+  onData: (data) =&gt; { /* unused for connection */ }
+);
+</code></pre>
+<p><strong>Post-Connection BLE Parameters:</strong></p>
+<pre><code class="language-dart">min_conn_interval: 39    // 48.75ms
+max_conn_interval: 80    // 100ms
+slave_latency: 0
+supervision_timeout: 1000ms
+</code></pre>
+<h3>Data Streaming</h3>
+<p><strong>IMU6 Subscription:</strong></p>
+<pre><code class="language-dart">MdsAsync.subscribe(
+  serial,
+  &#39;/Meas/IMU6/{rate}&#39;,  // rate: 52, 104, or 200 Hz
+  (data) =&gt; processImuData(data)
+);
+</code></pre>
+<p><strong>Raw Data Format (from Movesense):</strong></p>
+<pre><code class="language-json">{
+  &quot;Body&quot;: {
+    &quot;Acc&quot;: [x, y, z],      // Accelerometer -8 to +8G
+    &quot;Gyro&quot;: [x, y, z],     // Gyroscope -2000 to +2000 °/s
+    &quot;Ts&quot;: 1234567           // Timestamp (ms)
+  }
+}
+</code></pre>
+<p><strong>Processing Pipeline:</strong></p>
+<ol>
+<li>Raw BLE JSON → <code>ReadingEntity</code> (6D: 3 accel + 3 gyro)</li>
+<li>Butterworth IIR low-pass filter (cutoff ~1.5x feedback rate)</li>
+<li>Mahony complementary filter (proportionalGain ~2.0, integralGain ~0.0) → quaternion (q0, q1, q2, q3)</li>
+<li>Risk metrics extraction:<ul>
+<li>Elevation Angle: <code>arccos(q3) × 2</code> (degrees, 0-90)</li>
+<li>Angular Velocity: <code>magnitude(gyro)</code> (°/s, 0-400)</li>
+<li>Forward/Side Bending: roll/pitch from quaternion</li>
+<li>Vibration Detection: high-frequency gyro variance + confidence scoring</li>
+</ul>
+</li>
+</ol>
+<h3>MDS SDK Paths</h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/System/Mode</code></td>
+<td>PUT (int: 1)</td>
+<td>Enter DFU mode</td>
+</tr>
+<tr>
+<td><code>/Info</code></td>
+<td>GET</td>
+<td>Device metadata (HW/FW version)</td>
+</tr>
+<tr>
+<td><code>/Info/App</code></td>
+<td>GET</td>
+<td>App-level info</td>
+</tr>
+<tr>
+<td><code>/Comm/Ble/Peers</code></td>
+<td>GET</td>
+<td>Connected BLE peers</td>
+</tr>
+<tr>
+<td><code>/Comm/Ble/Peers/{handle}/Params</code></td>
+<td>GET/PUT</td>
+<td>BLE connection parameters</td>
+</tr>
+<tr>
+<td><code>/Meas/IMU6/{rate}</code></td>
+<td>SUBSCRIBE</td>
+<td>6D IMU at rate Hz</td>
+</tr>
+<tr>
+<td><code>/Meas/HR</code></td>
+<td>SUBSCRIBE</td>
+<td>Heart rate</td>
+</tr>
+<tr>
+<td><code>/Meas/Temp</code></td>
+<td>SUBSCRIBE</td>
+<td>Temperature</td>
+</tr>
+<tr>
+<td><code>/Time</code></td>
+<td>GET</td>
+<td>Device time</td>
+</tr>
+<tr>
+<td><code>/Time/Detailed</code></td>
+<td>GET</td>
+<td>Detailed time info</td>
+</tr>
+</tbody></table>
+<h3>Sensor Types</h3>
+<table>
+<thead>
+<tr>
+<th>Limb</th>
+<th>Category</th>
+<th>Measures</th>
+<th>Calibration</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>rightArm</td>
+<td>Main</td>
+<td>Elevation angle, angular velocity, bending</td>
+<td>Natural + Bent</td>
+</tr>
+<tr>
+<td>leftArm</td>
+<td>Main</td>
+<td>Elevation angle, angular velocity, bending</td>
+<td>Natural + Bent</td>
+</tr>
+<tr>
+<td>trunk</td>
+<td>Main</td>
+<td>Pitch, roll bending</td>
+<td>Natural + Bent (2 points required)</td>
+</tr>
+<tr>
+<td>head</td>
+<td>Main</td>
+<td>Pitch, roll bending</td>
+<td>Natural + Bent</td>
+</tr>
+<tr>
+<td>hand</td>
+<td>Reference</td>
+<td>Quaternion only</td>
+<td>Natural only</td>
+</tr>
+<tr>
+<td>forearm</td>
+<td>Reference</td>
+<td>Quaternion only</td>
+<td>Natural only</td>
+</tr>
+<tr>
+<td>chestStrap</td>
+<td>HR</td>
+<td>Heart rate BPM</td>
+<td>None</td>
+</tr>
+</tbody></table>
+<h2>4.5 Session Recording Engine</h2>
+<h3>CSV File Generation</h3>
+<p><strong>Per Limb CSV:</strong></p>
+<pre><code>Filename: measurements_{limb}_{workerName}_{datetime}.csv
+Columns: timestamp, elevationAngle, angularVelocity, gyroBasedAngularVelocity,
+         pitch, roll, yaw, accX, accY, accZ, gyroX, gyroY, gyroZ,
+         quaternion_w, quaternion_x, quaternion_y, quaternion_z,
+         vibrationResult, averageHr
+</code></pre>
+<p><strong>HR File:</strong></p>
+<pre><code>Filename: measurements_HR_{workerName}_{datetime}.csv
+Columns: timestamp, heartRate, confidence
+</code></pre>
+<p><strong>Location File:</strong></p>
+<pre><code>Filename: location_{sessionId}_{datetime}.csv
+Columns: timestamp, latitude, longitude, accuracy, altitude, speed
+</code></pre>
+<h3>CSV Writer Architecture</h3>
+<p><strong>CsvWriterManager:</strong></p>
+<ul>
+<li>One <code>LimbCsvWriter</code> per active limb</li>
+<li>In-memory write queue per limb</li>
+<li>Periodic flush: every 500ms</li>
+<li>Batch writes to disk for performance</li>
+<li>Error stream for monitoring write failures</li>
+</ul>
+<p><strong>Legacy System (fallback):</strong></p>
+<ul>
+<li><code>WriteDataToCsvUseCase.writeBuffer</code>: <code>List&lt;ProcessedDataEntity&gt;</code></li>
+<li>Max buffer size: <code>Constants.bleDataBufferSize</code></li>
+<li>Flushes when buffer full or session ends</li>
+<li>Toggle via <code>enableNewCsvSystem</code> setting</li>
+</ul>
+<h3>Session ZIP &amp; Upload</h3>
+<pre><code>session_measurements_{sessionId}_{date}.zip
+├── measurements_rightArm_{worker}_{datetime}.csv
+├── measurements_leftArm_{worker}_{datetime}.csv
+├── measurements_trunk_{worker}_{datetime}.csv
+├── measurements_HR_{worker}_{datetime}.csv
+└── location_{sessionId}_{datetime}.csv (optional)
+</code></pre>
+<h2>4.6 Sync Service</h2>
+<h3>Sync Flow (<code>syncWorkSession</code>)</h3>
+<pre><code>Step 1: Create remote session
+  POST /sessions/organizations/{orgId}/
+  Body: WorkSessionModel.toJson()
+  → Receives remoteSessionId
+  → Update DB: syncStatus → createdNotSynced
+
+Step 2: Create ZIP
+  Read all CSV files from session.path
+  Compress into single ZIP
+
+Step 3: Sync work tasks/events
+  POST /categories/labels/events/sessions/{sessionId}/bulk_create/
+  Body: list of SessionEventEntity
+
+Step 4: Upload to Firebase Storage
+  FirebaseStorage.ref(&quot;organizations/{orgId}/sessions/{sessionId}/zip/session.zip&quot;)
+    .putFile(zipFile)
+  → Real-time progress: bytesTransferred / totalBytes
+
+Step 5: Finalize session
+  PATCH /sessions/{sessionId}/
+  Body: { tasks: session.eventsToList, ended_at: ISO8601 }
+  → Update DB: syncStatus → fullySynced
+</code></pre>
+<h3>Sync Status Progression</h3>
+<pre><code>notSynced → createdNotSynced → fullySynced
+                                    ↑
+historyNotSynced ──────────────────┘
+</code></pre>
+<h3>No Queue Persistence</h3>
+<ul>
+<li>Sessions marked <code>createdNotSynced</code> are implicitly &quot;in queue&quot;</li>
+<li>No persistent job queue</li>
+<li>Retry: manual user action or background check on reconnect</li>
+<li>Sequential sync (one session at a time)</li>
+</ul>
+<h2>4.7 Offline Architecture</h2>
+<h3>Caching Strategy</h3>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Cached</th>
+<th>TTL</th>
+<th>Refresh Trigger</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Work Cycles</td>
+<td>Yes (DB)</td>
+<td>None</td>
+<td>Online reconnect</td>
+</tr>
+<tr>
+<td>Work Categories</td>
+<td>Yes (DB)</td>
+<td>None</td>
+<td><code>CheckWorkCategoriesExistanceUsecase</code></td>
+</tr>
+<tr>
+<td>Sensor Metadata</td>
+<td>Yes (DB)</td>
+<td>Permanent</td>
+<td>After pairing</td>
+</tr>
+<tr>
+<td>Calibration Data</td>
+<td>Yes (DB)</td>
+<td>Permanent</td>
+<td>User recalibrates</td>
+</tr>
+<tr>
+<td>Sessions</td>
+<td>Yes (DB)</td>
+<td>Permanent</td>
+<td>User deletes</td>
+</tr>
+<tr>
+<td>Settings</td>
+<td>Yes (DB)</td>
+<td>Permanent</td>
+<td>User changes</td>
+</tr>
+</tbody></table>
+<h3>Data Priority</h3>
+<ol>
+<li>During session: Always local sensors (no remote fallback)</li>
+<li>Post-session: Local data uploaded, remote DB becomes source of truth</li>
+<li>Work cycles: Local cache if offline, remote if online</li>
+<li>User data: Local cache until token expires</li>
+</ol>
+<h2>4.8 Platform Channels &amp; Native Code</h2>
+<h3>Android (Kotlin)</h3>
+<p><strong>MainActivity.kt</strong> (<code>com.wergonic.wergo.MainActivity</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sensor_availability</code></td>
+<td><code>isGyroAvailable</code></td>
+<td>Check hardware gyroscope exists</td>
+</tr>
+<tr>
+<td><code>sensor_availability</code></td>
+<td><code>isAccelerometerAvailable</code></td>
+<td>Check hardware accelerometer exists</td>
+</tr>
+<tr>
+<td><code>performance_monitor</code></td>
+<td><code>getMetrics</code></td>
+<td>FPS, memory, render time</td>
+</tr>
+<tr>
+<td><code>performance_monitor</code></td>
+<td><code>resetMetrics</code></td>
+<td>Reset performance counters</td>
+</tr>
+</tbody></table>
+<p><strong>Background Service:</strong></p>
+<ul>
+<li>Foreground notification: &quot;Recording in progress&quot;</li>
+<li>Wakelock + WorkManager for sustained recording</li>
+<li>Battery optimization exemption</li>
+</ul>
+<h3>iOS</h3>
+<ul>
+<li>Minimal native code — Flutter defaults used</li>
+<li>No custom platform channels observed</li>
+</ul>
+<hr>
+<h1 id="5-data-pipeline-end-to-end">Data Pipeline (End to End)</h1>
+<h2>Complete Flow: Sensor → Screen</h2>
+<pre><code>Step 1: SENSOR READING
+  Movesense IMU6 sensor → raw accelerometer + gyroscope data
+  Format: {Acc: [x,y,z], Gyro: [x,y,z], Ts: ms}
+  Rate: 104 Hz (default)
+
+Step 2: BLE TRANSMISSION
+  Movesense → BLE → MDS SDK → Flutter callback
+  Protocol: Movesense proprietary over BLE GATT
+  Latency: ~10-50ms per packet
+
+Step 3: SIGNAL PROCESSING (on phone)
+  Raw data → Butterworth IIR filter (noise removal)
+  Filtered data → Mahony complementary filter → quaternion
+  Quaternion → elevation angle, angular velocity, bending angles
+  Output: ProcessedDataEntity per sample
+
+Step 4: LOCAL STORAGE (on phone)
+  ProcessedDataEntity → CSV buffer (in memory)
+  Buffer flush → CSV file on device storage (every 500ms)
+  Session end → ZIP all CSVs
+
+Step 5: UPLOAD TO FIREBASE STORAGE
+  ZIP file → FirebaseStorage.ref(&quot;organizations/{orgId}/sessions/{sessionId}/zip/&quot;)
+  Real-time upload progress tracking
+
+Step 6: BACKEND PROCESSING (Django)
+  Session post_save signal → Thread spawned
+  Download ZIP from Firebase → extract CSVs
+  Parse CSV → create MeasurementData records (TimescaleDB)
+  Rate: bulk insert, interval=&quot;8 hours&quot; hypertable chunks
+
+Step 7: STATISTICAL CALCULATIONS
+  MeasurementData → posture percentages, movement distributions
+  MeasurementData → temperature aggregations (mean/max/min/median)
+  HRData → HRV analysis (SDNN, RMSSD, LF/HF, CSI/CVI)
+  MeasurementData → chart data (line, pie, bar)
+  MeasurementData → TNO analysis (static/dynamic, angle ranges)
+
+Step 8: RESULTS STORAGE
+  All calculations → Session JSONFields
+  Chart data → SessionStats model
+
+Step 9: AI ANALYSIS (optional)
+  Session data → Gemini prompt (localized)
+  Gemini response → Session.ai_report JSONField
+
+Step 10: FRONTEND DISPLAY
+  React Query fetches → /sessions/{id}/stats/
+  Stats JSON → Nivo charts (line, pie, donut)
+  Assessment data → form views, results pages
+  AI report → formatted text display
+</code></pre>
+<h2>Data Formats at Each Step</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Format</th>
+<th>Size (typical)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Raw IMU</td>
+<td>JSON per packet</td>
+<td>~200 bytes</td>
+</tr>
+<tr>
+<td>Processed</td>
+<td>ProcessedDataEntity</td>
+<td>~150 bytes</td>
+</tr>
+<tr>
+<td>CSV per limb</td>
+<td>CSV file</td>
+<td>5-50 MB (8-hour session)</td>
+</tr>
+<tr>
+<td>ZIP per session</td>
+<td>Compressed ZIP</td>
+<td>10-100 MB</td>
+</tr>
+<tr>
+<td>MeasurementData rows</td>
+<td>TimescaleDB</td>
+<td>~3M rows (8h, 104Hz)</td>
+</tr>
+<tr>
+<td>Stats JSON</td>
+<td>JSONField</td>
+<td>10-100 KB</td>
+</tr>
+<tr>
+<td>AI Report</td>
+<td>JSONField</td>
+<td>2-10 KB</td>
+</tr>
+</tbody></table>
+<h2>Where Data Can Be Lost</h2>
+<table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Risk</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BLE disconnect during recording</td>
+<td>Data gap</td>
+<td>Reconnection (up to 3 retries)</td>
+</tr>
+<tr>
+<td>CSV buffer crash</td>
+<td>Unbuffered data lost</td>
+<td>Periodic flush (500ms)</td>
+</tr>
+<tr>
+<td>Upload failure</td>
+<td>Session stays local</td>
+<td>Manual retry</td>
+</tr>
+<tr>
+<td>Backend processing failure</td>
+<td>Session unprocessed</td>
+<td><strong>None — no retry mechanism</strong></td>
+</tr>
+<tr>
+<td>Firestore doc deletion</td>
+<td>Active session status lost</td>
+<td>Pre-save signal deletes on FINISH only</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="6-third-party-integrations">Third-Party Integrations</h1>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Usage</th>
+<th>Configuration</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Firebase Auth</strong></td>
+<td>User authentication, token management, magic links, custom claims</td>
+<td>Per-environment credentials</td>
+</tr>
+<tr>
+<td><strong>Cloud Firestore</strong></td>
+<td>Real-time session status, push notifications</td>
+<td>Per-environment project</td>
+</tr>
+<tr>
+<td><strong>Firebase Storage</strong></td>
+<td>CSV/ZIP files, org logos, firmware files, session media</td>
+<td>Per-environment bucket</td>
+</tr>
+<tr>
+<td><strong>Firebase Analytics</strong></td>
+<td>User events, session tracking</td>
+<td>Auto-configured</td>
+</tr>
+<tr>
+<td><strong>Firebase Crashlytics</strong></td>
+<td>Mobile crash reporting</td>
+<td>Auto-configured</td>
+</tr>
+<tr>
+<td><strong>Google Gemini 2.0</strong></td>
+<td>AI-powered ergonomic report generation</td>
+<td><code>GEMINI_API_KEY</code></td>
+</tr>
+<tr>
+<td><strong>Movesense MDS SDK</strong></td>
+<td>BLE sensor communication protocol</td>
+<td>Bundled in app</td>
+</tr>
+<tr>
+<td><strong>Nordic DFU</strong></td>
+<td>Sensor firmware updates</td>
+<td>Bundled in app</td>
+</tr>
+<tr>
+<td><strong>Sentry</strong></td>
+<td>Error tracking (web + mobile)</td>
+<td>Separate DSNs per platform</td>
+</tr>
+<tr>
+<td><strong>Slack</strong></td>
+<td>Backend notifications</td>
+<td><code>slack_token</code></td>
+</tr>
+<tr>
+<td><strong>SMTP Email</strong></td>
+<td>Transactional emails (invitations, magic links, password reset)</td>
+<td><code>EMAIL_HOST/USER/PASSWORD</code>, port 465 SSL</td>
+</tr>
+<tr>
+<td><strong>reCAPTCHA v3</strong></td>
+<td>Firebase AppCheck (web)</td>
+<td><code>VITE_RECAPTCHA_SITE_KEY</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="7-deployment-amp-infrastructure">Deployment &amp; Infrastructure</h1>
+<h2>Backend</h2>
+<ul>
+<li><strong>Server:</strong> Gunicorn 22.0.0 (WSGI)</li>
+<li><strong>Database:</strong> PostgreSQL + TimescaleDB extension</li>
+<li><strong>Environment config:</strong> python-decouple with <code>.env</code> file</li>
+<li><strong>Django Channels:</strong> 4.1.0 installed (ASGI capability) but no WebSocket consumers implemented</li>
+</ul>
+<h2>Web Apps</h2>
+<ul>
+<li><strong>Build:</strong> Vite 4.1.1 + Turborepo</li>
+<li><strong>Docker:</strong> Multi-stage builds, Docker Compose</li>
+<li><strong>Ports:</strong> 443 (HTTPS), 8443 (secondary)</li>
+<li><strong>Max build memory:</strong> 8192 MB</li>
+</ul>
+<h2>Mobile App</h2>
+<ul>
+<li><strong>Build:</strong> Flutter SDK ≥3.3.1</li>
+<li><strong>CI/CD:</strong> Codemagic (inferred from mobile build pipeline)</li>
+<li><strong>Platforms:</strong> Android (primary, native code present), iOS (Flutter defaults)</li>
+<li><strong>Version:</strong> 4.0.2+273</li>
+</ul>
+<h2>Monitoring</h2>
+<ul>
+<li><strong>Sentry</strong> — Error tracking for web (DSN: <code>...ingest.sentry.io/4504765616750592</code>) and mobile (separate DSN)</li>
+<li><strong>Firebase Crashlytics</strong> — Mobile crash reports</li>
+<li><strong>Firebase Analytics</strong> — Usage analytics</li>
+<li><strong>Slack</strong> — Backend event notifications</li>
+</ul>
+<hr>
+<h1 id="8-technical-debt-register">Technical Debt Register</h1>
+<h2>Critical Issues</h2>
+<h3>1. Background Processing Without Task Queue</h3>
+<ul>
+<li><strong>Location:</strong> <code>user_sessions/</code> signals</li>
+<li><strong>Problem:</strong> Session calculations run in Python <code>Thread</code> from Django signal — no Celery/task queue</li>
+<li><strong>Impact:</strong> No retry on failure, no monitoring, no dead-letter queue. Processing thread silently dies on exception. Session stays unprocessed permanently.</li>
+<li><strong>Fix:</strong> Migrate to Celery with Redis/RabbitMQ broker</li>
+</ul>
+<h3>2. Security: ALLOWED_HOSTS = [&quot;*&quot;]</h3>
+<ul>
+<li><strong>Location:</strong> <code>core/settings.py:24</code></li>
+<li><strong>Problem:</strong> Accepts requests from any host in all environments</li>
+<li><strong>Impact:</strong> Host header injection vulnerability</li>
+<li><strong>Fix:</strong> Set per-environment allowed hosts</li>
+</ul>
+<h3>3. Password Emailed in Plaintext</h3>
+<ul>
+<li><strong>Location:</strong> <code>organizations/views/organizationView.py:347</code></li>
+<li><strong>Problem:</strong> Password sent via email during user creation</li>
+<li><strong>Impact:</strong> Credential exposure</li>
+<li><strong>Fix:</strong> Use password reset flow instead</li>
+</ul>
+<h3>4. Session Status Transitions Not Enforced</h3>
+<ul>
+<li><strong>Problem:</strong> Any status can be set to any other via API (e.g., FINISHED → ONGOING)</li>
+<li><strong>Impact:</strong> Invalid state, potential data corruption</li>
+<li><strong>Fix:</strong> Implement state machine validation</li>
+</ul>
+<h3>5. No Transaction Atomicity on Merge</h3>
+<ul>
+<li><strong>Location:</strong> <code>MergeSessions</code> view</li>
+<li><strong>Problem:</strong> Session merge doesn&#39;t use <code>transaction.atomic()</code></li>
+<li><strong>Impact:</strong> Partial merge on failure — corrupted data</li>
+<li><strong>Fix:</strong> Wrap in atomic transaction</li>
+</ul>
+<h2>High Priority</h2>
+<h3>6. Bare Exception Handling</h3>
+<ul>
+<li><strong>Location:</strong> <code>firebase_auth/authentication.py:49</code></li>
+<li><strong>Problem:</strong> <code>except:</code> catches all exceptions silently</li>
+<li><strong>Fix:</strong> Catch specific exceptions, log others</li>
+</ul>
+<h3>7. No Sync Retry Mechanism (Mobile)</h3>
+<ul>
+<li><strong>Problem:</strong> Failed uploads require manual user intervention</li>
+<li><strong>Impact:</strong> Data loss if user doesn&#39;t notice sync failure</li>
+<li><strong>Fix:</strong> Implement exponential backoff retry with persistent job queue</li>
+</ul>
+<h3>8. Organization Stats Computed on Every Call</h3>
+<ul>
+<li><strong>Location:</strong> <code>Organization</code> model properties</li>
+<li><strong>Problem:</strong> <code>number_of_sessions_per_month</code> etc. run DB queries per request</li>
+<li><strong>Impact:</strong> Slow dashboard for orgs with many sessions</li>
+<li><strong>Fix:</strong> Cache stats, invalidate on change</li>
+</ul>
+<h3>9. MeasurementData Volume</h3>
+<ul>
+<li><strong>Problem:</strong> TimescaleDB table grows massively (3M+ rows per 8h session per limb)</li>
+<li><strong>Impact:</strong> Query performance degradation over time</li>
+<li><strong>Fix:</strong> Implement data retention policies, materialized views for aggregates</li>
+</ul>
+<h3>10. No API Rate Limiting on Auth Endpoints</h3>
+<ul>
+<li><strong>Problem:</strong> Only <code>custom_post: 10/min</code> exists, not on login/reset</li>
+<li><strong>Impact:</strong> Brute-force vulnerability</li>
+<li><strong>Fix:</strong> Add rate limiting to all auth endpoints</li>
+</ul>
+<h2>Medium Priority</h2>
+<h3>11. Naming Inconsistencies</h3>
+<ul>
+<li><code>assesment_category</code> (typo throughout backend — &quot;assessment&quot; misspelled)</li>
+<li><code>switchOranization</code> route (typo in mobile — &quot;Organization&quot; misspelled)</li>
+<li><code>VITE_API_BASE_URl</code> (typo — &quot;URl&quot;)</li>
+<li><code>defaulPropotionalGain</code> (typo in mobile constants)</li>
+<li>Mixed snake_case/camelCase in JSON between backend and frontend</li>
+</ul>
+<h3>12. Commented-Out Code</h3>
+<ul>
+<li>Backend: Proxy models (<code>workerModel.py</code>, <code>ergonomistModel.py</code>, <code>orgAdminModel.py</code>)</li>
+<li>Backend: Multiprocessing TNO approach (<code>user_sessions/models.py:262-275</code>)</li>
+<li>Backend: Test runner (<code>test_runner.py</code>)</li>
+<li>Web: Hundreds of &quot;done&quot; comments in <code>apiRoutes.ts</code></li>
+</ul>
+<h3>13. Dead/Unused Code</h3>
+<ul>
+<li>Web: <code>legacyApiRoutes.ts</code> (17KB file of old routes)</li>
+<li>Mobile: <code>CheckResetPasswordUseCase</code> defined but unused</li>
+<li>Mobile: Commented MDS imports in pubspec.yaml</li>
+</ul>
+<h3>14. Missing Tests</h3>
+<ul>
+<li>Backend: Minimal test setup, test runner commented out</li>
+<li>No integration tests visible</li>
+<li>No end-to-end tests</li>
+</ul>
+<h3>15. Hardcoded Values</h3>
+<ul>
+<li>TNO thresholds: <code>[60, 20, 10]</code> degrees</li>
+<li>Static duration: 6 seconds</li>
+<li>BLE connection intervals: 39/80 (48.75ms/100ms)</li>
+<li>Cron paths: <code>/usr/local/bin/python3</code></li>
+<li>Session max duration: 480 minutes (8 hours)</li>
+<li>Signed URL expiry: 7200 seconds (2 hours)</li>
+</ul>
+<h3>16. Frontend-Backend Inconsistencies</h3>
+<ul>
+<li>Web calls endpoints that may not match backend exactly (e.g., <code>/sessions/{id}/stats/percentiles/</code> — not clearly visible in backend URLs)</li>
+<li>Additional web endpoints (archiving settings, report templates, word export) not all visible in backend URL config</li>
+</ul>
+<h3>17. N+1 Query Issues</h3>
+<ul>
+<li>Session list serializes all logs per session</li>
+<li>No select_related/prefetch_related optimization visible</li>
+</ul>
+<h3>18. Magic Link Security</h3>
+<ul>
+<li>URL-encoded in query parameter — logged by proxies, browser history</li>
+<li>Should use short-lived tokens with server-side validation</li>
+</ul>
+<h3>19. Incomplete Mobile Features</h3>
+<ul>
+<li>Vibration detection display (UI TODO)</li>
+<li>Firmware update flow (dialog incomplete)</li>
+<li>Sensor unpair/pair/disconnect buttons (not implemented)</li>
+<li>Work cycle auto-advance (timer exists, UI not wired)</li>
+</ul>
+<h3>20. No Caching Layer</h3>
+<ul>
+<li>No Redis/memcached configured</li>
+<li>Django ORM hits DB on every request</li>
+<li>React Query client-side cache (15min) provides some relief</li>
+</ul>
+<h2>Low Priority</h2>
+<h3>21. Missing Error Boundaries (Web)</h3>
+<ul>
+<li>Global boundary exists but no granular feature-level boundaries</li>
+<li>API errors may crash pages</li>
+</ul>
+<h3>22. Console Statements in Production Code</h3>
+<ul>
+<li><code>TestingNewComponentsPage:12</code> — <code>console.log(allDataIsValid)</code></li>
+<li><code>auth.ts:61</code> (admin) — <code>console.error</code> instead of logging service</li>
+</ul>
+<h3>23. Feature Flags Hardcoded</h3>
+<ul>
+<li>Only 2 flags, both tied to <code>import.meta.env.DEV</code></li>
+<li>No remote feature flag system</li>
+</ul>
+<h3>24. No API Versioning Strategy</h3>
+<ul>
+<li>Single <code>/api/v1/</code> prefix</li>
+<li>No migration path to v2</li>
+</ul>
+<h3>25. Null/Blank Inconsistency (Backend)</h3>
+<ul>
+<li>Many CharField fields with both <code>null=True</code> and <code>blank=True</code></li>
+<li>Should follow Django convention: CharField uses <code>blank=True</code> only, null for non-string fields</li>
+</ul>
+<h2>TODO/FIXME/HACK Items</h2>
+<h3>Backend</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Issue</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Session_post_save</code> signal</td>
+<td>Thread-based processing without queue</td>
+</tr>
+<tr>
+<td><code>firebase_auth/authentication.py:49</code></td>
+<td>Bare except clause</td>
+</tr>
+<tr>
+<td><code>user_sessions/models.py:262-275</code></td>
+<td>Commented multiprocessing for TNO</td>
+</tr>
+<tr>
+<td><code>settings.py:295-296</code></td>
+<td>Hardcoded cron python path</td>
+</tr>
+</tbody></table>
+<h3>Mobile</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Issue</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sensor_vibration_list_item.dart:122,137,149</code></td>
+<td>Unpair/Pair/Disconnect not implemented</td>
+</tr>
+<tr>
+<td><code>firmware_update_available_dialog.dart:25</code></td>
+<td>Update flow incomplete</td>
+</tr>
+<tr>
+<td><code>work_label_model.dart:25</code></td>
+<td>Replace name with ID mapping</td>
+</tr>
+<tr>
+<td><code>switch_organization_section.dart:34</code></td>
+<td>Review code quality</td>
+</tr>
+<tr>
+<td><code>sensors_settings_section.dart:208</code></td>
+<td>Restore deferred feature</td>
+</tr>
+<tr>
+<td><code>feedback_display_panel.dart:123</code></td>
+<td>Move logic elsewhere</td>
+</tr>
+<tr>
+<td><code>vibration_detection_panel.dart:65,85</code></td>
+<td>Time display + limb toggle</td>
+</tr>
+<tr>
+<td><code>session.remote.datasource.dart:112,146</code></td>
+<td>Review logic + error handling</td>
+</tr>
+<tr>
+<td><code>work_session_listing.page.dart:87</code></td>
+<td>Change cubit initialization</td>
+</tr>
+<tr>
+<td><code>work_session_setup.page.dart:24</code></td>
+<td>Review code</td>
+</tr>
+<tr>
+<td><code>category_with_label_search_widget.dart:136</code></td>
+<td>Selection logic unclear</td>
+</tr>
+<tr>
+<td><code>firmware.remote.datasource.dart:39</code></td>
+<td>Add error handling</td>
+</tr>
+<tr>
+<td><code>sensors_scanning_dialog.dart:78</code></td>
+<td>Verify vibrator detection</td>
+</tr>
+</tbody></table>
+<h3>Web</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Issue</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>apiRoutes.ts:1</code> (client-panel)</td>
+<td>&quot;todo delete all comments&quot;</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="9-dependencies-analysis">Dependencies Analysis</h1>
+<h2>Backend (166 packages)</h2>
+<p><strong>Core Framework:</strong></p>
+<ul>
+<li>Django 5.0.9, DRF 3.15.2</li>
+</ul>
+<p><strong>Data Processing:</strong></p>
+<ul>
+<li>numpy, pandas, scipy — numerical computation</li>
+<li>hrvanalysis — heart rate variability analysis</li>
+<li>astropy — scientific computing</li>
+<li>nolds — nonlinear dynamics analysis</li>
+</ul>
+<p><strong>Firebase:</strong></p>
+<ul>
+<li>firebase-admin 6.1.0</li>
+</ul>
+<p><strong>AI:</strong></p>
+<ul>
+<li>google-generativeai 0.7.2 (Gemini)</li>
+</ul>
+<p><strong>Database:</strong></p>
+<ul>
+<li>django-timescaledb — TimescaleDB support</li>
+<li>psycopg2 — PostgreSQL adapter</li>
+</ul>
+<p><strong>Infrastructure:</strong></p>
+<ul>
+<li>channels 4.1.0 — WebSocket (installed but unused)</li>
+<li>gunicorn 22.0.0 — WSGI server</li>
+<li>sentry-sdk 2.8.0</li>
+</ul>
+<p><strong>File Handling:</strong></p>
+<ul>
+<li>openpyxl — Excel export</li>
+<li>django-storages 1.14.3 — cloud storage</li>
+</ul>
+<p><strong>Tree Structure:</strong></p>
+<ul>
+<li>django-mptt — Modified Preorder Tree Traversal</li>
+</ul>
+<p><strong>Dev Tools:</strong></p>
+<ul>
+<li>black 24.4.2, pytest 8.2.2</li>
+</ul>
+<h2>Web Apps</h2>
+<p><strong>Core:</strong></p>
+<ul>
+<li>React 18.2.0, TypeScript 4.9.3, Vite 4.1.1</li>
+<li>Material-UI 5.11.9, Emotion (styled)</li>
+</ul>
+<p><strong>State:</strong></p>
+<ul>
+<li>Jotai 2.0.2, TanStack React Query 4.24.10</li>
+</ul>
+<p><strong>Charts:</strong></p>
+<ul>
+<li>@nivo/core, @nivo/line, @nivo/bar, @nivo/pie 0.83.0</li>
+</ul>
+<p><strong>Forms:</strong></p>
+<ul>
+<li>Formik 2.2.9, Yup 1.0.0</li>
+</ul>
+<p><strong>Data:</strong></p>
+<ul>
+<li>Axios 1.3.4, Firebase 9.17.1</li>
+<li>xlsx 0.18.5, file-saver 2.0.5</li>
+<li>@react-pdf/renderer 3.1.12</li>
+</ul>
+<p><strong>Routing:</strong></p>
+<ul>
+<li>react-router-dom 6.8.1</li>
+</ul>
+<p><strong>i18n:</strong></p>
+<ul>
+<li>i18next 22.4.9, react-i18next 12.1.5</li>
+</ul>
+<p><strong>Build:</strong></p>
+<ul>
+<li>Turborepo 1.8.1, Yarn 1.22.19</li>
+</ul>
+<h2>Mobile (Flutter)</h2>
+<p><strong>Core:</strong></p>
+<ul>
+<li>Flutter SDK ≥3.3.1, flutter_bloc 8.1.2</li>
+</ul>
+<p><strong>BLE:</strong></p>
+<ul>
+<li>flutter_blue_plus 1.35.3, mdsflutter 2.3.1, nordic_dfu 6.1.2</li>
+</ul>
+<p><strong>Database:</strong></p>
+<ul>
+<li>drift 2.28.2</li>
+</ul>
+<p><strong>Network:</strong></p>
+<ul>
+<li>dio 5.3.0</li>
+</ul>
+<p><strong>Firebase:</strong></p>
+<ul>
+<li>firebase_core, firebase_auth, cloud_firestore, firebase_storage, firebase_analytics, firebase_crashlytics</li>
+</ul>
+<p><strong>Code Generation:</strong></p>
+<ul>
+<li>freezed 2.3.2, json_serializable 6.6.1, injectable 2.1.0</li>
+</ul>
+<p><strong>Sensors:</strong></p>
+<ul>
+<li>sensors_plus (custom fork), flutter_activity_recognition 4.0.0</li>
+</ul>
+<p><strong>Media:</strong></p>
+<ul>
+<li>video_player 2.9.2, audioplayers 6.1.0, image_picker 1.0.2</li>
+</ul>
+<p><strong>Export:</strong></p>
+<ul>
+<li>pdf 3.10.8, printing 5.11.0</li>
+</ul>
+<p><strong>i18n:</strong></p>
+<ul>
+<li>easy_localization 3.0.1</li>
+</ul>
+<p><strong>DI:</strong></p>
+<ul>
+<li>get_it 8.0.2</li>
+</ul>
+<p><strong>Monitoring:</strong></p>
+<ul>
+<li>sentry_flutter 8.14.1</li>
+</ul>
+
+<footer>Wergonic — internal documentation. Generated from codebase analysis of the <code>dev</code> branch (backend, web apps, mobile) on 17 March 2026.</footer>
+</body>
+</html>

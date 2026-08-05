@@ -1,0 +1,15 @@
+// OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+// Obsidian per-machine UI state (avoids cross-laptop conflicts)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.trash
+// Python/venv artifacts, in case any sneak in
+.venv
+__pycache__
+*.pyc
+
+// git metadata — these folders are also synced by git (wsync); let git own .git
+.git

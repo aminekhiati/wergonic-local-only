@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Calculations — Possible Issues to Confirm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6; --ink: #181826; --slate: #5A6478; --muted: #98A1B3;
+    --line: #E9EBF0; --tint: #F4EFFD;
+    --amber: #B7791F; --amber-bg: #FFF8EC; --amber-line: #F2DFB8;
+    --red: #B42318; --red-bg: #FEF3F2; --red-line: #FDA29B;
+    --green: #1B7F5A; --green-bg: #ECFAF4; --green-line: #A9E0C9;
+    --blue: #17539B; --blue-bg: #EFF6FE; --blue-line: #B3D3F5;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 18mm 16mm 16mm 16mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink); font-size: 10.5pt; line-height: 1.5;
+    -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+  }
+  h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 14px 16px; margin-bottom: 18px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 23pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .lede { color: var(--slate); font-size: 10.5pt; max-width: 168mm; margin-top: 8px; }
+  .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; }
+
+  h2 {
+    font-size: 13pt; font-weight: 700; letter-spacing: -0.01em;
+    margin: 26px 0 4px; padding-bottom: 6px; border-bottom: 1.5px solid var(--line);
+    break-after: avoid;
+  }
+  .sectionnote { color: var(--slate); font-size: 9.5pt; margin: 6px 0 4px; break-after: avoid; }
+
+  .item { margin-top: 16px; break-inside: avoid; }
+  .item h3 { font-size: 11pt; font-weight: 700; color: var(--ink); margin: 0 0 5px; break-after: avoid; }
+  .item h3 .id {
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.5pt; font-weight: 500;
+    color: var(--purple); background: var(--tint); padding: 2px 6px; border-radius: 4px;
+    margin-right: 8px; vertical-align: 1.5px;
+  }
+  .conf {
+    font-size: 7.5pt; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 1.5px 6px; border-radius: 4px; margin-left: 7px; vertical-align: 1.5px;
+  }
+  .conf.c1 { color: var(--red); background: var(--red-bg); box-shadow: inset 0 0 0 1px var(--red-line); }
+  .conf.c2 { color: var(--amber); background: var(--amber-bg); box-shadow: inset 0 0 0 1px var(--amber-line); }
+  .conf.c3 { color: var(--blue); background: var(--blue-bg); box-shadow: inset 0 0 0 1px var(--blue-line); }
+
+  .facts { margin: 6px 0 0; border-collapse: collapse; width: 100%; font-size: 9.5pt; }
+  .facts td { padding: 4px 10px 4px 0; vertical-align: top; color: var(--slate); border-bottom: 1px solid #F4F5F8; }
+  .facts td.k { width: 40mm; color: var(--ink); font-weight: 600; white-space: nowrap; }
+  .facts tr:last-child td { border-bottom: none; }
+  .facts code, code {
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.8pt;
+    color: var(--ink); background: #F4F5F8; padding: 1px 4px; border-radius: 3px;
+  }
+
+  .why { margin-top: 8px; display: flex; gap: 10px; break-inside: avoid; }
+  .why > div { flex: 1; border-radius: 6px; padding: 8px 11px; font-size: 9.5pt; line-height: 1.5; }
+  .why .bad { background: var(--red-bg); border-left: 3px solid var(--red-line); color: var(--slate); }
+  .why .ok  { background: var(--green-bg); border-left: 3px solid var(--green-line); color: var(--slate); }
+  .why .tag { display: block; font-size: 7.5pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px; }
+  .why .bad .tag { color: var(--red); }
+  .why .ok .tag { color: var(--green); }
+
+  .confirm {
+    margin-top: 8px; background: #FAFAFC; border: 1px solid var(--line); border-radius: 6px;
+    padding: 8px 12px; font-size: 9.5pt; color: var(--slate); break-inside: avoid;
+  }
+  .confirm .tag { font-size: 7.5pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--purple); margin-right: 6px; }
+
+  .box { margin-top: 14px; border: 1px solid var(--line); border-radius: 8px; background: #FAFAFC; padding: 14px 18px; break-inside: avoid; }
+  .box h3 { margin: 0 0 4px; font-size: 11.5pt; }
+  .box p { margin: 4px 0 0; color: var(--slate); font-size: 9.5pt; }
+  .box.warn { border-color: var(--amber-line); background: var(--amber-bg); }
+  .box.warn h3 { color: var(--amber); }
+  .box.warn .tag { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); }
+  .box.flow { background: var(--tint); border-color: #E3D5F7; }
+  .box.flow h3 { color: var(--purple); }
+
+  table.sum { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 9pt; }
+  table.sum th {
+    text-align: left; font-weight: 700; font-size: 8pt; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted); border-bottom: 1.5px solid var(--line); padding: 6px 8px 6px 0;
+  }
+  table.sum td { padding: 5px 8px 5px 0; border-bottom: 1px solid #F2F3F7; color: var(--slate); vertical-align: top; }
+  table.sum td.tid { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.5pt; color: var(--purple); white-space: nowrap; }
+  table.sum td.what { color: var(--ink); }
+  .pill { display: inline-block; font-size: 7.5pt; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 1.5px 6px; border-radius: 4px; white-space: nowrap; }
+  .pill.c1 { color: var(--red); background: var(--red-bg); box-shadow: inset 0 0 0 1px var(--red-line); }
+  .pill.c2 { color: var(--amber); background: var(--amber-bg); box-shadow: inset 0 0 0 1px var(--amber-line); }
+  .pill.c3 { color: var(--blue); background: var(--blue-bg); box-shadow: inset 0 0 0 1px var(--blue-line); }
+
+  ul { margin: 6px 0 0; padding-left: 18px; }
+  li { color: var(--slate); margin: 4px 0; font-size: 9.5pt; }
+  li strong { color: var(--ink); font-weight: 600; }
+
+  footer { margin-top: 28px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="eyebrow">Wergonic · Measurement &amp; Risk Calculations</div>
+  <h1>Possible Issues to Confirm</h1>
+  <p class="lede">
+    Twenty things found while mapping how the product turns sensor data into risk verdicts. <strong>These are
+    candidates, not confirmed defects.</strong> Every one was read directly in the code and the facts stated below are
+    accurate — but whether each is a <em>problem</em> depends on intent, and intent is not written down anywhere.
+  </p>
+  <p class="lede">
+    Each entry gives the facts, the case for it being a bug, the case for it being deliberate, and what to check to
+    settle it. Nothing here should be sent to a developer as a ticket until the question in
+    <strong>“How to settle it”</strong> has been answered.
+  </p>
+  <div class="meta">
+    20 items · 27 July 2026 · read against backend <code>staging</code>, mobile <code>main</code>, web <code>dev</code><br />
+    Two known-intentional deviations are excluded: the <code>−5°</code> lower edge on the “0°–10°” band, and trunk
+    backward bending at <code>−10°</code> instead of RAMP’s <code>0°</code>.
+  </div>
+</div>
+
+<div class="box flow">
+  <h3>How to read the confidence labels</h3>
+  <p>
+    <span class="pill c1">Likely a bug</span> &nbsp;The two sides contradict each other and no reading makes both
+    correct. Still worth a sanity check, but expect this to become a ticket.
+  </p>
+  <p>
+    <span class="pill c2">Needs a decision</span> &nbsp;The behaviour is real and consistent, but whether it is right
+    is a product or ergonomics judgement — not something the code can answer.
+  </p>
+  <p>
+    <span class="pill c3">Probably fine</span> &nbsp;Looks odd at first, and there is a plausible reason it is
+    deliberate. Listed so it is not rediscovered later and mistaken for a bug.
+  </p>
+</div>
+
+<!-- ============================================================ -->
+<h2>Summary</h2>
+
+<table class="sum">
+  <thead>
+    <tr><th style="width:46px">ID</th><th style="width:106px">Confidence</th><th>Issue</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="tid">P1</td><td><span class="pill c1">Likely a bug</span></td><td class="what">TNO analysis silently discards whole angle ranges</td></tr>
+    <tr><td class="tid">P2</td><td><span class="pill c1">Likely a bug</span></td><td class="what">A RAMP field, its comment and its label state three different thresholds</td></tr>
+    <tr><td class="tid">P3</td><td><span class="pill c1">Likely a bug</span></td><td class="what">Phone warns about head bending at 30° later than the reports do</td></tr>
+    <tr><td class="tid">P4</td><td><span class="pill c1">Likely a bug</span></td><td class="what">Phone and reports count backward bending differently</td></tr>
+    <tr><td class="tid">P5</td><td><span class="pill c1">Likely a bug</span></td><td class="what">Phone warns about arm speed at 60 °/s, reports warn at 30 °/s</td></tr>
+    <tr><td class="tid">P6</td><td><span class="pill c1">Likely a bug</span></td><td class="what">Mobile PDF and web screen print different recommended arm-speed limits</td></tr>
+    <tr><td class="tid">P7</td><td><span class="pill c1">Likely a bug</span></td><td class="what">Trunk and head bending percentiles never appear in the Word report</td></tr>
+    <tr><td class="tid">P8</td><td><span class="pill c1">Likely a bug</span></td><td class="what">RAMP has two colour functions that disagree at score 1.5</td></tr>
+    <tr><td class="tid">P9</td><td><span class="pill c1">Likely a bug</span></td><td class="what">MEC treats the same boundary value differently in different questions</td></tr>
+    <tr><td class="tid">P10</td><td><span class="pill c1">Likely a bug</span></td><td class="what">Phone instant feedback ignores backward bending entirely</td></tr>
+
+    <tr><td class="tid">P11</td><td><span class="pill c2">Needs a decision</span></td><td class="what">Risk is a percentage of the recording, with no minimum length</td></tr>
+    <tr><td class="tid">P12</td><td><span class="pill c2">Needs a decision</span></td><td class="what">Three different rules decide a colour for the same session</td></tr>
+    <tr><td class="tid">P13</td><td><span class="pill c2">Needs a decision</span></td><td class="what">The web screen compares median speed against the yellow ceiling, not the green one</td></tr>
+    <tr><td class="tid">P14</td><td><span class="pill c2">Needs a decision</span></td><td class="what">Trunk and head speed is measured and shown but never assessed</td></tr>
+    <tr><td class="tid">P15</td><td><span class="pill c2">Needs a decision</span></td><td class="what">Head side bending is measured but has no risk band of its own</td></tr>
+    <tr><td class="tid">P16</td><td><span class="pill c2">Needs a decision</span></td><td class="what">The printed criteria text states ranges that overlap</td></tr>
+    <tr><td class="tid">P17</td><td><span class="pill c2">Needs a decision</span></td><td class="what">Temperature is printed with no unit in two of the three reports</td></tr>
+
+    <tr><td class="tid">P18</td><td><span class="pill c3">Probably fine</span></td><td class="what">Pie charts group arm angles differently from the risk gauges</td></tr>
+    <tr><td class="tid">P19</td><td><span class="pill c3">Probably fine</span></td><td class="what">The “Extension” slice and the “backward” risk row measure different populations</td></tr>
+    <tr><td class="tid">P20</td><td><span class="pill c3">Probably fine</span></td><td class="what">P99 appears in some reports and not others</td></tr>
+  </tbody>
+</table>
+
+<div class="box warn">
+  <span class="tag">The pattern underneath</span>
+  <h3>Six of these exist because the thresholds are written down three times.</h3>
+  <p>
+    The backend has a file that calls itself the single source of truth and says the numbers
+    <em>“can never drift apart again”</em>. The web app then re-types those numbers by hand into its own file. The
+    mobile app hardcodes its own copies inside each feedback class.
+  </p>
+  <p>
+    Two hand-made copies of a single source of truth is not a single source of truth. <strong>P3, P4, P5, P6, P8 and
+    P9 are all the same root cause</strong> — a threshold was updated in one copy and not the others. Fixing them
+    individually leaves the mechanism intact and they will drift again.
+  </p>
+</div>
+
+<!-- ============================================================ -->
+<h2>Likely a bug</h2>
+<p class="sectionnote">The two sides contradict each other, and no reading of the code makes both correct.</p>
+
+<div class="item">
+  <h3><span class="id">P1</span> TNO analysis silently discards whole angle ranges <span class="conf c1">Likely a bug</span></h3>
+  <table class="facts">
+    <tr><td class="k">What happens</td><td>The TNO calculation sorts each movement into an angle range. One range in the middle is never filled, so any movement landing there is dropped and counted nowhere.</td></tr>
+    <tr><td class="k">For arms</td><td>Movements between <strong>10° and 20°</strong> are discarded.</td></tr>
+    <tr><td class="k">For the trunk</td><td>Movements between <strong>0° and 20°</strong> are discarded — which is most normal working posture.</td></tr>
+    <tr><td class="k">Why</td><td>The condition that selects the middle range is <code>0 &lt; i &lt; length − 1</code>. The trunk is configured with only two boundaries, so this becomes <code>0 &lt; i &lt; 1</code> — impossible for any whole number.</td></tr>
+    <tr><td class="k">Where</td><td><code>tno/calculations/extractTaskCharacteristics.py:40-42</code></td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a bug</span>
+      The range exists in the output structure, has a label, and is read by the mobile app — which expects to receive
+      it. Nothing suggests the range was meant to be empty. It reports <strong>0%</strong> even when the worker spent
+      the whole shift there, which is not a missing feature but a wrong number.
+    </div>
+    <div class="ok"><span class="tag">Case for it being deliberate</span>
+      Weak. Somebody could have decided the middle range is uninteresting — but then it would not be defined, labelled
+      and consumed downstream. No comment anywhere says so.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Open any completed session and look at the TNO table. If the middle range reads exactly <code>0%</code> on every
+    session ever recorded, it is the bug. This takes one minute and is the strongest item on the list.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P2</span> A RAMP field, its comment and its label state three different thresholds <span class="conf c1">Likely a bug</span></h3>
+  <table class="facts">
+    <tr><td class="k">The code does</td><td>Counts time where head bending is <strong>−5° or further back</strong>.</td></tr>
+    <tr><td class="k">The comment says</td><td>“for values <strong>≤ −10</strong>”.</td></tr>
+    <tr><td class="k">The field is named</td><td><code>backward_bending_gt_10_degrees</code>.</td></tr>
+    <tr><td class="k">The customer reads</td><td>“Percentage of time with backward bending <strong>more than 10 degrees</strong>”.</td></tr>
+    <tr><td class="k">Where</td><td><code>ramp/calculations/ramp_calculator.py:273-282</code></td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a bug</span>
+      Three statements about one number, in ten lines, none of which agree. At minimum the comment and the customer
+      label are wrong. If the intended threshold really is −10°, the calculation is wrong too and every RAMP head
+      score is slightly overstated.
+    </div>
+    <div class="ok"><span class="tag">Case for it being deliberate</span>
+      The <em>value</em> −5° may well be correct and intentional — it matches the −5° edge used elsewhere, which is
+      confirmed as deliberate. In that case this is purely a naming and labelling problem, not a calculation one.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    One question to whoever specified RAMP: <strong>should head backward bending be measured from −5° or from
+    −10°?</strong> Note the risk gauges elsewhere in the product use −10° for the same body part, which is an argument
+    that −10° was intended here too.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P3</span> Phone warns about head bending later than the reports do <span class="conf c1">Likely a bug</span></h3>
+  <table class="facts">
+    <tr><td class="k">The phone warns at</td><td><strong>20°</strong> (orange) and <strong>45°</strong> (red)</td></tr>
+    <tr><td class="k">The reports warn at</td><td><strong>30°</strong></td></tr>
+    <tr><td class="k">What the worker sees</td><td>A worker holding their head at 35° forward sees <strong>no warning</strong> during the recording, then the report marks it as a risk factor afterwards.</td></tr>
+    <tr><td class="k">Why it looks accidental</td><td>The head feedback class is a line-for-line copy of the trunk one. <strong>20° and 45° are the trunk’s numbers.</strong> The head’s tighter limits were never substituted in.</td></tr>
+    <tr><td class="k">Where</td><td>Phone: <code>head_feedback_manager.dart:18-23</code> · Reports: <code>posture_thresholds.py:19</code></td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a bug</span>
+      The neck has far less range of movement than the lower back, which is exactly why the reports use 30° for the
+      head and 45° for the trunk. Applying the trunk’s numbers to the neck contradicts our own risk model, and the
+      copy-paste origin is visible in the code.
+    </div>
+    <div class="ok"><span class="tag">Case for it being deliberate</span>
+      Live feedback could be intentionally less sensitive than the report, so workers are not buzzed constantly.
+      But if so it should be a deliberate offset, not the trunk’s numbers by accident, and it should apply to every
+      body part rather than just this one.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Ask whether live warnings are meant to fire at the same angle as the report. If yes, this is a bug. If no, we need
+    a stated rule for how much less sensitive live feedback should be.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P4</span> Phone and reports count backward bending differently <span class="conf c1">Likely a bug</span></h3>
+  <table class="facts">
+    <tr><td class="k">The phone counts</td><td><strong>any</strong> backward lean at all (anything below 0°), then warns when that exceeds <strong>6%</strong> of the session and alarms above <strong>12.5%</strong>.</td></tr>
+    <tr><td class="k">The reports count</td><td>only leans past <strong>−10°</strong>, then warn above <strong>1%</strong> and alarm above <strong>6%</strong>.</td></tr>
+    <tr><td class="k">The mismatch</td><td>Both the angle and the percentage differ. The phone counts far more moments as “backward”, but then requires a much larger share before reacting.</td></tr>
+    <tr><td class="k">Where</td><td>Phone: <code>bending_feedback_manager.dart:22-23, 35-41</code> · Reports: <code>posture_thresholds.py:18,20</code></td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a bug</span>
+      The phone is applying one rule’s counting method to another rule’s limits. There is no version of the risk model
+      in which “any lean past 0°, warn above 6%” is a rule we chose — the number 0 appears nowhere in our threshold
+      files, and the 6% figure is the report’s <em>alarm</em> level being used as the phone’s <em>warning</em> level.
+    </div>
+    <div class="ok"><span class="tag">Case for it being deliberate</span>
+      Possible that whoever wrote it reasoned the two errors cancel out — counting more moments but requiring a higher
+      share. That is not a safe assumption and nothing documents it.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Worth measuring rather than reasoning about: take one real session and compute the backward-bending percentage
+    both ways. If they land in different colours, this is a bug regardless of intent.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P5</span> Phone warns about arm speed at a different threshold from the reports <span class="conf c1">Likely a bug</span></h3>
+  <table class="facts">
+    <tr><td class="k">The phone warns at</td><td><strong>60 °/s</strong></td></tr>
+    <tr><td class="k">The reports warn at</td><td><strong>15 °/s</strong> (yellow) and <strong>30 °/s</strong> (red)</td></tr>
+    <tr><td class="k">The decisive fact</td><td>Our own Word report explains, in text shown to customers, that the original standard used <strong>60 °/s</strong> and we deliberately changed it to <strong>30 °/s</strong> because IMU sensors estimate more accurately than the accelerometer-only sensors the original research used.</td></tr>
+    <tr><td class="k">Where</td><td>Phone: <code>arm_feedback_manager.dart:84-91</code> · Reports: <code>posture_thresholds.py:25</code> · Rationale: <code>session_docx_report.py:1171-1176</code></td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a bug</span>
+      <strong>60 is the number we publicly say we no longer use.</strong> The backend was updated when the decision
+      was made; the phone was not. This is the clearest example of the copy-drift problem on the list.
+    </div>
+    <div class="ok"><span class="tag">Case for it being deliberate</span>
+      One genuine complication: the phone and the backend measure arm speed by different methods. The phone uses total
+      rotation in every direction; the backend uses only the rate at which the arm rises and falls. The phone’s number
+      is therefore always the larger of the two, which could justify a higher threshold — but nobody has written down
+      that this is why, and 60 matching the superseded standard exactly is hard to call a coincidence.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Ask whoever made the 60 → 30 change whether the phone was in scope. Also worth deciding whether the phone and the
+    reports should be measuring arm speed the same way at all — see P12.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P6</span> The mobile PDF and the web screen print different recommended limits <span class="conf c1">Likely a bug</span></h3>
+  <table class="facts">
+    <tr><td class="k">Mobile PDF prints</td><td>Recommended limit for median arm speed: <strong>20 °/s</strong></td></tr>
+    <tr><td class="k">Web screen prints</td><td>Recommended limit for median arm speed: <strong>30 °/s</strong></td></tr>
+    <tr><td class="k">Canonical file says</td><td>Green up to <strong>15</strong>, yellow up to <strong>30</strong></td></tr>
+    <tr><td class="k">Where</td><td>Mobile: <code>pdf_table_report.widget.dart:555</code> (hardcoded text) · Web: <code>MovementSectionV2.tsx:362</code></td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a bug</span>
+      Three numbers for one limit, and the customer is told two of them as advice. <strong>20 appears in no threshold
+      file anywhere</strong> — it is not the green cutoff, not the yellow cutoff, and not the old standard. It looks
+      like a typed literal that was never traced to anything.
+    </div>
+    <div class="ok"><span class="tag">Case for it being deliberate</span>
+      None found. Even if 20 were a considered value, it is not stored anywhere it could be maintained from.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Decide which number is the recommended limit for the median — 15 or 30 — then make both reports read it from the
+    canonical file instead of printing a literal. See also P13, which questions whether 30 is the right choice.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P7</span> Trunk and head bending percentiles never appear in the Word report <span class="conf c1">Likely a bug</span></h3>
+  <table class="facts">
+    <tr><td class="k">What is computed</td><td>The backend calculates and stores the 10th, 50th, 90th and 99th percentiles for trunk and head forward bending, side bending, and arm elevation.</td></tr>
+    <tr><td class="k">What is printed</td><td>The Session Percentiles table only knows how to print two rows per body part: <em>Elevation Angle</em> and <em>Angular Velocity</em>.</td></tr>
+    <tr><td class="k">The consequence</td><td>Trunk and head have no elevation angle — they have forward bending. So their bending percentiles are silently omitted, and any trunk or head row printed under “Elevation Angle” would be empty.</td></tr>
+    <tr><td class="k">Where</td><td><code>session_docx_report.py:530-584</code></td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a bug</span>
+      We do the work of calculating these numbers and then throw them away at the last step. The Word report is our
+      most complete artefact and the one we hand to customers, so this is where the omission costs most.
+    </div>
+    <div class="ok"><span class="tag">Case for it being deliberate</span>
+      Possible the section was scoped to arms on purpose and never widened. But the table iterates over every body
+      part, which suggests the intent was to cover them all.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Open a recent Word report and look at the Session Percentiles table. If there are rows labelled “Trunk Elevation
+    Angle” filled with dashes, that confirms it.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P8</span> RAMP has two colour functions that disagree <span class="conf c1">Likely a bug</span></h3>
+  <table class="facts">
+    <tr><td class="k">Function one says</td><td>Score <strong>1.5</strong> → <strong>yellow</strong></td></tr>
+    <tr><td class="k">Function two says</td><td>Score <strong>1.5</strong> → <strong>green</strong></td></tr>
+    <tr><td class="k">Both are live</td><td>They run on different screens of the RAMP results, for the same posture fields.</td></tr>
+    <tr><td class="k">Is 1.5 reachable?</td><td>Yes. It is a real output of the head-backward score ladder.</td></tr>
+    <tr><td class="k">Where</td><td><code>RAMP/utils/functions.ts:321-341</code> and <code>RAMP/utils/generatedCalculations.ts:9-33</code></td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a bug</span>
+      The same score renders two different colours in two places in one assessment. Only one can be right.
+    </div>
+    <div class="ok"><span class="tag">Case for it being deliberate</span>
+      One function may have been written for the auto-generated view and the other for the manually completed view,
+      with genuinely different colour rules intended. If so, that should be stated, because it is not visible from
+      either screen.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Decide the correct colour for score 1.5, then delete one of the two functions. Note: an earlier version of this
+    finding claimed scores between 2 and 3 render green — <strong>that was wrong</strong>. RAMP scores are discrete
+    and nothing lands between 2 and 3. The disagreement at 1.5 is the real one.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P9</span> MEC treats the same boundary value differently in different questions <span class="conf c1">Likely a bug</span></h3>
+  <table class="facts">
+    <tr><td class="k">Question 1 says</td><td>Exactly <strong>8 minutes per hour</strong> of static time → <strong>red</strong></td></tr>
+    <tr><td class="k">Questions 9, 10, 11 say</td><td>Exactly <strong>8 minutes per hour</strong> of static time → <strong>yellow</strong></td></tr>
+    <tr><td class="k">Same test</td><td>Both use the same 4 and 8 minute cutoffs on the same measurement. Only the comparison differs — one includes the boundary, the other excludes it.</td></tr>
+    <tr><td class="k">Where</td><td><code>MEC/utils/calculations.ts:120-126</code> versus <code>:214-218</code></td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a bug</span>
+      There is no reason one body part should treat 8.00 differently from another. No comment explains it, and the
+      frequency thresholds in the same function already use the other convention consistently.
+    </div>
+    <div class="ok"><span class="tag">Case for it being deliberate</span>
+      None found — but the practical impact is close to zero. These are decimal minutes; landing on exactly 8.00 is
+      vanishingly rare with real sensor data.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Not urgent, but do not leave it deliberately. It is a one-character fix. <strong>The cost is credibility, not
+    accuracy</strong> — MEC is the assessment we can call fully objective, and two questions disagreeing on identical
+    inputs undermines that claim if anyone notices.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P10</span> Phone instant feedback ignores backward bending entirely <span class="conf c1">Likely a bug</span></h3>
+  <table class="facts">
+    <tr><td class="k">Instant feedback mode</td><td>Only reacts to forward bending. Any backward lean, however extreme, shows <strong>grey</strong>.</td></tr>
+    <tr><td class="k">Accumulated feedback mode</td><td>Does count backward bending and will turn orange or red because of it.</td></tr>
+    <tr><td class="k">The reports</td><td>Treat backward bending as a named risk factor with its own thresholds.</td></tr>
+    <tr><td class="k">Where</td><td><code>bending_feedback_manager.dart:48-59</code></td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a bug</span>
+      The same app gives contradictory guidance depending on which feedback mode the worker has selected. Backward
+      bending is a real risk factor everywhere else in the product.
+    </div>
+    <div class="ok"><span class="tag">Case for it being deliberate</span>
+      Instant feedback is meant to be simple and immediate; adding a backward rule may have been judged confusing.
+      Plausible — but then the accumulated mode should not contradict it.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Decide whether instant feedback should cover backward bending. Whichever way, the two modes should agree.
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>Needs a decision</h2>
+<p class="sectionnote">The behaviour is real and consistent. Whether it is <em>right</em> is a product or ergonomics judgement.</p>
+
+<div class="item">
+  <h3><span class="id">P11</span> Risk is a percentage of the recording, with no minimum length <span class="conf c2">Needs a decision</span></h3>
+  <table class="facts">
+    <tr><td class="k">How it works</td><td>Every risk colour is “what share of this recording was spent in the bad posture”. There is no adjustment for how long the recording was, and no minimum length.</td></tr>
+    <tr><td class="k">Consequence one</td><td>A 10-minute recording with 5 minutes of overhead work scores <strong>50% — red</strong>. A 10-hour recording with 4 hours of overhead work scores <strong>40% — yellow</strong>. Four hours rates better than five minutes.</td></tr>
+    <tr><td class="k">Consequence two</td><td>A 2-minute recording where the worker reaches up to a shelf for 20 seconds scores <strong>17% above 60° — red</strong>. For one shelf.</td></tr>
+    <tr><td class="k">Verified</td><td>No normalisation to a standard workday and no minimum-duration guard exists anywhere in the backend.</td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a problem</span>
+      As implemented, the same physical exposure produces opposite verdicts depending on how long we happened to
+      record. A customer who notices this will not trust the tool.
+    </div>
+    <div class="ok"><span class="tag">Case for it being correct</span>
+      Genuine and important. The research we cite gives limits <em>for an eight-hour workday</em>, and the method
+      assumes a recording is a <strong>representative sample</strong> of the shift. Under that assumption percentage
+      is exactly the right unit and duration is irrelevant. The maths is not wrong — the assumption is simply never
+      enforced or stated.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Three cheap options, not mutually exclusive: (1) set a minimum recording length below which the colour is
+    suppressed or marked indicative; (2) show the absolute time next to the percentage — <strong>we already calculate
+    it and it is already in the tables</strong>, the colour just ignores it; (3) print the assumption in the report:
+    “assumes this period is representative of the full shift.”
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P12</span> Three different rules decide a colour for the same session <span class="conf c2">Needs a decision</span></h3>
+  <table class="facts">
+    <tr><td class="k">Rule one</td><td><strong>Share of time in a bad posture.</strong> Used by the Word report and the web risk gauges. This is the main model.</td></tr>
+    <tr><td class="k">Rule two</td><td><strong>A percentile compared against a fixed limit</strong>, with a warning band at 80% of the limit. Used only on the web measurement screen. No other report applies it.</td></tr>
+    <tr><td class="k">Rule three</td><td><strong>The angle itself.</strong> The Appendix pie charts colour arms green, yellow and red at 20° and 60°.</td></tr>
+    <tr><td class="k">Consequence</td><td>A customer comparing the pie chart, the risk gauge and the on-screen view sees three colour schemes for the same arm in the same session.</td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a problem</span>
+      None of the three is wrong on its own, but together they make the product look like it cannot decide what
+      “risky” means. The 80% warning band in particular exists in exactly one place and is documented nowhere.
+    </div>
+    <div class="ok"><span class="tag">Case for it being correct</span>
+      They answer different questions and all three are legitimate: how long, how high, and what the spread looks
+      like. A single number cannot express all three.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    This is presentation, not maths. Decide which rule is <em>the</em> verdict and present the others as supporting
+    detail with different visual treatment, so three colour schemes stop competing for the same meaning.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P13</span> The web screen compares median speed against the yellow ceiling, not the green one <span class="conf c2">Needs a decision</span></h3>
+  <table class="facts">
+    <tr><td class="k">Canonical bands</td><td>Arm speed: green up to <strong>15 °/s</strong>, yellow up to <strong>30 °/s</strong>, red above.</td></tr>
+    <tr><td class="k">What the screen does</td><td>Shows the recommended limit for median arm speed as <strong>30 °/s</strong> — the ceiling of the yellow band.</td></tr>
+    <tr><td class="k">Effect</td><td>A worker whose median arm speed is 25 °/s is already in the yellow band by the canonical model, but the screen shows them comfortably under the stated limit.</td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a problem</span>
+      Presenting the top of the caution band as “the limit” makes a moderate-risk worker look compliant.
+    </div>
+    <div class="ok"><span class="tag">Case for it being correct</span>
+      Defensible if the intent is “the limit you must not exceed” rather than “the level you should stay under”. The
+      80% warning band partly compensates, flagging yellow from 24 °/s.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Decide what the word “limit” means in this table — the green ceiling or the red floor — and make it consistent
+    with P6.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P14</span> Trunk and head speed is measured and shown but never assessed <span class="conf c2">Needs a decision</span></h3>
+  <table class="facts">
+    <tr><td class="k">What exists</td><td>Trunk and head rotation speed is captured by the sensors, stored, and printed in report columns.</td></tr>
+    <tr><td class="k">What is missing</td><td>No threshold exists for it. Only arm and wrist speed have bands, so these columns can never be coloured.</td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a problem</span>
+      A column of numbers a customer cannot act on. Either it means something or it should not be shown.
+    </div>
+    <div class="ok"><span class="tag">Case for it being correct</span>
+      Likely deliberate: the research we cite gives velocity limits for arms and wrists, not for the trunk or neck. We
+      may simply have no defensible threshold to apply.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Ask whether a published trunk velocity limit exists. If not, either drop the columns or label them explicitly as
+    informational.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P15</span> Head side bending is measured but has no risk band of its own <span class="conf c2">Needs a decision</span></h3>
+  <table class="facts">
+    <tr><td class="k">What exists</td><td>Head side bending is measured and shown as a distribution, in the same 0–10° / 10–30° / above 30° ranges as the trunk.</td></tr>
+    <tr><td class="k">What is missing</td><td>The risk table covers arm elevation, trunk forward, trunk backward, head forward and head backward — and stops. Head side bending can never turn red.</td></tr>
+    <tr><td class="k">Where it does count</td><td>RAMP uses head side bending past <strong>10°</strong> as a trigger for its first posture question. So it affects a RAMP score but never a session risk gauge.</td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a problem</span>
+      Inconsistent: it is good enough to drive a RAMP score but not good enough to appear in the risk summary. If
+      sideways neck strain matters in one place it should matter in the other.
+    </div>
+    <div class="ok"><span class="tag">Case for it being correct</span>
+      The same is true of trunk side bending, which suggests a deliberate scope: the risk gauges cover the factors the
+      cited research gives eight-hour limits for, and side bending may not be among them.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Ask whether the omission of side bending from the risk gauges was a decision or an oversight. It applies to both
+    head and trunk, so it is one question, not two.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P16</span> The printed criteria text states ranges that overlap <span class="conf c2">Needs a decision</span></h3>
+  <table class="facts">
+    <tr><td class="k">The report prints</td><td><code>0 – 5 % = Low risk</code> · <code>5 – 10 % = Moderate risk</code> · <code>10 – 100 % = High risk</code></td></tr>
+    <tr><td class="k">The code means</td><td>Up to and including 5% is low · above 5% and up to 10% is moderate · above 10% is high</td></tr>
+    <tr><td class="k">The problem</td><td>As printed, 5% appears in two bands and 10% appears in two bands. A reader cannot tell which one applies.</td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a problem</span>
+      This is the text a customer’s safety officer reads to understand our verdicts. Ambiguous boundaries in a
+      compliance-adjacent document invite exactly the wrong kind of question.
+    </div>
+    <div class="ok"><span class="tag">Case for it being correct</span>
+      The calculation is right; only the wording is loose. In practice a value landing exactly on a boundary is rare.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Purely editorial. Print <code>≤ 5 %</code>, <code>&gt; 5 – 10 %</code>, <code>&gt; 10 %</code>. It is generated
+    from one function, so it is a single change affecting every criteria block.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P17</span> Temperature is printed with no unit in two of the three reports <span class="conf c2">Needs a decision</span></h3>
+  <table class="facts">
+    <tr><td class="k">Word report</td><td>Prints bare numbers, e.g. <code>32.45</code></td></tr>
+    <tr><td class="k">Web PDF</td><td>Also prints bare numbers</td></tr>
+    <tr><td class="k">Web screen</td><td>Correctly prints <code>32.45 °C</code></td></tr>
+  </table>
+  <div class="why">
+    <div class="bad"><span class="tag">Case for it being a problem</span>
+      An unlabelled temperature is ambiguous to any reader outside a Celsius country, and the on-screen view already
+      proves we know the unit.
+    </div>
+    <div class="ok"><span class="tag">Case for it being correct</span>
+      Context makes it obvious to most readers, and no customer has raised it.
+    </div>
+  </div>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Trivial fix, no decision really needed beyond confirming the unit is Celsius. Bundle with P16.
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>Probably fine</h2>
+<p class="sectionnote">Looks odd, has a plausible reason. Recorded so it is not rediscovered later and mistaken for a defect.</p>
+
+<div class="item">
+  <h3><span class="id">P18</span> Pie charts group arm angles differently from the risk gauges <span class="conf c3">Probably fine</span></h3>
+  <table class="facts">
+    <tr><td class="k">Pie charts group at</td><td><strong>20°</strong> and <strong>60°</strong></td></tr>
+    <tr><td class="k">Risk gauges use</td><td>time above <strong>30°</strong> and time above <strong>60°</strong></td></tr>
+    <tr><td class="k">Why it is probably fine</td><td>The pie chart is a picture of how the session was distributed; the gauge is a verdict. They answer different questions and neither claims to be the other.</td></tr>
+    <tr><td class="k">Why it still matters</td><td>The pie slices are coloured green, yellow and red — the same colours as the verdict. That is what invites the comparison.</td></tr>
+  </table>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    If left as is, consider using neutral colours for the distribution chart so it stops reading as a second opinion
+    on the risk level.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P19</span> The “Extension” slice and the “backward” risk row measure different populations <span class="conf c3">Probably fine</span></h3>
+  <table class="facts">
+    <tr><td class="k">The Extension slice counts</td><td>anything past <strong>−5°</strong></td></tr>
+    <tr><td class="k">The backward risk row counts</td><td>anything past <strong>−10°</strong></td></tr>
+    <tr><td class="k">Why it is probably fine</td><td>Both numbers are confirmed intentional. The −5° edge exists to absorb sensor noise in the distribution view; the −10° threshold is the documented, deliberate modification of the RAMP standard for the risk verdict. The risk file even carries a comment saying to use −10° consistently.</td></tr>
+    <tr><td class="k">Why it still matters</td><td>The two appear in the same document and sound like the same thing, so they will show different percentages for what a reader assumes is one measurement.</td></tr>
+  </table>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    No code change needed. Consider labelling the slice “Extension (past −5°)” and the risk row “Backward (past −10°)”
+    so the difference is visible rather than surprising.
+  </div>
+</div>
+
+<div class="item">
+  <h3><span class="id">P20</span> P99 appears in some reports and not others <span class="conf c3">Probably fine</span></h3>
+  <table class="facts">
+    <tr><td class="k">Shows P99</td><td>Word report, web measurement screen</td></tr>
+    <tr><td class="k">Does not</td><td>Mobile PDF, web PDF (which has no percentiles table at all)</td></tr>
+    <tr><td class="k">Why it is probably fine</td><td>Shorter reports omitting the most technical column is a reasonable editorial choice, and P99 is the least actionable of the four.</td></tr>
+  </table>
+  <div class="confirm"><span class="tag">How to settle it</span>
+    Only worth changing if customers are comparing reports and asking why a column is missing. Otherwise leave it.
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>If you only do three things</h2>
+
+<div class="box warn">
+  <h3>Ranked by what it costs us to leave alone</h3>
+  <p>
+    <strong>1. Confirm P1 (TNO).</strong> One minute of looking at a report settles it. If confirmed, we are reporting
+    0% for a range where workers spend most of their time, and every TNO figure we have ever shown a customer is
+    affected.
+  </p>
+  <p>
+    <strong>2. Decide P11 (percentage without duration).</strong> Not a bug, but the one item on this list a customer
+    could independently work out and challenge us on. Showing absolute time next to the percentage costs almost
+    nothing because we already calculate it.
+  </p>
+  <p>
+    <strong>3. Fix P3, P4, P5 and P6 as one job.</strong> They are four symptoms of one cause — the phone holds its own
+    hardcoded copies of thresholds that have since moved. Fix them individually and they will drift again; give the
+    phone one shared source and they cannot.
+  </p>
+</div>
+
+<footer>
+  Wergonic · Calculations — Possible Issues to Confirm · 27 July 2026<br />
+  Read against backend <code>staging</code> @ <code>7153485</code>, mobile <code>main</code> @ <code>3726867e</code>,
+  web <code>dev</code> @ <code>83a43d4f</code>. Every fact stated was read directly in the source. The confidence
+  labels are judgements about intent, not about the facts.
+</footer>
+
+</body>
+</html>

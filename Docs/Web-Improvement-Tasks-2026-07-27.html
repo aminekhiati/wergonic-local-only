@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Web Apps — Improvement Tasks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6;
+    --ink: #181826;
+    --slate: #5A6478;
+    --muted: #98A1B3;
+    --line: #E9EBF0;
+    --tint: #F4EFFD;
+    --amber: #B7791F;
+    --amber-bg: #FFF8EC;
+    --amber-line: #F2DFB8;
+    --red: #B42318;
+    --red-bg: #FEF3F2;
+    --red-line: #FDA29B;
+    --green: #1B7F5A;
+    --green-bg: #ECFAF4;
+    --green-line: #A9E0C9;
+    --blue: #17539B;
+    --blue-bg: #EFF6FE;
+    --blue-line: #B3D3F5;
+    --canvas: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 18mm 16mm 16mm 16mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    font-size: 10.5pt;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-variant-numeric: tabular-nums;
+  }
+  h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  /* Masthead */
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 14px 16px; margin-bottom: 18px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 24pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .lede { color: var(--slate); font-size: 10.5pt; max-width: 168mm; margin-top: 8px; }
+  .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; }
+
+  /* Section */
+  h2 {
+    font-size: 13pt; font-weight: 700; letter-spacing: -0.01em;
+    margin: 26px 0 4px; padding-bottom: 6px;
+    border-bottom: 1.5px solid var(--line);
+    break-after: avoid;
+  }
+  .sectionnote { color: var(--slate); font-size: 9.5pt; margin: 6px 0 4px; break-after: avoid; }
+
+  /* Task */
+  .task { margin-top: 16px; break-inside: avoid; }
+  .task h3 {
+    font-size: 11pt; font-weight: 700; color: var(--ink); margin: 0 0 3px;
+    break-after: avoid;
+  }
+  .task h3 .id {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 8.5pt; font-weight: 500; color: var(--purple);
+    background: var(--tint); padding: 2px 6px; border-radius: 4px;
+    margin-right: 8px; vertical-align: 1.5px;
+  }
+  .badge {
+    font-family: "Inter", sans-serif; font-size: 7.5pt; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 1.5px 6px; border-radius: 4px;
+    margin-left: 7px; vertical-align: 1.5px;
+    color: var(--slate); background: #F1F2F6;
+  }
+  .badge.bug { color: var(--red); background: var(--red-bg); }
+  .badge.perf { color: var(--amber); background: var(--amber-bg); }
+  .badge.infra { color: var(--purple); background: var(--tint); }
+  .badge.new { color: var(--green); background: var(--green-bg); box-shadow: inset 0 0 0 1px var(--green-line); }
+  .badge.revised { color: var(--blue); background: var(--blue-bg); box-shadow: inset 0 0 0 1px var(--blue-line); }
+
+  .desc { margin: 0; color: var(--slate); }
+  .desc code, code {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 8.8pt; color: var(--ink); background: #F4F5F8;
+    padding: 1px 4px; border-radius: 3px;
+  }
+
+  .explain {
+    margin-top: 7px; border-left: 3px solid #E3D5F7; background: #FBF9FE;
+    padding: 8px 12px; border-radius: 0 6px 6px 0; break-inside: avoid;
+  }
+  .explain .tag {
+    font-size: 7.5pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--purple); display: block; margin-bottom: 3px;
+  }
+  .explain p { margin: 0; font-size: 9.5pt; color: var(--slate); line-height: 1.55; }
+  .explain p + p { margin-top: 5px; }
+  .explain strong { color: var(--ink); font-weight: 600; }
+
+  /* Callout boxes */
+  .box {
+    margin-top: 14px; border: 1px solid var(--line); border-radius: 8px;
+    background: #FAFAFC; padding: 14px 18px; break-inside: avoid;
+  }
+  .box h3 { margin: 0 0 4px; font-size: 11.5pt; }
+  .box p { margin: 4px 0 0; color: var(--slate); font-size: 9.5pt; }
+  .box.warn { border-color: var(--amber-line); background: var(--amber-bg); }
+  .box.warn h3 { color: var(--amber); }
+  .box.warn .tag { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); }
+  .box.flow { background: var(--tint); border-color: #E3D5F7; }
+  .box.flow h3 { color: var(--purple); }
+  .box.good { background: var(--green-bg); border-color: var(--green-line); }
+  .box.good h3 { color: var(--green); }
+  .box.good .tag { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); }
+
+  ul { margin: 6px 0 0; padding-left: 18px; }
+  li { color: var(--slate); margin: 4px 0; font-size: 9.5pt; }
+  li strong { color: var(--ink); font-weight: 600; }
+
+  /* Summary table */
+  table.summary { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 9pt; break-inside: auto; }
+  table.summary th {
+    text-align: left; font-weight: 700; font-size: 8pt; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted); border-bottom: 1.5px solid var(--line); padding: 6px 8px 6px 0;
+  }
+  table.summary td { padding: 5px 8px 5px 0; border-bottom: 1px solid #F2F3F7; color: var(--slate); vertical-align: top; }
+  table.summary td.tid { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.5pt; color: var(--purple); white-space: nowrap; }
+  table.summary td.what { color: var(--ink); }
+  table.summary tr.grouphead td {
+    background: #F7F5FC; font-weight: 700; color: var(--ink); font-size: 8.5pt;
+    letter-spacing: 0.04em; text-transform: uppercase; padding: 6px 8px 6px 6px; border-bottom: 1px solid var(--line);
+  }
+  .pill { display: inline-block; font-size: 7.5pt; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 1.5px 6px; border-radius: 4px; white-space: nowrap; }
+  .pill.p0 { color: var(--red); background: var(--red-bg); box-shadow: inset 0 0 0 1px var(--red-line); }
+  .pill.p1 { color: var(--amber); background: var(--amber-bg); box-shadow: inset 0 0 0 1px var(--amber-line); }
+  .pill.p2 { color: var(--slate); background: #F1F2F6; }
+  .pill.p3 { color: var(--muted); background: #F7F8FA; }
+  .pill.s-new { color: var(--green); background: var(--green-bg); box-shadow: inset 0 0 0 1px var(--green-line); }
+  .pill.s-rev { color: var(--blue); background: var(--blue-bg); box-shadow: inset 0 0 0 1px var(--blue-line); }
+  .pill.s-open { color: var(--muted); background: #F7F8FA; }
+
+  footer { margin-top: 28px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="eyebrow">Wergonic · Web Apps</div>
+  <h1>Web Apps — Improvement Tasks</h1>
+  <p class="lede">
+    Tasks for the next round of work on <strong>wergonic-web-apps</strong> (client-panel + wergonic-admin).
+    Each task has a short <strong>title and description</strong> ready to paste straight into the tasks hub. The
+    description states the problem and what needs to be true when it is done — it deliberately does not name files or
+    prescribe a solution. The developer investigates and decides how to fix it.
+  </p>
+  <p class="lede">
+    Each task is then followed by a shaded <strong>background note for Amine only</strong>. That note carries the
+    diagnosis, the file, and the plain-language explanation. <strong>It is not intended for the dev</strong> — and if
+    a diagnosis in it turns out to be wrong, the task above it is still correct.
+  </p>
+  <div class="meta">
+    37 tasks · 6 groups · re-audited against the <code>dev</code> branch at commit <code>83a43d4f</code> · 27 July 2026<br />
+    Supersedes the 10 July 2026 edition, which was audited at <code>a8a3416f</code>.
+    Tasks marked <span class="badge new">New</span> did not exist in that edition; <span class="badge revised">Revised</span> means the problem changed shape and the description has been rewritten.
+  </div>
+</div>
+
+<div class="box warn">
+  <span class="tag">What changed since 10 July</span>
+  <h3>V2 shipped to production. Not one task on this list was closed.</h3>
+  <p>
+    In 17 days the team merged <strong>30 pull requests and 138 commits across 343 files</strong>. The headline change
+    is that on 24 July every v2 feature flag was switched from “dev only” to a hardcoded <code>true</code>, so the new
+    Workers, Team, Measurements, Assessments, Work Library, Settings, Sidebar, Home and Login pages are
+    <strong>now live for every customer</strong>.
+  </p>
+  <p>
+    Of the 25 tasks in the previous edition, <strong>zero were closed</strong>. One was substantially advanced
+    (A4, translations) and three changed shape because of the v2 rollout rather than because anyone worked on them.
+    The remaining 21 are untouched — no commit in the 138 went near them.
+  </p>
+</div>
+
+<div class="box warn">
+  <span class="tag">Read this first</span>
+  <h3>C1 is still the root cause, and it is now more expensive.</h3>
+  <p>
+    CI still runs typecheck, lint, build and tests in one job, and still builds and pushes the Docker image from a
+    second job that does not wait for the first. Nothing stops broken code from being deployed. This was the
+    number-one item on 10 July and it was not touched.
+  </p>
+  <p>
+    The cost has gone up, not down. Lint has drifted from 415 problems to <strong>430</strong>, and from 37 hard
+    errors to <strong>52</strong>, in seventeen days — while v2 was being switched on for customers. Every other task
+    below can silently regress the week after it is closed until this is fixed.
+  </p>
+</div>
+
+<!-- ============================================================ -->
+<h2>Priority summary</h2>
+<p class="sectionnote">
+  Ordered by what it costs us to leave alone. P0 is customer-visible and live today, or blocks everything else.
+  Use this to decide what to fund; the full task text follows.
+</p>
+
+<table class="summary">
+  <thead>
+    <tr>
+      <th style="width:52px">ID</th>
+      <th style="width:60px">Priority</th>
+      <th style="width:66px">Status</th>
+      <th>Task</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="grouphead"><td colspan="4">Do first — blocks everything, or broken in production right now</td></tr>
+    <tr><td class="tid">C1</td><td><span class="pill p0">P0</span></td><td><span class="pill s-open">Open</span></td><td class="what">Make the Docker build and push depend on the build job</td></tr>
+    <tr><td class="tid">A1</td><td><span class="pill p0">P0</span></td><td><span class="pill s-open">Open</span></td><td class="what">Workers page “Measured this month” always shows 0</td></tr>
+    <tr><td class="tid">B2</td><td><span class="pill p0">P0</span></td><td><span class="pill s-open">Open</span></td><td class="what">Infinite loop in the global error fallback freezes the tab</td></tr>
+    <tr><td class="tid">B3</td><td><span class="pill p0">P0</span></td><td><span class="pill s-open">Open</span></td><td class="what">Login hangs forever if the backend fails</td></tr>
+    <tr><td class="tid">E2</td><td><span class="pill p0">P0</span></td><td><span class="pill s-open">Open</span></td><td class="what">Worker password reset lands on a 404</td></tr>
+    <tr><td class="tid">A5</td><td><span class="pill p0">P0</span></td><td><span class="pill s-new">New</span></td><td class="what">AI cannot be switched on — the engine dropdown deadlocks</td></tr>
+    <tr><td class="tid">F1</td><td><span class="pill p0">P0</span></td><td><span class="pill s-open">Open</span></td><td class="what">Admin still points at localhost, so nothing works when deployed</td></tr>
+
+    <tr class="grouphead"><td colspan="4">High — customer-facing or high-leverage</td></tr>
+    <tr><td class="tid">B1</td><td><span class="pill p1">P1</span></td><td><span class="pill s-open">Open</span></td><td class="what">Show the backend’s real error message on 21 pages, not the developer’s</td></tr>
+    <tr><td class="tid">A2</td><td><span class="pill p1">P1</span></td><td><span class="pill s-open">Open</span></td><td class="what">Give the v2 table a real error state with retry</td></tr>
+    <tr><td class="tid">A4</td><td><span class="pill p1">P1</span></td><td><span class="pill s-rev">Revised</span></td><td class="what">Translate the remaining v2 surfaces (Settings, passwordless page)</td></tr>
+    <tr><td class="tid">B4</td><td><span class="pill p1">P1</span></td><td><span class="pill s-rev">Revised</span></td><td class="what">Guard the other seven form inputs against the blur crash</td></tr>
+    <tr><td class="tid">C2</td><td><span class="pill p1">P1</span></td><td><span class="pill s-rev">Revised</span></td><td class="what">Clear 52 lint errors and make lint block the build</td></tr>
+    <tr><td class="tid">C3</td><td><span class="pill p1">P1</span></td><td><span class="pill s-rev">Revised</span></td><td class="what">Write the first real tests — start with the risk scores</td></tr>
+    <tr><td class="tid">C5</td><td><span class="pill p1">P1</span></td><td><span class="pill s-new">New</span></td><td class="what">Wire the API address through the Docker builds properly</td></tr>
+    <tr><td class="tid">D1</td><td><span class="pill p1">P1</span></td><td><span class="pill s-open">Open</span></td><td class="what">Stop shipping the whole component library to every user</td></tr>
+    <tr><td class="tid">D7</td><td><span class="pill p1">P1</span></td><td><span class="pill s-new">New</span></td><td class="what">Load one language, not all five (956 KB on every first visit)</td></tr>
+    <tr><td class="tid">F2</td><td><span class="pill p1">P1</span></td><td><span class="pill s-new">New</span></td><td class="what">Admin never refreshes an expired login token</td></tr>
+
+    <tr class="grouphead"><td colspan="4">Medium — worth scheduling</td></tr>
+    <tr><td class="tid">A3</td><td><span class="pill p2">P2</span></td><td><span class="pill s-open">Open</span></td><td class="what">Notifications: build the “New” group, count all unread</td></tr>
+    <tr><td class="tid">A6</td><td><span class="pill p2">P2</span></td><td><span class="pill s-new">New</span></td><td class="what">Auth footer links all open the privacy policy</td></tr>
+    <tr><td class="tid">B5</td><td><span class="pill p2">P2</span></td><td><span class="pill s-open">Open</span></td><td class="what">Stop shipping the developer debug panel to customers</td></tr>
+    <tr><td class="tid">B6</td><td><span class="pill p2">P2</span></td><td><span class="pill s-open">Open</span></td><td class="what">Make “Try again” actually retry</td></tr>
+    <tr><td class="tid">C4</td><td><span class="pill p2">P2</span></td><td><span class="pill s-new">New</span></td><td class="what">Docker image builds fail silently and CI stays green</td></tr>
+    <tr><td class="tid">D2</td><td><span class="pill p2">P2</span></td><td><span class="pill s-open">Open</span></td><td class="what">Lazy-load the three eager routes</td></tr>
+    <tr><td class="tid">D3</td><td><span class="pill p2">P2</span></td><td><span class="pill s-rev">Revised</span></td><td class="what">Generate PDFs on click — six pages still do it on load</td></tr>
+    <tr><td class="tid">D8</td><td><span class="pill p2">P2</span></td><td><span class="pill s-new">New</span></td><td class="what">Split the admin bundle the way client-panel already does</td></tr>
+    <tr><td class="tid">E4</td><td><span class="pill p2">P2</span></td><td><span class="pill s-open">Open</span></td><td class="what">Grey out Submit until the assessment form is valid</td></tr>
+    <tr><td class="tid">E6</td><td><span class="pill p2">P2</span></td><td><span class="pill s-new">New</span></td><td class="what">Delete the v1 code and routes that can no longer be reached</td></tr>
+
+    <tr class="grouphead"><td colspan="4">Low — cheap, do them when nearby</td></tr>
+    <tr><td class="tid">D4</td><td><span class="pill p3">P3</span></td><td><span class="pill s-rev">Revised</span></td><td class="what">Delete the plotly charting library — it is now unreachable</td></tr>
+    <tr><td class="tid">D5</td><td><span class="pill p3">P3</span></td><td><span class="pill s-rev">Revised</span></td><td class="what">Remove two dead font families from both apps</td></tr>
+    <tr><td class="tid">D6</td><td><span class="pill p3">P3</span></td><td><span class="pill s-open">Open</span></td><td class="what">Remove the unused xlsx dependency</td></tr>
+    <tr><td class="tid">C6</td><td><span class="pill p3">P3</span></td><td><span class="pill s-new">New</span></td><td class="what">Admin’s Docker build ignores the lockfile</td></tr>
+    <tr><td class="tid">E1</td><td><span class="pill p3">P3</span></td><td><span class="pill s-open">Open</span></td><td class="what">Wire up or delete the signup form — product decision</td></tr>
+    <tr><td class="tid">E3</td><td><span class="pill p3">P3</span></td><td><span class="pill s-open">Open</span></td><td class="what">Remove the RULA dialog that says “test”</td></tr>
+    <tr><td class="tid">E5</td><td><span class="pill p3">P3</span></td><td><span class="pill s-open">Open</span></td><td class="what">Clean up dead UI in wergonic-admin</td></tr>
+    <tr><td class="tid">E7</td><td><span class="pill p3">P3</span></td><td><span class="pill s-new">New</span></td><td class="what">Remove the two remaining “stop type-checking this” escapes</td></tr>
+    <tr><td class="tid">E8</td><td><span class="pill p3">P3</span></td><td><span class="pill s-new">New</span></td><td class="what">Paired export files can get mismatched names</td></tr>
+    <tr><td class="tid">E9</td><td><span class="pill p3">P3</span></td><td><span class="pill s-new">New</span></td><td class="what">Remove the unused cache-key file that would break the app if used</td></tr>
+  </tbody>
+</table>
+
+<!-- ============================================================ -->
+<h2>Group A · Live defects in the v2 pages</h2>
+<p class="sectionnote">These were “ship-blockers before the flags go on”. The flags went on. Every one of them is now in front of customers.</p>
+
+<div class="task">
+  <h3><span class="id">A1</span> Fix Workers page “Measured this month” always showing 0 <span class="badge bug">Bug</span></h3>
+  <p class="desc">
+    On the Workers page, the “Measured this month” card always shows <strong>0</strong>, and the change indicator
+    always reads <strong>“+0% vs last month”</strong> — regardless of how many measurements the organisation actually
+    has. The card never reflects real data. Find out why and make it show the true count and the real month-over-month
+    change.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Unchanged since 10 July, but the severity is not. This page is now live, so <strong>every customer sees
+      “Measured this month: 0”</strong> on their Workers page today.
+    </p>
+    <p>
+      The API sends back a box with a smaller box inside it. The numbers are in the inner box. The code opens the
+      outer box, looks for the numbers there, finds nothing, and shows 0. The Home page reads the same API correctly,
+      so the two pages disagree with each other. TypeScript would have caught it, but the developer wrote
+      <code>as any</code> — <em>“stop checking this line”</em> — and silenced the linter on the same line.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">A2</span> Add an error state to TableV2 <span class="badge bug">Bug</span></h3>
+  <p class="desc">
+    When a v2 list page fails to load its data, it shows the same “nothing here” panel as an organisation that
+    genuinely has no records — only the wording differs. There is no way to retry. Give the shared table a proper
+    error state with a retry action, and use it on all four v2 list pages.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Since 10 July the four pages have been patched to at least pass different <em>text</em> into the empty panel
+      when a load fails. That is a workaround, not a fix: the customer still sees an empty-state graphic where an
+      error belongs, and there is still no retry button. The shared table itself has only two states, loading and
+      empty.
+    </p>
+    <p>
+      This is the one place where the v2 rewrite repeated a v1 weakness instead of fixing it. Worth fixing in the
+      shared table once, so all four pages get it for free.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">A3</span> Implement New / Earlier grouping in the notifications dropdown <span class="badge bug">Bug</span></h3>
+  <p class="desc">
+    In the notifications dropdown, every notification appears under a heading that says “Earlier” — including ones
+    that arrived seconds ago. There is no “New” section at all. Separately, the unread counter on the bell and the
+    “Mark all as read” action only cover the notifications currently loaded, so older unread ones are never counted
+    and never get marked as read. Build the two groups and make the counter and the action cover everything.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      A commit in July changed the bell badge colour to red and left a comment referring to “the New/Earlier
+      grouping” — but the grouping itself was never built. A notification that arrived one second ago is still filed
+      under “Earlier”.
+    </p>
+    <p>
+      The second half is the more serious one. The little red number on the bell only counts the notifications on
+      the first page. If a user has more unread than fit on one page, the rest are never counted and
+      <strong>“Mark all as read” silently skips them</strong>.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">A4</span> Translate the remaining v2 surfaces <span class="badge infra">i18n</span> <span class="badge revised">Revised</span></h3>
+  <p class="desc">
+    Most of the v2 pages were translated in July, but three surfaces were missed and are still English-only in every
+    language: the <strong>Settings page</strong> (Organisation tab and Help &amp; Support tab), the
+    <strong>passwordless sign-in page</strong> that opens from the email link, and the confirmation message shown
+    after submitting a support ticket. Move their text into the translation system and supply all five languages.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      <strong>Good news first.</strong> Pull request #910, merged 26 July, did the bulk of this properly — Workers,
+      Team, Measurements, Assessments, Work Library, the sidebar and the login pages, 60 files and about 5,000 new
+      entries across the five languages. That was a real piece of work and it closed most of this task.
+    </p>
+    <p>
+      What it missed: the Settings page has roughly 30 hardcoded English strings across the Organisation and Help
+      &amp; Support tabs — “Organisation name”, “Country”, “Industry”, “AI &amp; Privacy”, “Create a support ticket”,
+      “App version”, and so on. The passwordless page shows “Signing you in…” and “Verifying your link” in English
+      only. A German customer now gets a fully German app that switches to English the moment they open Settings.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">A5</span> Fix the AI engine setting that cannot be switched on <span class="badge bug">Bug</span> <span class="badge new">New</span></h3>
+  <p class="desc">
+    In Settings → Organisation, an organisation admin cannot turn AI on. The AI engine dropdown is greyed out until
+    AI consent is already enabled, and the consent switch sits below it — so there is no order of clicks that gets
+    the feature turned on. Make it possible to configure and enable AI from the interface.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      A circular lock. The dropdown that picks the AI engine refuses to open until AI is switched on; the natural
+      reading of the form is that you pick the engine first. An admin who wants to enable AI clicks Edit, tries the
+      dropdown, finds it dead, and has no way forward from the UI.
+    </p>
+    <p>
+      Commercially this is the one to care about in this group: <strong>it blocks a customer from switching on a
+      feature we sell.</strong> Right now the only way to enable AI for an organisation is for us to change it in the
+      database by hand.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">A6</span> Fix the auth page footer links <span class="badge bug">Bug</span> <span class="badge new">New</span></h3>
+  <p class="desc">
+    On the invitation page and the passwordless sign-in page, the footer offers three links — Privacy, Terms and
+    Data protection — and all three open the privacy policy. Point each one at the right page, or remove the ones we
+    do not have a page for.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Both pages were added in July. Three links, one destination, copy-pasted. It is small, but these are the first
+      two screens a brand-new user ever sees, and one of them is where they accept an invitation into the product.
+    </p>
+    <p>
+      Worth checking with the business side whether we actually have a Terms page and a separate Data protection page
+      to link to — if not, the right fix is to remove the links rather than invent destinations.
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>Group B · Shared infrastructure</h2>
+<p class="sectionnote">These files are shared by the old and the new app. None of them were touched since 10 July.</p>
+
+<div class="task">
+  <h3><span class="id">B1</span> Show the backend’s real error message in PageErrorBoundary <span class="badge bug">Bug</span></h3>
+  <p class="desc">
+    When a page fails to load, the user is shown an internal developer message instead of the real reason from the
+    server — for example, the screen literally reads “React query error thrown manually from RULADetailPage”. The
+    actual reason is available but never displayed. This was already fixed on the session detail page (WH-533);
+    around 21 other pages still need it. Look for a fix that covers them all at once rather than page by page.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Still 21 pages, still one line in one shared file. Nothing in the 138 commits went near it. When a page fails
+      the customer sees, word for word: <strong>“React query error thrown manually from RULADetailPage.”</strong>
+      The real reason — “no active organisation”, a permissions error, a validation message — is captured and thrown
+      away.
+    </p>
+    <p>
+      We already paid to fix exactly this once, on one page. <strong>Still the best value on the whole list.</strong>
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">B2</span> Fix the infinite loop in GlobalAppProvider’s ErrorFallback <span class="badge bug">Bug</span></h3>
+  <p class="desc">
+    When the app catches an unexpected error, instead of redirecting cleanly to the error page it gets stuck
+    repeating the error over and over, which can freeze the browser tab. Reported in the April backlog as item #68,
+    still open, and present in both apps.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      An error happens, the code immediately resets, which causes the error again, which resets again. It spins
+      forever and can lock up the browser tab. Same code in client-panel and in admin.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">B3</span> Guard useAuth against a failing retrieveCurrentUser <span class="badge bug">Bug</span></h3>
+  <p class="desc">
+    If the backend fails at the moment a user logs in, the app stays on the loading spinner indefinitely. No error is
+    shown and there is no way forward — the user has to reload the page. Handle the failure and show the user
+    something.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      If the backend has any hiccup during login, the loading spinner spins forever. The user is not shown an error
+      and cannot get past it — their only option is to reload the page. This is on the path every single user takes,
+      every day.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">B4</span> Centralise the MUI onBlur guard across all Formik wrappers <span class="badge bug">Bug</span> <span class="badge revised">Revised</span></h3>
+  <p class="desc">
+    Some forms crash when a field becomes disabled while the cursor is still inside it — which is exactly what
+    happens when a form disables its inputs on submit. To reproduce: open an assessment result, click into the
+    comment box, and press Submit while still focused. This was fixed once for one type of input field (WH-482);
+    we have eight and the other seven are still affected. Find a single fix that covers all of them.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Re-counted on the current code: eight input wrappers, one guarded, seven exposed — text fields, text areas,
+      dropdowns, radios and checkboxes. Unchanged since 10 July.
+    </p>
+    <p>
+      Same class as B1 — <strong>a fix was made in one place and never generalised.</strong> That pattern is the real
+      finding, not the individual bugs.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">B5</span> Gate ReactQueryDevtools to development builds <span class="badge infra">Cleanup</span></h3>
+  <p class="desc">
+    The React Query developer debugging panel is included in production builds and ships to customers, in both apps.
+    It should only be present when running locally in development.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      A developer debugging panel is being shipped to customers, and its code is included in the download everyone
+      pays for on first load. It is also declared as a normal dependency rather than a development-only one, which is
+      why nobody noticed.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">B6</span> Make the error boundary’s “Try again” button actually retry <span class="badge bug">Bug</span></h3>
+  <p class="desc">
+    On the error screen, clicking “Try again” appears to do nothing — the same error comes straight back. Nothing is
+    actually re-fetched. Make the button genuinely retry the request that failed.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      The button says “Try again” but nothing is retried — the same bad data is still cached, so the same error
+      appears instantly. To the user the button looks broken. Cheap to fix alongside B1 and B2, which live in the
+      same two files.
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>Group C · Build, CI and deployment configuration</h2>
+<p class="sectionnote">The reason defects reach production and stay there. C1 first — nothing else in this document is safe until it is done.</p>
+
+<div class="task">
+  <h3><span class="id">C1</span> Make the Docker build and push depend on the build job <span class="badge infra">CI</span></h3>
+  <p class="desc">
+    Our pipeline builds and pushes Docker images even when typecheck, lint, build or tests have failed — the deploy
+    half never waits for the check half, and several steps are configured to carry on after an error. Nothing
+    currently stops broken code from being deployed. Make deployment depend on the checks passing.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Our pipeline has two halves running side by side. One half checks the code. The other half builds the image and
+      pushes it to the registry. <strong>The second half never looks at the result of the first.</strong> Tests can
+      fail, the build can fail, and the image ships anyway. Verified again today: still exactly one workflow file,
+      still no dependency between the two jobs.
+    </p>
+    <p>
+      This was the top item on 10 July, it was not done, and in the seventeen days since we shipped the entire v2 UI
+      to customers with no working safety net. <strong>Fund this before anything else on the list.</strong>
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">C2</span> Clear the lint errors and make lint fail the build <span class="badge infra">CI</span> <span class="badge revised">Revised</span></h3>
+  <p class="desc">
+    Linting reports <strong>430 problems, 52 of them hard errors</strong>, and CI is explicitly configured to carry
+    on when the lint step fails — so nobody sees them. Nearly half the errors come from <code>wergonic-admin</code>
+    using a package it never declared as a dependency; it only works today because another app in the repo happens to
+    install it. Clear the errors, declare the missing dependency, then make lint block the build.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Re-measured today: client-panel 369 problems (29 errors), admin 30 problems (23 errors), shared library 31
+      warnings. <strong>It has got worse, not better — from 415 problems and 37 errors on 10 July to 430 and 52
+      now.</strong> That is the direct, measurable cost of C1.
+    </p>
+    <p>
+      Worth knowing: the lint command itself already fails correctly when run by hand. The only thing keeping the
+      pipeline green is one line in the CI file telling it to ignore the result. The admin dependency issue is the
+      other half: admin uses a table library it never asked for, and it works purely by accident because a different
+      app in the same repo installed it.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">C3</span> Add unit tests for the RULA and RAMP score calculations <span class="badge infra">Tests</span> <span class="badge revised">Revised</span></h3>
+  <p class="desc">
+    The repo still has no real automated tests. A test runner is configured in both apps, and the only two test files
+    render a button and assert that true is true. Begin real coverage with the RULA and RAMP risk-score calculations,
+    which decide the risk level we report to the customer and are the most important logic we have.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Unchanged: two placeholder files, zero real tests, seventeen days and 138 commits later. If we only ever test
+      one thing, it should be <strong>the number that tells a customer whether their worker is at risk of
+      injury.</strong>
+    </p>
+    <p>
+      One correction to the previous edition: it said the scoring code had 24 places asserting a value “definitely
+      exists” without checking. Re-measured on the current code, that is now effectively one. The risk is real but it
+      is the absence of tests, not that specific count — please do not quote the 24 figure to the dev.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">C4</span> Stop Docker image builds from failing silently <span class="badge infra">CI</span> <span class="badge new">New</span></h3>
+  <p class="desc">
+    Both Docker image builds in the pipeline are configured to carry on after a failure, and the job still reports
+    success. If a Dockerfile breaks, CI stays green and nobody is told; for the admin app the image push is simply
+    skipped, so a deploy quietly does nothing. Make a failed image build fail the pipeline.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      This is C1’s smaller sibling and found in the same file. There is a legitimate reason one of the two images is
+      built but not pushed — a registry limit on our Digital Ocean plan — but that does not justify hiding the
+      failure. Today a broken build and a successful build look identical on the pull request.
+    </p>
+    <p>
+      Cheap to do at the same time as C1, and it closes the last way a broken deploy can pass unnoticed.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">C5</span> Wire the API address through the Docker builds <span class="badge infra">CI</span> <span class="badge new">New</span></h3>
+  <p class="desc">
+    The two apps read the backend address from build-time configuration, but neither is wired up correctly:
+    client-panel’s Docker build never receives the two settings its code depends on, and the admin app declares them
+    but is never passed them by our compose file. Any image built through the normal path therefore has no valid API
+    address. Make both apps receive the API address through the documented build path, and fail the build loudly if
+    it is missing.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      When the app is built, the backend address is stamped permanently into the JavaScript. If it is not supplied at
+      that moment, the address becomes the literal text “undefined” and every request fails. Client-panel’s Docker
+      file lists ten settings and is missing exactly the two that matter here; admin lists them correctly but our
+      compose file never passes them in.
+    </p>
+    <p>
+      Production works today, which means something outside these files is injecting the address — undocumented, and
+      nobody currently knows what. That is worth pinning down: <strong>it is the difference between “we deploy” and
+      “we can deploy again if the machine dies.”</strong> Pair this with F1; a dev fixing F1 alone will find admin
+      still broken.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">C6</span> Make the admin Docker build respect the lockfile <span class="badge infra">Cleanup</span> <span class="badge new">New</span></h3>
+  <p class="desc">
+    The admin app’s Docker build explicitly disables lockfile enforcement and rewrites dependency checksums on every
+    run, so it can install different library versions than the ones we committed. Client-panel does not do this.
+    Make both apps install exactly what the lockfile specifies.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      The lockfile is the record of exactly which version of every library we tested against. Admin’s build is told to
+      ignore it, so two builds of the same commit can produce different software. It is almost certainly there because
+      somebody hit an install error once and added flags until it went away.
+    </p>
+    <p>
+      Low priority on its own, but it means “it worked yesterday” is not evidence of anything for the admin app. Fix
+      it while you are in the file for C5.
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>Group D · Performance</h2>
+<p class="sectionnote">Measured from the current code. Where a number could not be re-measured without a full production build, it is marked as carried over from 10 July.</p>
+
+<div class="task">
+  <h3><span class="id">D1</span> Stop packages/ui being bundled whole into the entry chunk <span class="badge perf">Perf</span></h3>
+  <p class="desc">
+    Every user downloads roughly <strong>1.45 MB (compressed)</strong> before the login screen even appears. A large
+    part of that is code from our shared component library that the app never uses. Work out why the shared library
+    cannot be trimmed down per app, and cut the initial download.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Our shared component library is packaged in a way that tells the bundler “anything in here might be needed”, so
+      it ships all of it, everywhere. It has no build step and no declaration that its files are safe to discard, and
+      the vendor-splitting added on 10 July only applies to third-party libraries, not to our own shared package.
+    </p>
+    <p>
+      The 1.45 MB figure is carried over from 10 July — re-measuring it needs a full production build. The cause is
+      confirmed unchanged. This and D2 are the same problem and can be one ticket.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">D2</span> Lazy-load the three eager routes in AppRoutes.tsx <span class="badge perf">Perf</span></h3>
+  <p class="desc">
+    Three pages — the invitation page and the two privacy policy pages — are loaded up front on every visit, while
+    every other page in the app is loaded only when opened. Make them load on demand like the rest. Closely related
+    to D1; the two can be done together.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Every other page in the app is loaded on demand. These three are loaded up front, and because they reach into
+      the shared component library, they are what drags all of D1’s dead weight into the initial download. Small fix,
+      and it is the trigger for the big one.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">D3</span> Generate PDFs on click, not on page load <span class="badge perf">Perf</span> <span class="badge revised">Revised</span></h3>
+  <p class="desc">
+    Six pages still build the entire downloadable PDF in the background as soon as they open, even though most users
+    never click Download: the four multi-assessment comparison pages, the multi-session comparison page, and the
+    session detail export. The single-assessment result pages already do this correctly. Make the remaining six build
+    the PDF only when the user asks for it.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Half of this closed itself. The v2 assessment result pages build their PDF on click, and the old pages that did
+      it on load are no longer reachable now that v2 is on. So the single-assessment case is genuinely fixed.
+    </p>
+    <p>
+      But the comparison pages were never behind a flag and were missed. Opening a comparison of several sessions —
+      one of the heavier things a user can do — still silently renders a full PDF nobody asked for. Smaller task than
+      it was, same fix, and there is now a correct example in the codebase to copy.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">D4</span> Remove the plotly charting library <span class="badge perf">Perf</span> <span class="badge revised">Revised</span></h3>
+  <p class="desc">
+    We ship two charting libraries. The larger one — <strong>1.17 MB compressed</strong> — is now unreachable: the
+    only screen that used it is no longer part of the live app. Confirm it has no remaining users and remove it and
+    its wrapper components from the shared library.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      This got much cheaper. On 10 July the task was “rewrite the bar chart on top of the charting library we already
+      have”. The v2 rollout retired the screen that used it, so the chart, its wrapper and the whole 1.17 MB library
+      are now dead weight. <strong>The task is now a deletion, not a migration.</strong>
+    </p>
+    <p>
+      One caveat for the dev: it should be deleted, not just left unimported. It is still declared as a dependency, so
+      it still slows every install and still shows up in security scanning.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">D5</span> Remove the dead font families from both apps <span class="badge perf">Perf</span> <span class="badge revised">Revised</span></h3>
+  <p class="desc">
+    Both apps fetch font families from Google’s servers on every page load that nothing in the live product uses —
+    two in client-panel and two in wergonic-admin. A third is used only by the <code>/prototype</code> route and is
+    loaded for everyone. Remove the unused ones, load the prototype’s font only on the prototype route, and consider
+    hosting the remaining fonts ourselves to remove the external requests entirely.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Re-checked properly, and the previous edition had this partly wrong. Of the four font requests client-panel
+      makes, two are for the old v1 typefaces that nothing in the live app references any more, and one is for the
+      prototype’s display font. Only the last request — the two typefaces the v2 design actually uses — earns its
+      place. Admin makes three requests and two of them are dead.
+    </p>
+    <p>
+      So it is more waste than we thought, and safer to remove than we thought: this is now mostly deleting leftovers
+      from the v1 design rather than untangling the prototype. Still small, still real, still measured on every single
+      page load.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">D6</span> Remove the unused xlsx dependency <span class="badge perf">Perf</span></h3>
+  <p class="desc">
+    The <code>xlsx</code> library (7.8 MB) is declared as a dependency in both apps but is imported by neither.
+    It is also downloaded from a direct link rather than the normal package registry, which hides it from our
+    security scanners. Confirm it is genuinely unused and remove it.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      A large library nobody uses, slowing down every install. Re-checked today: still zero imports anywhere in the
+      repo. Note that in April somebody <em>upgraded</em> it rather than removing it, which is a small sign of how
+      little attention the dependency list gets.
+    </p>
+    <p>
+      It is fetched from a direct download link instead of the normal package registry, which means our security
+      scanners cannot see it — so if a vulnerability is ever found in it, we would not be told.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">D7</span> Load one language instead of all five <span class="badge perf">Perf</span> <span class="badge new">New</span></h3>
+  <p class="desc">
+    Every user downloads all five languages before the app starts — roughly <strong>956 KB</strong> of translation
+    data, of which they need about a fifth. Load only the active language, and fetch a different one when the user
+    switches. This is the single largest avoidable item in the initial download.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      A direct and slightly ironic consequence of the July translation work: the more we translate, the more every
+      customer downloads. Adding a sixth language today would add another ~180 KB to every first visit worldwide.
+    </p>
+    <p>
+      The fix is a standard, well-trodden pattern in the library we already use — fetch the one language file the
+      user needs, cache it, fetch another only if they switch. It is a bigger measured saving than D2, D5 and D6
+      combined, and it does not touch a single page. <strong>Best performance value on the list.</strong>
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">D8</span> Split the admin bundle the way client-panel already does <span class="badge perf">Perf</span> <span class="badge new">New</span></h3>
+  <p class="desc">
+    The admin app packages every third-party library into one large file, so nothing is usable until all of it has
+    downloaded, and any dependency update invalidates the whole thing for returning users. Client-panel already
+    splits its heavy libraries into separate files. Apply the same configuration to admin.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Client-panel got this treatment in the 10 July performance work; admin was not included. Splitting means the
+      browser downloads several files at once instead of one big one, and — more usefully — that updating one library
+      does not force returning users to re-download everything.
+    </p>
+    <p>
+      Roughly ten lines copied from the other app. Low risk, and worth doing before we look at admin’s other problems,
+      because it makes the app quick enough to actually work in.
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>Group E · Dead code, dead UI, and small defects</h2>
+<p class="sectionnote">None of these are migration leftovers except E6, which is the migration cleanup itself and is now safe to do.</p>
+
+<div class="task">
+  <h3><span class="id">E1</span> Wire up or delete the signup form <span class="badge bug">Dead UI</span></h3>
+  <p class="desc">
+    There is a “Create an Account” page with an email field and a Submit button. The button does nothing at all — no
+    request is sent, no message is shown. No link anywhere in the product leads to this page, so no user can reach
+    it. Decide whether to build it properly or remove the page entirely. <strong>Product decision needed before this
+    is picked up.</strong>
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      A dead form on an unreachable route, unchanged since 10 July. <strong>This is a product decision, not a bug
+      fix</strong> — tell the dev which way to go. Given that the passwordless sign-in flow was built in July, the
+      question is really whether self-signup is on the roadmap at all.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">E2</span> Fix the worker password-reset redirect to a non-existent route <span class="badge bug">Bug</span></h3>
+  <p class="desc">
+    When a worker resets their password, they type the new one, press Save, and land on a “page not found” screen.
+    The password change itself succeeds — the page they are sent to afterwards does not exist. Send them somewhere
+    real.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      A worker resets their password, types the new one, presses Save — and lands on a 404. The password change itself
+      works; the screen afterwards does not exist.
+    </p>
+    <p>
+      Both the old and the new password form do this, so switching v2 on did not help. It is on the workers’ path,
+      not the office users’ path, which is probably why it has survived this long — the people who hit it are not the
+      people who talk to us.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">E3</span> Remove the vestigial RULA information dialog <span class="badge bug">Dead UI</span></h3>
+  <p class="desc">
+    The RULA detail page contains a help dialog whose entire content is the placeholder word “test”, and nothing in
+    the page can ever open it. Either remove it, or finish it the way the equivalent dialog on the RAMP page works.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Somebody left placeholder debug text — literally the word “test” — in a help popup that can never be opened
+      anyway. Harmless today, but it would show the word “test” to a customer the moment anyone adds the button that
+      opens it.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">E4</span> Disable the assessment Submit button until the form is valid <span class="badge bug">UX</span></h3>
+  <p class="desc">
+    On every RAMP, RULA and REBA form, the Submit and Save-and-Continue buttons always look clickable, even when the
+    form is incomplete. The user clicks and is met with an error message instead. The buttons should be greyed out
+    until the form is valid — the app already knows whether it is.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      The shared button component is even <em>given</em> the answer — it receives whether the form is valid, uses it
+      for the submit logic, and then hardcodes both buttons to “always enabled” anyway. So the user fills the form,
+      clicks, and gets told off.
+    </p>
+    <p>
+      One file, shared by all three assessment types. Cheap, and it is on the most-used screen in the product.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">E5</span> Clean up dead UI in wergonic-admin <span class="badge bug">Dead UI</span></h3>
+  <p class="desc">
+    Three pieces of dead interface in the admin app. The bulk archive/unarchive action for organisations has been
+    disabled and its code left behind, commented out. The notifications bell has been removed from the header, and
+    the underlying button would not have worked anyway. The “?” icon in the Industry column looks clickable —
+    cursor, click animation — but only has a hover tooltip. Restore or remove each.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Buttons that look pressable and do nothing, plus two blocks of commented-out code left in place instead of
+      deleted. The “?” icon shows the hand cursor and the click ripple animation but only reveals a tooltip on hover —
+      so it reads as broken.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">E6</span> Delete the v1 code and routes that can no longer be reached <span class="badge infra">Cleanup</span> <span class="badge new">New</span></h3>
+  <p class="desc">
+    Now that the v2 pages are live for everyone, the v1 versions behind the old switches can never be displayed
+    again: the old home page, three login forms, the old sidebar and profile menu, the old settings modal, and the
+    old work-cycles table with its dialogs. Two old pages are also still routed — the old Users page and the old
+    Sessions page — reachable by typing the address even though nothing links to them. Remove the unreachable code
+    and retire those two routes, then remove the switches themselves.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Roughly four thousand lines that can never run again. Keeping the old version behind a switch during a rollout
+      was the right call; keeping it after the rollout is just carrying weight, and it makes every future change more
+      confusing because there are two of everything.
+    </p>
+    <p>
+      The two still-routed old pages matter more than they look — see the box below. Retiring them is what makes
+      three separate old bugs disappear without anyone fixing them. <strong>Do this only once we are confident the
+      v2 rollout is not being reverted</strong>; the switches are the emergency brake and this task removes it.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">E7</span> Remove the remaining type-checking escapes on API data <span class="badge infra">Cleanup</span> <span class="badge new">New</span></h3>
+  <p class="desc">
+    Two places switch off type checking on data coming back from the backend — the Workers page statistics and the
+    measurement detail header. Both then read fields from that data with no safety net, so a backend change breaks
+    them at runtime instead of at build time. Type the responses properly and remove the escapes.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      One of these two is the direct cause of A1 — the “Measured this month: 0” bug got through precisely because
+      type checking was switched off on that line by hand. The other has not caused a visible bug yet.
+    </p>
+    <p>
+      Worth doing as a pair with A1 so the fix does not just paper over the same hole. It is a small task; the reason
+      to raise it at all is that it is the mechanism behind our most embarrassing live bug.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">E8</span> Give paired exports matching filenames <span class="badge bug">Bug</span> <span class="badge new">New</span></h3>
+  <p class="desc">
+    When a user exports a session comparison they get two files, a spreadsheet and a PDF, which are supposed to share
+    a name so they are obviously a pair. The timestamp is calculated separately for each, so if the clock ticks over
+    between them the two files get different names. Calculate it once.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Rare — it needs the second to change between two lines of code — but when it happens the customer gets two
+      files that look unrelated, and around midnight they get two different dates. Two-line fix.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">E9</span> Remove the unused cache-key file <span class="badge infra">Cleanup</span> <span class="badge new">New</span></h3>
+  <p class="desc">
+    There is a file defining the standard cache keys for assessments that nothing in the app uses. The rest of the
+    app uses a misspelled version of the same key everywhere. Because the spelling is wrong consistently, nothing is
+    broken today — but the first developer who uses the unused file will silently break assessment refreshing.
+    Delete it, or adopt it everywhere and correct the spelling in one pass.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Think of it as a label on a filing cabinet. Every drawer is labelled with the same typo, so everyone still finds
+      the right drawer. Someone left a sheet of correctly-spelled labels on the desk. The day anyone uses one, that
+      drawer stops being found — and the symptom is “assessments don’t refresh”, which is hard to trace back.
+    </p>
+    <p>
+      Not a bug today. It is a trap, and it costs almost nothing to defuse. I mention it because the failure it would
+      cause looks exactly like the kind of intermittent bug we would spend a day chasing.
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>Group F · wergonic-admin</h2>
+<p class="sectionnote">Admin is live but rarely used, so this is low priority by your call. Both items below share a root cause worth knowing about.</p>
+
+<div class="task">
+  <h3><span class="id">F1</span> Fix the hardcoded localhost API URL in wergonic-admin <span class="badge bug">Bug</span></h3>
+  <p class="desc">
+    The deployed admin app tries to reach the backend at the address of the machine it is being viewed on, rather
+    than at our server, so every request fails once it leaves a developer’s laptop. It should read the API address
+    from configuration, the way client-panel already does — the settings already exist in admin, they are simply not
+    used. See also C5, which fixes how that address reaches the build.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      New information since 10 July, and it changes the story. <strong>This was fixed on 11 May.</strong> The correct
+      version was written, reviewed and merged. On 1 June another branch was merged on top of it and silently
+      reverted it — that branch had been cut before the fix and nobody noticed the conflict resolution threw it away.
+    </p>
+    <p>
+      So this is not “nobody got around to it”. We paid for the fix, we had it, and we lost it — with no test, no lint
+      rule and no CI check that would notice. Exactly the failure mode C1 exists to prevent.
+    </p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">F2</span> Restore the expired-login handling in wergonic-admin <span class="badge bug">Bug</span> <span class="badge new">New</span></h3>
+  <p class="desc">
+    The admin app does not recover when a user’s login expires mid-session. Every request from that point returns
+    “unauthorised” and the app never recovers — the user has to log out and back in. When done, an expired session
+    must renew itself and the failed request must succeed, and if renewal genuinely fails the user should be signed
+    out cleanly. Client-panel already behaves correctly.
+  </p>
+  <div class="explain">
+    <span class="tag">Background — for Amine</span>
+    <p>
+      Logins expire after about an hour. A well-behaved app notices, quietly gets a fresh one, and retries — the user
+      sees nothing. Admin does not, so after an hour it simply stops working until you log out and in.
+    </p>
+    <p>
+      <strong>Same story as F1: this was also written on 11 May and also lost in the same 1 June merge.</strong> One
+      careless merge reverted two separate fixes in one file, and nothing caught it for eight weeks. That single fact
+      is a stronger argument for C1 than anything else in this document. Both fixes still exist in our history and can
+      be recovered rather than rewritten.
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>Re-verdict on the five bugs excluded in July</h2>
+
+<div class="box">
+  <h3>“Superseded by v2” — checked again now that v2 is actually live</h3>
+  <p>
+    The previous edition set five v1 bugs aside on the grounds that v2 handled them correctly and they would vanish
+    when the old files were deleted. The old files were <em>not</em> deleted — only hidden — so each was re-checked:
+  </p>
+  <ul>
+    <li>
+      <strong>Fake subscription number and licence date</strong> (“123456”, “05/12/2022”) —
+      <strong>genuinely gone.</strong> The old settings modal can no longer be opened by anyone. The one item that
+      previously needed a decision has resolved itself.
+    </li>
+    <li>
+      <strong>Sessions list loading without an organisation</strong> — still reachable. The old Sessions page is no
+      longer linked anywhere, but its address still works if typed.
+    </li>
+    <li>
+      <strong>Merging sessions never refreshing the list</strong> — still reachable, same page, same reason.
+    </li>
+    <li>
+      <strong>Bulk user delete not clearing the ticked rows</strong> — still reachable. The old Users page is no
+      longer linked, but its address still works.
+    </li>
+    <li>
+      <strong>Mismatched cache keys for task models</strong> — dormant. The old work-cycles screen that used them is
+      unreachable, so the mismatch cannot fire today. It stays a trap until the code is deleted.
+    </li>
+  </ul>
+  <p>
+    <strong>Recommendation: do not fix the middle three.</strong> They are only reachable by typing a URL that
+    nothing links to. Retiring those two old routes as part of E6 removes all three at once, plus the fifth, for less
+    effort than fixing any one of them.
+  </p>
+</div>
+
+<!-- ============================================================ -->
+<h2>Management signals, not code tasks</h2>
+
+<div class="box warn">
+  <span class="tag">The clearest signal in this re-audit</span>
+  <h3>We lost two paid fixes to one merge, and nothing noticed for eight weeks.</h3>
+  <p>
+    F1 and F2 were both written, reviewed and merged on 11 May. Both were silently reverted by a single merge on
+    1 June from a branch cut before them. Nobody found out until this audit. There was no test to fail, no lint rule
+    to trip, and CI would have deployed it either way.
+  </p>
+  <p>
+    This is worse than the pattern flagged in July. That one was “a fix gets applied once and never generalised”.
+    This one is “a fix gets applied and then disappears.” Both are the same underlying cause: <strong>we have no
+    automated way to notice that something that used to work no longer does.</strong> That is C1 and C3.
+  </p>
+</div>
+
+<div class="box">
+  <h3>Seventeen days, 138 commits, zero tasks closed</h3>
+  <p>
+    The team was not idle — they shipped the entire v2 UI to production and did a large translation pass, which is
+    real work. But not one item from a 25-item list written specifically as the next round of work was picked up.
+    That is a prioritisation conversation, not a performance one: either the list was never scheduled, or it was
+    scheduled and displaced by the v2 launch.
+  </p>
+  <p>
+    Worth deciding explicitly this time. If the answer is “ship v2 first”, that is fine — but v2 has now shipped,
+    and six of the items on this list are defects customers are hitting today.
+  </p>
+</div>
+
+<div class="box">
+  <h3>The same fix keeps being applied once and never generalised</h3>
+  <p>
+    Unchanged from July and still true: WH-533 fixed the error message on one page of 21 (B1). WH-482 fixed the blur
+    crash in one input of eight (B4). The task for the dev is not “fix these three” — it is “find where else this
+    pattern applies before closing the ticket.” That belongs in the review checklist, not in a ticket.
+  </p>
+  <p>
+    The A2 workaround is the newest example: instead of giving the shared table an error state, four pages were each
+    patched to pass different words into the empty-state panel. Four changes, none of them the fix.
+  </p>
+</div>
+
+<div class="box warn">
+  <span class="tag">Getting worse, measurably</span>
+  <h3>Our safety nets are still switched off, and the debt is now growing.</h3>
+  <p>
+    Lint went from 415 problems and 37 hard errors on 10 July to <strong>430 and 52</strong> today. Test coverage is
+    unchanged at zero. CI still deploys regardless of results. A1 is still a user-visible bug in new code, hidden by
+    a hand-written instruction to stop type-checking that line.
+  </p>
+  <p>
+    Those are not separate findings. They are one, and the fix is C1 — after which C2 and C3 are what stop it coming
+    back.
+  </p>
+</div>
+
+<footer>
+  Wergonic · Web Apps — Improvement Tasks · 27 July 2026 · re-audited against <code>dev</code> @ <code>83a43d4f</code> · supersedes the edition of 10 July 2026 @ <code>a8a3416f</code><br />
+  Groups A–F are ready for the tasks hub: use the task title and the description directly. The shaded
+  “Background — for Amine” notes are internal context and are not intended for the dev.
+</footer>
+
+</body>
+</html>

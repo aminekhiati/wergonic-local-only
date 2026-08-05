@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Mobile App — Improvement Tasks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6;
+    --ink: #181826;
+    --slate: #5A6478;
+    --muted: #98A1B3;
+    --line: #E9EBF0;
+    --tint: #F4EFFD;
+    --amber: #B7791F;
+    --amber-bg: #FFF8EC;
+    --amber-line: #F2DFB8;
+    --canvas: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 18mm 16mm 16mm 16mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    font-size: 10.5pt;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-variant-numeric: tabular-nums;
+  }
+  h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  /* Masthead */
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 14px 16px; margin-bottom: 18px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 24pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .lede { color: var(--slate); font-size: 10.5pt; max-width: 168mm; margin-top: 8px; }
+  .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; }
+
+  /* Section */
+  h2 {
+    font-size: 13pt; font-weight: 700; letter-spacing: -0.01em;
+    margin: 24px 0 6px; padding-bottom: 6px;
+    border-bottom: 1.5px solid var(--line);
+    break-after: avoid;
+  }
+  h3 { font-size: 11pt; font-weight: 700; color: var(--ink); margin: 16px 0 2px; break-after: avoid; }
+  h3 .badge {
+    font-family: "Inter", sans-serif; font-size: 7.5pt; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--purple); background: var(--tint);
+    padding: 1.5px 6px; border-radius: 4px; margin-left: 7px; vertical-align: 1.5px;
+  }
+  h3 .badge.fix { color: var(--amber); background: var(--amber-bg); }
+
+  p { margin: 4px 0 0; }
+  .ctx { color: var(--slate); font-style: italic; font-size: 9.5pt; margin: 2px 0 6px; }
+  ul { margin: 6px 0 0; padding-left: 18px; }
+  li { color: var(--slate); margin: 4px 0; }
+  li strong, p strong { color: var(--ink); font-weight: 600; }
+  .sub { list-style: none; padding-left: 14px; margin: 3px 0; }
+  .sub li { margin: 2px 0; }
+
+  /* Terminology table */
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; break-inside: avoid; }
+  th, td { text-align: left; vertical-align: top; padding: 7px 10px; font-size: 9.5pt; border-bottom: 1px solid var(--line); }
+  th { font-size: 8pt; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); border-bottom: 1.5px solid var(--line); }
+  td.old { color: var(--slate); }
+  td.new { color: var(--ink); font-weight: 600; }
+  td.where { color: var(--muted); font-size: 9pt; }
+
+  /* Callout boxes */
+  .box {
+    margin-top: 14px; border: 1px solid var(--line); border-radius: 8px;
+    background: #FAFAFC; padding: 14px 18px; break-inside: avoid;
+  }
+  .box.dep { border-color: var(--amber-line); background: var(--amber-bg); }
+  .box h3 { margin: 0 0 4px; font-size: 11.5pt; }
+  .box .tag { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); }
+  .box.flow { background: var(--tint); border-color: #E3D5F7; }
+  .box.flow h3 { color: var(--purple); }
+  .flowline { font-family: "Hanken Grotesk", sans-serif; font-weight: 700; font-size: 10.5pt; color: var(--ink); margin-top: 6px; line-height: 1.8; }
+  .flowline .arrow { color: var(--muted); font-weight: 600; padding: 0 4px; }
+  .flowline .hl { color: var(--purple); }
+
+  .note { font-size: 9pt; color: var(--muted); font-style: italic; }
+  .pushback { border-left: 3px solid var(--amber-line); background: var(--amber-bg); padding: 8px 12px; margin-top: 8px; border-radius: 0 6px 6px 0; font-size: 9.5pt; color: var(--slate); break-inside: avoid; }
+  .pushback strong { color: var(--amber); }
+  footer { margin-top: 28px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; }
+</style>
+</head>
+<body>
+
+  <div class="masthead">
+    <div class="eyebrow">Wergonic · Flutter App</div>
+    <h1>Mobile App — Improvement Tasks</h1>
+    <p class="lede">The brief for the next round of work on the Wergonic mobile app. It defines <strong>what</strong> to change and <strong>why</strong>. Exact layout, placement and visual treatment are the designer's call — any specific arrangement described here is illustrative, not prescriptive. All renames are UI-only: database fields, API payloads and model classes do not change.</p>
+    <div class="meta">5 phases · audited against the dev branch · updated 29 June 2026</div>
+  </div>
+
+  <div class="box flow">
+    <h3>Setup flow — step order</h3>
+    <p class="ctx" style="margin-top:2px">The redesigned setup wizard runs in this order. Conditions sit right after the worker, before any hardware step.</p>
+    <div class="flowline">
+      Home <span class="arrow">→</span> Worker <span class="arrow">→</span> <span class="hl">Conditions</span> <span class="arrow">→</span> Work Setup <span class="arrow">→</span> Pairing <span class="arrow">→</span> Calibration <span class="arrow">→</span> Measurement
+    </div>
+  </div>
+
+  <div class="box dep">
+    <span class="tag">Backend dependencies — not mobile work</span>
+    <h3>What the app needs from the backend before Phase 2</h3>
+    <p class="ctx" style="margin-top:2px">The mobile dev does <strong>not</strong> build these. They must exist before the Conditions step and the activity picker can be built. The data already exists in the web prototype — this is about exposing it and agreeing the contract. Do not invent payload shapes; confirm them with the backend.</p>
+    <ul>
+      <li><strong>Activities endpoint</strong> — the org's activity groups and their activities (the closed list the user picks from during recording).</li>
+      <li><strong>Conditions endpoint</strong> — the org's condition groups, each with its selection type (single-choice / multi-choice) and its values.</li>
+      <li><strong>Sync payload</strong> — extend the measurement sync to carry the selected condition values, so they are stored server-side.</li>
+    </ul>
+  </div>
+
+  <h2>Phase 1 · Terminology Alignment</h2>
+  <p class="ctx">Rename UI labels across all 5 translation files (en, de, nl, sv, es) and any hardcoded Dart strings. Display-only — no backend changes.</p>
+  <table>
+    <thead><tr><th style="width:30%">Current</th><th style="width:28%">New</th><th style="width:42%">Where</th></tr></thead>
+    <tbody>
+      <tr><td class="old">"Work Task" (in free measurements)</td><td class="new">Activity</td><td class="where">Setup, measurement screen, history — everywhere outside Work Cycles</td></tr>
+      <tr><td class="old">"Work Label"</td><td class="new">Condition</td><td class="where">Condition selector, measurement metadata, history</td></tr>
+      <tr><td class="old">"Work Break" / "breakSession"</td><td class="new">Break</td><td class="where">Measurement screen, history. The in-use string already reads "Break" — retire the unused <em>work_break</em> string so there is one key.</td></tr>
+      <tr><td class="old">"Virtual Coach" (settings section)</td><td class="new">Feedback Settings</td><td class="where">Settings section header</td></tr>
+      <tr><td class="old">"Finish measurement"</td><td class="new">End Measurement</td><td class="where">Measurement screen button</td></tr>
+      <tr><td class="old">"Leave measurement"</td><td class="new">Discard &amp; Exit</td><td class="where">Measurement screen button</td></tr>
+      <tr><td class="old">"Voice feedback interval"</td><td class="new">Feedback interval</td><td class="where">Feedback Settings (seconds). This is the user-facing one.</td></tr>
+    </tbody>
+  </table>
+  <div class="pushback">
+    <strong>Correction from the audit.</strong> The previous draft renamed <em>"Instant feedback refresh rate" → "Feedback interval"</em>. That string is a <strong>developer-only setting in Hz</strong> (visual refresh rate), not the user-facing interval — leave it under developer settings. The user-facing setting to rename is <em>"Voice feedback interval"</em> (in seconds), as in the table above.
+  </div>
+  <p class="note" style="margin-top:10px"><strong>No change needed:</strong> "Measurements" (list title), "New measurement" (home), and "Work Task" <em>inside</em> Work Cycles — already correct.</p>
+
+  <h2>Phase 2 · Setup Flow Redesign</h2>
+
+  <h3>2.1 Home Screen</h3>
+  <p class="ctx">Today the home is a launcher only — a single "New measurement" button and a small unsynced banner. Most opens are repeat setups, so the home should make repeating and resuming fast.</p>
+  <ul>
+    <li><strong>Quick Start</strong> — surface the last setup so it can be repeated in one tap (reconnect → recalibrate → record). Work Cycle: "Record [Worker] at [Station]?". Free: "Record [Worker]?".</li>
+    <li><strong>Sync status</strong> — when measurements are waiting to sync, show how many and a way to sync. Hide when there's nothing pending.</li>
+    <li><strong>Recent measurements</strong> — the last few as compact cards (worker, date, duration, sync status); tap to open or sync.</li>
+    <li><strong>Sensor status</strong> — battery and connection for cached sensors, so a dead sensor is never a surprise.</li>
+  </ul>
+
+  <h3>2.2 Worker Selection</h3>
+  <p class="ctx">Today it's a paginated search field only. Ergonomists reuse the same 5–10 workers.</p>
+  <ul>
+    <li><strong>Recent workers</strong> — surface recently-used workers (from the local cache described below) for one-tap selection, with live search for anyone else and a clear "New Worker" action.</li>
+  </ul>
+  <div class="pushback">
+    <strong>Offline gap — cache workers on use, not the whole org.</strong> Today the worker list is fetched live from the API; selecting a worker keeps it in memory only and never stores it, and the local store holds just the account's own profiles — so offline there's nothing to pick from and the app forces new-worker creation. <strong>Fix:</strong> when a worker is selected online, persist that profile locally (the save path already exists). The step then reads recent/cached workers from local storage — instant, and works offline. Online search stays for discovering workers not yet cached; "New Worker" (already offline-capable) covers the rest. No org-wide sync, no bulk download.
+  </div>
+
+  <h3>2.3 Conditions Step <span class="badge">new</span></h3>
+  <p class="ctx">Conditions are whole-measurement metadata (e.g. Shift Type, Environment), defined per org in the Work Library. Today the app has no support for them — they can only be added <em>after</em> the measurement, from history, which means they get skipped.</p>
+  <ul>
+    <li>Add a dedicated step <strong>after worker selection, before the hardware steps</strong> (see flow above). Asking upfront matters — conditions (shift, weather) are known at the start; asking at the end gets skipped.</li>
+    <li>Render each condition group as a selector driven by its type: <strong>single-choice</strong> → pick one; <strong>multi-choice</strong> → pick several. (Visual treatment is the designer's call.)</li>
+    <li>If the org has no conditions configured, skip this step automatically.</li>
+  </ul>
+
+  <h3>2.4 Work Setup Step</h3>
+  <p class="ctx">Today the user is forced to choose between "Work Task" and "Work Cycle" regardless of what the org actually has. The step should adapt to the org's configuration instead of making the user reason about terminology.</p>
+  <ul>
+    <li><strong>Org has only Work Cycles</strong> → go straight to the hierarchy picker (Factory → Line → Station → Operator → Model); surface recently used cycles.</li>
+    <li><strong>Org has only Activities</strong> → no choice to make; it's a Free Measurement. Continue straight through — <strong>do not</strong> ask the user to pre-declare activities.</li>
+    <li><strong>Org has both</strong> → offer a clear choice: <strong>Work Cycle</strong> or <strong>Free Measurement</strong>.</li>
+  </ul>
+  <div class="pushback">
+    <strong>Two decisions applied here.</strong> (1) The old "ask the user which activities they expect to record" idea is <strong>removed</strong> — it was vague and made both the user and the dev guess. In a Free Measurement, activities are chosen <em>live</em> during recording via an easy, searchable picker (see 3.3). (2) Naming: kept as <strong>"Free Measurement"</strong>, paired with "Work Cycle" — deliberately reusing the one noun "measurement" rather than introducing "session" or "recording" as competing words for the same thing.
+  </div>
+
+  <h3>2.5 Pairing</h3>
+  <ul>
+    <li>If sensors are cached from the last measurement, <strong>auto-reconnect</strong> and make it visible that this is happening (today the cache reconnect is silent).</li>
+    <li>Per-sensor, limb-specific status: "Reconnecting Left Arm…" rather than a generic "Connecting…".</li>
+    <li>Show battery level per sensor during pairing — the app already tracks real % (BatteryTracker / BatteryLabel), so make sure the pairing cards use it rather than only an OK/low icon.</li>
+    <li>If all sensors reconnect successfully, auto-advance to calibration.</li>
+  </ul>
+
+  <h3>2.6 Calibration</h3>
+  <p class="ctx">The current flow with videos works well — only small additions.</p>
+  <ul>
+    <li>After the last calibration succeeds, auto-advance into the measurement — one less tap.</li>
+  </ul>
+
+  <h2>Phase 3 · Measurement Screen Overhaul</h2>
+
+  <h3>3.1 Top Bar: Current Activity + Time</h3>
+  <ul>
+    <li>Show what's being recorded and elapsed time. Work Cycle: "Task 3/7: Quality Check · 02:15". Free: "Lifting · 12:34".</li>
+  </ul>
+
+  <h3>3.2 Work Cycle: Task Timeline</h3>
+  <p class="ctx">The auto/manual toggle works well. These additions give more context and control.</p>
+  <ul>
+    <li>A progress bar showing all tasks as proportional segments (completed / current / upcoming).</li>
+    <li><strong>Auto mode</strong> — countdown for the current task ("Next in 0:45") with an "Extend 30s" option near zero, and a brief "Now: [Next Task]" cue on advance.</li>
+    <li><strong>Manual mode</strong> — show elapsed vs expected ("2:15 / 3:00") and make "Next Task" prominent.</li>
+  </ul>
+
+  <h3>3.3 Free Measurement: Activity Switching</h3>
+  <p class="ctx">Reworked to match 2.4 — there is no pre-selected activity list anymore; everything is chosen live.</p>
+  <ul>
+    <li>Show the current activity on the measurement screen.</li>
+    <li>A <strong>searchable activity picker</strong> to switch: surface recently/last-used activities for one-tap, with search-as-you-type over the full list. Switching must be fast and low-friction mid-measurement.</li>
+    <li>Starting a new activity automatically ends the previous one — no extra tap.</li>
+  </ul>
+
+  <h3>3.4 Break Behavior</h3>
+  <ul>
+    <li>Adding a break auto-pauses; ending it auto-resumes. (Today a break already pauses data writing — keep that, just make the pause/resume explicit and obvious.)</li>
+    <li>Breaks appear as distinct segments in the task timeline.</li>
+    <li>Decide intended behavior for advancing tasks while paused — today "Next Task" is blocked during a break, which may or may not be wanted.</li>
+  </ul>
+
+  <h3>3.5 Fix the in-session settings menu <span class="badge fix">bug</span></h3>
+  <p class="ctx">The gear icon shown during a measurement opens a menu with two items, and both are problematic — this is the issue spotted in review.</p>
+  <ul>
+    <li><strong>"Settings"</strong> is <strong>permanently disabled</strong> (hardcoded, no handler) — dead UI. Either wire it to the settings it implies, or remove it.</li>
+    <li><strong>"Limbs Recalibration"</strong> works only <em>before</em> Start (armed state) and is disabled once recording begins. Decide: if a sensor drifts mid-measurement there's currently no recovery. Either allow recalibration mid-session (likely via a pause) or, at minimum, don't present a control that never works in that state.</li>
+    <li>Principle: a measurement should never show controls that are disabled in every state the user can actually reach.</li>
+  </ul>
+
+  <h3>3.6 Make feedback warm-up visible <span class="badge fix">bug</span></h3>
+  <ul>
+    <li>Live limb feedback (colours + voice) does not start until the "accumulated feedback first delay" elapses — default ~10 minutes. On short measurements the user may never see feedback and is never told why.</li>
+    <li>Surface the warm-up (e.g. indicate feedback is pending / when it starts) and reconsider whether the default delay should be that long.</li>
+  </ul>
+
+  <h2>Phase 4 · Completion &amp; Measurements List</h2>
+
+  <h3>4.1 Completion Screen</h3>
+  <p class="ctx">Today the summary after a measurement is minimal — no confirmation that metadata was captured.</p>
+  <ul>
+    <li>Show a completion checklist: worker, duration, limbs recorded, activities, conditions.</li>
+    <li>If conditions were not set during setup, prompt to add them here.</li>
+    <li>Make syncing the primary action, with "Save &amp; sync later" as the secondary.</li>
+  </ul>
+
+  <h3>4.2 Measurements List</h3>
+  <ul>
+    <li>Filters above the list: All / Synced / Pending / Today / This Week.</li>
+    <li>Richer cards: worker, date, duration, activity count, sync status.</li>
+    <li>A proper empty state with a CTA.</li>
+    <li>Swipe to delete.</li>
+  </ul>
+
+  <h2>Phase 5 · Settings, Onboarding &amp; Work Library</h2>
+
+  <h3>5.1 Settings Restructure</h3>
+  <p class="ctx">Today settings are one long scroll with technical labels.</p>
+  <ul>
+    <li>Group into clear sections: Sensors &amp; Hardware, Feedback During Recording, Measurement Defaults, Organization, Work Library (read-only), App.</li>
+    <li>Add a short description under each section header.</li>
+    <li>Developer settings are <strong>already</strong> hidden behind a 7-tap gesture — so this is mostly about grouping and plain-language labels, not hiding.</li>
+    <li>Disambiguate the two feedback settings so they aren't confused: "Feedback interval" (voice, seconds) vs the developer "Instant feedback refresh rate" (Hz).</li>
+  </ul>
+
+  <h3>5.2 Work Library (Read-Only) <span class="badge">new</span></h3>
+  <p class="ctx">No in-app view of the org library exists today.</p>
+  <ul>
+    <li>A read-only view of the org's Work Library: Activities (groups + activities), Conditions (groups + values), Work Cycles (the hierarchy). Editing stays on the web.</li>
+  </ul>
+
+  <h3>5.3 Onboarding <span class="badge">new</span></h3>
+  <p class="ctx">There is no first-time onboarding today — users land straight on the home screen.</p>
+  <ul>
+    <li>A short 3-screen intro for first-time users, ending in "Let's start your first measurement" → straight into the setup wizard.</li>
+  </ul>
+
+  <div class="box">
+    <h3>Do Not Change</h3>
+    <ul>
+      <li><strong>BLE / sensor layer</strong> — just stabilized after the native Kotlin migration.</li>
+      <li><strong>Sync mechanism</strong> — works; don't refactor.</li>
+      <li><strong>Calibration logic and videos</strong> — working well; only add UI around them.</li>
+      <li><strong>Database fields / API payloads</strong> — all renames are UI-only; backend migration is separate.</li>
+      <li><strong>Dark theme</strong> — keep it; suits industrial environments.</li>
+      <li><strong>"Work Task" inside Work Cycles</strong> — stays as is.</li>
+    </ul>
+  </div>
+
+  <footer>Wergonic · Mobile App — Improvement Tasks · 29 June 2026</footer>
+
+</body>
+</html>

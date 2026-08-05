@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Firebase Migration Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6;
+    --ink: #181826;
+    --slate: #5A6478;
+    --muted: #98A1B3;
+    --line: #E9EBF0;
+    --tint: #F4EFFD;
+    --green: #1F7A4D;
+    --green-bg: #EEF9F2;
+    --green-line: #B7E0C6;
+    --amber: #B7791F;
+    --amber-bg: #FFF8EC;
+    --amber-line: #F2DFB8;
+    --red: #B42318;
+    --red-bg: #FEF3F2;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 18mm 16mm 16mm 16mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    font-size: 10.5pt;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 14px 16px; margin-bottom: 20px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 24pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .lede { color: var(--slate); font-size: 10.5pt; max-width: 168mm; margin-top: 8px; }
+  .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; }
+
+  h2 {
+    font-size: 13pt; font-weight: 700; letter-spacing: -0.01em;
+    margin: 26px 0 8px; padding-bottom: 6px;
+    border-bottom: 1.5px solid var(--line);
+    break-after: avoid;
+  }
+  p { margin: 6px 0 0; }
+  strong { color: var(--ink); font-weight: 600; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; break-inside: avoid; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 10px; font-size: 9.7pt; border-bottom: 1px solid var(--line); }
+  th { font-size: 8pt; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); border-bottom: 1.5px solid var(--line); }
+  td.svc { color: var(--ink); font-weight: 600; white-space: nowrap; }
+  .pill { font-size: 7.5pt; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 7px; border-radius: 10px; white-space: nowrap; }
+  .pill.keep { color: var(--green); background: var(--green-bg); }
+  .pill.go { color: var(--red); background: var(--red-bg); }
+
+  .box {
+    margin-top: 12px; border: 1px solid var(--green-line); border-radius: 8px;
+    background: var(--green-bg); padding: 12px 16px; break-inside: avoid;
+  }
+  .box h3 { margin: 0 0 4px; font-size: 11pt; color: var(--green); }
+  .box p { margin: 4px 0 0; color: var(--slate); font-size: 9.7pt; }
+  .box.warn { border-color: var(--amber-line); background: var(--amber-bg); }
+  .box.warn h3, .box.warn .tag { color: var(--amber); }
+  .tag { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .step { margin-top: 14px; break-inside: avoid; padding-left: 40px; position: relative; min-height: 30px; }
+  .step .num {
+    position: absolute; left: 0; top: 0;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--purple); color: #fff;
+    font-family: "Hanken Grotesk", sans-serif; font-weight: 800; font-size: 12pt;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step h3 { font-size: 11pt; font-weight: 700; margin: 3px 0 2px; }
+  .step h3 .risk { font-size: 7.5pt; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 1.5px 6px; border-radius: 4px; margin-left: 8px; vertical-align: 1.5px; }
+  .risk.low { color: var(--green); background: var(--green-bg); }
+  .risk.med { color: var(--amber); background: var(--amber-bg); }
+  .risk.high { color: var(--red); background: var(--red-bg); }
+  .step p { margin: 2px 0 0; color: var(--slate); font-size: 9.7pt; }
+
+  footer { margin-top: 28px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="eyebrow">Wergonic · Platform</div>
+  <h1>Firebase Migration Plan</h1>
+  <p class="lede">
+    Firebase is used across web, mobile and backend for login, live data, file storage and analytics. Some of it is
+    worth keeping; some adds cost and complexity we no longer need. This is what we want to change and why. How to
+    implement it is the dev's call.
+  </p>
+  <div class="meta">10 July 2026</div>
+</div>
+
+<div class="box">
+  <h3>Goal</h3>
+  <p>
+    Move live data and file storage off Firebase and onto our own backend and DigitalOcean Spaces, so everything runs
+    through one system with one source of truth. Keep Firebase only for login. No new vendor, no extra hosting cost —
+    the Spaces bucket already exists.
+  </p>
+</div>
+
+<!-- ============================================================ -->
+<h2>What to keep and what to remove</h2>
+
+<table>
+  <thead>
+    <tr><th>Service</th><th>Decision</th><th>Why</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="svc">Auth (login)</td>
+      <td><span class="pill keep">Keep</span></td>
+      <td>Handles all login flows on web and mobile — email, Google, Microsoft, magic link, password reset. Reliable, and replacing it is high-risk for no real gain.</td>
+    </tr>
+    <tr>
+      <td class="svc">Analytics</td>
+      <td><span class="pill keep">Keep</span></td>
+      <td>Useful and lightweight. Keep it, but load it only after cookie consent — see the note below.</td>
+    </tr>
+    <tr>
+      <td class="svc">Live sessions &amp; notifications</td>
+      <td><span class="pill go">Remove</span></td>
+      <td>Currently synced through a separate Firebase database. We already have all this data in our own database. Replace with the app polling our API every few seconds. We do not need true real-time here.</td>
+    </tr>
+    <tr>
+      <td class="svc">File storage</td>
+      <td><span class="pill go">Remove</span></td>
+      <td>Avatars, session recordings, logos and firmware are stored in Firebase. Move them to our DigitalOcean Spaces so all files live in one place we control.</td>
+    </tr>
+    <tr>
+      <td class="svc">App abuse protection</td>
+      <td><span class="pill go">Remove</span></td>
+      <td>Only useful while we depend on Firebase's live database and storage. Once those are gone, it protects nothing. Replace with proper API security on our backend.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ============================================================ -->
+<h2>Order of work</h2>
+
+<div class="step">
+  <div class="num">1</div>
+  <h3>Notifications <span class="risk low">Low risk</span></h3>
+  <p>
+    Switch notifications to polling our own API instead of Firebase. Most of the backend already exists; it needs a
+    small extension so the app can also read already-seen notifications and an unread count. Good first step — low
+    risk, and it proves the polling approach.
+  </p>
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <h3>Live session status <span class="risk med">Medium risk</span></h3>
+  <p>
+    Have the mobile app send live session status to our backend, and have the web read it by polling — instead of
+    both going through Firebase. Once that works, remove the Firebase pieces on all three sides. Note: the mobile app
+    is the one sending this data today, so this touches mobile as well as web and backend.
+  </p>
+</div>
+
+<div class="step">
+  <div class="num">3</div>
+  <h3>Lock down file storage first <span class="risk high">Before step 4</span></h3>
+  <p>
+    Our storage bucket currently makes files public by default. Before moving any private session recordings there,
+    make them private and served through secure, time-limited links. This must happen before step 4, not after.
+  </p>
+</div>
+
+<div class="step">
+  <div class="num">4</div>
+  <h3>Move file uploads to our storage <span class="risk high">Biggest piece</span></h3>
+  <p>
+    Route all uploads — avatars, session recordings, logos, firmware — through our backend into DigitalOcean Spaces.
+    This is the largest part of the work and touches web, mobile and backend, so it should be estimated on its own
+    before we commit. We also need to decide whether to move old existing files across or keep the old ones where
+    they are.
+  </p>
+</div>
+
+<div class="step">
+  <div class="num">5</div>
+  <h3>Remove leftover Firebase pieces <span class="risk low">Easy finish</span></h3>
+  <p>
+    Once live data and storage are off Firebase, remove the abuse-protection service and drop the unused Firebase
+    code from the apps. The apps get smaller and faster to load. Login stays on Firebase.
+  </p>
+</div>
+
+<!-- ============================================================ -->
+<h2>Two things to handle separately</h2>
+
+<div class="box warn">
+  <span class="tag">Privacy</span>
+  <h3>Analytics runs before cookie consent</h3>
+  <p>
+    Analytics currently starts the moment the page loads, before the user accepts anything. For an EU-facing product
+    this is a compliance gap. It should be gated behind a cookie-consent step. Separate task, worth doing regardless
+    of this migration.
+  </p>
+</div>
+
+<div class="box warn">
+  <span class="tag">Security</span>
+  <h3>API needs proper access control</h3>
+  <p>
+    Our API currently allows access by default unless a developer explicitly locks each endpoint down. Before we
+    remove Firebase's abuse protection, we need real login-required-by-default rules and basic rate limiting on the
+    backend. Separate task, but it should land before or alongside step 5.
+  </p>
+</div>
+
+<h2>What we're not doing</h2>
+<p>
+  Not replacing login — Firebase Auth stays, no disruption to sign-in. Not rebuilding true real-time — polling every
+  few seconds is enough for session monitoring. Not switching cloud providers — storage moves to the DigitalOcean
+  Spaces we already pay for.
+</p>
+
+<footer>
+  Wergonic · Firebase Migration Plan · 10 July 2026
+</footer>
+
+</body>
+</html>
