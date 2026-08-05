@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wergonic — User Manual</title>
+<style>
+@font-face{font-family:'Inter';font-weight:400;src:url('file:///Users/mac/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-Regular-slnt=0.ttf');}
+@font-face{font-family:'Inter';font-weight:500;src:url('file:///Users/mac/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-Medium-slnt=0.ttf');}
+@font-face{font-family:'Inter';font-weight:600;src:url('file:///Users/mac/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-SemiBold-slnt=0.ttf');}
+@font-face{font-family:'Inter';font-weight:700;src:url('file:///Users/mac/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-Bold-slnt=0.ttf');}
+@font-face{font-family:'Inter';font-weight:800;src:url('file:///Users/mac/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-ExtraBold-slnt=0.ttf');}
+
+:root{--blue:#1DBBF8;--ink:#14181b;--muted:#5b6670;--line:#e2e7ea;--soft:#f4f7f9;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+body{font-family:'Inter',sans-serif;color:var(--ink);font-size:10.4pt;line-height:1.5;}
+@page{size:A4;margin:20mm 18mm 16mm;}
+
+h1,h2,h3{line-height:1.2;}
+h2{font-size:17pt;font-weight:800;color:var(--ink);margin:0 0 4px;padding-top:2px;}
+h2 .num{color:var(--blue);}
+h3{font-size:11.5pt;font-weight:700;margin:16px 0 5px;color:var(--ink);}
+h4{font-size:10.4pt;font-weight:700;margin:11px 0 3px;color:var(--ink);}
+p{margin:0 0 8px;}
+ul,ol{margin:0 0 9px;padding-left:18px;}
+li{margin:0 0 4px;}
+strong{font-weight:600;}
+.small{font-size:9pt;color:var(--muted);}
+.sect{page-break-before:always;padding-top:2px;}
+.rule{height:3px;width:46px;background:var(--blue);border-radius:2px;margin:6px 0 16px;}
+.lead{color:var(--muted);font-size:10.4pt;margin-bottom:14px;}
+
+/* cover */
+.cover{height:257mm;display:flex;flex-direction:column;justify-content:center;page-break-after:always;}
+.cover .logo{height:52px;margin-bottom:30px;}
+.cover .kick{color:var(--blue);font-weight:700;letter-spacing:2px;font-size:11pt;text-transform:uppercase;}
+.cover h1{font-size:40pt;font-weight:800;margin:8px 0 4px;letter-spacing:-.5px;}
+.cover .sub{font-size:15pt;color:var(--muted);font-weight:500;}
+.cover .meta{margin-top:40px;font-size:10pt;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;max-width:320px;}
+.cover .meta b{color:var(--ink);font-weight:600;}
+
+/* callouts */
+.note{background:var(--soft);border-left:3px solid var(--blue);padding:9px 13px;border-radius:0 6px 6px 0;margin:10px 0;font-size:9.6pt;}
+.note b{color:var(--ink);}
+.tip{background:#eefaff;border-left:3px solid var(--blue);}
+.warn{background:#fff6e8;border-left:3px solid #F5A623;}
+
+/* screenshot figures */
+.shots{display:flex;gap:14px;margin:14px 0 4px;align-items:flex-start;justify-content:center;flex-wrap:wrap;}
+.shot{text-align:center;width:186px;}
+.shot img{width:100%;border-radius:16px;display:block;}
+.shot figcaption{font-size:8.6pt;color:var(--muted);margin-top:6px;line-height:1.3;}
+.shot .cn{display:inline-block;background:var(--blue);color:#fff;font-weight:700;font-size:8pt;border-radius:20px;padding:1px 8px;margin-right:4px;}
+
+/* color-code chips */
+.chips{display:flex;flex-wrap:wrap;gap:6px 16px;margin:6px 0 10px;}
+.chip{display:flex;align-items:center;gap:7px;font-size:9.6pt;}
+.sw{width:13px;height:13px;border-radius:50%;border:1px solid rgba(0,0,0,.15);}
+
+/* table */
+table{border-collapse:collapse;width:100%;font-size:9.6pt;margin:8px 0 12px;}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--soft);font-weight:600;}
+td.k{font-weight:600;width:38%;}
+
+/* toc */
+.toc{font-size:10pt;}
+.toc .row{display:flex;justify-content:space-between;border-bottom:1px dotted var(--line);padding:6px 0;}
+.toc .row b{color:var(--blue);width:26px;display:inline-block;}
+.grid2{display:flex;gap:22px;}
+.grid2>div{flex:1;}
+.faqq{font-weight:600;margin-top:9px;}
+.faqa{color:#374049;margin-bottom:4px;}
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="cover">
+  <img class="logo" src="file:///Users/mac/Projects/Wergonic/wergonic-flutter/assets/logo.png" style="filter:none;">
+  <div class="kick">Smart Workwear System</div>
+  <h1>User Manual</h1>
+  <div class="sub">Ergonomic risk assessment &amp; work technique training</div>
+  <div class="meta">
+    <div><b>Manual version</b> &nbsp; 3.0</div>
+    <div><b>Mobile app</b> &nbsp; Android v2.9.x</div>
+    <div><b>Applies to</b> &nbsp; Wergonic Mobile App &amp; Web Dashboard</div>
+    <div style="margin-top:8px;">© Wergonic AB — for authorised system users.</div>
+  </div>
+</section>
+
+<!-- ============ TOC ============ -->
+<section>
+  <h2>Contents</h2>
+  <div class="rule"></div>
+  <div class="toc">
+    <div class="row"><span><b>1</b> The Wergonic System</span><span>overview &amp; components</span></div>
+    <div class="row"><span><b>2</b> What's in the Kit</span><span>hardware checklist</span></div>
+    <div class="row"><span><b>3</b> Sensors &amp; What It Measures</span><span>IMUs, placement, metrics</span></div>
+    <div class="row"><span><b>4</b> System Setup</span><span>app, pairing, phone settings, tags</span></div>
+    <div class="row"><span><b>5</b> Running a Measurement</span><span>fit, session, calibration, live mode</span></div>
+    <div class="row"><span><b>6</b> Reviewing Results</span><span>in the app &amp; on the dashboard</span></div>
+    <div class="row"><span><b>7</b> Maintenance &amp; Return</span><span>cleaning, storage, return</span></div>
+    <div class="row"><span><b>8</b> Troubleshooting &amp; FAQ</span><span>common issues</span></div>
+  </div>
+</section>
+
+<!-- ============ 1 OVERVIEW ============ -->
+<section class="sect">
+  <h2><span class="num">1.</span> The Wergonic System</h2>
+  <div class="rule"></div>
+  <p class="lead">Wergonic is a smart-workwear system for fast, accurate measurement of upper-body posture and motion during real work tasks — with results compared directly against recommended reference values.</p>
+
+  <div class="grid2">
+    <div>
+      <h3>Smart Workwear</h3>
+      <ul>
+        <li>Motion sensors fitted into garments for on/off use</li>
+        <li>Tracks trunk &amp; head, arms, and wrist</li>
+        <li>Estimates reachability (hand's reach)</li>
+      </ul>
+      <h3>Mobile App <span class="small">(Android)</span></h3>
+      <ul>
+        <li>Streams and records sensor data over Bluetooth</li>
+        <li>Real-time posture &amp; movement metrics</li>
+        <li>Annotate activities and breaks</li>
+        <li>Syncs sessions to the web dashboard</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Web Dashboard</h3>
+      <ul>
+        <li>Programme activity &amp; work-cycle tags</li>
+        <li>Generate risk-assessment reports</li>
+        <li>Built-in frameworks: RAMP, RULA, REBA, MEC (Volvo)</li>
+        <li>AI-assisted interpretation of results</li>
+        <li>User &amp; organisation admin tools</li>
+        <li>Runs in any browser — <strong>cloud.wergonic.com</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="note tip"><b>Your account.</b> You receive credentials to sign in to both the app and the dashboard with an email of your choice. Within an organisation, colleagues' accounts are linked for shared work.</div>
+</section>
+
+<!-- ============ 2 KIT ============ -->
+<section class="sect">
+  <h2><span class="num">2.</span> What's in the Kit</h2>
+  <div class="rule"></div>
+  <p class="lead">The Wergonic Smart Workwear is delivered as a standardised kit.</p>
+  <ul>
+    <li><strong>Six IMUs</strong> in colour-coded moulds</li>
+    <li><strong>Android phone</strong> with the Wergonic App installed and pre-paired</li>
+    <li><strong>Wergonic shirts</strong> in six sizes (XS–XXL)</li>
+    <li><strong>Wergonic glove</strong> and <strong>headband</strong></li>
+    <li><strong>Six CR2025</strong> coin-cell batteries and one <strong>phone charger</strong></li>
+    <li><strong>Heart-rate chest band</strong> with an extra mould-free IMU <span class="small">(optional)</span></li>
+  </ul>
+
+  <h3>Phone compatibility</h3>
+  <p>For best performance use an Android phone on <strong>Android 13 or newer</strong>. Bluetooth hardware quality affects data streaming. Thoroughly tested models:</p>
+  <ul>
+    <li>Samsung Galaxy S21 FE · Samsung Galaxy S21 Ultra</li>
+    <li>Google Pixel 6A · Google Pixel 7A</li>
+  </ul>
+  <p class="small"><strong>Compliance:</strong> CE, FCC, IC · Bluetooth 4.0/5.0 · RoHS, REACH.</p>
+</section>
+
+<!-- ============ 3 SENSORS ============ -->
+<section class="sect">
+  <h2><span class="num">3.</span> Sensors &amp; What It Measures</h2>
+  <div class="rule"></div>
+  <p class="lead">The system uses six Movesense inertial measurement units (IMUs) held in colour-coded moulds for correct placement.</p>
+
+  <div class="grid2">
+    <div>
+      <h4>Sensor &amp; specs</h4>
+      <ul>
+        <li>9-axis motion (accelerometer, gyroscope, magnetometer) + temperature</li>
+        <li>Accelerometer ±2/4/8/16 g · Gyroscope ±125–2000 °/s</li>
+        <li>Sampling 12.5–833 Hz · Bluetooth 4.0/5.0</li>
+        <li>36.6 mm ⌀ × 10.6 mm · 9.4 g · CR2025 battery</li>
+        <li>Waterproof &amp; shockproof</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Placement &amp; colour code</h4>
+      <div class="chips">
+        <span class="chip"><span class="sw" style="background:#1DBBF8"></span>Right arm — Blue</span>
+        <span class="chip"><span class="sw" style="background:#00C21E"></span>Trunk — Green</span>
+        <span class="chip"><span class="sw" style="background:#111"></span>Head — Black</span>
+        <span class="chip"><span class="sw" style="background:#FF2A2A"></span>Left arm — Red</span>
+        <span class="chip"><span class="sw" style="background:#C0C0C0"></span>Hand — Silver</span>
+        <span class="chip"><span class="sw" style="background:#C8AD7F"></span>Forearm — Beige</span>
+      </div>
+      <p class="small">One IMU on each arm (deltoid), one on the trunk (cervical/thoracic junction), one on the head (forehead), one on the dominant forearm and one on the dominant hand.</p>
+    </div>
+  </div>
+
+  <h3>Measured quantities</h3>
+  <table>
+    <tr><td class="k">Trunk &amp; head inclination</td><td>Angle (°) of trunk / head relative to a vertical reference set during calibration — flexion, extension or a combination.</td></tr>
+    <tr><td class="k">Arm elevation</td><td>Upper-arm posture (°) and speed of movement (°/s) — all shoulder movements relative to vertical.</td></tr>
+    <tr><td class="k">Wrist angular velocity</td><td>Rate of rotation (°/s) between hand and forearm, from the hand and forearm IMUs.</td></tr>
+  </table>
+</section>
+
+<!-- ============ 4 SETUP ============ -->
+<section class="sect">
+  <h2><span class="num">4.</span> System Setup</h2>
+  <div class="rule"></div>
+  <p class="lead">You can use the provided phone (mostly pre-configured) or your own Android phone. Either way, finish by creating your tags on the dashboard.</p>
+
+  <h3>4.1 · Using the provided phone</h3>
+  <p>The kit phone already has the correct Android version, the latest Wergonic App, and pre-paired IMUs. Two steps remain:</p>
+  <ol>
+    <li><strong>Sign in to Google Play</strong> with a Gmail account so the app stays updated with new releases.</li>
+    <li><strong>Create your tags</strong> on the dashboard (see 4.4).</li>
+  </ol>
+  <p class="small">Resetting the phone to factory settings is optional. If you do, follow the "own phone" steps below afterwards.</p>
+
+  <h3>4.2 · Using your own phone</h3>
+  <ol>
+    <li><strong>Install the app</strong> — open Google Play, sign in, search <strong>Wergonic</strong>, install the official app.</li>
+    <li><strong>Start the IMUs</strong> — insert a CR2025 into each unit (pry the lid with a coin). A <strong>red light blinks</strong> when the IMU is on; it can take up to 30 seconds to appear.</li>
+    <li><strong>Sign in</strong> to the app with your credentials.</li>
+  </ol>
+
+  <h3>4.3 · Pairing the IMUs</h3>
+  <p>Open <strong>Settings</strong> (gear icon, top-right of the home screen) and go to <strong>Sensors &amp; Hardware</strong>. Each body part has a <strong>Pair</strong> button; tap it and pick the sensor from the list. Identify a sensor by the last four digits of the serial number on its back. Once connected the row shows <strong>Paired</strong> in cyan with battery level and an <strong>Unpair</strong> option.</p>
+
+  <div class="shots">
+    <figure class="shot"><img src="./manual_assets/02-settings-sensors.png"><figcaption><span class="cn">A</span>Settings → Sensors &amp; Hardware. Pair / Unpair each body part; "Head alignment" sits below.</figcaption></figure>
+    <figure class="shot"><img src="./manual_assets/03-pair-dialog.png"><figcaption><span class="cn">B</span>"Select a sensor to pair" — tap the matching serial number to connect it to that body part.</figcaption></figure>
+  </div>
+
+  <p><strong>Colour-code standard —</strong> Right arm&nbsp;Blue · Trunk&nbsp;Green · Head&nbsp;Black · Left arm&nbsp;Red · Hand&nbsp;Silver · Forearm&nbsp;Beige. The optional HR chest band pairs with the mould-free sensor.</p>
+  <div class="note"><b>Head alignment.</b> The head IMU can face either way. In Settings, set <b>Logo side facing forehead</b> (logo forward) or <b>Back side facing forehead</b> (logo backward) to match how you fit it.</div>
+  <div class="note tip"><b>Test auto-pairing.</b> Log out, close and reopen the app — sensors should reconnect automatically. If you're not measuring right away, remove the batteries to save charge.</div>
+
+  <h4>Phone settings (own phone)</h4>
+  <ul>
+    <li><strong>Battery:</strong> turn off adaptive/optimised modes; set the Wergonic App to <strong>Unrestricted</strong>.</li>
+    <li><strong>Permissions:</strong> Location and Nearby devices → <strong>Allow all the time</strong>.</li>
+    <li><strong>Notifications:</strong> enable for the Wergonic App.</li>
+    <li><strong>Unused-apps / app-pausing:</strong> disable for the Wergonic App.</li>
+  </ul>
+
+  <h3>4.4 · Create your tags on the dashboard</h3>
+  <p>Sign in at <strong>cloud.wergonic.com</strong> and open <strong>Tags</strong> in the left menu. Tags organise your measurements in the cloud.</p>
+  <ul>
+    <li><strong>Activities</strong> — choose <em>Work Task</em>, press <em>Add category</em>, then add activities (use <em>+ Add item</em> for several). Optional in online mode.</li>
+    <li><strong>Work Cycles</strong> — choose <em>Work Cycle</em>. Prepare them in Excel and import, or add them with the <em>+</em> button. Cycles are organised by Factory, Line, Workstation, Model, Task and Time. <strong>Required</strong> when measuring a work cycle.</li>
+  </ul>
+  <div class="note small"><b>Note.</b> Dashboard (web) screenshots are covered separately in the online help; this manual focuses on the mobile app.</div>
+</section>
+
+<!-- ============ 5 MEASUREMENT ============ -->
+<section class="sect">
+  <h2><span class="num">5.</span> Running a Measurement</h2>
+  <div class="rule"></div>
+
+  <h3>5.1 · Prepare</h3>
+  <ul>
+    <li>Fully charged phone and six paired IMUs</li>
+    <li>Fresh CR2025 batteries (recommended)</li>
+    <li>Clean Wergonic shirt &amp; glove in the right size, plus a headband for the head IMU</li>
+    <li>A ~2 kg weight for arm calibration</li>
+  </ul>
+
+  <h3>5.2 · Start the IMUs &amp; fit the workwear</h3>
+  <p>Insert batteries and confirm each IMU shows a <strong>red blinking light</strong>. Fit the sensors with the Movesense logo <strong>facing outward and upright</strong>:</p>
+  <ul>
+    <li><strong>Shirt (trunk &amp; arms):</strong> slide IMUs into the pockets — Right arm Blue, Trunk Green, Left arm Red. Shirt should fit snugly.</li>
+    <li><strong>Head:</strong> attach the black IMU to the headband, logo forward or backward — match the Head alignment setting.</li>
+    <li><strong>Glove (hand &amp; forearm):</strong> Hand Silver, Forearm Beige, in the matching pockets.</li>
+  </ul>
+
+  <h3>5.3 · Start a new measurement in the app</h3>
+  <p>On the home screen tap <strong>New measurement</strong>, then complete the two setup pages and confirm pairing before calibration.</p>
+
+  <div class="shots">
+    <figure class="shot"><img src="./manual_assets/01-home.png"><figcaption><span class="cn">C</span>Home — tap <b>New measurement</b>. The folder icon opens history; the gear opens settings.</figcaption></figure>
+    <figure class="shot"><img src="./manual_assets/05-config.png"><figcaption><span class="cn">D</span>Page 1 — choose feedback type and <b>Measurement Type</b>: <b>Activity</b> or <b>Work Cycle</b>. Pick or search a worker.</figcaption></figure>
+    <figure class="shot"><img src="./manual_assets/06-profile.png"><figcaption><span class="cn">E</span>Page 2 — worker profile (workplace, ID, gender, dominant arm, age, weight). Tap <b>Next</b>.</figcaption></figure>
+  </div>
+  <div class="note small"><b>Online vs offline.</b> To load a pre-programmed <b>Work Cycle</b> or reuse a saved worker profile you must be online. Offline, create a new profile and sync later.</div>
+
+  <h3>5.4 · Confirm pairing</h3>
+  <p>The <strong>Pairing</strong> screen shows the shirt with each body part. Paired sensors show a <strong>cyan check</strong>; tap a body part to pair, or tap a paired one to unpair. When ready, tap <strong>Next</strong> (top-right) to calibrate.</p>
+
+  <div class="shots">
+    <figure class="shot"><img src="./manual_assets/04-pairing.png"><figcaption><span class="cn">F</span>Pairing overview — connection cards show each sensor's serial and battery. Tap <b>Next</b> when all needed sensors are green.</figcaption></figure>
+    <figure class="shot"><img src="./manual_assets/07-calibration.png"><figcaption><span class="cn">G</span>Calibration — follow the numbered steps and demo video, then <b>Start Calibration</b> and hold the pose for 5&nbsp;seconds.</figcaption></figure>
+  </div>
+
+  <h3>5.5 · Calibrate the IMUs</h3>
+  <p>Calibration is done per test person, in <strong>four steps</strong> — <strong>Back and head</strong>, <strong>Right arm</strong>, <strong>Left arm</strong>, and a <strong>Forward reference</strong>. Each step gives text, a demo video (with audio) and voice cues. The arm steps use the ~2 kg weight. Calibration is saved on the phone and can be reused for consecutive measurements on the same person <strong>if the IMUs have not moved</strong> — otherwise recalibrate.</p>
+
+  <h3>5.6 · Live mode &amp; recording</h3>
+  <p>After calibration you enter live mode. Metric squares update in real time and colour by risk — <span style="color:#22a06b;font-weight:600">green</span> (safe), <span style="color:#d98218;font-weight:600">orange</span>, <span style="color:#e0453d;font-weight:600">red</span>.</p>
+  <div class="shots">
+    <figure class="shot"><img src="./manual_assets/08-live.png"><figcaption><span class="cn">H</span>Live mode — <b>Start</b> to record, <b>Break</b> to pause, <b>Finish</b> to end. Long-press a square to choose which metrics show; the gear (at 00:00:00) recalibrates a body part.</figcaption></figure>
+  </div>
+  <ul>
+    <li><strong>Choose metrics:</strong> long-press any square, tick the metrics you want, then <strong>Save</strong> (top-left).</li>
+    <li><strong>Recalibrate:</strong> before starting (timer at 00:00:00), tap the gear → a body part.</li>
+    <li><strong>Record:</strong> tap <strong>Start</strong>; use <strong>Break</strong> to pause; tap <strong>Finish</strong> to end and save. When online you can also add activities during recording.</li>
+  </ul>
+</section>
+
+<!-- ============ 6 RESULTS ============ -->
+<section class="sect">
+  <h2><span class="num">6.</span> Reviewing Results</h2>
+  <div class="rule"></div>
+  <p class="lead">Review a session directly in the app, or in full on the web dashboard.</p>
+
+  <div class="grid2">
+    <div>
+      <h3>In the app</h3>
+      <p>Tap the <strong>folder icon</strong> (home, top-right) to open your sessions. On a session, tap the <strong>⋮ menu → Report</strong>. The report opens as <strong>swipeable pages</strong> — one per body part — with the numbers in tables. Reference limits are shown in <span style="color:#1DBBF8;font-weight:600">blue</span>.</p>
+      <ul class="small">
+        <li>⋮ menu also offers <b>Sync measurement</b>, <b>Share</b> and <b>Delete</b>.</li>
+        <li>Tapping a session opens its <b>timeline</b> (activities, breaks).</li>
+      </ul>
+    </div>
+    <div>
+      <figure class="shot" style="width:170px;margin:0 auto;"><img src="./manual_assets/09-report.png"><figcaption><span class="cn">I</span>In-app report — per-body-part tables; blue values are recommended 8-hour limits.</figcaption></figure>
+    </div>
+  </div>
+
+  <h3>On the web dashboard</h3>
+  <p>Online sessions upload automatically; offline sessions upload when you reconnect (may take a few minutes). Sign in at <strong>cloud.wergonic.com</strong>, open <strong>Finished Sessions</strong>, and click <strong>Details</strong> on a session. Results are shown as:</p>
+  <ul>
+    <li><strong>Pie charts</strong> — posture (°) first, switch to <em>Speed of movement</em> for angular velocity (°/s). Export to Excel/PDF, or open <em>Show Detailed View</em> for time plots.</li>
+    <li><strong>Tables</strong> — posture, an algorithm-based reach estimate, then speed of movement.</li>
+  </ul>
+</section>
+
+<!-- ============ 7 MAINTENANCE ============ -->
+<section class="sect">
+  <h2><span class="num">7.</span> Maintenance &amp; Return</h2>
+  <div class="rule"></div>
+  <div class="grid2">
+    <div>
+      <h3>Between sessions</h3>
+      <ul>
+        <li><strong>Remove the IMUs</strong>, then machine-wash garments at <strong>30&nbsp;°C</strong> with regular, perfume-free detergent (no disinfecting softener).</li>
+        <li><strong>Disinfect</strong> the removed IMUs.</li>
+        <li>Avoid fully discharging the phone.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Returning the kit</h3>
+      <ul>
+        <li>Clean the workwear as above.</li>
+        <li>Batteries needn't be returned — recycle any you won't reuse.</li>
+        <li>Fully charge the phone.</li>
+        <li>Log out of Google Play and the Wergonic App.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8 TROUBLESHOOTING ============ -->
+<section class="sect">
+  <h2><span class="num">8.</span> Troubleshooting &amp; FAQ</h2>
+  <div class="rule"></div>
+
+  <h3>Troubleshooting</h3>
+  <table>
+    <tr><th style="width:42%">Problem</th><th>What to do</th></tr>
+    <tr><td>IMU won't blink / seems off</td><td>Moist fingers can discharge coin cells. Try a fresh battery; if it still won't start, contact Wergonic for a replacement.</td></tr>
+    <tr><td>IMU is slow to pair</td><td>Start the IMU <em>before</em> opening the app and wait ~1 minute. Don't repeatedly tap pair/unpair. Try another location — some environments disturb Bluetooth.</td></tr>
+    <tr><td>Battery lid won't open</td><td>Use only CR2025, inserted the right way up. Never use CR2032 — it can jam and damage the lid.</td></tr>
+    <tr><td>App stuck loading after calibration</td><td>Usually an offline network search. Enable flight mode <em>with Bluetooth on</em>, or work online for best stability.</td></tr>
+  </table>
+
+  <h3>Frequently asked questions</h3>
+  <p class="faqq">Do I need to be online to measure?</p>
+  <p class="faqa">No — only Bluetooth is required. Data is stored on the phone and uploads when you're back online. Online mode is more stable and is recommended.</p>
+  <p class="faqq">How far does Bluetooth reach?</p>
+  <p class="faqa">Roughly 10 metres, but range depends on the environment where you measure.</p>
+
+  <div class="note tip" style="margin-top:20px;"><b>Need help?</b> Contact the Wergonic team for hardware replacements or support with setup and measurements.</div>
+</section>
+
+</body>
+</html>
