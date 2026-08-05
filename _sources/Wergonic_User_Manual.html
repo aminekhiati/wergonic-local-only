@@ -49,7 +49,9 @@ em{color:#26313a;font-style:italic;}
 .cover::before{content:"";position:absolute;right:-90px;top:120px;width:360px;height:360px;border-radius:50%;
   background:radial-gradient(circle,rgba(29,187,248,.20),transparent 62%);}
 .cover .glyph{position:absolute;right:24mm;bottom:22mm;width:230px;opacity:.10;}
-.cover .logo{height:44px;margin-bottom:auto;z-index:1;}
+.cover .logo{margin-bottom:auto;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:11px;}
+.cover .logo .mark{height:42px;width:auto;}
+.cover .logo .type{height:19px;width:auto;filter:brightness(0) invert(1);}
 .cover .block{z-index:1;margin-top:auto;}
 .cover .kick{color:var(--blue);font-weight:700;letter-spacing:3px;font-size:10.5pt;text-transform:uppercase;}
 .cover h1{font-size:46pt;font-weight:800;letter-spacing:-1px;line-height:1;margin:12px 0 10px;color:#fff;}
@@ -76,14 +78,22 @@ em{color:#26313a;font-style:italic;}
 .note.warn{background:#fff7ea;border-color:#f6e4c2;border-left-color:#F2A93B;}
 
 /* ---------- screenshots ---------- */
-.shots{display:flex;gap:16px;margin:16px 0 6px;align-items:flex-start;justify-content:center;flex-wrap:wrap;}
-.shot{text-align:center;width:180px;}
+.shots{display:flex;gap:16px;margin:16px 0 6px;align-items:flex-start;justify-content:center;flex-wrap:wrap;break-inside:avoid;}
+.shot{text-align:center;width:180px;break-inside:avoid;}
+figure,.photo{break-inside:avoid;}
+h3,h4{break-after:avoid;}
 .shot .frame{background:linear-gradient(180deg,#f7fafb,#eef3f6);border:1px solid var(--line);
   border-radius:20px;padding:8px 8px 4px;}
 .shot img{width:100%;border-radius:14px;display:block;}
 .shot figcaption{font-size:8.5pt;color:var(--muted);margin-top:8px;line-height:1.35;}
 .shot .cn{display:inline-flex;width:16px;height:16px;border-radius:50%;background:var(--blue);color:#fff;
   font-weight:700;font-size:8pt;align-items:center;justify-content:center;margin-right:5px;vertical-align:-2px;}
+
+/* ---------- product photos ---------- */
+.photo{margin:2px 0 8px;}
+.photo img{width:100%;border-radius:12px;border:1px solid var(--line);display:block;}
+.photo figcaption{font-size:8.6pt;color:var(--muted);margin-top:7px;line-height:1.35;}
+.photo.sm{width:230px;}
 
 /* ---------- colour-code chips ---------- */
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px;}
@@ -115,7 +125,10 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
 
 <!-- ============ COVER ============ -->
 <section class="cover">
-  <img class="logo" src="./manual_assets/logo_hires.png">
+  <div class="logo">
+    <img class="mark" src="./manual_assets/wergonic_symbol.svg">
+    <img class="type" src="./manual_assets/wergonic_type.svg">
+  </div>
   <img class="glyph" src="./manual_assets/wergonic_symbol.svg">
   <div class="block">
     <div class="kick">Smart Workwear System</div>
@@ -198,9 +211,7 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
         <li><strong>Six CR2025</strong> coin-cell batteries + one <strong>phone charger</strong></li>
         <li><strong>Heart-rate chest band</strong> with a mould-free IMU <span class="small">(optional)</span></li>
       </ul>
-    </div>
-    <div>
-      <div class="card">
+      <div class="card" style="margin-top:14px">
         <h4 style="margin-top:0">Phone compatibility</h4>
         <p style="margin-bottom:6px">Use an Android phone on <strong>Android 13 or newer</strong>. Bluetooth hardware quality affects streaming. Tested models:</p>
         <ul style="margin-bottom:0">
@@ -209,6 +220,12 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
         </ul>
       </div>
       <p class="small" style="margin-top:12px"><strong>Compliance:</strong> CE, FCC, IC · Bluetooth 4.0/5.0 · RoHS, REACH.</p>
+    </div>
+    <div>
+      <figure class="photo">
+        <img src="./manual_assets/kit_imus.jpg">
+        <figcaption>The six Wergonic / Movesense IMUs in their colour-coded moulds — Right arm Blue, Trunk Green, Head Black, Left arm Red, Hand Silver, Forearm Beige.</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -270,6 +287,10 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
     <li><strong>Start the IMUs</strong> — insert a CR2025 into each unit (pry the lid with a coin). A <strong>red light blinks</strong> when the IMU is on; it can take up to 30 seconds to appear.</li>
     <li><strong>Sign in</strong> to the app with your credentials.</li>
   </ol>
+  <figure class="photo">
+    <img src="./manual_assets/battery_insert.png">
+    <figcaption>Opening the battery lid and inserting a CR2025 coin cell — use a coin (or small spoon) to pry the lid, then reattach it.</figcaption>
+  </figure>
 
   <h3>4.3 · Pairing the IMUs</h3>
   <p>Open <strong>Settings</strong> (gear icon, top-right of the home screen) and go to <strong>Sensors &amp; Hardware</strong>. Each body part has a <strong>Pair</strong> button; tap it and pick the sensor from the list. Identify a sensor by the last four digits of the serial number on its back. Once connected, the row shows <strong>Paired</strong> in cyan with battery level and an <strong>Unpair</strong> option.</p>
@@ -297,7 +318,7 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
     <li><strong>Activities</strong> — choose <em>Work Task</em>, press <em>Add category</em>, then add activities (use <em>+ Add item</em> for several). Optional in online mode.</li>
     <li><strong>Work Cycles</strong> — choose <em>Work Cycle</em>. Prepare them in Excel and import, or add them with the <em>+</em> button. Cycles are organised by Factory, Line, Workstation, Model, Task and Time. <strong>Required</strong> when measuring a work cycle.</li>
   </ul>
-  <div class="note small"><b>Note.</b> Dashboard (web) screenshots are covered separately in the online help; this manual focuses on the mobile app.</div>
+  <p class="small" style="margin-top:8px"><b>Note:</b> Dashboard (web) screenshots are covered separately in the online help — this manual focuses on the mobile app.</p>
 </section>
 
 <!-- ============ 5 MEASUREMENT ============ -->
@@ -319,6 +340,10 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
     <li><strong>Head:</strong> attach the black IMU to the headband, logo forward or backward — match the Head alignment setting.</li>
     <li><strong>Glove (hand &amp; forearm):</strong> Hand Silver, Forearm Beige, in the matching pockets.</li>
   </ul>
+  <figure class="photo sm">
+    <img src="./manual_assets/shirt_pocket.jpg">
+    <figcaption>Trunk IMU seated in the shirt pocket — logo facing outward and upright.</figcaption>
+  </figure>
 
   <h3>5.3 · Start a new measurement in the app</h3>
   <p>On the home screen tap <strong>New measurement</strong>, then complete the two setup pages and confirm pairing before calibration.</p>
