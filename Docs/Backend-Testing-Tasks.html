@@ -17,10 +17,6 @@
     --amber: #B7791F;
     --amber-bg: #FFF8EC;
     --amber-line: #F2DFB8;
-    --red: #C0392B;
-    --red-bg: #FDF1F0;
-    --green: #1E7A55;
-    --green-bg: #EEF7F2;
   }
   * { box-sizing: border-box; }
   @page { size: A4; margin: 16mm 14mm 14mm 14mm; }
@@ -67,13 +63,8 @@
   tbody td { padding: 8px 8px 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--slate); }
   tbody tr { break-inside: avoid; }
   td.id { font-weight: 700; color: var(--ink); white-space: nowrap; width: 22px; }
-  td.mod { color: var(--ink); width: 158px; }
+  td.mod { color: var(--ink); width: 165px; }
   td.mod .fn { color: var(--purple); }
-  td.ref { width: 46px; font-size: 8pt; color: var(--muted); font-weight: 600; }
-  .flag { font-size: 7.4pt; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 1.5px 5px; border-radius: 3px; margin-right: 5px; white-space: nowrap; }
-  .flag.open { color: var(--red); background: var(--red-bg); }
-  .flag.fixed { color: var(--green); background: var(--green-bg); }
-  .flag.key { color: var(--purple); background: var(--tint); }
 
   .box {
     margin-top: 16px; border: 1px solid var(--amber-line); border-radius: 8px;
@@ -102,10 +93,8 @@
   <p>The backend has about 17 real test methods across 14 apps — most <code>tests.py</code> files are empty stubs — and no test
   infrastructure. CI runs <code>manage.py test</code>, finds almost nothing and reports green. So "green" today means
   <strong>nothing is tested</strong>, not "nothing is broken".</p>
-  <p>Meanwhile the two July audits found real calculation errors and tenant-isolation defects (cross-org data leaks). This epic builds
-  a real suite, starting from the code we already know is fragile.</p>
-  <p>The scope below comes from going through all 42 logic-bearing modules and cross-referencing both audits. Every module listed was
-  checked in the source.</p>
+  <p>Meanwhile two audits in July found real calculation errors and tenant-isolation defects, where one company's data is reachable
+  from another company's account. This epic builds a real suite, starting from the code we already know is fragile.</p>
 </div>
 
 <h2>Goal</h2>
@@ -119,24 +108,22 @@
 <h2>Definition of done — per sub-task</h2>
 <ul>
   <li>The module has tests for its main path plus the specific edge and boundary cases listed.</li>
-  <li>For anything marked <span class="flag open">Open</span>: the test <strong>fails on today's code and passes once it's
-  fixed</strong>.</li>
-  <li>For anything marked <span class="flag fixed">Fixed</span>: the test passes now and would fail if the fix were reverted.</li>
+  <li>Where a note says the code is wrong today, the test <strong>fails first and passes once it's fixed</strong>. Seeing it go red
+  is the proof the test is real.</li>
   <li>The suite runs green in CI, wired into the GitHub Actions workflow.</li>
   <li>No test touches the staging or production DB, Firebase, or live data. Tests run on isolated test data only.</li>
 </ul>
 
 <h2>How to read this</h2>
 <div class="body">
-  <p>Each row is one target: the file and function to test, then what the test has to prove. That last column is the instruction —
-  it's not a description of the module, it's the list of things to assert. Anything you find on top of it is yours to add; use your
-  judgement on the rest of the module.</p>
-  <p>The <strong>ref</strong> column points back to the source finding so you can read the original write-up —
-  <code>A#</code> is the pre-production audit (20 July), <code>P#</code> is the calculation-issues review.
-  <span class="flag open">Open</span> and <span class="flag fixed">Fixed</span> were re-checked against <code>origin/dev</code>
-  on 5 August 2026, so they reflect the code as it stands today, not as the audits found it.</p>
-  <p>Phases are priority order. Phase 1 and 2 are the must-ship — together they cover every defect we know about. Phase 3 and 4 are
-  backlog.</p>
+  <p>Each row is one target: the file and function on the left, what the test has to prove on the right. The right column is the
+  instruction, not a description of the module — those are the things that must be asserted. Whatever else the module needs is your
+  call, and anything you find beyond the list is worth adding.</p>
+  <p>A few notes say the current behaviour is wrong. Those are deliberate: the code reads as intentional in those places — one of
+  them even has a comment defending the wrong value — so don't take today's behaviour as the expected result there. Everything
+  below was checked against <code>dev</code> on 5 August 2026.</p>
+  <p>The phases are priority order. Phase 1 and 2 are the must-ship, together they cover every defect we know about. Phase 3 and 4
+  are backlog.</p>
 </div>
 
 <div class="box">
@@ -145,7 +132,7 @@
   <ul>
     <li><strong>Head backward bending is −5°, trunk backward bending is −10°.</strong> They are different on purpose — never assume
     they share a threshold. Assert them side by side so nobody "harmonises" them later.</li>
-    <li><strong>The −5° head change still has to happen in one place:</strong> the risk verdict in
+    <li><strong>The head value still has to be changed in one place:</strong> the risk verdict in
     <code>risk_assessment_posture</code> and the Word report (item 2.18), which both still use −10°. <code>ramp_calculator</code>
     already uses −5° correctly — it only has stale <code>gt_10</code> key names to rename.</li>
     <li><strong><code>calculate_postures_2</code> returning a 1.5 score is wrong</strong> and is still in the code (item 1.2).
@@ -167,19 +154,18 @@
   </ul>
 </div>
 
-<h2>Phase 1 · Pure calculation logic <span class="count">P0 · do first</span></h2>
+<h2>Phase 1 · Pure calculation logic <span class="count">do first</span></h2>
 <p class="sectionnote">Best value per hour: pure functions, called with dicts, lists and DataFrames, no DB. Kills the worst
 calculation findings fast.</p>
 
 <table>
   <thead>
-    <tr><th>#</th><th>Module</th><th>Ref</th><th>What the test must prove</th></tr>
+    <tr><th>#</th><th>Module</th><th>What the test must prove</th></tr>
   </thead>
   <tbody>
     <tr>
       <td class="id">1.1</td>
       <td class="mod">mec_mapping.py<br /><span class="mono fn">calculate_time</span></td>
-      <td class="ref">—</td>
       <td>Generic band accumulator, threshold-agnostic — no −5/−10 baked in, callers pass the threshold. Upper-inclusive
       (<code>v ≤ upper</code>), lower-exclusive (<code>v &gt; lower</code>): for band <code>(20,45]</code>, 20 is out, 45 is in,
       45.1 is out. <code>side_bending</code> uses <code>abs()</code>; <code>elevation_angle</code> drops <code>v &lt; 0</code>;
@@ -188,179 +174,156 @@ calculation findings fast.</p>
     <tr>
       <td class="id">1.2</td>
       <td class="mod">mec_mapping.py<br /><span class="mono fn">calculate_postures_1..6</span></td>
-      <td class="ref">P8</td>
-      <td><span class="flag open">Open</span><code>calculate_postures_2</code> returns 1.5 for the input band <code>[1, 6.25)</code>.
-      Before the fix: reproduce the 1.5 (red). After: it never returns 1.5 and scores stay monotonic in %. Don't hard-code the new
-      band values until the fix is defined. Also: <code>None → None</code>; clamp <code>&lt;0 → 0</code> and
-      <code>&gt;100 → top</code>; ladders 1, 3, 4, 5, 6 never emit 1.5.</td>
+      <td><strong>Wrong today:</strong> <code>calculate_postures_2</code> returns 1.5 for the input band <code>[1, 6.25)</code>.
+      A RAMP score is never 1.5. Before the fix: reproduce the 1.5 (red). After: it never returns 1.5 and scores stay monotonic
+      in %. Don't hard-code the new band values until the fix is defined. Also: <code>None → None</code>; clamp
+      <code>&lt;0 → 0</code> and <code>&gt;100 → top</code>; ladders 1, 3, 4, 5, 6 never emit 1.5.</td>
     </tr>
     <tr>
       <td class="id">1.3</td>
       <td class="mod">mec_segments.py<br /><span class="mono fn">scale_results_with_takt_time</span>, <span class="mono fn">get_feedback_frequency</span></td>
-      <td class="ref">A15</td>
       <td><code>takt=60, count=10, static=120</code> → <code>600 / 120</code>. <code>takt ≤ 0</code> raises. Frequency: metadata
       <code>None</code> → 52 for hand, 13 otherwise; arm variants fall through to the standard branch.</td>
     </tr>
     <tr>
       <td class="id">1.4</td>
       <td class="mod">posture_thresholds.py<br /><span class="mono fn">3 functions</span></td>
-      <td class="ref">P16</td>
-      <td>Pure threshold tables that feed every report. The overlapping wording is intentional — test as-is, don't change it.
-      Each boundary lands in exactly one band; ranges end at <code>(100, 'high')</code>; integers render without a trailing
+      <td>Pure threshold tables that feed every report. The overlapping wording in them is intentional — test as-is, don't change
+      it. Each boundary lands in exactly one band; ranges end at <code>(100, 'high')</code>; integers render without a trailing
       <code>.0</code>.</td>
     </tr>
   </tbody>
 </table>
 
-<h2>Phase 2 · Tenant isolation &amp; integration <span class="count">P0</span></h2>
-<p class="sectionnote">The cross-org data-leak work. Test the shared gate <em>and</em> its callers — the audit fixes all delegate to
-a couple of shared functions, which are the real single points of failure.</p>
+<h2>Phase 2 · Tenant isolation &amp; integration</h2>
+<p class="sectionnote">The cross-org data-leak work. Test the shared gate <em>and</em> its callers — the scoping fixes all delegate
+to a couple of shared functions, which are the real single points of failure.</p>
 
 <table>
   <thead>
-    <tr><th>#</th><th>Module</th><th>Ref</th><th>What the test must prove</th></tr>
+    <tr><th>#</th><th>Module</th><th>What the test must prove</th></tr>
   </thead>
   <tbody>
     <tr>
       <td class="id">2.1</td>
       <td class="mod">users/scoping.py<br /><span class="mono fn">get_request_organization</span></td>
-      <td class="ref">A1 A3 A5 A6 A7</td>
-      <td><span class="flag key">Start here</span>About 15 endpoints delegate to this one function.
+      <td><strong>Start here.</strong> About 15 endpoints delegate to this one function.
       <code>X-Client-Platform: web</code> → consulting org vs active org; <code>_cached_org</code> memoization; unauthenticated
       short-circuit. If this returns the wrong org, every scoped view silently breaks while its own test still passes.</td>
     </tr>
     <tr>
       <td class="id">2.2</td>
       <td class="mod">user_sessions/permissions.py<br /><span class="mono fn">3 classes</span></td>
-      <td class="ref">A1</td>
-      <td><span class="flag open">Open</span>The gate other views assume is "already guarded", never tested.
+      <td>The gate other views assume is "already guarded", never tested. <strong>Wrong today:</strong>
       <code>SessionCrudPermission</code> calls <code>session.worker.user</code>, which raises <code>AttributeError</code> when
-      <code>worker</code> is <code>None</code> (same root cause as A18). Give that its own case.</td>
+      <code>worker</code> is <code>None</code> — same root cause as 2.12. Give that its own case.</td>
     </tr>
     <tr>
       <td class="id">2.3</td>
       <td class="mod">work_tags/permissions.py<br /><span class="mono fn">4 classes</span></td>
-      <td class="ref">A1 A3</td>
       <td>Org-admin and ergonomist gates; cross-org → <code>False</code>; <code>is_deactivated=True</code> → <code>False</code>;
-      swagger bypass behaviour. The classes exist and work — it's the views that don't use them, see 2.5.</td>
+      swagger bypass behaviour. The classes themselves are fine — it's the views that don't use them, see 2.5.</td>
     </tr>
     <tr>
       <td class="id">2.4</td>
       <td class="mod">users/permissions/<br /><span class="mono fn">level_0/1/2 + userCrud</span></td>
-      <td class="ref">—</td>
       <td>The role-based CRUD permission matrix.</td>
     </tr>
     <tr>
       <td class="id">2.5</td>
       <td class="mod">work_tags/views.py<br /><span class="mono fn">Event / Category / Label</span></td>
-      <td class="ref">A1 A3</td>
-      <td><span class="flag open">Open</span>The org-scoping <code>permission_classes</code> are still commented out and replaced
-      with plain <code>IsAuthenticated</code>, so any logged-in user reads and writes any org's events, categories and labels. Test
-      through <code>APIClient</code>: <code>org_id</code> and <code>category_id</code> from the URL must never be trusted over the
-      caller's own org.</td>
+      <td><strong>Wrong today:</strong> the org-scoping <code>permission_classes</code> are commented out and replaced with plain
+      <code>IsAuthenticated</code>, so any logged-in user reads and writes any org's events, categories and labels. Test through
+      <code>APIClient</code>: <code>org_id</code> and <code>category_id</code> from the URL must never be trusted over the caller's
+      own org.</td>
     </tr>
     <tr>
       <td class="id">2.6</td>
       <td class="mod">tickets/views.py</td>
-      <td class="ref">A4</td>
-      <td><span class="flag open">Open</span><code>TicketRetrieveDestroyView</code> is still
-      <code>Ticket.objects.all()</code> + <code>IsAuthenticated</code>, so any ticket id can be read or deleted by anyone. Test that
-      tickets are scoped to the org.</td>
+      <td><strong>Wrong today:</strong> <code>TicketRetrieveDestroyView</code> is <code>Ticket.objects.all()</code> with only
+      <code>IsAuthenticated</code>, so any ticket id can be read or deleted by anyone. Test that tickets are scoped to the org.</td>
     </tr>
     <tr>
       <td class="id">2.7</td>
       <td class="mod">stats_view.py<br /><span class="mono fn">GenerateGeminiAnalysisView.get</span></td>
-      <td class="ref">A5</td>
-      <td><span class="flag fixed">Fixed</span>The view now compares <code>session.organization_id</code> against the active org.
-      Test locks it in: the AI report GET rejects another org's session.</td>
+      <td>Already correct — the view compares <code>session.organization_id</code> against the active org. The test keeps it that
+      way: the AI report GET rejects another org's session.</td>
     </tr>
     <tr>
       <td class="id">2.8</td>
       <td class="mod">work_library/views.py<br /><span class="mono fn">+ serializers.py</span></td>
-      <td class="ref">A6</td>
-      <td><span class="flag fixed">Fixed</span>Querysets are scoped and a cross-org group raises a validation error. Test locks it
-      in: an update can't re-point a record to another org's activity.</td>
+      <td>Already correct — querysets are scoped and a cross-org group raises a validation error. The test keeps it that way: an
+      update can't re-point a record to another org's activity.</td>
     </tr>
     <tr>
       <td class="id">2.9</td>
       <td class="mod">workcycles/views.py<br /><span class="mono fn">TaskViewSet.get_queryset</span></td>
-      <td class="ref">A7</td>
-      <td><span class="flag fixed">Fixed</span>The queryset now filters by the request org. Test locks it in, including that
-      org-less orphan tasks are not exposed across companies.</td>
+      <td>Already correct — the queryset filters by the request org. The test keeps it that way, including that org-less orphan
+      tasks are not exposed across companies.</td>
     </tr>
     <tr>
       <td class="id">2.10</td>
       <td class="mod">ramp_calculator.py<br /><span class="mono fn">run_ramp_calculations</span></td>
-      <td class="ref">P2 A16</td>
       <td>Head backward already uses <code>upper_threshold = −5</code> — assert −5, not −10. The response keys are still named
       <code>postures_2_…gt_10_degrees_*</code>; after the rename they read <code>gt_5</code>. Trunk posture 4 uses −5 and doesn't
       change. This function must emit <strong>no −10 value at all</strong> — the −10 trunk verdict lives in 2.18, keep the two from
-      getting mixed up. Task-scoped posture 6 uses the task window, not the whole session (A16).</td>
+      getting mixed up. Task-scoped posture 6 uses the task window, not the whole session.</td>
     </tr>
     <tr>
       <td class="id">2.11</td>
       <td class="mod">mec_segments.py<br /><span class="mono fn">compute_mec_for_segment</span></td>
-      <td class="ref">A15</td>
       <td>DB-backed. Trunk with side-bending present but forward-bending null → no swallowed <code>UnboundLocalError</code>, and the
-      missing-limb flags get set. Worth checking the head branch in the same pass: its availability guard reads
-      <code>forward_bending</code> while the values it collects are <code>side_bending</code>.</td>
+      missing-limb flags get set. Worth a look while you're in there: the head branch checks whether <code>forward_bending</code>
+      data exists, then collects <code>side_bending</code> values.</td>
     </tr>
     <tr>
       <td class="id">2.12</td>
       <td class="mod">management/commands/<br /><span class="mono fn">session_check.py</span></td>
-      <td class="ref">A18</td>
-      <td><span class="flag open">Open</span>Still dereferences <code>session.worker.user.organization</code>, so the per-minute
-      auto-finish crashes on a session whose worker was deleted. Test that it survives one.</td>
+      <td><strong>Wrong today:</strong> it dereferences <code>session.worker.user.organization</code>, so the per-minute auto-finish
+      crashes on a session whose worker was deleted. Test that it survives one.</td>
     </tr>
     <tr>
       <td class="id">2.13</td>
       <td class="mod">management/commands/<br /><span class="mono fn">archive_sessions.py</span></td>
-      <td class="ref">A19</td>
       <td>The status to match comes from the rule row in the DB, not from code — so this is about the stored rule values, not the
-      command. Test that archiving works with the post-rename status values.</td>
+      command. Test that archiving works with the current status values, after the ONGOING/FINISHED/INTERRUPTED rename.</td>
     </tr>
     <tr>
       <td class="id">2.14</td>
       <td class="mod">notifications/<br /><span class="mono fn">models.py + views.py</span></td>
-      <td class="ref">A20</td>
-      <td><span class="flag open">Open</span>The notification is still stamped with the recipient's active consulting org, not the
-      org the session belongs to. Test that a failed-measurement notification is filed under the session's org.</td>
+      <td><strong>Wrong today:</strong> the notification is stamped with the recipient's active consulting org, not the org the
+      session belongs to. Test that a failed-measurement notification is filed under the session's org.</td>
     </tr>
     <tr>
       <td class="id">2.15</td>
       <td class="mod">stats_view.py<br /><span class="mono fn">single-session Excel export</span></td>
-      <td class="ref">A17</td>
-      <td><span class="flag open">Open</span>Head is still written into the same columns as trunk (D/F for forward, J/L for side)
-      right after trunk, so head overwrites it. Test that head values don't land in the trunk columns.</td>
+      <td><strong>Wrong today:</strong> head is written into the same columns as trunk (D/F for forward, J/L for side) right after
+      trunk, so head overwrites it. Test that head values don't land in the trunk columns.</td>
     </tr>
     <tr>
       <td class="id">2.16</td>
       <td class="mod">measurements.py<br /><span class="mono fn">merge_measurment_files</span></td>
-      <td class="ref">A11</td>
-      <td><span class="flag fixed">Fixed</span>Test locks it in: the merged zip includes <code>_metadata_merged.json</code>, the
-      highest <code>App.Version</code> is chosen, the axis swap is correct.</td>
+      <td>Already correct. The test keeps it that way: the merged zip includes <code>_metadata_merged.json</code>, the highest
+      <code>App.Version</code> is chosen, the axis swap is correct.</td>
     </tr>
     <tr>
       <td class="id">2.17</td>
       <td class="mod">session_views.py<br /><span class="mono fn">session merge</span></td>
-      <td class="ref">A10</td>
-      <td><span class="flag fixed">Fixed</span>Measurements are deliberately not moved — the async task rebuilds them from the
-      combined file. Test locks that in end to end, which is why this one is heavier than the rest: it needs the full
-      merge → reprocess pipeline.</td>
+      <td>Already correct — measurements are deliberately not moved, the async task rebuilds them from the combined file. The test
+      locks that in end to end, which is why this one is heavier than the rest: it needs the full merge → reprocess pipeline.</td>
     </tr>
     <tr>
       <td class="id">2.18</td>
       <td class="mod">risk_assessment_posture.py<br /><span class="mono fn">calculate_risk_posture_stats</span><br />+ session_docx_report.py</td>
-      <td class="ref">P2 P19</td>
-      <td><span class="flag open">Open</span>This is where the head threshold actually changes, and it still reads −10° today. The
-      head backward risk verdict goes to −5° (mask <code>≤ −5</code>: a head row at −6° starts counting; the id and label say −5°).
-      The <strong>trunk verdict stays at −10°</strong> — trunk −7° doesn't count, −10° and −12° do. Assert head and trunk side by
-      side. In the Word report the head row is labelled −5° and the trunk row −10°.</td>
+      <td><strong>Wrong today, and it looks intentional in the code — there's a comment defending −10°.</strong> This is where the
+      head threshold actually changes. The head backward risk verdict goes to −5° (mask <code>≤ −5</code>: a head row at −6° starts
+      counting; the id and label say −5°). The <strong>trunk verdict stays at −10°</strong> — trunk −7° doesn't count, −10° and
+      −12° do. Assert head and trunk side by side. In the Word report the head row is labelled −5° and the trunk row −10°.</td>
     </tr>
   </tbody>
 </table>
 
-<h2>Phase 3 · Important logic <span class="count">P1 · backlog</span></h2>
+<h2>Phase 3 · Important logic <span class="count">backlog</span></h2>
 <p class="sectionnote">Not covered by the audits, medium risk: filters, report maths, signal-processing helpers.</p>
 
 <table>
@@ -371,20 +334,20 @@ a couple of shared functions, which are the real single points of failure.</p>
     <tr><td class="mod">Signal processing</td><td><code>mec_mapping.py</code> — peak detection, static periods, butter filter, arm postures, zones, hourly</td></tr>
     <tr><td class="mod">Wrist analysis</td><td><code>wrist_mec_mapping.py</code> — position, custom zones, peaks, static</td></tr>
     <tr><td class="mod">Report maths</td><td><code>report_service.py</code> — label-bounds parsing, bin midpoints, weighted mean/median, option and velocity blocks</td></tr>
-    <tr><td class="mod">Distance zones</td><td><code>transformations.py :: compute_distance_zone_minutes</code> plus the round/timezone helpers — the pure banding that feeds posture 6, i.e. the numeric core behind A16</td></tr>
-    <tr><td class="mod">Pie &amp; risk stats</td><td><code>pie_stats.py</code>, <code>risk_assessment_posture.py</code> — P18/P19 banding. Guard the intentional constants; the head −5° change itself is P0, see 2.18</td></tr>
+    <tr><td class="mod">Distance zones</td><td><code>transformations.py :: compute_distance_zone_minutes</code> plus the round/timezone helpers — the pure banding that feeds posture 6</td></tr>
+    <tr><td class="mod">Pie &amp; risk stats</td><td><code>pie_stats.py</code>, <code>risk_assessment_posture.py</code> — the banding. Guard the intentional constants; the head −5° change itself is in 2.18</td></tr>
     <tr><td class="mod">Data reshaping</td><td><code>stats.py</code>, pure helpers in <code>measurements.py</code>, <code>task_measurments.py</code>, <code>filters.py :: pair_measurements_by_time</code>, preprocessing and swapping</td></tr>
     <tr><td class="mod">DOCX helpers</td><td><code>session_docx_report.py :: get_risk_image</code>, <code>format_duration_seconds</code></td></tr>
   </tbody>
 </table>
 
-<h2>Phase 4 · Nice to have <span class="count">P2 · backlog</span></h2>
+<h2>Phase 4 · Nice to have <span class="count">backlog</span></h2>
 <div class="body">
   <p>Lower risk or harder to test. The TNO pipeline, including <code>extractTaskCharacteristics</code>, sits here — it's
   deliberately parked for now. Also: inversion correction, time bounds, percentage change, swapped pie stats, user-service claims,
-  report JSON and Excel value maps, the work_tags event upsert, and
+  report JSON and Excel value maps, the work_tags event upsert, temperature and percentile formatting in the reports, and
   <code>firebase_auth/authentication.py :: authenticate</code> — the token-parsing branch, worth a look because it silently returns
-  <code>None</code> on an unknown uid. The report-formatting findings P7 and P17 are also in here.</p>
+  <code>None</code> on an unknown uid.</p>
 </div>
 
 <h2>Out of scope <span class="count">don't spend time here</span></h2>
