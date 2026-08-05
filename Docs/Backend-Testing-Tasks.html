@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Backend Automated Test Suite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6;
+    --ink: #181826;
+    --slate: #5A6478;
+    --muted: #98A1B3;
+    --line: #E9EBF0;
+    --tint: #F4EFFD;
+    --amber: #B7791F;
+    --amber-bg: #FFF8EC;
+    --amber-line: #F2DFB8;
+    --red: #C0392B;
+    --red-bg: #FDF1F0;
+    --red-line: #F2CFCB;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 16mm 14mm 14mm 14mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    font-size: 10pt;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+  code, .mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.6pt; }
+
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 12px 16px; margin-bottom: 4px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 23pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .sub { font-family: "Hanken Grotesk", sans-serif; font-size: 12.5pt; font-weight: 600; color: var(--slate); margin-top: 4px; }
+  .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; }
+
+  .stats { display: flex; gap: 10px; margin: 16px 0 2px; }
+  .stat { flex: 1; border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; background: #FCFCFD; }
+  .stat b { display: block; font-family: "Hanken Grotesk", sans-serif; font-size: 17pt; font-weight: 800; color: var(--purple); line-height: 1.1; }
+  .stat span { font-size: 7.6pt; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
+
+  h2 {
+    font-size: 13pt; font-weight: 700; letter-spacing: -0.01em;
+    margin: 24px 0 2px; padding-bottom: 6px;
+    border-bottom: 1.5px solid var(--line);
+    break-after: avoid;
+  }
+  h2 .count { float: right; font-size: 9pt; font-weight: 600; color: var(--muted); padding-top: 5px; }
+  .sectionnote { color: var(--slate); font-size: 9.4pt; margin: 8px 0 0; break-after: avoid; }
+
+  p { margin: 0 0 8px; }
+  .body p { color: var(--slate); }
+  strong { color: var(--ink); font-weight: 600; }
+
+  ul { margin: 8px 0 0; padding-left: 17px; color: var(--slate); }
+  li { margin-bottom: 5px; }
+  li::marker { color: var(--muted); }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 11px; font-size: 9pt; }
+  thead th {
+    text-align: left; font-size: 7.6pt; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted); padding: 0 8px 5px 0;
+    border-bottom: 1.5px solid var(--line);
+  }
+  tbody td { padding: 8px 8px 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--slate); }
+  tbody tr { break-inside: avoid; }
+  td.id { font-weight: 700; color: var(--ink); white-space: nowrap; width: 22px; }
+  td.mod { color: var(--ink); width: 150px; }
+  td.mod .fn { color: var(--purple); }
+  td.est { text-align: right; width: 26px; color: var(--ink); font-weight: 600; }
+  td.ref { width: 44px; font-size: 8pt; color: var(--muted); font-weight: 600; }
+  .flag { font-size: 7.4pt; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 1.5px 5px; border-radius: 3px; margin-right: 5px; white-space: nowrap; }
+  .flag.bug { color: var(--red); background: var(--red-bg); }
+  .flag.guard { color: var(--amber); background: var(--amber-bg); }
+  .flag.key { color: var(--purple); background: var(--tint); }
+
+  .box {
+    margin-top: 16px; border: 1px solid var(--amber-line); border-radius: 8px;
+    background: var(--amber-bg); padding: 13px 17px; break-inside: avoid;
+  }
+  .box .tag { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 4px; }
+  .box h3 { margin: 0 0 5px; font-size: 11.5pt; color: var(--amber); }
+  .box p, .box li { margin: 0 0 5px; color: #6B5A3A; font-size: 9.4pt; }
+  .box ul { margin-top: 6px; color: #6B5A3A; }
+  .box strong { color: #4A3C22; }
+
+  footer { margin-top: 26px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="eyebrow">Wergonic · Engineering · Epic</div>
+  <h1>Backend automated test suite</h1>
+  <div class="sub">Calculation logic &amp; tenant isolation</div>
+  <p class="meta">Repo: wergonic-django-backend · Split into sub-tasks · 5 August 2026</p>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>~510</b><span>Total test cases</span></div>
+  <div class="stat"><b>~205</b><span>P0 must-ship</span></div>
+  <div class="stat"><b>22</b><span>Known bugs covered</span></div>
+  <div class="stat"><b>42</b><span>Modules covered</span></div>
+</div>
+
+<h2>Why this exists</h2>
+<div class="body">
+  <p>The backend has about 17 real test methods across 14 apps — most <code>tests.py</code> files are empty stubs — and no test
+  infrastructure. CI runs <code>manage.py test</code>, finds almost nothing and reports green. So "green" today means
+  <strong>nothing is tested</strong>, not "nothing is broken".</p>
+  <p>Meanwhile the two July audits found real calculation errors and tenant-isolation defects (cross-org data leaks). This epic builds
+  a real suite, starting from the code we already know is fragile.</p>
+  <p>The scope below comes from going through all 42 logic-bearing modules and cross-referencing both audits (35 findings, 22 of them
+  unit-testable). Every bug site listed was checked in the source.</p>
+</div>
+
+<h2>Goal</h2>
+<ul>
+  <li>Stand up backend test infrastructure — there is none today.</li>
+  <li>Lock down the known calculation and permission defects with tests, so they can't come back while we fix them.</li>
+  <li>Get a baseline suite that CI actually gates on, at the level the Flutter repo already runs at (78 files, ~498 tests).</li>
+</ul>
+
+<h2>Definition of done — per sub-task</h2>
+<ul>
+  <li>The module has tests for its main path plus the specific edge and boundary cases listed.</li>
+  <li>Each mapped bug has a test that <strong>fails on the current code and passes once it's fixed</strong>.</li>
+  <li>The suite runs green in CI, wired into the GitHub Actions workflow.</li>
+  <li>No test touches the staging or production DB, Firebase, or live data. Tests run on isolated test data only.</li>
+</ul>
+
+<h2>How to read the scope</h2>
+<div class="body">
+  <p>The <strong>cases</strong> column is a rough count of logical test cases per target — a relative sizing signal, not a schedule.
+  Sequencing and estimation are yours. Phase 1 and 2 (~205 cases) are the must-ship: together they cover every known defect.
+  The <strong>ref</strong> column points back to the source finding — <code>A#</code> is the pre-production audit (20 July),
+  <code>P#</code> is the calculation-issues review.</p>
+</div>
+
+<div class="box">
+  <span class="tag">Read this before writing expected values</span>
+  <h3>Four rules that decide whether your assertions are right</h3>
+  <ul>
+    <li><strong>Head backward bending is −5°, trunk backward bending is −10°.</strong> They are different on purpose — never assume
+    they share a threshold. Assert them side by side so nobody "harmonises" them later.</li>
+    <li><strong>The −5° head flip still has to happen in one place:</strong> the risk verdict in <code>risk_assessment_posture</code>
+    and the Word report (item 2.18), which still use −10°. <code>ramp_calculator</code> already uses −5° correctly — it only has
+    stale <code>gt_10</code> labels to rename.</li>
+    <li><strong><code>calculate_postures_2</code> emitting a 1.5 score is a real bug</strong> (item 1.2). Write the test to reproduce
+    it red first.</li>
+    <li><strong>The overlapping wording in <code>posture_thresholds</code> is intentional</strong> — test the tables as pure logic,
+    don't "fix" them.</li>
+  </ul>
+</div>
+
+<h2>Sub-task 0 · Test infrastructure <span class="count">prerequisite</span></h2>
+<div class="body">
+  <p>Nothing below can run without this. There is only a bare test runner today and no reusable fixtures. The approach and tooling
+  are your call.</p>
+  <ul>
+    <li>A working test-run setup that CI executes and gates on — today's CI step is near-empty and always green.</li>
+    <li>Reusable fixtures/factories for the core models the tests need: <code>User, Organization, UserOrganization, Session,
+    Measurement, MeasurementData, Event, Category, Label, SessionActivity, SessionCondition, WorkCycleEvent, RAMPAssessment,
+    SessionStats, Ticket, Notification</code>.</li>
+  </ul>
+</div>
+
+<h2>Phase 1 · Pure calculation logic <span class="count">P0 · ~42 cases · do first</span></h2>
+<p class="sectionnote">Best value per hour: pure functions, called with dicts, lists and DataFrames, no DB. Kills the worst
+calculation findings fast.</p>
+
+<table>
+  <thead>
+    <tr><th>#</th><th>Module</th><th style="text-align:right">Cases</th><th>Ref</th><th>Key cases</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="id">1.1</td>
+      <td class="mod">mec_mapping.py<br /><span class="mono fn">calculate_time</span></td>
+      <td class="est">8</td><td class="ref">—</td>
+      <td>Generic band accumulator, threshold-agnostic — no −5/−10 baked in, callers pass the threshold. Upper-inclusive
+      (<code>v ≤ upper</code>), lower-exclusive (<code>v &gt; lower</code>): for band <code>(20,45]</code>, 20 is out, 45 is in,
+      45.1 is out. <code>side_bending</code> uses <code>abs()</code>; <code>elevation_angle</code> drops <code>v &lt; 0</code>;
+      percentages are time-weighted (<code>matching_ms / valid_ms</code>); empty input → <code>{0,0,0}</code>.</td>
+    </tr>
+    <tr>
+      <td class="id">1.2</td>
+      <td class="mod">mec_mapping.py<br /><span class="mono fn">calculate_postures_1..6</span></td>
+      <td class="est">18</td><td class="ref">P8</td>
+      <td><span class="flag bug">Real bug</span><code>calculate_postures_2</code> emits 1.5 for input band <code>[1, 6.25)</code>.
+      Before the fix: reproduce the 1.5 (red). After: never returns 1.5 and scores stay monotonic in %. Don't hard-code the new
+      band values until the fix is defined. Also: <code>None → None</code>; clamp <code>&lt;0 → 0</code> and <code>&gt;100 → top</code>;
+      ladders 1, 3, 4, 5, 6 never emit 1.5.</td>
+    </tr>
+    <tr>
+      <td class="id">1.3</td>
+      <td class="mod">mec_segments.py<br /><span class="mono fn">scale_results_with_takt_time</span>, <span class="mono fn">get_feedback_frequency</span></td>
+      <td class="est">6</td><td class="ref">A15</td>
+      <td><code>takt=60, count=10, static=120</code> → <code>600 / 120</code>. <code>takt ≤ 0</code> raises. Frequency: metadata
+      <code>None</code> → 52 for hand, 13 otherwise; arm variants fall through to the standard branch.</td>
+    </tr>
+    <tr>
+      <td class="id">1.4</td>
+      <td class="mod">posture_thresholds.py<br /><span class="mono fn">3 functions</span></td>
+      <td class="est">10</td><td class="ref">P16</td>
+      <td>Pure threshold tables that feed every report. The overlapping wording is intentional — test as-is, don't change it.
+      Each boundary lands in exactly one band; ranges end at <code>(100, 'high')</code>; integers render without a trailing
+      <code>.0</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Phase 2 · Tenant isolation &amp; integration <span class="count">P0 · ~163 cases</span></h2>
+<p class="sectionnote">The cross-org data-leak blockers. Test the shared gate <em>and</em> its callers — the audit fixes all delegate
+to a couple of shared functions, which are the real single points of failure.</p>
+
+<table>
+  <thead>
+    <tr><th>#</th><th>Module</th><th style="text-align:right">Cases</th><th>Ref</th><th>Notes</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="id">2.1</td>
+      <td class="mod">users/scoping.py<br /><span class="mono fn">get_request_organization</span></td>
+      <td class="est">8</td><td class="ref">A1 A3 A5 A6 A7</td>
+      <td><span class="flag key">Start here</span>About 15 endpoints delegate to this one function.
+      <code>X-Client-Platform: web</code> → consulting org vs active org; <code>_cached_org</code> memoization; unauthenticated
+      short-circuit. If this returns the wrong org, every "fixed" view silently breaks while its own test still passes.</td>
+    </tr>
+    <tr>
+      <td class="id">2.2</td>
+      <td class="mod">user_sessions/permissions.py<br /><span class="mono fn">3 classes</span></td>
+      <td class="est">12</td><td class="ref">A1</td>
+      <td>The gate that A1 assumes is "already guarded" but which has never been tested.
+      <span class="flag bug">Latent bug</span><code>SessionCrudPermission</code> calls <code>session.worker.user</code> →
+      <code>AttributeError</code> when <code>worker</code> is <code>None</code> (same root cause as A18). Give it a dedicated case.</td>
+    </tr>
+    <tr>
+      <td class="id">2.3</td>
+      <td class="mod">work_tags/permissions.py<br /><span class="mono fn">4 classes</span></td>
+      <td class="est">18</td><td class="ref">A1 A3</td>
+      <td>Org-admin and ergonomist gates; cross-org → <code>False</code>; <code>is_deactivated=True</code> → <code>False</code>;
+      swagger bypass behaviour.</td>
+    </tr>
+    <tr>
+      <td class="id">2.4</td>
+      <td class="mod">users/permissions/<br /><span class="mono fn">level_0/1/2 + userCrud</span></td>
+      <td class="est">20</td><td class="ref">—</td>
+      <td>The role-based CRUD permission matrix.</td>
+    </tr>
+    <tr>
+      <td class="id">2.5</td>
+      <td class="mod">work_tags/views.py<br /><span class="mono fn">Event / Category / Label</span></td>
+      <td class="est">12</td><td class="ref">A1 A3</td>
+      <td>Via <code>APIClient</code>. <code>org_id</code> and <code>category_id</code> from the URL must never be trusted over the
+      caller's own org.</td>
+    </tr>
+    <tr>
+      <td class="id">2.6</td>
+      <td class="mod">tickets/views.py</td>
+      <td class="est">6</td><td class="ref">A4</td>
+      <td>Integration level: tickets scoped to the org, no global IDOR.</td>
+    </tr>
+    <tr>
+      <td class="id">2.7</td>
+      <td class="mod">stats_view.py<br /><span class="mono fn">GenerateGeminiAnalysisView.get</span></td>
+      <td class="est">5</td><td class="ref">A5</td>
+      <td>The AI report GET rejects another org's session.</td>
+    </tr>
+    <tr>
+      <td class="id">2.8</td>
+      <td class="mod">work_library/views.py<br /><span class="mono fn">+ serializers.py</span></td>
+      <td class="est">6</td><td class="ref">A6</td>
+      <td>An update can't re-point a record to another org's activity.</td>
+    </tr>
+    <tr>
+      <td class="id">2.9</td>
+      <td class="mod">workcycles/views.py<br /><span class="mono fn">TaskViewSet.get_queryset</span></td>
+      <td class="est">5</td><td class="ref">A7</td>
+      <td>Org-less orphan tasks are not exposed across companies.</td>
+    </tr>
+    <tr>
+      <td class="id">2.10</td>
+      <td class="mod">ramp_calculator.py<br /><span class="mono fn">run_ramp_calculations</span></td>
+      <td class="est">10</td><td class="ref">P2 A16</td>
+      <td>Head backward already uses <code>upper_threshold = −5</code> — assert −5, not −10. After the rename the payload carries
+      <code>postures_2_…gt_5_degrees_*</code> keys, not <code>gt_10</code>. Trunk posture 4 uses −5 and doesn't change. This function
+      must emit <strong>no −10 value at all</strong> — the −10 trunk verdict lives in 2.18, keep them from getting mixed up.
+      Task-scoped posture 6 uses the task window, not the whole session (A16).</td>
+    </tr>
+    <tr>
+      <td class="id">2.11</td>
+      <td class="mod">mec_segments.py<br /><span class="mono fn">compute_mec_for_segment</span></td>
+      <td class="est">8</td><td class="ref">A15</td>
+      <td>DB-backed. Trunk with side-bending present but forward-bending null → no swallowed <code>UnboundLocalError</code>, and the
+      missing-limb flags get set.</td>
+    </tr>
+    <tr>
+      <td class="id">2.12</td>
+      <td class="mod">management/commands/<br /><span class="mono fn">session_check.py</span></td>
+      <td class="est">5</td><td class="ref">A18</td>
+      <td>The per-minute auto-finish doesn't crash on sessions whose worker was deleted.</td>
+    </tr>
+    <tr>
+      <td class="id">2.13</td>
+      <td class="mod">management/commands/<br /><span class="mono fn">archive_sessions.py</span></td>
+      <td class="est">6</td><td class="ref">A19</td>
+      <td>Auto-archive uses the post-rename status value.</td>
+    </tr>
+    <tr>
+      <td class="id">2.14</td>
+      <td class="mod">notifications/<br /><span class="mono fn">models.py + views.py</span></td>
+      <td class="est">6</td><td class="ref">A20</td>
+      <td>A failed-measurement notification is filed under the session's org, not the recipient's currently active org.</td>
+    </tr>
+    <tr>
+      <td class="id">2.15</td>
+      <td class="mod">stats_view.py<br /><span class="mono fn">single-session Excel export</span></td>
+      <td class="est">5</td><td class="ref">A17</td>
+      <td>Head values are not written over the trunk columns.</td>
+    </tr>
+    <tr>
+      <td class="id">2.16</td>
+      <td class="mod">measurements.py<br /><span class="mono fn">merge_measurment_files</span></td>
+      <td class="est">9</td><td class="ref">A11</td>
+      <td><span class="flag guard">Regression guard</span>Already fixed — the tests keep it fixed. Merged zip includes
+      <code>_metadata_merged.json</code>, the highest <code>App.Version</code> is chosen, axis swap is correct.</td>
+    </tr>
+    <tr>
+      <td class="id">2.17</td>
+      <td class="mod">session_views.py<br /><span class="mono fn">session merge</span></td>
+      <td class="est">12</td><td class="ref">A10</td>
+      <td><span class="flag guard">Regression guard</span>Already fixed. Measurements are rebuilt from the combined CSV, not moved.
+      Sized higher than the rest because it needs the full async merge → reprocess pipeline.</td>
+    </tr>
+    <tr>
+      <td class="id">2.18</td>
+      <td class="mod">risk_assessment_posture.py<br /><span class="mono fn">calculate_risk_posture_stats</span><br />+ session_docx_report.py</td>
+      <td class="est">10</td><td class="ref">P2 P19</td>
+      <td><span class="flag bug">The −5° flip</span>This is where the head threshold actually changes. Head backward risk verdict goes
+      from −10° to −5° (mask <code>≤ −5</code>: a head row at −6° now counts; the id and label say −5°). The
+      <strong>trunk verdict stays at −10°</strong> — trunk −7° doesn't count, −10° and −12° do. Assert head and trunk side by side.
+      In the Word report the head row is labelled −5° and the trunk row −10°.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Phase 3 · Important logic <span class="count">P1 · ~199 cases · backlog</span></h2>
+<p class="sectionnote">Not covered by the audits, medium risk: filters, report maths, signal-processing helpers. Grouped counts here —
+ask if you want the per-module breakdown.</p>
+
+<table>
+  <thead>
+    <tr><th style="width:100px">Area</th><th>Modules</th><th style="text-align:right">Cases</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="mod">Signal processing</td><td><code>mec_mapping.py</code> — peak detection, static periods, butter filter, arm postures, zones, hourly</td><td class="est">22</td></tr>
+    <tr><td class="mod">Wrist analysis</td><td><code>wrist_mec_mapping.py</code> — position, custom zones, peaks, static</td><td class="est">24</td></tr>
+    <tr><td class="mod">Report maths</td><td><code>report_service.py</code> — label-bounds parsing, bin midpoints, weighted mean/median, option and velocity blocks</td><td class="est">46</td></tr>
+    <tr><td class="mod">Distance zones</td><td><code>transformations.py :: compute_distance_zone_minutes</code> plus the round/timezone helpers — the pure banding that feeds posture 6, i.e. the numeric core behind A16</td><td class="est">8</td></tr>
+    <tr><td class="mod">Pie &amp; risk stats</td><td><code>pie_stats.py</code>, <code>risk_assessment_posture.py</code> — P18/P19 banding. Guard the intentional constants; the head −5° flip itself is P0, see 2.18</td><td class="est">24</td></tr>
+    <tr><td class="mod">Data reshaping</td><td><code>stats.py</code>, pure helpers in <code>measurements.py</code>, <code>task_measurments.py</code>, <code>filters.py :: pair_measurements_by_time</code>, preprocessing and swapping</td><td class="est">58</td></tr>
+    <tr><td class="mod">DOCX helpers</td><td><code>session_docx_report.py :: get_risk_image</code>, <code>format_duration_seconds</code></td><td class="est">11</td></tr>
+  </tbody>
+</table>
+
+<h2>Phase 4 · Nice to have <span class="count">P2 · ~110 cases · backlog</span></h2>
+<div class="body">
+  <p>Lower risk or harder to test. The TNO pipeline, including <code>extractTaskCharacteristics</code>, sits here — it's deliberately
+  parked for now. Also: inversion correction, time bounds, percentage change, swapped pie stats, user-service claims, report JSON and
+  Excel value maps, the work_tags event upsert, and <code>firebase_auth/authentication.py :: authenticate</code> (the token-parsing
+  branch — security-relevant, it silently returns <code>None</code> on an unknown uid). The report-formatting findings P7 and P17 are
+  also in here.</p>
+</div>
+
+<h2>Out of scope <span class="count">don't spend time here</span></h2>
+<ul>
+  <li>Raw-SQL percentile paths in <code>stats.py</code> — Postgres/Timescale-only and would need huge fixtures. The reusable zone and
+  pivot logic is covered elsewhere.</li>
+  <li>Firebase and DB IO orchestration in <code>measurements.py</code>, <code>task_measurments.py</code>,
+  <code>calculation_service.py</code> — the underlying maths is covered by the pure targets.</li>
+  <li>DOCX/XLSX byte assembly (<code>build_session_word_report</code>, the Excel builders, <code>docx_pie_charts.py</code>) — the
+  data-selection branching is covered through the helpers.</li>
+  <li>Firebase Storage pass-throughs (<code>tickets/utils.py</code>, <code>devices/utils.py</code>) and user-service
+  create/update/delete — heavy multi-system mocking for little return.</li>
+</ul>
+
+<footer>
+  Wergonic · Backend automated test suite · 5 August 2026
+</footer>
+
+</body>
+</html>
