@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wergonic — QA Testing Checklist</title>
+<style>
+  @page { size: A4; margin: 14mm 0; }
+  :root {
+    --ink: #1a1d23; --muted: #5b6472; --line: #e3e7ee;
+    --brand: #1f6feb; --brand-dark: #12325f; --bg-soft: #f6f8fb;
+    --green: #1a7f5a; --amber: #b7791f; --red: #c0392b;
+    --star: #d98c00;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Segoe UI","Helvetica Neue",Arial,sans-serif; color: var(--ink); font-size: 11.5px; line-height: 1.55; margin: 0; }
+  .page { padding: 8px 54px 0; }
+  .page-break { page-break-before: always; }
+  h1,h2,h3,h4 { line-height: 1.2; margin: 0; }
+  h2 { font-size: 18px; color: var(--brand-dark); margin: 0 0 4px; padding-bottom: 7px; border-bottom: 2px solid var(--brand); }
+  h3 { font-size: 13px; color: var(--brand-dark); margin: 20px 0 6px; }
+  h3 .idr { font-weight: 400; color: var(--muted); font-size: 10.5px; letter-spacing: .3px; }
+  p { margin: 8px 0; }
+  .muted { color: var(--muted); }
+  .lead { color: var(--muted); font-size: 12px; margin: 4px 0 14px; }
+  ul { margin: 6px 0; padding-left: 18px; }
+  li { margin: 3px 0; }
+  code { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; font-size: 10.5px; font-family: "Consolas",monospace; }
+  strong { color: var(--ink); }
+
+  /* cover */
+  .cover { padding: 130px 54px 0; }
+  .cover .kicker { color: var(--brand); font-weight: 700; letter-spacing: 2px; font-size: 12px; text-transform: uppercase; }
+  .cover h1 { font-size: 38px; color: var(--brand-dark); margin: 14px 0 10px; letter-spacing: -0.5px; }
+  .cover .sub { font-size: 15px; color: var(--muted); max-width: 600px; line-height: 1.5; }
+  .cover .meta { margin-top: 40px; font-size: 11.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; width: 380px; }
+
+  /* generic tables */
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 11px; }
+  th { background: var(--brand-dark); color: #fff; text-align: left; padding: 7px 10px; font-weight: 600; }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--bg-soft); }
+
+  /* checklist rows */
+  .cl { width: 100%; border-collapse: collapse; margin: 6px 0 2px; font-size: 11px; }
+  .cl td { padding: 4.5px 8px; border-bottom: 1px solid var(--line); vertical-align: top; background: none !important; }
+  .cl tr:nth-child(even) td { background: #fbfcfe !important; }
+  .cl .id { width: 46px; font-family: "Consolas",monospace; font-size: 10px; color: var(--brand-dark); font-weight: 700; white-space: nowrap; }
+  .cl .st { width: 14px; color: var(--star); font-size: 11px; text-align: center; }
+  .cl .exp { color: var(--muted); }
+  .cl tr { break-inside: avoid; }
+
+  /* daily check boxes */
+  .daily { display: table; width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 11px; }
+  .daily .row { display: table-row; break-inside: avoid; }
+  .daily .row > div { display: table-cell; padding: 5px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .daily .bx { width: 22px; }
+  .daily .bx span { display: inline-block; width: 11px; height: 11px; border: 1.4px solid #9aa4b2; border-radius: 2px; }
+  .daily .rid { width: 46px; font-family: "Consolas",monospace; font-size: 10px; color: var(--brand-dark); font-weight: 700; }
+
+  .callout { background: var(--bg-soft); border-left: 3px solid var(--brand); border-radius: 0 6px 6px 0; padding: 11px 15px; margin: 13px 0; break-inside: avoid; }
+  .callout.green { border-left-color: var(--green); }
+  .callout.amber { border-left-color: var(--amber); }
+  .callout.red { border-left-color: var(--red); }
+  .callout .t { font-weight: 700; color: var(--brand-dark); }
+  .callout p { margin: 4px 0 0; }
+
+  .grp { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; margin: 14px 0 0; break-inside: avoid; }
+  .grp .n { font-weight: 700; color: var(--brand-dark); font-size: 12px; }
+
+  .legend { font-size: 10.5px; color: var(--muted); margin: 2px 0 12px; }
+  .legend .s { color: var(--star); font-weight: 700; }
+
+  .toc { font-size: 12px; }
+  .toc div { padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .toc .n { display: inline-block; width: 26px; color: var(--brand); font-weight: 700; }
+  .toc .sub { color: var(--muted); font-size: 10.5px; }
+  .count { float: right; color: var(--muted); font-size: 10.5px; font-weight: 400; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="kicker">Wergonic · Quality Team</div>
+  <h1>QA Testing Checklist</h1>
+  <div class="sub">Everything to check in the mobile app, the client panel and the admin panel — with a short daily run at the front and the full release run behind it.</div>
+  <div class="meta">
+    For: manual testing, no coding needed<br>
+    Companion to: <em>QA Onboarding &amp; Study Guide</em> (how to test, how to write a bug ticket)<br>
+    194 checks · version 1 · August 2026
+  </div>
+</div>
+
+<!-- CONTENTS -->
+<div class="page page-break">
+  <h2>Contents</h2>
+  <div class="toc" style="margin-top:14px">
+    <div><span class="n">1</span> How to use this list <span class="count">page 3</span><br><span class="sub" style="margin-left:26px">Daily run vs release run · what the star means · what to do when something fails</span></div>
+    <div><span class="n">2</span> Where to test <span class="count">page 4</span><br><span class="sub" style="margin-left:26px">Environments · browsers · phones · the sensor kit</span></div>
+    <div><span class="n">3</span> The daily check <span class="count">page 5</span><br><span class="sub" style="margin-left:26px">32 items · about 50 minutes · run this every morning</span></div>
+    <div><span class="n">4</span> Mobile app — full checklist <span class="count">M-01 → M-80</span><br><span class="sub" style="margin-left:26px">Login · setup · sensors · calibration · recording · sync · history · offline · settings</span></div>
+    <div><span class="n">5</span> Client panel — full checklist <span class="count">W-01 → W-92</span><br><span class="sub" style="margin-left:26px">Login · home · measurements · assessments · workers · team · work library · settings</span></div>
+    <div><span class="n">6</span> Admin panel — full checklist <span class="count">A-01 → A-09</span><br><span class="sub" style="margin-left:26px">Organisations · users · devices · firmware</span></div>
+    <div><span class="n">7</span> Cross-cutting checks <span class="count">X-01 → X-13</span><br><span class="sub" style="margin-left:26px">Languages · roles · screen sizes · browsers · bad network · empty states</span></div>
+    <div><span class="n">8</span> Known and already reported — do not file these <span class="count">last page</span><br><span class="sub" style="margin-left:26px">Things that look like bugs but aren't, or are already on the list</span></div>
+  </div>
+</div>
+
+<!-- 1 · HOW TO USE -->
+<div class="page page-break">
+  <h2>1 · How to use this list</h2>
+  <p class="lead">Two runs, one list. Nothing here needs code — it's all clicking, tapping and looking carefully.</p>
+
+  <h3>The daily run — every morning, about 50 minutes</h3>
+  <p>Section 3. It answers one question: <strong>is anything obviously broken right now?</strong> Log in, open the main screens, record a short session, check the data arrives. It is not meant to find subtle bugs — it's meant to catch a broken build before the whole team wastes a day on it. If everything passes, say so in the team chat in one line and move on to your other work.</p>
+  <p>You don't need to record 32 passes. <strong>Only report what fails.</strong></p>
+
+  <h3>The release run — before every release</h3>
+  <p>Sections 4 to 7, all of it. Takes one to two days. This is the full sweep: every screen, every field, every error message, plus the cross-cutting pass in section 7. Here you <em>do</em> keep a record of what passed and what failed, so we know the release was actually covered.</p>
+
+  <h3>What the star means</h3>
+  <p class="legend"><span class="s">★</span> in the full list = this item is also part of the daily run. Same check, listed once, so the two runs can never drift apart.</p>
+
+  <h3>Every item is written the same way</h3>
+  <p class="muted" style="margin-bottom:2px">ID &nbsp;·&nbsp; what you do &nbsp;—&nbsp; what should happen.</p>
+  <table class="cl" style="margin-top:2px">
+    <tr><td class="id">M-16</td><td class="st">★</td><td>Assign a sensor to a limb <span class="exp">— it connects, shows its serial number and a battery percentage</span></td></tr>
+  </table>
+  <p>If what happens is different from what's written after the dash, that's a bug. Some items are deliberately open ("check what happens when…") — those are where you use your judgement and ask if you're unsure.</p>
+
+  <h3>When something fails</h3>
+  <p>Write a bug ticket the way the <em>QA Onboarding &amp; Study Guide</em> describes — title, steps, what happened, what you expected, screenshot, environment, severity. <strong>Put the check ID in the ticket</strong> (for example "fails M-16"), so we can trace it back here.</p>
+
+  <div class="callout amber">
+    <span class="t">Before you file anything, read section 8.</span>
+    <p>Some things in the apps are unfinished on purpose or already reported. Filing them again wastes your time and the developers'.</p>
+  </div>
+
+  <div class="callout green">
+    <span class="t">Keep this list alive.</span>
+    <p>Every real bug you find that isn't covered by an item here should become a new item. That's how the list grows — it should be noticeably longer in six months than it is today. Tell us when you add one so the IDs stay unique.</p>
+  </div>
+</div>
+
+<!-- 2 · WHERE TO TEST -->
+<div class="page page-break">
+  <h2>2 · Where to test</h2>
+  <p class="lead">Get these set up and written down before your first run. Ask the team for the accounts.</p>
+
+  <h3>Environments</h3>
+  <table>
+    <thead><tr><th style="width:22%">What</th><th style="width:40%">Where</th><th>Use it for</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Test (web)</strong></td><td><code>dev.cloud.wergonic.com</code></td><td>Everything. This is your home. Break it freely.</td></tr>
+      <tr><td><strong>Production (web)</strong></td><td><code>cloud.wergonic.com</code></td><td>Look only. A quick check after a release that it loads and login works. Never create test data here.</td></tr>
+      <tr><td><strong>Mobile app</strong></td><td>The test build the team gives you</td><td>It points at the test backend. Confirm which build you have before reporting anything.</td></tr>
+      <tr><td><strong>Admin panel</strong></td><td>Runs locally only, for now</td><td>See the note below — check with the team before testing it.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout amber">
+    <span class="t">Two things to confirm on day one.</span>
+    <p>The environment names are being reorganised, so ask which URL is the current test environment before you start. And the admin panel currently points at a backend running on the developer's own machine — it can't be tested on a normal URL yet. Ask before you spend time on section 6.</p>
+  </div>
+
+  <h3>Accounts you need</h3>
+  <p>One of each role, on the test environment, so you can check that people only see what they should:</p>
+  <ul>
+    <li><strong>Org admin</strong> — sees everything in one organisation, including Team</li>
+    <li><strong>Ergonomist</strong> — records and analyses, but no Team page</li>
+    <li><strong>Worker</strong> — mobile app only; must be refused on the web</li>
+    <li><strong>Superadmin</strong> — for the admin panel</li>
+    <li>A user who belongs to <strong>two organisations</strong>, to test switching</li>
+  </ul>
+
+  <h3>Browsers and screens (web)</h3>
+  <p>Chrome is your everyday browser. For the release run, also go through the main flows in Edge, Safari and Firefox. Screen sizes to check: a 1366-wide laptop, a 1920 desktop, and a tablet width. If something only breaks on one of them, say which one in the ticket.</p>
+
+  <h3>Phones (mobile)</h3>
+  <p>At least one Android and one iPhone, and ideally one older, slower Android — that's where recording problems show up first. Always write the phone model and OS version in the ticket.</p>
+
+  <h3>The sensor kit</h3>
+  <p>Some checks need the physical sensors and the workwear — they're marked <strong>needs the kit</strong> in section 4. You can't do them from your desk. If the kit isn't always available to you, do the kit part of the daily run at least twice a week, and always before a release.</p>
+</div>
+
+<!-- 3 · DAILY CHECK -->
+<div class="page page-break">
+  <h2>3 · The daily check</h2>
+  <p class="lead">32 items, about 50 minutes. Two halves: the desk half needs nothing but a laptop and a phone; the kit half needs the sensors. Run it on the test environment, every morning.</p>
+
+  <div class="grp"><span class="n">Part A · At your desk</span> &nbsp;<span class="muted">~20 minutes · no hardware needed</span></div>
+  <div class="daily">
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-01</div><div>The login page loads, nothing looks broken</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-02</div><div>Log in with email and password</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-12</div><div>Home page loads and shows numbers, not errors or empty cards</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-16</div><div>Measurements list loads and shows rows</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-18</div><div>Search a worker's name — the list filters</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-28</div><div>Open a finished measurement — the charts draw, no blank page</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-52</div><div>Assessments list loads</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-56</div><div>Open one completed assessment — the score and colours show</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-64</div><div>Workers list loads</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-71</div><div>Team page loads (as an org admin)</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-77</div><div>Work library opens and the factory tree expands</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-88</div><div>Notification bell opens and shows the list</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-85</div><div>Switch the language and back — text changes, nothing overflows</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-11</div><div>Log out — you land on the login page and can't go back in with the back button</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">X-12</div><div>No red errors in the browser console on any page you opened</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-01</div><div>Mobile app opens past the splash screen without crashing</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-02</div><div>Log in on mobile</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-58</div><div>Session history loads and shows past sessions</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-60</div><div>Open a past session report — the charts draw</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-64</div><div>Turn wifi and data off — the offline banner appears</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-70</div><div>Change one setting, force-close the app, reopen — the setting stuck</div></div>
+  </div>
+
+  <div class="grp" style="margin-top:16px"><span class="n">Part B · With the sensor kit</span> &nbsp;<span class="muted">~30 minutes · twice a week minimum, and before every release</span></div>
+  <div class="daily">
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-15</div><div>Scan finds the sensors</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-16</div><div>Pair a sensor to a limb — it connects and shows a serial number</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-21</div><div>Battery percentage shows for each connected sensor</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-24</div><div>Calibration runs through every connected limb and finishes</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-37</div><div>Start recording — the timer counts up</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-38</div><div>Move your arm — the live angle and speed numbers move with you</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-45</div><div>Pause and resume — the timer stops and continues correctly</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-46</div><div>Switch a sensor off and on — it shows disconnected, then reconnects</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-51</div><div>End the session — the summary screen shows duration and devices</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">M-54</div><div>Sync it — the badge changes to fully synced, no error</div></div>
+    <div class="row"><div class="bx"><span></span></div><div class="rid">W-16</div><div>The session appears in the web panel within a few minutes</div></div>
+  </div>
+
+  <div class="callout">
+    <span class="t">If part B fails, stop and tell someone straight away.</span>
+    <p>Recording and sync are the heart of the product. A broken sensor flow is more urgent than anything else on this list.</p>
+  </div>
+</div>
+
+<!-- 4 · MOBILE -->
+<div class="page page-break">
+  <h2>4 · Mobile app — full checklist</h2>
+  <p class="lead">80 checks. The Flutter app that field workers and ergonomists use to record sessions.</p>
+  <p class="legend"><span class="s">★</span> = also in the daily check &nbsp;·&nbsp; items in <strong>Sensors</strong>, <strong>Calibration</strong> and <strong>Recording</strong> need the kit</p>
+
+  <h3>4.1 · Login and account <span class="idr">M-01 → M-07</span></h3>
+  <table class="cl">
+    <tr><td class="id">M-01</td><td class="st">★</td><td>Open the app from cold <span class="exp">— the splash screen passes and you land on login (logged out) or the welcome screen (logged in)</span></td></tr>
+    <tr><td class="id">M-02</td><td class="st">★</td><td>Log in with email and password <span class="exp">— you reach the welcome screen</span></td></tr>
+    <tr><td class="id">M-03</td><td class="st"></td><td>Log in with the wrong password, and with an email that doesn't exist <span class="exp">— a clear message in your language, no crash, no raw error code</span></td></tr>
+    <tr><td class="id">M-04</td><td class="st"></td><td>Log in with the email link <span class="exp">— the email arrives, tapping the link opens the app and logs you in</span></td></tr>
+    <tr><td class="id">M-05</td><td class="st"></td><td>Reset your password end to end <span class="exp">— email arrives, new password is accepted, you can log in with it</span></td></tr>
+    <tr><td class="id">M-06</td><td class="st"></td><td>Open an old or already-used reset link <span class="exp">— the "link expired" screen appears, not an error</span></td></tr>
+    <tr><td class="id">M-07</td><td class="st"></td><td>Log out, then log in as a different user <span class="exp">— none of the previous user's sessions, workers or settings are still visible</span></td></tr>
+  </table>
+
+  <h3>4.2 · First launch and organisation <span class="idr">M-08 → M-12</span></h3>
+  <table class="cl">
+    <tr><td class="id">M-08</td><td class="st"></td><td>Install fresh and open <span class="exp">— the onboarding screens appear and can be completed or skipped</span></td></tr>
+    <tr><td class="id">M-09</td><td class="st"></td><td>Log in as a user who belongs to two organisations <span class="exp">— you are asked which one to use</span></td></tr>
+    <tr><td class="id">M-10</td><td class="st"></td><td>Log in as a user in one organisation only <span class="exp">— no question, straight through</span></td></tr>
+    <tr><td class="id">M-11</td><td class="st"></td><td>Switch organisation in settings <span class="exp">— the worker list and session list change to the other organisation's data</span></td></tr>
+    <tr><td class="id">M-12</td><td class="st"></td><td>Close and reopen the app after switching <span class="exp">— you are still in the organisation you chose</span></td></tr>
+  </table>
+
+  <h3>4.3 · Sensors and pairing <span class="idr">M-13 → M-23 · needs the kit</span></h3>
+  <table class="cl">
+    <tr><td class="id">M-13</td><td class="st"></td><td>Open pairing with Bluetooth switched off <span class="exp">— the app asks you to turn it on instead of showing an empty list</span></td></tr>
+    <tr><td class="id">M-14</td><td class="st"></td><td>Deny the Bluetooth or location permission when asked <span class="exp">— a clear explanation, and a way to get to the phone settings; no crash</span></td></tr>
+    <tr><td class="id">M-15</td><td class="st">★</td><td>Start a scan with sensors switched on nearby <span class="exp">— they appear in the list with a name and signal strength</span></td></tr>
+    <tr><td class="id">M-16</td><td class="st">★</td><td>Assign a sensor to a limb <span class="exp">— it connects and shows its serial number</span></td></tr>
+    <tr><td class="id">M-17</td><td class="st"></td><td>Try to assign the same sensor to a second limb <span class="exp">— blocked, with a message</span></td></tr>
+    <tr><td class="id">M-18</td><td class="st"></td><td>Pair all seven limb types: right arm, left arm, trunk, head, hand, forearm, chest strap <span class="exp">— each one connects</span></td></tr>
+    <tr><td class="id">M-19</td><td class="st"></td><td>Connect five or more sensors at once <span class="exp">— all stay connected, the app stays responsive</span></td></tr>
+    <tr><td class="id">M-20</td><td class="st"></td><td>Switch a sensor off, or walk out of range, during pairing <span class="exp">— it shows as disconnected within a few seconds; the app doesn't hang on a spinner</span></td></tr>
+    <tr><td class="id">M-21</td><td class="st">★</td><td>Look at each connected sensor <span class="exp">— a battery percentage is shown and it looks believable</span></td></tr>
+    <tr><td class="id">M-22</td><td class="st"></td><td>Look at each connected sensor <span class="exp">— a firmware version is shown</span></td></tr>
+    <tr><td class="id">M-23</td><td class="st"></td><td>Leave the pairing screen and come back <span class="exp">— the sensors are still connected and still assigned to the same limbs</span></td></tr>
+  </table>
+
+  <h3>4.4 · Calibration <span class="idr">M-24 → M-30 · needs the kit</span></h3>
+  <table class="cl">
+    <tr><td class="id">M-24</td><td class="st">★</td><td>Run a full calibration <span class="exp">— it asks for each connected limb in turn and finishes without an error</span></td></tr>
+    <tr><td class="id">M-25</td><td class="st"></td><td>Follow the natural-position step <span class="exp">— it captures for about two seconds and moves on by itself</span></td></tr>
+    <tr><td class="id">M-26</td><td class="st"></td><td>Calibrate trunk and head <span class="exp">— they ask for a second, bent position; the arms and hand do not</span></td></tr>
+    <tr><td class="id">M-27</td><td class="st"></td><td>Turn off two-point calibration in settings and calibrate again <span class="exp">— the bent step is gone</span></td></tr>
+    <tr><td class="id">M-28</td><td class="st"></td><td>Switch a sensor off in the middle of calibration <span class="exp">— a clear error and the option to retry, not a stuck screen</span></td></tr>
+    <tr><td class="id">M-29</td><td class="st"></td><td>Recalibrate a single limb <span class="exp">— only that limb is redone, the others keep their calibration</span></td></tr>
+    <tr><td class="id">M-30</td><td class="st"></td><td>Turn on lite mode and calibrate <span class="exp">— one five-second phone calibration only, no sensor steps</span></td></tr>
+  </table>
+
+  <h3>4.5 · Setting up a session <span class="idr">M-31 → M-36</span></h3>
+  <table class="cl">
+    <tr><td class="id">M-31</td><td class="st"></td><td>Choose the session type: work task or work cycle <span class="exp">— the next screens change accordingly</span></td></tr>
+    <tr><td class="id">M-32</td><td class="st"></td><td>Pick the worker being measured <span class="exp">— the list shows the organisation's workers and you can search it</span></td></tr>
+    <tr><td class="id">M-33</td><td class="st"></td><td>Set the session conditions / workplace <span class="exp">— your choices are saved and appear again on the summary at the end</span></td></tr>
+    <tr><td class="id">M-34</td><td class="st"></td><td>Choose which limbs to record <span class="exp">— only limbs that are connected and calibrated can be selected</span></td></tr>
+    <tr><td class="id">M-35</td><td class="st"></td><td>Try to start with a sensor missing or not calibrated <span class="exp">— start is blocked and the message says exactly what is missing</span></td></tr>
+    <tr><td class="id">M-36</td><td class="st"></td><td>Open the work library from settings <span class="exp">— categories and work cycles load and a selection can be made</span></td></tr>
+  </table>
+</div>
+
+<div class="page page-break">
+  <h3 style="margin-top:0">4.6 · Recording <span class="idr">M-37 → M-50 · needs the kit</span></h3>
+  <table class="cl">
+    <tr><td class="id">M-37</td><td class="st">★</td><td>Start recording <span class="exp">— the timer starts at zero and counts up in real time</span></td></tr>
+    <tr><td class="id">M-38</td><td class="st">★</td><td>Raise and lower an arm <span class="exp">— the elevation angle and speed of movement change with you, with no long delay</span></td></tr>
+    <tr><td class="id">M-39</td><td class="st"></td><td>Bend forward and sideways <span class="exp">— the trunk bending values change and match roughly what you're doing</span></td></tr>
+    <tr><td class="id">M-40</td><td class="st"></td><td>Record with a chest strap connected <span class="exp">— a heart rate in beats per minute appears and updates</span></td></tr>
+    <tr><td class="id">M-41</td><td class="st"></td><td>Hold your arm high for a while <span class="exp">— the indicator turns yellow then red at the thresholds, and back to green when you lower it</span></td></tr>
+    <tr><td class="id">M-42</td><td class="st"></td><td>Leave voice feedback on <span class="exp">— it speaks at the interval you set, in the app's language, and stops when you turn it off</span></td></tr>
+    <tr><td class="id">M-43</td><td class="st"></td><td>Mark a task start and end during recording <span class="exp">— both appear in the task list with the right time</span></td></tr>
+    <tr><td class="id">M-44</td><td class="st"></td><td>Mark a break start and end <span class="exp">— same, and it's clearly shown as a break, not a task</span></td></tr>
+    <tr><td class="id">M-45</td><td class="st">★</td><td>Pause, wait a minute, then resume <span class="exp">— the timer stops while paused and continues from where it stopped, not from the wall clock</span></td></tr>
+    <tr><td class="id">M-46</td><td class="st">★</td><td>Switch one sensor off mid-recording, then on again <span class="exp">— its status goes disconnected, then reconnecting, then connected, and data resumes</span></td></tr>
+    <tr><td class="id">M-47</td><td class="st"></td><td>Put the app in the background for five minutes <span class="exp">— recording continues and a "recording" notification is visible</span></td></tr>
+    <tr><td class="id">M-48</td><td class="st"></td><td>Lock the phone screen for five minutes <span class="exp">— recording continues, the timer is correct when you unlock</span></td></tr>
+    <tr><td class="id">M-49</td><td class="st"></td><td>Receive a phone call during recording <span class="exp">— recording survives the call</span></td></tr>
+    <tr><td class="id">M-50</td><td class="st"></td><td>Watch the battery percentages during a longer recording <span class="exp">— they refresh, and dropping to a low battery gives some kind of warning</span></td></tr>
+  </table>
+
+  <h3>4.7 · Ending a session and syncing <span class="idr">M-51 → M-57</span></h3>
+  <table class="cl">
+    <tr><td class="id">M-51</td><td class="st">★</td><td>End the session <span class="exp">— the summary shows duration, the devices used and the sync status</span></td></tr>
+    <tr><td class="id">M-52</td><td class="st"></td><td>End a very short session, under a minute <span class="exp">— it still saves and appears in history</span></td></tr>
+    <tr><td class="id">M-53</td><td class="st"></td><td>Look at the session in history right after ending it <span class="exp">— it's there with a "not synced" badge</span></td></tr>
+    <tr><td class="id">M-54</td><td class="st">★</td><td>Sync it <span class="exp">— progress is shown and the badge ends up as fully synced</span></td></tr>
+    <tr><td class="id">M-55</td><td class="st"></td><td>Start a sync with no internet <span class="exp">— it fails with a clear message and the session is kept, not lost; you can retry later</span></td></tr>
+    <tr><td class="id">M-56</td><td class="st"></td><td>Force-close the app in the middle of a recording, then reopen <span class="exp">— the session is still in history and can be synced; the app doesn't get stuck thinking it's recording</span></td></tr>
+    <tr><td class="id">M-57</td><td class="st"></td><td>Check the same session in the web panel afterwards <span class="exp">— the duration, worker and limbs match what the phone showed</span></td></tr>
+  </table>
+
+  <h3>4.8 · History and reports <span class="idr">M-58 → M-63</span></h3>
+  <table class="cl">
+    <tr><td class="id">M-58</td><td class="st">★</td><td>Open the session list <span class="exp">— worker name, date, duration, sync status and limbs are shown for each</span></td></tr>
+    <tr><td class="id">M-59</td><td class="st"></td><td>Use the filters and sorting <span class="exp">— the list changes as expected and clearing the filter brings everything back</span></td></tr>
+    <tr><td class="id">M-60</td><td class="st">★</td><td>Open a session report <span class="exp">— risk data per limb and the charts draw, with sensible colours</span></td></tr>
+    <tr><td class="id">M-61</td><td class="st"></td><td>Open the TNO report <span class="exp">— it loads with the static and dynamic breakdown</span></td></tr>
+    <tr><td class="id">M-62</td><td class="st"></td><td>Add a work label to a session from history <span class="exp">— it saves and is still there after leaving and coming back</span></td></tr>
+    <tr><td class="id">M-63</td><td class="st"></td><td>Open a session that recorded almost nothing <span class="exp">— an empty or "no data" state, not a crash or a blank screen</span></td></tr>
+  </table>
+
+  <h3>4.9 · Offline <span class="idr">M-64 → M-69</span></h3>
+  <table class="cl">
+    <tr><td class="id">M-64</td><td class="st">★</td><td>Turn off wifi and mobile data <span class="exp">— an offline indicator appears within a few seconds</span></td></tr>
+    <tr><td class="id">M-65</td><td class="st"></td><td>Record a complete session while offline <span class="exp">— it records and saves normally</span></td></tr>
+    <tr><td class="id">M-66</td><td class="st"></td><td>Pair and calibrate while offline <span class="exp">— both work; they don't need the internet</span></td></tr>
+    <tr><td class="id">M-67</td><td class="st"></td><td>Open history and a cached report while offline <span class="exp">— they open</span></td></tr>
+    <tr><td class="id">M-68</td><td class="st"></td><td>Try to log in as a new user while offline <span class="exp">— refused with a clear message about needing an internet connection</span></td></tr>
+    <tr><td class="id">M-69</td><td class="st"></td><td>Turn the internet back on and sync the offline sessions <span class="exp">— they upload and appear in the web panel</span></td></tr>
+  </table>
+
+  <h3>4.10 · Settings and support <span class="idr">M-70 → M-80</span></h3>
+  <table class="cl">
+    <tr><td class="id">M-70</td><td class="st">★</td><td>Change a setting, force-close the app, reopen <span class="exp">— the change is still there</span></td></tr>
+    <tr><td class="id">M-71</td><td class="st"></td><td>Switch the app language to each of English, Swedish, German, Spanish and Dutch <span class="exp">— every screen is translated, no English left behind, no text cut off or overlapping</span></td></tr>
+    <tr><td class="id">M-72</td><td class="st"></td><td>Change the IMU sample rate, gyroscope range and accelerometer range <span class="exp">— they save, and the next session records without errors</span></td></tr>
+    <tr><td class="id">M-73</td><td class="st"></td><td>Turn on lite mode and record <span class="exp">— it records with the phone alone, one limb only, and the session saves</span></td></tr>
+    <tr><td class="id">M-74</td><td class="st"></td><td>Turn heart rate tracking on and off <span class="exp">— the heart rate tile appears and disappears accordingly</span></td></tr>
+    <tr><td class="id">M-75</td><td class="st"></td><td>Turn location tracking on and record <span class="exp">— the permission is asked for once and location data ends up in the session</span></td></tr>
+    <tr><td class="id">M-76</td><td class="st"></td><td>Change the voice feedback interval and the limb priority order <span class="exp">— the next recording follows the new settings</span></td></tr>
+    <tr><td class="id">M-77</td><td class="st"></td><td>Change the battery check interval <span class="exp">— saved, and battery values refresh at roughly that rate</span></td></tr>
+    <tr><td class="id">M-78</td><td class="st"></td><td>Change the session duration limit <span class="exp">— saved; a session stops itself at the limit</span></td></tr>
+    <tr><td class="id">M-79</td><td class="st"></td><td>Send a report from "report a problem", with an attachment <span class="exp">— it sends, you get a confirmation, and the ticket reaches the team</span></td></tr>
+    <tr><td class="id">M-80</td><td class="st"></td><td>Open an old app version against the current backend <span class="exp">— the force-update screen appears instead of letting you use a broken version</span></td></tr>
+  </table>
+</div>
+
+<!-- 5 · CLIENT PANEL -->
+<div class="page page-break">
+  <h2>5 · Client panel — full checklist</h2>
+  <p class="lead">92 checks. The web app ergonomists and org admins use to analyse the recorded data.</p>
+  <p class="legend"><span class="s">★</span> = also in the daily check</p>
+
+  <h3>5.1 · Login, signup and invitations <span class="idr">W-01 → W-11</span></h3>
+  <table class="cl">
+    <tr><td class="id">W-01</td><td class="st">★</td><td>Open the login page <span class="exp">— it loads fully, logo and fields in place, nothing shifting around</span></td></tr>
+    <tr><td class="id">W-02</td><td class="st">★</td><td>Log in with email and password <span class="exp">— you land on the home page</span></td></tr>
+    <tr><td class="id">W-03</td><td class="st"></td><td>Log in with the email link <span class="exp">— the email arrives, the link logs you in, and it can't be reused afterwards</span></td></tr>
+    <tr><td class="id">W-04</td><td class="st"></td><td>Try a wrong password, an unknown email and an empty form <span class="exp">— a clear message each time, no technical error text, no crash</span></td></tr>
+    <tr><td class="id">W-05</td><td class="st"></td><td>Reset a password end to end <span class="exp">— email arrives, the new password works, the old one doesn't</span></td></tr>
+    <tr><td class="id">W-06</td><td class="st"></td><td>Log in with a worker account <span class="exp">— refused with "Workers cannot access this application" and signed out</span></td></tr>
+    <tr><td class="id">W-07</td><td class="st"></td><td>Register a new organisation from the public form <span class="exp">— required fields are validated, the organisation and its admin are created, and you can log in</span></td></tr>
+    <tr><td class="id">W-08</td><td class="st"></td><td>Invite someone to the organisation <span class="exp">— the email arrives, the link opens the invitation page, accepting adds them with the role you chose</span></td></tr>
+    <tr><td class="id">W-09</td><td class="st"></td><td>Open an invitation older than seven days, and one already accepted <span class="exp">— a proper "expired" or "already used" message, not an error page</span></td></tr>
+    <tr><td class="id">W-10</td><td class="st"></td><td>Refresh the page while logged in <span class="exp">— you stay logged in and on the same page</span></td></tr>
+    <tr><td class="id">W-11</td><td class="st">★</td><td>Log out, then press the browser back button <span class="exp">— you stay on the login page; the dashboard doesn't reappear</span></td></tr>
+  </table>
+
+  <h3>5.2 · Home <span class="idr">W-12 → W-15</span></h3>
+  <table class="cl">
+    <tr><td class="id">W-12</td><td class="st">★</td><td>Open home <span class="exp">— user numbers, measurement numbers and licence information all load, no empty or broken cards</span></td></tr>
+    <tr><td class="id">W-13</td><td class="st"></td><td>Change the date range <span class="exp">— the numbers change; a range with no data shows zero, not a broken card</span></td></tr>
+    <tr><td class="id">W-14</td><td class="st"></td><td>Compare the measurement count on home with the measurements list <span class="exp">— they agree</span></td></tr>
+    <tr><td class="id">W-15</td><td class="st"></td><td>Check the licence card <span class="exp">— expiry date and usage against the limits are shown and look right for that organisation</span></td></tr>
+  </table>
+
+  <h3>5.3 · Measurements list <span class="idr">W-16 → W-27</span></h3>
+  <table class="cl">
+    <tr><td class="id">W-16</td><td class="st">★</td><td>Open the measurements list <span class="exp">— rows load with worker, date, duration, status and tags</span></td></tr>
+    <tr><td class="id">W-17</td><td class="st"></td><td>Switch between active, finished and archived <span class="exp">— each shows the right sessions and nothing leaks between them</span></td></tr>
+    <tr><td class="id">W-18</td><td class="st">★</td><td>Search a worker's name <span class="exp">— the list filters; a nonsense search gives a clean empty state</span></td></tr>
+    <tr><td class="id">W-19</td><td class="st"></td><td>Filter by limb and by status <span class="exp">— results match the filter, and clearing it restores the full list</span></td></tr>
+    <tr><td class="id">W-20</td><td class="st"></td><td>Sort by each column, both directions <span class="exp">— the order is actually correct, including dates and durations</span></td></tr>
+    <tr><td class="id">W-21</td><td class="st"></td><td>Go to page two, change the page size, then change a filter <span class="exp">— the page resets sensibly instead of showing an empty page</span></td></tr>
+    <tr><td class="id">W-22</td><td class="st"></td><td>Select several rows <span class="exp">— the bulk action bar appears with the right count</span></td></tr>
+    <tr><td class="id">W-23</td><td class="st"></td><td>Archive several at once <span class="exp">— they move to archived; unarchiving brings them back to finished</span></td></tr>
+    <tr><td class="id">W-24</td><td class="st"></td><td>Delete a measurement <span class="exp">— you are asked to confirm, and after confirming it's really gone, also after a refresh</span></td></tr>
+    <tr><td class="id">W-25</td><td class="st"></td><td>Cancel a delete <span class="exp">— nothing is deleted</span></td></tr>
+    <tr><td class="id">W-26</td><td class="st"></td><td>Import a measurement file <span class="exp">— a valid file imports; a wrong or corrupt file gives a readable error, not a crash</span></td></tr>
+    <tr><td class="id">W-27</td><td class="st"></td><td>Look at an organisation with no measurements at all <span class="exp">— a friendly empty state that explains what to do, not a blank table</span></td></tr>
+  </table>
+
+  <h3>5.4 · Measurement detail <span class="idr">W-28 → W-40</span></h3>
+  <table class="cl">
+    <tr><td class="id">W-28</td><td class="st">★</td><td>Open a finished measurement <span class="exp">— worker, duration, date, status and the devices used are shown, and the charts draw</span></td></tr>
+    <tr><td class="id">W-29</td><td class="st"></td><td>Use the posture chart: zoom, scroll, page through a long session <span class="exp">— it stays smooth and the axis labels stay correct</span></td></tr>
+    <tr><td class="id">W-30</td><td class="st"></td><td>Hover a point on the chart <span class="exp">— the tooltip shows a value and, where relevant, the logged event at that time</span></td></tr>
+    <tr><td class="id">W-31</td><td class="st"></td><td>Check the speed-of-movement chart <span class="exp">— it draws and its values are in a believable range</span></td></tr>
+    <tr><td class="id">W-32</td><td class="st"></td><td>Check the risk-zone donuts <span class="exp">— the green, yellow and red slices add up to 100% and match the colours used elsewhere</span></td></tr>
+    <tr><td class="id">W-33</td><td class="st"></td><td>Check the wrist distance zones <span class="exp">— under 30 cm, 30–50 cm and over 50 cm are shown and add up</span></td></tr>
+    <tr><td class="id">W-34</td><td class="st"></td><td>Open a session recorded with a chest strap, and one without <span class="exp">— the heart rate section shows data in the first and hides or says "no data" in the second</span></td></tr>
+    <tr><td class="id">W-35</td><td class="st"></td><td>Check temperature per limb <span class="exp">— a value per recorded limb, nothing wildly out of range</span></td></tr>
+    <tr><td class="id">W-36</td><td class="st"></td><td>Check the TNO section <span class="exp">— the static and dynamic breakdown per angle range loads</span></td></tr>
+    <tr><td class="id">W-37</td><td class="st"></td><td>Open a session where tasks and breaks were marked on the phone <span class="exp">— the task-by-task breakdown shows them with the right names and times</span></td></tr>
+    <tr><td class="id">W-38</td><td class="st"></td><td>Add a note to the session log <span class="exp">— it saves, shows who added it and when, and survives a refresh</span></td></tr>
+    <tr><td class="id">W-39</td><td class="st"></td><td>Press recalculate <span class="exp">— a progress state is shown and the numbers come back updated, not blank</span></td></tr>
+    <tr><td class="id">W-40</td><td class="st"></td><td>Go back to the list from a measurement <span class="exp">— your filters, tab and page are still applied</span></td></tr>
+  </table>
+</div>
+
+<div class="page page-break">
+  <h3 style="margin-top:0">5.5 · Comparing measurements <span class="idr">W-41 → W-44</span></h3>
+  <table class="cl">
+    <tr><td class="id">W-41</td><td class="st"></td><td>Select several measurements and open the comparison <span class="exp">— all of them appear side by side</span></td></tr>
+    <tr><td class="id">W-42</td><td class="st"></td><td>Go through the comparison tabs: results table, TNO, heart rate, temperature <span class="exp">— each loads, and a tab with no data for one session says so instead of showing nothing</span></td></tr>
+    <tr><td class="id">W-43</td><td class="st"></td><td>Export the comparison to Excel <span class="exp">— the file downloads, opens, and the numbers match the screen</span></td></tr>
+    <tr><td class="id">W-44</td><td class="st"></td><td>Compare sessions that recorded different limbs, and try to compare just one <span class="exp">— handled sensibly with a message, not a broken page</span></td></tr>
+  </table>
+
+  <h3>5.6 · Reports, exports and AI <span class="idr">W-45 → W-51</span></h3>
+  <table class="cl">
+    <tr><td class="id">W-45</td><td class="st"></td><td>Export one measurement to Excel <span class="exp">— it downloads, opens, and the values match the detail page</span></td></tr>
+    <tr><td class="id">W-46</td><td class="st"></td><td>Export the raw data <span class="exp">— the file downloads and isn't empty</span></td></tr>
+    <tr><td class="id">W-47</td><td class="st"></td><td>Export a Word report and switch the section toggles on and off <span class="exp">— the document contains exactly the sections you ticked, and the charts and text are readable</span></td></tr>
+    <tr><td class="id">W-48</td><td class="st"></td><td>Create a report template, use it, edit it, delete it <span class="exp">— each step works and the template is applied when exporting</span></td></tr>
+    <tr><td class="id">W-49</td><td class="st"></td><td>Generate the AI analysis <span class="exp">— a progress state, then real text in the language you chose, saved so it shows again after a refresh instead of regenerating</span></td></tr>
+    <tr><td class="id">W-50</td><td class="st"></td><td>Generate the AI analysis on a session with almost no data <span class="exp">— it fails or explains itself clearly; it doesn't spin forever</span></td></tr>
+    <tr><td class="id">W-51</td><td class="st"></td><td>Download an assessment result as PDF <span class="exp">— the file opens and the layout isn't cut off</span></td></tr>
+  </table>
+
+  <h3>5.7 · Assessments <span class="idr">W-52 → W-63</span></h3>
+  <table class="cl">
+    <tr><td class="id">W-52</td><td class="st">★</td><td>Open the assessments list <span class="exp">— it loads with method, status, worker and date</span></td></tr>
+    <tr><td class="id">W-53</td><td class="st"></td><td>Filter by method and by status <span class="exp">— results match</span></td></tr>
+    <tr><td class="id">W-54</td><td class="st"></td><td>Create a new assessment from the modal <span class="exp">— it's created and opens on the first step</span></td></tr>
+    <tr><td class="id">W-55</td><td class="st"></td><td>Fill a RAMP assessment through all seven steps <span class="exp">— every step saves, going back keeps your answers, and the body diagrams respond correctly</span></td></tr>
+    <tr><td class="id">W-56</td><td class="st">★</td><td>Open a completed assessment result <span class="exp">— the score, the colour coding and the breakdown are shown</span></td></tr>
+    <tr><td class="id">W-57</td><td class="st"></td><td>Generate a RAMP from a session and continue it <span class="exp">— the suggested values are filled in, can be changed, and saving keeps your changes</span></td></tr>
+    <tr><td class="id">W-58</td><td class="st"></td><td>Fill a RULA: left side, right side, neck/trunk/legs <span class="exp">— each section scores and the final score matches the method's own table</span></td></tr>
+    <tr><td class="id">W-59</td><td class="st"></td><td>Fill a REBA the same way <span class="exp">— sections score and the final score is correct</span></td></tr>
+    <tr><td class="id">W-60</td><td class="st"></td><td>Generate a MEC from a session <span class="exp">— it processes and the results page shows values, not an empty page</span></td></tr>
+    <tr><td class="id">W-61</td><td class="st"></td><td>Leave an assessment half-filled and come back later <span class="exp">— it's marked in progress and resumes exactly where you left off</span></td></tr>
+    <tr><td class="id">W-62</td><td class="st"></td><td>Open the multi-compare view for each method <span class="exp">— several assessments side by side, with correct scores</span></td></tr>
+    <tr><td class="id">W-63</td><td class="st"></td><td>Delete assessments in bulk, and export to AVIX <span class="exp">— delete asks for confirmation and works; the AVIX file downloads</span></td></tr>
+  </table>
+
+  <h3>5.8 · Workers <span class="idr">W-64 → W-70</span></h3>
+  <table class="cl">
+    <tr><td class="id">W-64</td><td class="st">★</td><td>Open the workers list <span class="exp">— it loads, search and filters work</span></td></tr>
+    <tr><td class="id">W-65</td><td class="st"></td><td>Add a worker <span class="exp">— required fields are validated, a bad email is rejected, and the worker appears in the list</span></td></tr>
+    <tr><td class="id">W-66</td><td class="st"></td><td>Open a worker and fill the full profile: weight, resting heart rate, gender, dominant arm, date of birth, comment <span class="exp">— all save and are still right after a refresh</span></td></tr>
+    <tr><td class="id">W-67</td><td class="st"></td><td>Enter impossible values — a negative weight, a birth date in the future <span class="exp">— rejected with a clear message</span></td></tr>
+    <tr><td class="id">W-68</td><td class="st"></td><td>Assign a consultant to a worker <span class="exp">— it saves and shows on the worker</span></td></tr>
+    <tr><td class="id">W-69</td><td class="st"></td><td>Deactivate a worker <span class="exp">— they leave the active list but their past measurements are still there and still open</span></td></tr>
+    <tr><td class="id">W-70</td><td class="st"></td><td>Add workers up to the organisation's limit <span class="exp">— going over gives a clear message about the limit</span></td></tr>
+  </table>
+
+  <h3>5.9 · Team <span class="idr">W-71 → W-76</span></h3>
+  <table class="cl">
+    <tr><td class="id">W-71</td><td class="st">★</td><td>Open Team as an org admin <span class="exp">— the member list loads with names, roles and status</span></td></tr>
+    <tr><td class="id">W-72</td><td class="st"></td><td>Log in as an ergonomist <span class="exp">— Team is not in the menu, and typing its address directly doesn't get you in</span></td></tr>
+    <tr><td class="id">W-73</td><td class="st"></td><td>Invite a team member with a role <span class="exp">— the invitation is sent and shows as pending</span></td></tr>
+    <tr><td class="id">W-74</td><td class="st"></td><td>Change a member's role <span class="exp">— after they log in again, what they can see and do actually matches the new role</span></td></tr>
+    <tr><td class="id">W-75</td><td class="st"></td><td>Deactivate a member <span class="exp">— they can no longer log in, and their existing data stays</span></td></tr>
+    <tr><td class="id">W-76</td><td class="st"></td><td>Add admins up to the organisation's admin limit <span class="exp">— going over gives a clear message</span></td></tr>
+  </table>
+
+  <h3>5.10 · Work library <span class="idr">W-77 → W-82</span></h3>
+  <table class="cl">
+    <tr><td class="id">W-77</td><td class="st">★</td><td>Open the work library <span class="exp">— the factory → line → workstation → task tree loads and expands</span></td></tr>
+    <tr><td class="id">W-78</td><td class="st"></td><td>Create, rename and delete an item at each level <span class="exp">— each works, and deleting a level with children warns you first</span></td></tr>
+    <tr><td class="id">W-79</td><td class="st"></td><td>Import a work cycle from Excel and from an AVIX file <span class="exp">— a good file imports and the tree updates; a bad file gives a readable error</span></td></tr>
+    <tr><td class="id">W-80</td><td class="st"></td><td>Create a category and add labels to it, including a private one and a favourite <span class="exp">— all save and appear in the mobile app after a refresh</span></td></tr>
+    <tr><td class="id">W-81</td><td class="st"></td><td>Try to delete a label that is used by a measurement <span class="exp">— you are warned, or the measurement keeps working afterwards; nothing silently breaks</span></td></tr>
+    <tr><td class="id">W-82</td><td class="st"></td><td>Check that one organisation's work library is not visible to another organisation <span class="exp">— it isn't, including by putting the other organisation's id in the address bar</span></td></tr>
+  </table>
+
+  <h3>5.11 · Settings and profile <span class="idr">W-83 → W-87</span></h3>
+  <table class="cl">
+    <tr><td class="id">W-83</td><td class="st"></td><td>Edit your profile: name, personal number, AI consent <span class="exp">— saves, and the name updates in the top bar straight away</span></td></tr>
+    <tr><td class="id">W-84</td><td class="st"></td><td>Edit the organisation details and upload a logo <span class="exp">— the logo appears in the app and in exported reports; an oversized or wrong-format file is rejected clearly</span></td></tr>
+    <tr><td class="id">W-85</td><td class="st">★</td><td>Switch the interface language through all five <span class="exp">— everything translates, nothing overflows its box, and the choice survives a refresh</span></td></tr>
+    <tr><td class="id">W-86</td><td class="st"></td><td>Switch the RAMP limit display between time and percentage <span class="exp">— the results view actually changes</span></td></tr>
+    <tr><td class="id">W-87</td><td class="st"></td><td>Open the privacy policy and data deletion pages <span class="exp">— they load, including when logged out</span></td></tr>
+  </table>
+
+  <h3>5.12 · Notifications <span class="idr">W-88 → W-92</span></h3>
+  <table class="cl">
+    <tr><td class="id">W-88</td><td class="st">★</td><td>Open the notification bell <span class="exp">— the list loads and the unread count matches it</span></td></tr>
+    <tr><td class="id">W-89</td><td class="st"></td><td>Finish and sync a session, then wait <span class="exp">— a notification appears when the processing is done</span></td></tr>
+    <tr><td class="id">W-90</td><td class="st"></td><td>Generate an assessment <span class="exp">— a notification appears for it too</span></td></tr>
+    <tr><td class="id">W-91</td><td class="st"></td><td>Click a notification <span class="exp">— it opens the measurement or assessment it refers to, not a dead page</span></td></tr>
+    <tr><td class="id">W-92</td><td class="st"></td><td>Mark as read and delete <span class="exp">— the count drops correctly and the change survives a refresh</span></td></tr>
+  </table>
+</div>
+
+<!-- 6 · ADMIN + 7 · CROSS-CUTTING -->
+<div class="page page-break">
+  <h2>6 · Admin panel — full checklist</h2>
+  <p class="lead">9 checks. Superadmin only — organisations, users across all organisations, devices and firmware.</p>
+
+  <div class="callout amber">
+    <span class="t">Check before you start.</span>
+    <p>The admin panel currently talks to a backend running on a developer's own machine, so it can't be tested on a normal URL yet. Ask the team how to run it — or whether to skip this section for now.</p>
+  </div>
+
+  <table class="cl">
+    <tr><td class="id">A-01</td><td class="st"></td><td>Log in as superadmin, then try with an org admin and an ergonomist account <span class="exp">— only the superadmin gets in; the others are refused clearly</span></td></tr>
+    <tr><td class="id">A-02</td><td class="st"></td><td>Open the organisations list and use the filters: country, active, archived, licence expiry <span class="exp">— results match, search and sorting work</span></td></tr>
+    <tr><td class="id">A-03</td><td class="st"></td><td>Create an organisation with a logo <span class="exp">— it's created, appears in the list, and can be logged into</span></td></tr>
+    <tr><td class="id">A-04</td><td class="st"></td><td>Edit an organisation's limits and licence expiry <span class="exp">— saved, and the client panel enforces the new limits</span></td></tr>
+    <tr><td class="id">A-05</td><td class="st"></td><td>Archive and unarchive organisations in bulk <span class="exp">— they move between the lists, and users of an archived organisation are handled as expected</span></td></tr>
+    <tr><td class="id">A-06</td><td class="st"></td><td>Open the users list and filter by organisation and role <span class="exp">— results match; a user in two organisations shows both</span></td></tr>
+    <tr><td class="id">A-07</td><td class="st"></td><td>Add a user to an organisation, then deactivate them <span class="exp">— both take effect on their next login</span></td></tr>
+    <tr><td class="id">A-08</td><td class="st"></td><td>Open the devices list <span class="exp">— serial number, firmware, organisation and assigned worker are shown; search works</span></td></tr>
+    <tr><td class="id">A-09</td><td class="st"></td><td>Add a firmware version, edit it, mark it as current <span class="exp">— it saves, and the mobile app offers that version as an update</span></td></tr>
+  </table>
+
+  <h2 style="margin-top:34px">7 · Cross-cutting checks</h2>
+  <p class="lead">13 checks. Not tied to one feature — run these once per release, across the whole product. This is where most of the embarrassing bugs hide.</p>
+
+  <table class="cl">
+    <tr><td class="id">X-01</td><td class="st"></td><td>Walk the main screens in each of English, Swedish, German, Spanish and Dutch, on web and mobile <span class="exp">— no untranslated text, nothing cut off, nothing overlapping, dates and numbers formatted for that language</span></td></tr>
+    <tr><td class="id">X-02</td><td class="st"></td><td>Repeat the main flows as org admin, ergonomist and worker <span class="exp">— each role sees exactly what it should, and no more</span></td></tr>
+    <tr><td class="id">X-03</td><td class="st"></td><td>While logged into one organisation, put another organisation's measurement or worker id in the address bar <span class="exp">— access denied, not someone else's data</span></td></tr>
+    <tr><td class="id">X-04</td><td class="st"></td><td>Use the web app at 1366, 1920 and tablet width <span class="exp">— nothing overlaps, tables scroll instead of breaking the page, menus still reachable</span></td></tr>
+    <tr><td class="id">X-05</td><td class="st"></td><td>Run the main web flows in Chrome, Edge, Safari and Firefox <span class="exp">— they behave the same; note the browser if one differs</span></td></tr>
+    <tr><td class="id">X-06</td><td class="st"></td><td>Throttle the network to slow, then reload pages and submit forms <span class="exp">— loading states appear; nothing shows a blank page or a raw error</span></td></tr>
+    <tr><td class="id">X-07</td><td class="st"></td><td>Turn the network off mid-action on the web <span class="exp">— a clear message and a way to retry; the app doesn't get stuck</span></td></tr>
+    <tr><td class="id">X-08</td><td class="st"></td><td>Refresh in the middle of a flow, use the browser back button, and open a deep link in a new tab <span class="exp">— you end up somewhere sensible, still logged in, with nothing half-saved</span></td></tr>
+    <tr><td class="id">X-09</td><td class="st"></td><td>Leave the app open overnight, then use it <span class="exp">— it either still works or asks you to log in again; it never silently fails on every click</span></td></tr>
+    <tr><td class="id">X-10</td><td class="st"></td><td>Double-click every submit and save button <span class="exp">— nothing is created twice</span></td></tr>
+    <tr><td class="id">X-11</td><td class="st"></td><td>Put very long text, emoji and characters like <code>&lt; &gt; &amp; ' "</code> into every name and comment field <span class="exp">— saved and displayed correctly, no broken layout, no error</span></td></tr>
+    <tr><td class="id">X-12</td><td class="st">★</td><td>Keep the browser console open while you test <span class="exp">— no red errors on normal use</span></td></tr>
+    <tr><td class="id">X-13</td><td class="st"></td><td>Open a very long session, and a worker with a hundred measurements <span class="exp">— the pages still load in a reasonable time and the charts stay usable</span></td></tr>
+  </table>
+</div>
+
+<!-- 8 · KNOWN -->
+<div class="page page-break">
+  <h2>8 · Known and already reported — do not file these</h2>
+  <p class="lead">Read this before your first run, and check back before filing anything that looks odd in these areas. These are either unfinished on purpose or already known to the team.</p>
+
+  <h3>Unfinished on purpose — they'll be built later</h3>
+  <table>
+    <thead><tr><th style="width:30%">Where</th><th>What you'll see</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Mobile · vibration panel</strong></td><td>The time display and the limb toggle aren't built. The panel looks half-empty. Not a bug.</td></tr>
+      <tr><td><strong>Mobile · firmware update</strong></td><td>The dialog offers an update, but the button doesn't start it. Known.</td></tr>
+      <tr><td><strong>Mobile · sensor list buttons</strong></td><td>Pair, unpair and disconnect in the settings sensor list do nothing when tapped. Known.</td></tr>
+      <tr><td><strong>Mobile · work cycle auto-advance</strong></td><td>The setting exists but the app doesn't actually move to the next task by itself.</td></tr>
+      <tr><td><strong>Mobile · failed syncs</strong></td><td>There is no automatic retry. If a sync fails, the user has to press sync again. That's the current design, not a bug.</td></tr>
+      <tr><td><strong>Web · real-time updates</strong></td><td>The web panel doesn't update by itself — you have to refresh to see a new measurement. Expected for now.</td></tr>
+      <tr><td><strong>Admin panel</strong></td><td>Points at a local backend, so it doesn't work on a deployed address. Already on the team's list.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Looks wrong, is intentional</h3>
+  <div class="callout green">
+    <span class="t">The head and trunk "0° to 10°" posture band.</span>
+    <p>It actually covers −5° to 10° — it includes a small amount of backward bending. This was decided deliberately, so a value of −3° landing in the "0–10°" band is correct behaviour. Don't report it.</p>
+  </div>
+
+  <div class="callout">
+    <span class="t">When you're not sure whether something is a bug.</span>
+    <p>Ask. It's much better to ask a quick question than to either stay silent about a real bug or file a ticket for something that was designed that way. Both cost the team time — asking costs almost nothing.</p>
+  </div>
+
+  <h3>Keeping this section honest</h3>
+  <p>When one of these gets built or fixed, it should be removed from this page and the matching check should go back into the normal list. Tell us when you notice one is done — you'll usually see it before we do.</p>
+
+  <div class="callout amber">
+    <span class="t">And the one thing worth repeating.</span>
+    <p>Anything about recording, sensors or sync is more serious than anything else in this document. If a measurement can't be recorded, or recorded data doesn't arrive in the web panel, that's a critical bug — report it immediately, don't wait until the end of your run.</p>
+  </div>
+</div>
+
+</body>
+</html>
