@@ -8,35 +8,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --purple: #670DD6;
-    --ink: #181826;
-    --slate: #5A6478;
-    --muted: #98A1B3;
-    --line: #E9EBF0;
-    --tint: #F4EFFD;
-    --amber: #B7791F;
-    --amber-bg: #FFF8EC;
-    --amber-line: #F2DFB8;
-    --red: #B42318;
-    --red-bg: #FEF3F2;
-    --red-line: #FDA29B;
-    --green: #1B7F5A;
-    --green-bg: #ECFAF4;
-    --green-line: #A9E0C9;
-    --blue: #17539B;
-    --blue-bg: #EFF6FE;
-    --blue-line: #B3D3F5;
+    --purple: #670DD6; --ink: #181826; --slate: #5A6478; --muted: #98A1B3;
+    --line: #E9EBF0; --tint: #F4EFFD;
+    --amber: #B7791F; --amber-bg: #FFF8EC; --amber-line: #F2DFB8;
+    --red: #B42318; --red-bg: #FEF3F2; --red-line: #FDA29B;
+    --green: #1B7F5A; --green-bg: #ECFAF4; --green-line: #A9E0C9;
+    --blue: #17539B; --blue-bg: #EFF6FE; --blue-line: #B3D3F5;
   }
   * { box-sizing: border-box; }
   @page { size: A4; margin: 16mm 15mm 14mm 15mm; }
   html, body { margin: 0; padding: 0; }
   body {
     font-family: "Inter", system-ui, -apple-system, sans-serif;
-    color: var(--ink);
-    font-size: 10pt;
-    line-height: 1.48;
-    -webkit-font-smoothing: antialiased;
-    font-variant-numeric: tabular-nums;
+    color: var(--ink); font-size: 10pt; line-height: 1.48;
+    -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
   }
   h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
 
@@ -46,59 +31,40 @@
   .lede { color: var(--slate); font-size: 10pt; max-width: 172mm; margin-top: 8px; }
   .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; line-height: 1.55; }
 
-  h2 {
-    font-size: 13.5pt; font-weight: 700; letter-spacing: -0.01em;
-    margin: 26px 0 4px; padding-bottom: 6px;
-    border-bottom: 1.5px solid var(--line);
-    break-after: avoid;
-  }
-  h3.grp {
-    font-size: 9pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--muted); margin: 18px 0 2px; break-after: avoid;
-  }
+  h2 { font-size: 13.5pt; font-weight: 700; letter-spacing: -0.01em; margin: 26px 0 4px;
+       padding-bottom: 6px; border-bottom: 1.5px solid var(--line); break-after: avoid; }
+  h3.grp { font-size: 9pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+           color: var(--muted); margin: 18px 0 2px; break-after: avoid; }
   .sectionnote { color: var(--slate); font-size: 9.5pt; margin: 6px 0 4px; break-after: avoid; }
 
   .task { margin-top: 13px; break-inside: avoid; }
   .task h3 { font-size: 10.5pt; font-weight: 700; color: var(--ink); margin: 0 0 3px; break-after: avoid; }
-  .task h3 .id {
-    font-family: "JetBrains Mono", ui-monospace, monospace;
-    font-size: 8pt; font-weight: 500; color: var(--purple);
-    background: var(--tint); padding: 2px 6px; border-radius: 4px;
-    margin-right: 8px; vertical-align: 1.5px;
-  }
-  .badge {
-    font-size: 7pt; font-weight: 700; letter-spacing: 0.06em;
-    text-transform: uppercase; padding: 1.5px 6px; border-radius: 4px;
-    margin-left: 6px; vertical-align: 1.5px;
-    color: var(--slate); background: #F1F2F6;
-  }
+  .task h3 .id { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8pt; font-weight: 500;
+                 color: var(--purple); background: var(--tint); padding: 2px 6px; border-radius: 4px;
+                 margin-right: 8px; vertical-align: 1.5px; }
+  .badge { font-size: 7pt; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+           padding: 1.5px 6px; border-radius: 4px; margin-left: 6px; vertical-align: 1.5px;
+           color: var(--slate); background: #F1F2F6; }
   .badge.be { color: var(--blue); background: var(--blue-bg); box-shadow: inset 0 0 0 1px var(--blue-line); }
   .badge.mo { color: var(--green); background: var(--green-bg); box-shadow: inset 0 0 0 1px var(--green-line); }
   .badge.we { color: var(--purple); background: var(--tint); box-shadow: inset 0 0 0 1px #E3D5F7; }
+  .badge.p0 { color: var(--red); background: var(--red-bg); box-shadow: inset 0 0 0 1px var(--red-line); }
+  .badge.p1 { color: var(--amber); background: var(--amber-bg); box-shadow: inset 0 0 0 1px var(--amber-line); }
 
   .desc { margin: 0; color: var(--slate); }
-  code {
-    font-family: "JetBrains Mono", ui-monospace, monospace;
-    font-size: 8.5pt; color: var(--ink); background: #F4F5F8;
-    padding: 1px 4px; border-radius: 3px;
-  }
+  code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.5pt;
+         color: var(--ink); background: #F4F5F8; padding: 1px 4px; border-radius: 3px; }
 
-  .explain {
-    margin-top: 6px; border-left: 3px solid #E3D5F7; background: #FBF9FE;
-    padding: 7px 12px; border-radius: 0 6px 6px 0; break-inside: avoid;
-  }
-  .explain .tag {
-    font-size: 7pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--purple); display: block; margin-bottom: 3px;
-  }
+  .explain { margin-top: 6px; border-left: 3px solid #E3D5F7; background: #FBF9FE;
+             padding: 7px 12px; border-radius: 0 6px 6px 0; break-inside: avoid; }
+  .explain .tag { font-size: 7pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+                  color: var(--purple); display: block; margin-bottom: 3px; }
   .explain p { margin: 0; font-size: 9pt; color: var(--slate); line-height: 1.5; }
   .explain p + p { margin-top: 5px; }
   .explain strong { color: var(--ink); font-weight: 600; }
 
-  .box {
-    margin-top: 13px; border: 1px solid var(--line); border-radius: 8px;
-    background: #FAFAFC; padding: 13px 17px; break-inside: avoid;
-  }
+  .box { margin-top: 13px; border: 1px solid var(--line); border-radius: 8px;
+         background: #FAFAFC; padding: 13px 17px; break-inside: avoid; }
   .box h3 { margin: 0 0 4px; font-size: 11pt; }
   .box p { margin: 4px 0 0; color: var(--slate); font-size: 9.5pt; }
   .box .tag { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
@@ -108,30 +74,22 @@
   .box.bad h3, .box.bad .tag { color: var(--red); }
   .box.good { border-color: var(--green-line); background: var(--green-bg); }
   .box.good h3, .box.good .tag { color: var(--green); }
-  .box.flow { background: var(--tint); border-color: #E3D5F7; }
-  .box.flow h3, .box.flow .tag { color: var(--purple); }
 
   ul { margin: 6px 0 0; padding-left: 18px; }
   li { color: var(--slate); margin: 3px 0; font-size: 9.5pt; }
   li strong { color: var(--ink); font-weight: 600; }
 
   table.t { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 8.8pt; }
-  table.t th {
-    text-align: left; font-weight: 700; font-size: 7.5pt; letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--muted); border-bottom: 1.5px solid var(--line); padding: 6px 8px 6px 0;
-  }
+  table.t th { text-align: left; font-weight: 700; font-size: 7.5pt; letter-spacing: 0.06em;
+               text-transform: uppercase; color: var(--muted); border-bottom: 1.5px solid var(--line);
+               padding: 6px 8px 6px 0; }
   table.t td { padding: 5px 8px 5px 0; border-bottom: 1px solid #F2F3F7; color: var(--slate); vertical-align: top; }
   table.t td.tid { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8pt; color: var(--purple); white-space: nowrap; }
-  table.t td.what { color: var(--ink); }
-  table.t tr.grouphead td {
-    background: #F7F5FC; font-weight: 700; color: var(--ink); font-size: 8pt;
-    letter-spacing: 0.04em; text-transform: uppercase; padding: 6px 8px 6px 6px; border-bottom: 1px solid var(--line);
-  }
-  .pill { display: inline-block; font-size: 7pt; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 1.5px 6px; border-radius: 4px; white-space: nowrap; }
-  .pill.p0 { color: var(--red); background: var(--red-bg); box-shadow: inset 0 0 0 1px var(--red-line); }
-  .pill.p1 { color: var(--amber); background: var(--amber-bg); box-shadow: inset 0 0 0 1px var(--amber-line); }
-  .pill.p2 { color: var(--slate); background: #F1F2F6; }
-  .pill.p3 { color: var(--muted); background: #F7F8FA; }
+  table.t tr.grouphead td { background: #F7F5FC; font-weight: 700; color: var(--ink); font-size: 8pt;
+                            letter-spacing: 0.04em; text-transform: uppercase; padding: 6px 8px 6px 6px;
+                            border-bottom: 1px solid var(--line); }
+  .pill { display: inline-block; font-size: 7pt; font-weight: 700; letter-spacing: 0.05em;
+          text-transform: uppercase; padding: 1.5px 6px; border-radius: 4px; white-space: nowrap; }
   .pill.be { color: var(--blue); background: var(--blue-bg); }
   .pill.mo { color: var(--green); background: var(--green-bg); }
   .pill.we { color: var(--purple); background: var(--tint); }
@@ -153,761 +111,650 @@
   <div class="eyebrow">Wergonic · Backend · Client Panel · Admin · Mobile</div>
   <h1>Open Work</h1>
   <p class="lede">
-    One list. It replaces the five audits and three task lists we had running in parallel, which overlapped heavily
-    and no longer said what was true. Every item below was <strong>re-checked against the code on 10 August</strong>,
-    after pulling the latest <code>dev</code> on all four repositories. Anything already fixed has been removed and is
-    listed at the back so you can stop tracking it.
+    One list, replacing the five audits and three task lists that were running in parallel. Every item here was
+    <strong>read in the current code</strong> before it was written down — not carried over from an older document.
+    Anything already fixed has been removed and is listed at the back.
   </p>
   <p class="lede">
-    Each item is written to be pasted straight into the tasks hub: a title and a short description of the problem and
-    what has to be true when it is done. It deliberately does not name files or prescribe a solution. Where there is
-    something <strong>you</strong> need to know — a decision, a correction, a piece of history — it is in a shaded note
-    underneath. Simple items have no note.
+    Items are grouped by <strong>what is actually wrong from a user's point of view</strong>, not by which part of the
+    code it lives in. Each one says what happens today and what has to be true when it is done. It does not name files
+    or prescribe a solution — the developer decides that. Where you personally need to know something, there is a
+    shaded note. Simple items have none.
   </p>
   <div class="meta">
-    115 open items · 8 do-first · 7 decisions for you · 10 August 2026<br />
-    Verified against <code>dev</code>: backend <code>ce515fb</code> · web apps <code>18dcf7af</code> · mobile <code>7a808f6a</code> · landing page <code>bb99528</code>
+    98 open items · 5 do first · 6 decisions for you · 10 August 2026<br />
+    Read against <code>dev</code>: backend <code>ce515fb</code> · web apps <code>18dcf7af</code> · mobile <code>7a808f6a</code> · landing page <code>bb99528</code>
   </div>
 </div>
 
 <div class="kpis">
-  <div class="kpi red"><div class="n">8</div><div class="l">Do first</div></div>
-  <div class="kpi amber"><div class="n">42</div><div class="l">High</div></div>
+  <div class="kpi red"><div class="n">5</div><div class="l">Do first</div></div>
+  <div class="kpi amber"><div class="n">28</div><div class="l">High</div></div>
   <div class="kpi grey"><div class="n">65</div><div class="l">Medium &amp; low</div></div>
-  <div class="kpi green"><div class="n">37</div><div class="l">Closed since July</div></div>
+  <div class="kpi green"><div class="n">54</div><div class="l">Already fixed</div></div>
 </div>
 
 <div class="box warn">
   <span class="tag">Read this first</span>
-  <h3>Three things that change how you read the rest.</h3>
+  <h3>Two things that change how you read the rest.</h3>
   <p>
-    <strong>1 · A developer overruled the CEO in the code and then deleted the evidence.</strong>
-    On 3 August Farhad ruled that head backward bending is <strong>−5°</strong> and that a RAMP score of 1.5 is a bug.
-    On 6 August a backend developer rewrote the tests to state that <strong>−10°</strong> and <strong>1.5</strong> are
-    intended — describing both as "confirmed by the team" — and on 7 August deleted those tests entirely. The product
-    code was never changed, so it still contradicts the written decision. This needs one ruling from you, not a ticket.
-    See <strong>DEC-1</strong> and <strong>DEC-2</strong>.
+    <strong>1 · A written decision of yours was reversed in the code and the record removed.</strong>
+    On 3 August Farhad ruled that head backward bending is −5° and that a RAMP score of 1.5 is wrong. On 6 August a
+    backend developer rewrote the tests to say −10° and 1.5 are intended, describing both as "confirmed by the team",
+    and on 7 August deleted those tests. The product code was never changed, so it still contradicts the ruling.
+    That needs one answer from you, not a ticket. See <strong>DEC-1</strong>.
   </p>
   <p>
-    <strong>2 · The backend team did real work; the web team did not touch its list.</strong>
-    Since 5 August the backend shipped a full automated test suite from nothing and closed fourteen audit findings.
-    In the same period the web apps closed four items out of thirty-seven, and the two most expensive ones —
-    the pipeline that deploys broken code, and the admin app that points at localhost — are untouched for the third
-    list in a row.
-  </p>
-  <p>
-    <strong>3 · Backend fixes are on <code>dev</code>, not in production yet.</strong>
-    <code>dev</code> is twenty commits ahead of <code>main</code> on the backend. Every backend item marked closed
-    below is closed on <code>dev</code>. The web apps and the mobile app have <code>dev</code> and <code>main</code>
-    level, so their fixes are live.
+    <strong>2 · More was already fixed than the old audits suggested.</strong>
+    Fifty-four items from the July and August audits are done — the v2 work quietly closed a large part of the
+    13 July bug report. The exposure-limit colours, the Home inbox, the generated-RAMP status, the notification
+    wording and several others are no longer problems. They are listed at the back so nobody re-raises them.
   </p>
 </div>
 
-<h2>Do first</h2>
+<div class="box">
+  <span class="tag">How the sections work</span>
+  <h3>Three different kinds of problem, handled differently.</h3>
+  <p>
+    <strong>Sections A, B, D and E are real bugs</strong> — a user hits them by using the product normally.
+    <strong>Section C is security</strong> — nothing is broken, and nobody will ever hit it by accident; it needs
+    someone to deliberately send something our apps never send. <strong>Sections F, G and H are debt</strong> —
+    slowness, missing safety nets and dead code. Worth keeping those apart when you decide what to fund.
+  </p>
+</div>
+
+<h2>A · Broken for users right now</h2>
 <p class="sectionnote">
-  Live customer harm, a cross-company data hole, or something that blocks everything else. Eight items.
+  Someone hits these by using the product normally. Thirty-three items; the first five are the do-first list.
 </p>
 
 <div class="task">
-  <h3><span class="id">ISO-1</span>Restore company separation on work categories, labels and session events<span class="badge be">Backend</span></h3>
+  <h3><span class="id">A1</span>A worker invited from the Users page can never record a session<span class="badge p0">Do first</span><span class="badge we">Web</span><span class="badge be">Backend</span></h3>
   <p class="desc">
-    Any logged-in user can read and write another company's session labels, label categories and session events. The
-    checks that keep each company's data private are commented out and replaced with a plain "is logged in" check.
-    Restore them, and scope every query to the organisation making the request rather than to an ID taken from the
-    web address.
+    Adding someone as a worker from the Users page creates their login and sends the invitation, but never sets up
+    their worker record and never asks for a Worker ID. When they open the mobile app and press start, the session
+    fails with a server error and no explanation. Make that path either create the worker properly, or stop offering
+    the worker role there and send admins to the Workers page, which works.
   </p>
   <div class="explain"><span class="tag">Note for you</span>
-    <p>This has now been reported as the number-one blocker in the 20 July audit and again on 6 August, and it is
-    still byte-for-byte unchanged — six views in one file. The neighbouring bulk-create endpoint still enforces the
-    guard, which is the proof the checks were meant to be there and were switched off deliberately at some point.
-    <strong>Worth asking who removed them and why</strong> before it is simply put back.</p>
+    <p>The real problem is that there are two ways to add a worker and one has never worked. Decide which is the
+    real one before anyone writes code — that is DEC-2.</p>
   </div>
 </div>
 
 <div class="task">
-  <h3><span class="id">ISO-2</span>Stop session creation trusting worker and ergonomist ID numbers<span class="badge be">Backend</span></h3>
+  <h3><span class="id">A2</span>Every recording replaces the worker's gender and dominant arm with something invalid<span class="badge p0">Do first</span><span class="badge mo">Mobile</span><span class="badge be">Backend</span></h3>
   <p class="desc">
-    When a session is created the backend looks up the worker and the ergonomist by their ID numbers and never checks
-    they belong to the company making the request. Anyone with a valid login can attach another customer's worker or
-    ergonomist to their own session just by sending a different number. Restrict the lookups to the request's
-    organisation and return "not found" otherwise.
+    When a session starts, the app sends the worker's gender and dominant arm in a form the system does not recognise,
+    and the backend stores it without checking. The saved value ends up outside the list of values the system itself
+    allows. It happens on every session, for every worker, and nobody is told. The same step also overwrites weight,
+    age and resting heart rate from the recording, so whatever an admin set in the client panel is replaced.
+    Send the right values, and reject anything that is not one of the allowed options.
   </p>
   <div class="explain"><span class="tag">Note for you</span>
-    <p>Five unscoped lookups in one function. The request already works out the caller's organisation a few lines
-    above, so the fix is mechanical — but it needs a test, because nothing currently proves it. I have not checked
-    whether this has ever been exploited; I am reporting that the code allows it.</p>
+    <p>This also re-breaks workers whose details were entered correctly on the web. Ask Farhad whether gender or
+    dominant arm feed any calculation (DEC-3) — that decides whether results have been affected and how far back.</p>
   </div>
 </div>
 
 <div class="task">
-  <h3><span class="id">DATA-1</span>Stop every mobile session overwriting the worker's gender and dominant arm<span class="badge mo">Mobile</span><span class="badge be">Backend</span></h3>
+  <h3><span class="id">A3</span>Logging in can hang forever with no way past it<span class="badge p0">Do first</span><span class="badge we">Web</span></h3>
   <p class="desc">
-    The app sends the worker's gender and dominant arm in a format the system does not recognise, and the backend
-    writes whatever it receives straight onto the profile without checking. The stored value ends up outside the list
-    of values the system itself allows. This happens on every session start, for every worker, and nobody is told.
-    Fix the format the app sends, and make the backend reject values that are not one of the allowed options.
+    If the request that loads the user's profile fails at the moment they sign in, the app sits on the loading spinner
+    and never moves. No error, no retry, no way forward except reloading the page and hoping. Show the user what
+    happened and let them try again.
   </p>
   <div class="explain"><span class="tag">Note for you</span>
-    <p>Unchanged since 6 August. It also re-corrupts workers whose details were entered correctly from the web, and
-    the same code overwrites weight, age and resting heart rate from the session payload — so mobile silently beats
-    anything an admin set in the client panel.</p>
-    <p><strong>Ask Farhad whether gender or dominant arm feed any ergonomic calculation</strong> (DEC-4). If they do,
-    this has been quietly affecting results and we need to know how far back.</p>
+    <p>It is on the path every user takes every day, and the admin app already handles it correctly — so there is a
+    working example in our own code.</p>
   </div>
 </div>
 
 <div class="task">
-  <h3><span class="id">DATA-2</span>Workers invited from the Users page never get a worker profile<span class="badge we">Web</span><span class="badge be">Backend</span></h3>
+  <h3><span class="id">A4</span>A worker who resets their password lands on a "page not found"<span class="badge p0">Do first</span><span class="badge we">Web</span></h3>
   <p class="desc">
-    Adding a worker from the Users page creates their login and sends the invitation but never creates their worker
-    profile, and the form does not even ask for a Worker ID — which is now required. When that worker logs into the
-    mobile app and starts a session, the request fails with a server error and no explanation. Either collect the
-    Worker ID there and create the profile alongside the account, or stop offering the worker role on that form and
-    point admins at the Workers page, which does it correctly.
+    They type the new password, press Save, and get a 404. The password change itself works — the page they are sent
+    to afterwards does not exist. Send them somewhere real.
   </p>
   <div class="explain"><span class="tag">Note for you</span>
-    <p>Two different ways to add a worker, one of which has never worked. That is the actual problem — decide which
-    one is the real path before anyone writes code (DEC-3).</p>
+    <p>It is on the workers' path, not the office users' path, which is why it has lasted — the people who hit it are
+    not the people who talk to us.</p>
   </div>
 </div>
 
 <div class="task">
-  <h3><span class="id">ERR-1</span>Login hangs forever if the backend fails<span class="badge we">Web</span></h3>
+  <h3><span class="id">A5</span>The admin panel does not work once it is deployed<span class="badge p0">Do first</span><span class="badge we">Web</span></h3>
   <p class="desc">
-    If the profile request fails at the moment a user logs in, the app stays on the loading spinner indefinitely. No
-    error is shown and there is no way forward — the user has to reload the page and hope. Handle the failure and show
-    the user something.
+    The deployed admin app tries to reach the backend on the machine it is being viewed from instead of on our server,
+    so every action fails after login. Make it read the address from configuration the way the client panel does.
+    The settings already exist in the app; they are just not used.
   </p>
   <div class="explain"><span class="tag">Note for you</span>
-    <p>This is on the path every single user takes, every day, and the admin app already handles it correctly. It has
-    been on the list since 20 July.</p>
+    <p>We already had this fix — written, reviewed and merged on 11 May, then thrown away by a merge on 1 June from a
+    branch cut before it. Nobody noticed for eight weeks. That is the argument for G1. Pair this with G4, or a
+    developer will fix this and find the app still broken.</p>
+  </div>
+</div>
+
+<h3 class="grp">High</h3>
+
+<div class="task">
+  <h3><span class="id">A6</span>A session can be filed against another company's worker<span class="badge p1">High</span><span class="badge be">Backend</span></h3>
+  <p class="desc">
+    When a session is created, the backend checks that the person recording belongs to the company — but never checks
+    that the worker or the ergonomist does. Restrict both to the company the session belongs to and refuse the request
+    otherwise.
+  </p>
+  <div class="explain"><span class="tag">Note for you</span>
+    <p>This one can happen without anyone trying. A consultant records offline for company A; the recording stores
+    that worker. They sync later, and the app sends whichever company is active <em>at sync time</em> — if that is now
+    company B, company A's worker is filed under company B's session, with no error. Multi-company users are normal
+    here, so this is a real path.</p>
+    <p>Worker records now carry a company, so the check is easy — but older records may not have one. Decide what
+    happens to those rather than letting them fail quietly.</p>
   </div>
 </div>
 
 <div class="task">
-  <h3><span class="id">UI-1</span>Worker password reset lands on a "page not found"<span class="badge we">Web</span></h3>
+  <h3><span class="id">A7</span>Work-cycle steps belonging to nobody show up in every company's list<span class="badge p1">High</span><span class="badge be">Backend</span></h3>
   <p class="desc">
-    A worker resets their password, types the new one, presses Save — and lands on a 404. The password change itself
-    works; the page they are sent to afterwards does not exist. Send them somewhere real.
+    The work-cycle step list is meant to show only your own company's steps. It also returns every step that is not
+    attached to a work cycle — which happens with imported or legacy data — and those are visible, editable and
+    deletable by everyone. Show only the company's own steps.
   </p>
   <div class="explain"><span class="tag">Note for you</span>
-    <p>Confirmed again today: the destination is referenced in two places and registered in none. Both the old and the
-    new password form do this. It is on the workers' path, not the office users' path, which is probably why it has
-    survived this long — the people who hit it are not the people who talk to us.</p>
+    <p>Unlike the items in section C, nobody has to try anything here: the list simply hands them over. Worth deciding
+    what should happen to those orphan steps at the same time — hiding them may just hide a data problem.</p>
   </div>
 </div>
 
 <div class="task">
-  <h3><span class="id">PIPE-1</span>Make the Docker build and push wait for the checks<span class="badge we">Web</span></h3>
+  <h3><span class="id">A8</span>The web app can end up showing the wrong company's data<span class="badge p1">High</span><span class="badge be">Backend</span></h3>
   <p class="desc">
-    Our pipeline builds and pushes Docker images even when typecheck, lint, build or tests have failed — the deploy
-    half never waits for the check half, and several steps are configured to carry on after an error. Nothing
-    currently stops broken code from being deployed. Make deployment depend on the checks passing.
+    Web and mobile each remember their own selected company. If a user has never used the company switcher on the web,
+    the web quietly falls back to whichever company their phone is on — and if they belong to several, that fallback
+    picks one at random. Set the web company properly on first sign-in, make the choice deterministic, and refuse a
+    request that does not say which app it came from instead of guessing.
   </p>
   <div class="explain"><span class="tag">Note for you</span>
-    <p>This was the top item on 10 July, the top item again on 27 July, and it is still exactly as it was. Every other
-    web item on this list can silently regress the week after it is closed until this is done — and we have direct
-    evidence of that: two paid fixes (PIPE-2 and UI-2) were written and merged on 11 May and silently reverted by one
-    merge on 1 June. Nobody found out for eight weeks.</p>
-    <p>The backend now has the safety net the web apps do not. Same company, same standard should apply.</p>
+    <p>This was demonstrated in July: the same account and the same page, one request with the app header and one
+    without, returned two different companies' assessments. No error either time. It is the quietest thing on this
+    list and the hardest to explain to a customer.</p>
   </div>
 </div>
 
 <div class="task">
-  <h3><span class="id">PIPE-2</span>Fix the admin app pointing at localhost<span class="badge we">Web</span></h3>
+  <h3><span class="id">A9</span>Location stops being recorded after the first session<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
   <p class="desc">
-    The deployed admin app tries to reach the backend at the address of the machine it is being viewed on rather than
-    at our server, so every request fails once it leaves a developer's laptop. It should read the address from
-    configuration the way the client panel already does — the settings exist in the admin app, they are simply not
-    used. One line.
+    With location tracking on, it works for the first session after the app opens and never again — every session after
+    that records nothing, silently. It should work for every session.
+  </p>
+</div>
+
+<div class="task">
+  <h3><span class="id">A10</span>Hand data is uploaded misaligned when vibration detection is off<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
+  <p class="desc">
+    The uploaded file always has the vibration columns in its header, but the rows only fill them when the setting is
+    on. Everything after that point shifts across, so values sit under the wrong headings and the backend reads the
+    whole hand recording wrong. The file must line up whether the setting is on or off.
+  </p>
+</div>
+
+<div class="task">
+  <h3><span class="id">A11</span>Female workers are stored as "other"<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
+  <p class="desc">
+    Gender is written one way and read back another, so the two never match and any female worker is quietly recorded
+    as "other". Do this with A2 — it is the same underlying carelessness about the allowed values.
+  </p>
+</div>
+
+<div class="task">
+  <h3><span class="id">A12</span>Finishing a session says it worked when it did not<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
+  <p class="desc">
+    When a user presses Finish, the app asks the recording and the data file to close, waits, and then moves to the
+    summary whether or not either succeeded. The user sees a finished session with numbers that may be incomplete.
+    If a step fails, say so and offer to try again instead of presenting partial results as final.
   </p>
   <div class="explain"><span class="tag">Note for you</span>
-    <p>We already had this fix. It was written, reviewed and merged on 11 May, and thrown away by a merge on 1 June
-    from a branch cut before it. Pair this with PIPE-5, which fixes how the address reaches the build — a developer
-    fixing this alone will find admin still broken.</p>
+    <p>This is the worst version of a pattern that runs through this document: the user is shown success for something
+    that failed. It would also explain sessions with numbers that look wrong for no visible reason — speculation, but
+    cheap to rule out.</p>
   </div>
 </div>
 
-<h2 class="pb">High</h2>
+<div class="task">
+  <h3><span class="id">A13</span>Nothing warns you before you lose a half-filled assessment<span class="badge p1">High</span><span class="badge we">Web</span></h3>
+  <p class="desc">
+    Fill in half a RULA, REBA or RAMP, click away or close the tab, and everything since the last save is gone with no
+    warning. There is no autosave either. Warn before leaving, or save as they go.
+  </p>
+  <div class="explain"><span class="tag">Note for you</span>
+    <p>Probably the thing our users hit most often. It was never built rather than broken, and it was promised as
+    "will be done today" back in July.</p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">A14</span>Settings and the email sign-in page are English only<span class="badge p1">High</span><span class="badge we">Web</span></h3>
+  <p class="desc">
+    The Settings page and the page that opens from a sign-in email are English in every language, as is the message
+    shown after submitting a support ticket. Translate them into all five languages. Separately, check Swedish end to
+    end and make the language choice save.
+  </p>
+  <div class="explain"><span class="tag">Note for you</span>
+    <p>A German customer gets a fully German app that switches to English the moment they open Settings. Swedish is
+    the commercial one — in July, switching to Swedish translated exactly one word.</p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">A15</span>Forms crash if you submit while the cursor is still in a field<span class="badge p1">High</span><span class="badge we">Web</span></h3>
+  <p class="desc">
+    To reproduce: open an assessment result, click into the comment box, and press Submit without clicking away first.
+    The page crashes. This was fixed once for one kind of field; the rest are still affected. Find the one fix that
+    covers all of them.
+  </p>
+</div>
+
+<div class="task">
+  <h3><span class="id">A16</span>The admin panel stops working about an hour after login<span class="badge p1">High</span><span class="badge we">Web</span></h3>
+  <p class="desc">
+    Once the login expires, every action fails and the app never recovers — the user has to sign out and back in.
+    It should renew the login quietly and carry on, and sign the user out cleanly if it genuinely cannot. The client
+    panel already does this.
+  </p>
+  <div class="explain"><span class="tag">Note for you</span>
+    <p>Written on 11 May and lost in the same 1 June merge as A5. Both fixes are still in our history and can be
+    recovered rather than rewritten.</p>
+  </div>
+</div>
+
+<h3 class="grp">Medium</h3>
+
+<table class="t">
+  <thead><tr><th style="width:52px">ID</th><th style="width:58px">Where</th><th>Task</th></tr></thead>
+  <tbody>
+    <tr><td class="tid">A17</td><td><span class="pill be">Backend</span></td><td>An assessment can get stuck at "In progress" forever. If the job generating it dies, nothing ever touches the row again — no timeout, no retry, no failed state. The row looks clickable but does nothing, and deleting it is the only option. Sessions already have a recovery job; assessments need the same.</td></tr>
+    <tr><td class="tid">A18</td><td><span class="pill we">Web</span></td><td>Changing "rows per page" breaks the list. If you were on page 3 and there is no longer a page 3, the list asks for it anyway and shows an error. Go back to page 1 when the page size changes. Affects every list in both apps.</td></tr>
+    <tr><td class="tid">A19</td><td><span class="pill we">Web</span></td><td>Submit and Save-and-continue are always clickable on an assessment form, even when it is incomplete, so the user clicks and gets told off. Grey them out until the form is valid — the app already knows whether it is.</td></tr>
+    <tr><td class="tid">A20</td><td><span class="pill we">Web</span></td><td>The Run assessment window clears your choices a fraction of a second after it opens, because the recording's length arrives late and resets the form. Set it up once when it opens.</td></tr>
+    <tr><td class="tid">A21</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td>Clicking Generate twice produces two identical assessments. Several assessments on one measurement is normal — identical duplicates from one button is not.</td></tr>
+    <tr><td class="tid">A22</td><td><span class="pill we">Web</span></td><td>Dismissing something from the Home inbox only applies on that computer, and does not clear for a colleague who deals with it. Opening an item also counts as dealing with it. Store it on the server and only clear it when something actually happened.</td></tr>
+    <tr><td class="tid">A23</td><td><span class="pill be">Backend</span></td><td>Changing a user's email to one already in use leaves the account unusable — our records get the new address, the login keeps the old one, and the admin just sees a server error. Check the address is free before changing anything.</td></tr>
+    <tr><td class="tid">A24</td><td><span class="pill be">Backend</span></td><td>A deactivated member cannot be brought back. Re-inviting them is refused with a message telling the admin to reactivate them from the team list, and there is no reactivation control there. Either make the invitation reactivate them, or build the control the message refers to.</td></tr>
+    <tr><td class="tid">A25</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td>Workers can never be removed or deactivated, so anyone who leaves stays in the list and the counts forever. There is also no duplicate check and no validation — age is free text, and "333" is in the data now — and searching a full name finds nothing, because it only matches the start of a first or last name.</td></tr>
+    <tr><td class="tid">A26</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td>A recording of zero seconds is treated as a real measurement, marked complete, and offered for a risk assessment.</td></tr>
+    <tr><td class="tid">A27</td><td><span class="pill mo">Mobile</span></td><td>Picking an activity closes the picker whether or not the choice saved, so the user goes back to the recording screen believing they chose something. Same on the conditions screen, where a failure flashes up and disappears.</td></tr>
+    <tr><td class="tid">A28</td><td><span class="pill mo">Mobile</span></td><td>A recording can end up on the server twice. If the app fails to remember the server's ID after uploading, the next attempt uploads it again — and the data attaches to only one copy.</td></tr>
+    <tr><td class="tid">A29</td><td><span class="pill be">Backend</span></td><td>Importing a Work Library file is not all-or-nothing: if row 500 fails, rows 1 to 499 are already saved. The server knows which row and column was wrong and that message is replaced with "Something went wrong", so the user cannot fix their file.</td></tr>
+    <tr><td class="tid">A30</td><td><span class="pill we">Web</span></td><td>Admin panel input loss: a failed save closes the organisation form and throws away everything typed; filters break on names containing "&amp;" or spaces; the organisation filter silently drops selections you did not touch; and the counts do not refresh after adding a user.</td></tr>
+    <tr><td class="tid">A31</td><td><span class="pill mo">Mobile</span></td><td>Mobile ignores the order an ergonomist set for work-cycle steps on the web and shows them in whatever order the server returned, so the operator can be walked through the cycle in the wrong sequence.</td></tr>
+    <tr><td class="tid">A32</td><td><span class="pill we">Web</span></td><td>Work Library rough edges: the drag handle on steps does nothing and there is no ordering behind it; the stated 5 MB import limit is not enforced and .xlsx is accepted by a button that says Import CSV; merging has no confirmation and cannot be undone; and the delete warning does not say that measurement tags go with it.</td></tr>
+    <tr><td class="tid">A33</td><td><span class="pill we">Web</span></td><td>Compare, Merge and Combined report are greyed out with no explanation, so nobody knows they need to select two to four measurements first.</td></tr>
+  </tbody>
+</table>
+
+<h2 class="pb">B · The numbers we report are wrong</h2>
 <p class="sectionnote">
-  Customer-visible, wrong data, or high leverage. Forty-two items, grouped by where the work lands.
+  The product's actual output. A customer cannot tell any of these are wrong by looking.
 </p>
 
-<h3 class="grp">Backend — company separation and access</h3>
-
 <div class="task">
-  <h3><span class="id">ISO-3</span>Scope work-cycle tasks that have no parent model<span class="badge be">Backend</span></h3>
-  <p class="desc">The task list is meant to show only your own company's tasks, but it also returns every task that is
-  not linked to a parent model — which happens with legacy or imported data — and those are visible, editable and
-  deletable by every company. Drop that branch or scope it.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">ISO-4</span>Block re-pointing a session's activity or condition to another company's<span class="badge be">Backend</span></h3>
-  <p class="desc">When an activity is first attached to a session the backend checks it belongs to your company. When
-  that attachment is edited afterwards it forgets to re-check, so a user can point their own session at another
-  company's activity — leaking its name and inflating that company's usage counters. Apply the same check on update.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">ISO-5</span>Change the default API permission from "anyone" to "logged in"<span class="badge be">Backend</span></h3>
-  <p class="desc">The framework default is set to allow anyone, so any endpoint where a developer forgets to declare
-  permissions is publicly accessible. Switch the default and mark the genuinely public endpoints — login, register,
-  password reset — explicitly.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">ISO-6</span>Restrict allowed hosts and the API documentation in production<span class="badge be">Backend</span></h3>
-  <p class="desc">The backend accepts any host name, and the full Swagger endpoint listing is readable without logging
-  in. Restrict both outside development.</p>
-</div>
-
-<h3 class="grp">Backend — wrong numbers</h3>
-
-<div class="task">
-  <h3><span class="id">DATA-3</span>MEC questions 11 and 12 measure the wrong things<span class="badge be">Backend</span></h3>
+  <h3><span class="id">B1</span>Head backward bending is measured three different ways<span class="badge p1">High</span><span class="badge be">Backend</span></h3>
   <p class="desc">
-    Questions 11.1 and 11.2, "head in red zone", currently report the difference between the head and trunk angle —
-    which is what question 12 was defined to measure. Question 11 should use the head's own angle. Question 12 is
-    declared in the response and never calculated, so it comes back empty on every MEC ever produced. Fix both.
+    The risk verdict and the Word report count head backward bending from −10°, RAMP counts it from −5°, and the phone
+    counts it from −5°. Pick one and make all three agree. Trunk backward bending stays at −10° and is not part of
+    this — the two must not be collapsed into one value.
   </p>
   <div class="explain"><span class="tag">Note for you</span>
-    <p>Net effect today: the head's own angle is never reported anywhere, question 11 is mislabelled, and a worker
-    whose head moves with their body always scores near zero.</p>
+    <p>Blocked on DEC-1. Farhad already ruled −5° for the head; the backend still says −10° because that ruling was
+    reversed in the tests and never applied to the code. Nothing should be changed until you confirm which it is.</p>
   </div>
 </div>
 
 <div class="task">
-  <h3><span class="id">DATA-4</span>Pair head and trunk readings by time, not by list position<span class="badge be">Backend</span></h3>
+  <h3><span class="id">B2</span>Two MEC questions report the wrong thing and two report nothing<span class="badge p1">High</span><span class="badge be">Backend</span></h3>
   <p class="desc">
-    The two sensors record at different rates, so from the first dropped sample onwards the calculation compares the
-    head at one moment with the trunk at another. Match them by timestamp.
+    Questions 11.1 and 11.2 — "head in the red zone" — currently report the difference between the head and trunk
+    angle, which is what question 12 was defined to measure. Question 11 should use the head's own angle. Questions
+    12.1 and 12.2 are never calculated at all and come back empty on every MEC ever produced.
   </p>
   <div class="explain"><span class="tag">Note for you</span>
-    <p>A fix for this was written and then <strong>reverted</strong> earlier this year. Ask why before it is re-done —
-    there may have been a real reason, and if there was it needs writing down.</p>
+    <p>Net effect: the head's own angle is never reported anywhere, and a worker whose head moves with their body
+    always scores near zero on question 11.</p>
   </div>
 </div>
 
 <div class="task">
-  <h3><span class="id">DATA-5</span>Task-scoped RAMP mixes in whole-session hand-distance data<span class="badge be">Backend</span></h3>
-  <p class="desc">RAMP can be run for a single task inside a session. Five of its six posture measures correctly look
-  only at that task's time window; the sixth — how far the hands are from the body — uses the whole session. So a
-  task-specific report is contaminated by behaviour from the rest of the session.</p>
+  <h3><span class="id">B3</span>A body part that was not measured is reported as acceptable<span class="badge p1">High</span><span class="badge be">Backend</span></h3>
+  <p class="desc">
+    A RAMP item with no data shows "Missing: Forearm", a total time of 00:00:00 and no zone — and still says
+    "Score 0 — Acceptable". The same happens when only one arm is missing. It should say "Not assessed".
+    A body part we did not record must never come out green.
+  </p>
 </div>
 
 <div class="task">
-  <h3><span class="id">DATA-6</span>Print trunk and head bending percentiles in the Word report<span class="badge be">Backend</span></h3>
+  <h3><span class="id">B4</span>A RAMP run for one task includes hand-distance data from the whole session<span class="badge p1">High</span><span class="badge be">Backend</span></h3>
   <p class="desc">
-    The percentiles for trunk and head bending are calculated, stored, and then dropped at the last step: the Session
-    Percentiles table only knows how to print an Elevation Angle row and an Angular Velocity row, and trunk and head
-    have neither. Add forward and backward bending rows for both. Skip side bending.
+    Five of the six posture measures correctly look only at that task's time window. The sixth — how far the hands are
+    from the body — uses the whole session, so a task-specific result is contaminated by the rest of the recording.
+  </p>
+</div>
+
+<div class="task">
+  <h3><span class="id">B5</span>Trunk and head bending percentiles never reach the Word report<span class="badge p1">High</span><span class="badge be">Backend</span></h3>
+  <p class="desc">
+    We calculate and store them, then drop them at the last step: the percentiles table only knows how to print two
+    kinds of row, and trunk and head have neither. Add forward and backward bending rows for both. Leave side bending
+    out.
   </p>
   <div class="explain"><span class="tag">Note for you</span>
     <p>Side bending is excluded on Farhad's instruction — he does not consider it accurate enough to publish.</p>
   </div>
 </div>
 
-<div class="task">
-  <h3><span class="id">DATA-13</span>A body part that was not measured must not be reported as "Acceptable"<span class="badge be">Backend</span></h3>
-  <p class="desc">RAMP item 1.6 shows "Missing: Forearm", a total time of 00:00:00 and no zone — and still prints
-  "Score 0 — Acceptable". The same happens in item 1.5 when only one arm is missing. It should read "Not assessed".
-  A body part we did not record must never show green.</p>
-</div>
-
-<h3 class="grp">Backend — errors and reliability</h3>
-
-<div class="task">
-  <h3><span class="id">ERR-5</span>Separate user mistakes from real crashes<span class="badge be">Backend</span></h3>
-  <p class="desc">
-    Session creation, session import, firmware create and update, and organisation creation each wrap everything in a
-    single catch-all that returns a generic server error. A duplicate value, a missing field and a genuine crash all
-    come back looking identical, so no client app can show anything useful. Return proper validation errors for things
-    the user can fix; keep server errors for real failures.
-  </p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>Session import is the one that matters most — an import failing with no reason is a support call every time.
-    This also hides our real error rate in Sentry, because everything is logged as one generic exception.</p>
-    <p><strong>Assign this before ERR-2 and ERR-6</strong>, or with them. Those two depend on the shape this settles;
-    doing them first means the team will guess at a shape that is about to change.</p>
-  </div>
-</div>
-
-<div class="task">
-  <h3><span class="id">ERR-10</span>Assessments get stuck at "In progress" forever<span class="badge be">Backend</span></h3>
-  <p class="desc">If the background worker dies mid-generation nothing ever touches the row again — no timeout, no
-  retry, no cleanup. The row looks clickable but does nothing, and the only thing the user can do is delete it. Add a
-  timeout and a visible failed state.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">PIPE-8</span>A background job runs every minute, in every server process at once<span class="badge be">Backend</span></h3>
-  <p class="desc">The session-status check is meant to run roughly every five hours. Two overlapping schedulers mean it
-  is scheduled every single minute, and it also starts up inside every server worker process. The same heavy job fires
-  many times over, hammering Firestore with redundant reads and racing against itself. Use one scheduler and the right
-  cadence.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">UI-11</span>Notifications name the assessment number as if it were the measurement<span class="badge be">Backend</span></h3>
-  <p class="desc">The bell says "RAMP generated from measurement #2224" — 2224 is the assessment number; the
-  measurement is #7010. Assessments with no measurement print the literal text "measurement #None", and several
-  assessments on one measurement all print as identical lines because the text never includes the assessment number.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">UI-12</span>Stop guessing which company a web request belongs to<span class="badge be">Backend</span></h3>
-  <p class="desc">
-    Web and mobile each keep their own selected organisation and a header tells the API which to use. If a user has
-    never touched the web organisation switcher, the web falls back to whatever organisation their phone is on — and
-    when a user belongs to several, that fallback picks one with no ordering at all. Set the web organisation properly
-    on first web login, make the lookup deterministic, and reject a request with no platform header instead of guessing.
-  </p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>This was demonstrated in July: the same account and the same address, one request with the header and one
-    without, returned two completely different companies' assessments. No error, no warning. It is the quietest item
-    on this list and the one hardest to explain to a customer if it ever surfaces.</p>
-  </div>
-</div>
-
-<h3 class="grp">Backend + web together</h3>
-
-<div class="task">
-  <h3><span class="id">UI-8</span>A generated RAMP looks finished when it is not<span class="badge be">Backend</span><span class="badge we">Web</span></h3>
-  <p class="desc">
-    The backend marks an assessment "Completed" the moment the calculation finishes, and the app reads that as "a
-    human has finished it". So a RAMP with six of about forty questions answered shows a green Completed chip, a
-    Download PDF button, and a risk bar reading "0 red / 0 yellow / 5 green". Add a status between "In progress" and
-    "Completed", show "5 of 40 answered" instead of a risk verdict, and do not offer the PDF until it is genuinely
-    complete. There is also no way to reopen a completed assessment — add one.
-  </p>
-</div>
-
-<div class="task">
-  <h3><span class="id">UI-9</span>Make the Home inbox a queue that can empty<span class="badge be">Backend</span><span class="badge we">Web</span></h3>
-  <p class="desc">
-    "To review" is literally every assessment that has finished calculating, so nothing can ever leave it. The
-    distinction we actually need — whether a human has answered it — already exists in the data but is not filterable;
-    exposing it is a one-line backend change. At the same time, the inbox and Recent activity list the same events, and
-    every generated assessment appears twice because two separate events fire seconds apart. Inbox should be things
-    that went wrong or are waiting on you; Recent activity should be things that went fine. Nothing in both.
-  </p>
-</div>
-
-<div class="task">
-  <h3><span class="id">UI-6</span>Three different worker counts, and admins are counted as workers<span class="badge we">Web</span><span class="badge be">Backend</span></h3>
-  <p class="desc">
-    The Workers page, Home and the licence bar show three different numbers, all labelled "workers". Every user account
-    automatically gets a worker profile and the list never filters those out, so every admin and ergonomist is listed
-    and counted as a worker. On top of that "Active workers" is fed by the search box, so typing changes the count.
-    Agree what a worker is, count it once, and reconcile the three surfaces.
-  </p>
-</div>
-
-<h3 class="grp">Web — errors the user cannot act on</h3>
-
-<div class="task">
-  <h3><span class="id">ERR-2</span>Show the backend's real error message instead of the developer's<span class="badge we">Web</span></h3>
-  <p class="desc">
-    When a page fails to load the user is shown an internal developer message rather than the real reason from the
-    server — one screen literally reads "React query error thrown manually from RULADetailPage". The actual reason is
-    available and thrown away. Around 21 pages are affected. Look for the fix that covers them all at once rather than
-    page by page.
-  </p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>We already paid to fix exactly this once, on one page. Still the best value on the whole list. Depends on ERR-5.</p>
-  </div>
-</div>
-
-<div class="task">
-  <h3><span class="id">ERR-3</span>Make "Try again" actually retry<span class="badge we">Web</span></h3>
-  <p class="desc">On the error screen, clicking "Try again" appears to do nothing — the same bad data is still cached so
-  the same error comes straight back. Make the button genuinely re-fetch what failed.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">ERR-4</span>Fix the error fallback that loops and can freeze the tab<span class="badge we">Web</span></h3>
-  <p class="desc">When the app catches an unexpected error it resets immediately, which causes the error again, which
-  resets again. It spins forever and can lock up the browser tab. Same code in both apps.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">ERR-6</span>Stop dropping per-field validation messages<span class="badge we">Web</span></h3>
-  <p class="desc">When the backend rejects a form and says which field was wrong, the app only looks for a single
-  general message and ignores the per-field ones. The user gets a vague toast — sometimes an empty one — and no
-  indication of which field to correct. Handle every shape the backend replies in, through one shared helper, and show
-  the message against the field it belongs to.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">ERR-7</span>Home shows a confident dashboard of zeros when the backend is down<span class="badge we">Web</span></h3>
-  <p class="desc">Home never checks whether its data loaded. If the backend is unavailable it renders a complete
-  dashboard with every number reading 0 — which looks exactly like a healthy but empty organisation. The previous Home
-  had a loading skeleton and an error message; the new one lost them.</p>
-</div>
-
-<h3 class="grp">Web — defects</h3>
-
-<div class="task">
-  <h3><span class="id">UI-2</span>Restore expired-login handling in the admin app<span class="badge we">Web</span></h3>
-  <p class="desc">The admin app does not recover when a login expires mid-session. Every request from that point returns
-  "unauthorised" and the app never recovers — the user has to log out and back in. An expired session must renew itself
-  and the failed request must succeed; if renewal genuinely fails the user should be signed out cleanly. The client
-  panel already behaves correctly.</p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>Also written on 11 May and lost in the same 1 June merge as PIPE-2. Both fixes still exist in our history and
-    can be recovered rather than rewritten.</p>
-  </div>
-</div>
-
-<div class="task">
-  <h3><span class="id">UI-3</span>Guard the remaining form inputs against the blur crash<span class="badge we">Web</span></h3>
-  <p class="desc">Some forms crash when a field becomes disabled while the cursor is still inside it — which is exactly
-  what happens when a form disables its inputs on submit. To reproduce: open an assessment result, click into the
-  comment box, press Submit while still focused. This was fixed once for one type of input; seven of our eight are
-  still exposed. Find a single fix that covers all of them.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">UI-4</span>Every count on Home stops at 10<span class="badge we">Web</span></h3>
-  <p class="desc">
-    The app asks the server for 10 items and then counts how many came back, so the number can never go above 10 no
-    matter how big the real backlog is. "Run risk assessment" fetches the newest 10 and shows 0 if those happen to have
-    assessments — even with 200 older ones waiting. The real total is already in the same reply and is ignored.
-  </p>
-</div>
-
-<div class="task">
-  <h3><span class="id">UI-5</span>Exposure limit colours are assigned by row position, not by value<span class="badge we">Web</span></h3>
-  <p class="desc">
-    On the Head and Trunk cards the safest band is coloured yellow and backward bending is coloured green, because the
-    colour comes from where the row sits rather than from the number. The Head card also shows "—" for every
-    recommended limit while still colouring its bands red and amber — a risk colour with no threshold behind it. And
-    two cards on the same screen are both titled "Arm angular velocity" with different numbers.
-  </p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>The head has no limits of its own: the code treats anything that is not an arm as a trunk, so the head's 50th
-    percentile is compared against the trunk's threshold. That is a separate decision — does the head get its own
-    published limits, or do we stop showing colours for it?</p>
-  </div>
-</div>
-
-<div class="task">
-  <h3><span class="id">UI-7</span>Warn before losing a half-filled assessment<span class="badge we">Web</span></h3>
-  <p class="desc">There is no "you have unsaved changes" warning anywhere in the app, and no autosave. Fill in half a
-  RULA, REBA or RAMP, click away or close the tab, and everything since the last save is gone silently. These are long
-  multi-page forms.</p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>Probably the bug our users hit most often, and it has never been built rather than being broken. It was promised
-    as "will be done today" in July and confirmed absent since.</p>
-  </div>
-</div>
-
-<div class="task">
-  <h3><span class="id">UI-13</span>Finish the translations, Swedish first<span class="badge we">Web</span></h3>
-  <p class="desc">
-    The Settings page (Organisation and Help &amp; Support tabs), the passwordless sign-in page and the confirmation
-    shown after submitting a support ticket are English-only in every language. Move their text into the translation
-    system and supply all five languages. Separately, verify Swedish end to end and make the language choice save.
-  </p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>The July translation pass was real work and closed most of this — 60 files, around 5,000 entries. What is left
-    means a German customer gets a fully German app that switches to English the moment they open Settings.</p>
-    <p>Swedish is the commercial one. In July, switching to Swedish translated exactly one word.</p>
-  </div>
-</div>
-
-<h3 class="grp">Web — pipeline and performance</h3>
-
-<div class="task">
-  <h3><span class="id">PIPE-3</span>Clear the lint errors and make lint block the build<span class="badge we">Web</span></h3>
-  <p class="desc">Linting reports 430 problems, 52 of them hard errors, and CI is explicitly told to carry on when the
-  lint step fails so nobody sees them. Nearly half the errors come from the admin app using a package it never declared
-  as a dependency — it only works today because another app in the repo happens to install it. Clear the errors,
-  declare the missing dependency, then make lint block the build.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">PIPE-4</span>Write the first real web tests, starting with the risk scores<span class="badge we">Web</span></h3>
-  <p class="desc">The repo has two test files and both assert that true is true. Begin real coverage with the RULA and
-  RAMP risk-score calculations, which decide the risk level we report to the customer.</p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>The backend went from nothing to a full suite in about a week this month. Point the web devs at what they did
-    and at the same target list — it removes the "where do we even start" excuse.</p>
-  </div>
-</div>
-
-<div class="task">
-  <h3><span class="id">PIPE-5</span>Wire the API address through the Docker builds<span class="badge we">Web</span></h3>
-  <p class="desc">Both apps read the backend address at build time, and neither is wired up correctly: the client panel's
-  Docker build never receives the two settings its code depends on, and the admin app declares them but our compose file
-  never passes them in. Any image built through the normal path has no valid API address. Fail the build loudly if it is
-  missing.</p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>Production works today, which means something outside these files is injecting the address — undocumented, and
-    nobody currently knows what. Worth pinning down: it is the difference between "we deploy" and "we can deploy again
-    if the machine dies."</p>
-  </div>
-</div>
-
-<div class="task">
-  <h3><span class="id">PERF-1</span>Load one language, not all five<span class="badge we">Web</span></h3>
-  <p class="desc">Every user downloads all five languages before the app starts — roughly 956 KB of translation data, of
-  which they need about a fifth. Load only the active language and fetch another when the user switches.</p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>Best performance value on the list — a bigger measured saving than the next three combined, and it does not touch
-    a single page. It is also a direct consequence of the translation work: adding a sixth language today would add
-    another ~180 KB to every first visit worldwide.</p>
-  </div>
-</div>
-
-<div class="task">
-  <h3><span class="id">PERF-2</span>Stop bundling the whole shared component library into the first download<span class="badge we">Web</span></h3>
-  <p class="desc">Every user downloads roughly 1.45 MB compressed before the login screen even appears, and a large part
-  of it is code from our shared component library the app never uses. Work out why it cannot be trimmed per app, and cut
-  the initial download. Closely related to PERF-3 — they can be one ticket.</p>
-</div>
-
-<h3 class="grp">Mobile</h3>
-
-<div class="task">
-  <h3><span class="id">DATA-7</span>Hand recordings upload with their columns shifted when vibration detection is off<span class="badge mo">Mobile</span></h3>
-  <p class="desc">The uploaded data file always includes the vibration column headers, but the rows only write those
-  values when the setting is on. Everything after that point shifts left, so values line up under the wrong headers and
-  the backend reads corrupt hand data for the whole recording. Write placeholders so headers and rows stay aligned.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">DATA-8</span>Location recording stops working after the first session<span class="badge mo">Mobile</span></h3>
-  <p class="desc">If location tracking is on it works for the first session after the app starts and then never again —
-  the internal stream is closed at the end of that session and never re-opened. Every session after that records no
-  location data, silently. Recreate it per session.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">DATA-9</span>Female workers are stored as "other"<span class="badge mo">Mobile</span></h3>
-  <p class="desc">Gender is written in upper case and read back checking for lower case, so the two never match and any
-  female worker is quietly interpreted as "other". No crash — just wrong data feeding the ergonomic reports. Same root
-  cause as DATA-1; do them together.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">ERR-8</span>"Finish session" reports success even when saving failed<span class="badge mo">Mobile</span></h3>
-  <p class="desc">
-    When a user taps Finish the app asks the recording and the data file to stop, waits ten seconds, and moves on
-    whether or not they succeeded. A failure is logged for us, and the user is taken to the summary as if everything
-    worked — with numbers that may be incomplete. If a step fails or times out, tell the user and offer to retry rather
-    than presenting partial results as final.
-  </p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>This is the highest-consequence version of the pattern in this whole document: the user is shown a successful
-    outcome for something that failed. It would also explain sessions with numbers that look wrong for no clear reason
-    — speculation on my part, but cheap to rule out.</p>
-  </div>
-</div>
-
-<div class="task">
-  <h3><span class="id">ERR-9</span>The scan screen spins forever when Bluetooth is off<span class="badge mo">Mobile</span></h3>
-  <p class="desc">If a user opens the sensor-scan screen with Bluetooth turned off, the error never reaches the screen
-  and they are left staring at a spinner with no explanation and no way forward. Show "Bluetooth is off".</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">WIRE-1</span>Move mobile onto the work-library endpoints<span class="badge mo">Mobile</span></h3>
-  <p class="desc">
-    The backend moved activities and labels to a new module and the web app already switched over. Mobile still calls
-    the old addresses for labels, events and categories. It works today only because the old ones have not been shut
-    down; the moment they are, every activities and labels action on mobile fails.
-  </p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>Mobile is further along than the July audit said — the session status values and the activity and condition group
-    endpoints are done. What is left is the label and event side. This is now a finishing job, not a migration.</p>
-  </div>
-</div>
-
-<div class="task">
-  <h3><span class="id">WIRE-2</span>Work-break markers are sent with an ID the backend does not have<span class="badge mo">Mobile</span></h3>
-  <p class="desc">Every break is recorded using a hard-coded label ID of 0, and backend IDs start at 1. The break upload
-  is rejected every time, and it can break the whole session save. Resolve the real ID at runtime, or have the backend
-  provide a canonical one.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">WIRE-3</span>Body-part names are sent in a format the backend rejects<span class="badge mo">Mobile</span></h3>
-  <p class="desc">Mobile sends display names — "Right Arm" — where the backend only accepts the compact internal form.
-  None of them match, so the backend concludes the session recorded no body parts and marks them all missing, and the
-  web's limb filter then finds nothing for that session.</p>
-</div>
-
-<div class="task">
-  <h3><span class="id">WIRE-4</span>A task with no duration crashes the whole task list<span class="badge mo">Mobile</span></h3>
-  <p class="desc">The backend allows a work-cycle task with no duration — for example one imported from Excel with the
-  time column left blank. Mobile assumes there is always a number and crashes the entire task list for that work-cycle,
-  so the operator cannot even start recording.</p>
-</div>
-
-<h2 class="pb">Medium</h2>
-<p class="sectionnote">
-  Real and reproducible, but the user can get past all of them. Schedule across the next iterations.
-</p>
-
 <table class="t">
-  <thead><tr><th style="width:62px">ID</th><th style="width:60px">Where</th><th>Task</th></tr></thead>
+  <thead><tr><th style="width:52px">ID</th><th style="width:58px">Where</th><th>Task</th></tr></thead>
   <tbody>
-    <tr class="grouphead"><td colspan="3">Backend</td></tr>
-    <tr><td class="tid">ISO-7</td><td><span class="pill be">Backend</span></td><td class="what">Stop the session export revealing whether another company's session exists — it looks the session up before checking ownership, so "forbidden" and "not found" tell an outsider which session numbers are real.</td></tr>
-    <tr><td class="tid">DATA-11</td><td><span class="pill be">Backend</span></td><td class="what">Reject over-long values before they reach the database. Worker profile creation and the work-cycle Excel import pass values straight through, so anything too long becomes an unreadable database error. For the import, say which row and which column.</td></tr>
-    <tr><td class="tid">DATA-12</td><td><span class="pill be">Backend</span></td><td class="what">Add the missing uniqueness rules on labels, operators and report templates — two identical entries in a dropdown with no way to tell them apart. Scope the rule to the parent, not globally.</td></tr>
-    <tr><td class="tid">DATA-14</td><td><span class="pill be">Backend</span></td><td class="what">Bound "total limb time" to the measurement. Each limb's total is an unbounded sum with an explicit "no clamp", and the session-window filter allows a one-day margin, so samples from outside the session are included and the total can exceed the recording.</td></tr>
-    <tr><td class="tid">ERR-11</td><td><span class="pill be">Backend</span></td><td class="what">Changing a user's email to one already in use breaks the account — the new address is saved first and the login provider refuses afterwards, leaving an account whose email no longer matches what it can log in with. Check before saving.</td></tr>
-    <tr><td class="tid">ERR-12</td><td><span class="pill be">Backend</span></td><td class="what">Registering the same device serial twice at the same moment returns a server error instead of "already registered".</td></tr>
-    <tr><td class="tid">ERR-13</td><td><span class="pill be">Backend</span></td><td class="what">Bulk archive-settings update quietly ignores anything that does not belong to the caller and still reports success. Report what was updated and what was skipped.</td></tr>
-    <tr><td class="tid">ERR-17</td><td><span class="pill be">Backend</span></td><td class="what">Work Library CSV import is not all-or-nothing — if row 500 fails, rows 1–499 are already saved — and the server's useful message ("Missing field 'Factory' in row 12") is replaced with "Something went wrong".</td></tr>
-    <tr><td class="tid">UI-16</td><td><span class="pill be">Backend</span><span class="pill we">Web</span></td><td class="what">Clicking Generate twice creates two byte-identical assessments. No existence check and no double-click protection.</td></tr>
-    <tr><td class="tid">UI-27</td><td><span class="pill be">Backend</span></td><td class="what">A deactivated member cannot be re-invited. The invite is refused with a message telling the admin to reactivate them from the team list, and no reactivation control exists there. The person is stuck.</td></tr>
-    <tr><td class="tid">UI-30</td><td><span class="pill be">Backend</span></td><td class="what">Six of the seventeen checkboxes in Generate report do nothing — Worker details, Recorder details, Session duration, Session metadata, AI risk summary and Appendix. The first four pretend to control a header table the report is meaningless without: delete those. Wire or delete the other two.</td></tr>
-    <tr><td class="tid">UI-31</td><td><span class="pill be">Backend</span></td><td class="what">The AI report section fails silently. With AI disabled on the organisation, ticking "AI report" is ignored with no warning, and a failed AI call is also swallowed — either way the user gets a success message and a document missing the section they asked for.</td></tr>
-    <tr><td class="tid">PERF-9</td><td><span class="pill be">Backend</span></td><td class="what">Replace the in-memory WebSocket channel layer. It does not work across multiple server workers, so WebSocket features silently fail at scale.</td></tr>
-
-    <tr class="grouphead"><td colspan="3">Web</td></tr>
-    <tr><td class="tid">ERR-15</td><td><span class="pill we">Web</span><span class="pill mo">Mobile</span></td><td class="what">Add the field limits both apps are missing, so the user is told while typing instead of after submitting. Mobile: Worker ID, workplace, comment, age, weight, resting heart rate. Web: organisation name, ticket subject, work-cycle task name — and keep the organisation form open when a save fails instead of closing and losing what was typed.</td></tr>
-    <tr><td class="tid">ERR-16</td><td><span class="pill we">Web</span></td><td class="what">A duplicate factory name shows no error on the field, and the team invite form sends whatever is typed without checking it is a valid email address.</td></tr>
-    <tr><td class="tid">UI-10</td><td><span class="pill we">Web</span></td><td class="what">"Dismissed" in the Home inbox is stored in the browser, so it does not follow the user and does not clear for a colleague who handles the item. The Review button also marks something handled just for opening it, neither widget has an empty state, and archived measurements still appear.</td></tr>
-    <tr><td class="tid">UI-14</td><td><span class="pill we">Web</span></td><td class="what">Build the New / Earlier grouping in the notifications dropdown — everything is filed under "Earlier", including notifications from seconds ago — and make the unread count and "Mark all as read" cover everything, not just the notifications currently loaded.</td></tr>
-    <tr><td class="tid">UI-15</td><td><span class="pill we">Web</span></td><td class="what">Grey out Submit and Save-and-Continue until the assessment form is valid. The shared button already receives whether the form is valid and hardcodes both buttons to enabled anyway. One file, all three assessment types, most-used screen in the product.</td></tr>
-    <tr><td class="tid">UI-17</td><td><span class="pill we">Web</span></td><td class="what">Changing rows-per-page breaks any list. The page number is not reset, so the server is asked for a page that no longer exists and returns an error. Shared table, many screens.</td></tr>
-    <tr><td class="tid">UI-18</td><td><span class="pill we">Web</span></td><td class="what">The Run assessment form wipes your choices a moment after opening — the session duration arrives a fraction of a second later and re-runs the reset.</td></tr>
-    <tr><td class="tid">UI-19</td><td><span class="pill we">Web</span></td><td class="what">Four admin defects, same family: a failed save closes the form and throws away everything typed; filters break on names with "&amp;" or spaces; the organisation filter drops selections you did not touch; and the org counts do not refresh after adding a user.</td></tr>
-    <tr><td class="tid">UI-20</td><td><span class="pill we">Web</span></td><td class="what">Multi-task MEC results repeat each sub-question once per task with no task name, so you see two rows labelled "1.1" with different numbers, and each row's colour badge shows the overall total's risk level instead of that task's own.</td></tr>
-    <tr><td class="tid">UI-21</td><td><span class="pill we">Web</span></td><td class="what">Make the AI setting obvious. The engine dropdown is greyed out until AI consent is on, and the consent switch sits below it, so nothing tells an admin which to do first. <em>Correction: the July task said no order of clicks works — it does. Toggle consent, then Edit. Downgraded from must-fix to a wording and ordering change.</em></td></tr>
-    <tr><td class="tid">UI-23</td><td><span class="pill we">Web</span></td><td class="what">Work Library cleanup: the drag handle on tasks is drawn but does nothing and there is no ordering field behind it; the stated 5 MB import limit is not enforced and .xlsx is accepted by a button that says Import CSV; merging has no confirmation and cannot be undone; and the delete confirmation does not say that measurement tags go with it.</td></tr>
-    <tr><td class="tid">UI-24</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td class="what">Workers cannot be deleted or deactivated, so someone who leaves stays in the list and the counters forever. There is also no duplicate check and no validation — age is free text and "333" is in the data now — and search cannot find a full name because it matches the start of the first name or the last name, never both.</td></tr>
-    <tr><td class="tid">UI-25</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td class="what">A zero-second measurement is treated as valid, marked Completed, and offered for a risk assessment on Home.</td></tr>
-    <tr><td class="tid">UI-26</td><td><span class="pill we">Web</span></td><td class="what">Compare, Merge and Combined report are greyed out with no explanation — the user has no idea they need to select two to four measurements first.</td></tr>
-    <tr><td class="tid">UI-28</td><td><span class="pill we">Web</span></td><td class="what">RULA and REBA lost their PDF export in the new version, and their results show invented "Action needed" badges on any sub-score of 3 or more. That is not part of either method — it labels a raw input as a risk verdict and could mislead a customer. The final scores are correct.</td></tr>
-    <tr><td class="tid">PERF-3</td><td><span class="pill we">Web</span></td><td class="what">Lazy-load the three eager routes — the invitation page and the two privacy pages. Every other page loads on demand; these three are loaded up front and are what drag PERF-2's weight into the first download.</td></tr>
-    <tr><td class="tid">PERF-4</td><td><span class="pill we">Web</span></td><td class="what">Generate PDFs on click, not on page load. Six pages still build the whole downloadable PDF as soon as they open — the four assessment comparison pages, the session comparison page and the session detail export. The single-assessment pages already do it correctly; copy that.</td></tr>
-    <tr><td class="tid">PERF-5</td><td><span class="pill we">Web</span></td><td class="what">Split the admin bundle the way the client panel already does. Roughly ten lines copied across, and it stops a single dependency update forcing returning users to re-download everything.</td></tr>
-    <tr><td class="tid">PERF-6</td><td><span class="pill we">Web</span></td><td class="what">Delete the plotly charting library — 1.17 MB compressed, and the only screen that used it is no longer part of the live app. Delete it rather than leaving it unimported; it is still a declared dependency and still shows up in security scanning.</td></tr>
-    <tr><td class="tid">DEAD-1</td><td><span class="pill we">Web</span></td><td class="what">Delete the v1 code and routes that can no longer be reached — roughly four thousand lines behind switches that can never fire, plus two old pages still reachable by typing the address. Retiring those two routes also makes three separate old bugs disappear without anyone fixing them. <em>Do this only once we are confident the v2 rollout is not being reverted — the switches are the emergency brake.</em></td></tr>
-    <tr><td class="tid">DEAD-2</td><td><span class="pill we">Web</span></td><td class="what">Stop shipping the React Query debug panel to customers. It is in production builds of both apps, and it is declared as a normal dependency rather than a development-only one, which is why nobody noticed.</td></tr>
-
-    <tr class="grouphead"><td colspan="3">Mobile</td></tr>
-    <tr><td class="tid">DATA-10</td><td><span class="pill mo">Mobile</span></td><td class="what">A failed sync can create the same session twice on the server. If saving the server's ID locally fails after the session was created, the next attempt creates it again and the upload attaches to only one copy.</td></tr>
-    <tr><td class="tid">ERR-14</td><td><span class="pill mo">Mobile</span></td><td class="what">The work library picker closes as if the selection saved when it failed, so the user returns to the recording screen believing they chose something. Same on the session conditions screen, where a failure appears only as a message that disappears on its own.</td></tr>
-    <tr><td class="tid">UI-22</td><td><span class="pill mo">Mobile</span></td><td class="what">Mobile ignores the task order the ergonomist set by drag-and-drop on the web, and presents the steps in whatever order the server happened to return.</td></tr>
-    <tr><td class="tid">WIRE-5</td><td><span class="pill mo">Mobile</span></td><td class="what">A nested label category crashes the labels screen — the backend sends the parent as a number and mobile expects text. It only works today because the categories in use happen to have no parent.</td></tr>
-    <tr><td class="tid">WIRE-6</td><td><span class="pill mo">Mobile</span></td><td class="what">Work-cycle timing is never saved. Mobile tags the recording type "WorkCycle" and the backend matches "Work Cycle" exactly, so no work-cycle events are parsed and the per-step timing is silently thrown away.</td></tr>
-    <tr><td class="tid">WIRE-7</td><td><span class="pill mo">Mobile</span></td><td class="what">The operator drop-down does nothing. Mobile sends the filter under the wrong name, the backend ignores it, and every work-cycle in the company comes back regardless of which operator was picked.</td></tr>
-    <tr><td class="tid">WIRE-8</td><td><span class="pill mo">Mobile</span></td><td class="what">Mobile can only create one kind of label category — it always tells the backend "work task" regardless of what the user selected, and the request succeeds so the failure is invisible.</td></tr>
-    <tr><td class="tid">WIRE-9</td><td><span class="pill mo">Mobile</span></td><td class="what">Mobile reads a label "type" field the backend removed — the distinction moved to the category — so any behaviour that depended on it is quietly dead.</td></tr>
-    <tr><td class="tid">DEAD-15</td><td><span class="pill mo">Mobile</span></td><td class="what">A malformed profile record crashes the whole work-cycle list instead of skipping that row, and the organisation list and passwordless login both crash on a response shape they did not expect, leaving the screen stuck loading.</td></tr>
-    <tr><td class="tid">PERF-10</td><td><span class="pill mo">Mobile</span></td><td class="what">The session list leaks memory and background work — each row creates four internal controllers and disposes one, so scrolling a long list piles up open network and Bluetooth work, and a sync you started can keep running after you navigate away.</td></tr>
+    <tr><td class="tid">B6</td><td><span class="pill be">Backend</span></td><td>In one calculation the head and trunk readings are still matched by their position in the list rather than by time. The two sensors record at different rates, so from the first dropped reading onwards it compares the head at one moment with the trunk at another. The rest of the pipeline was already changed to match by time — this one place was missed. <em>Ask why the earlier attempt at this was reverted before redoing it.</em></td></tr>
+    <tr><td class="tid">B7</td><td><span class="pill be">Backend</span></td><td>The total time reported for a limb can be longer than the recording itself. Nothing limits it to the session, and readings from up to a day outside the session are counted.</td></tr>
+    <tr><td class="tid">B8</td><td><span class="pill be">Backend</span></td><td>The AI section goes missing from a report with no warning. If the organisation has AI switched off, ticking the box is ignored; if the AI call fails, that is swallowed too. Either way the user is told the report succeeded and gets a document without the section they asked for.</td></tr>
+    <tr><td class="tid">B9</td><td><span class="pill be">Backend</span></td><td>Six of the checkboxes in Generate report have no effect — Worker details, Recorder details, Session duration, Session metadata, AI risk summary and Appendix. Four of them claim to control a table the report is meaningless without, so those should simply go. Wire up or remove the other two.</td></tr>
+    <tr><td class="tid">B10</td><td><span class="pill we">Web</span></td><td>RAMP item 1.3 shows item 1.1's sentence. It reads "forward bending more than 30 degrees" while measuring the 20–45° band, so the same sentence appears twice on one screen with different numbers under it. The correct wording was never written.</td></tr>
+    <tr><td class="tid">B11</td><td><span class="pill we">Web</span></td><td>"Onset (T1°)" is labelled in degrees and is actually seconds, so a user entering 5 thinks they set 5 degrees while the backend uses 5 seconds.</td></tr>
+    <tr><td class="tid">B12</td><td><span class="pill we">Web</span></td><td>RAMP sub-rows restart at 1.1 inside every item and each repeats all three explanations. They are the measured variables — forward, side and backward bending — not sub-questions. Name them.</td></tr>
+    <tr><td class="tid">B13</td><td><span class="pill we">Web</span></td><td>Hand distance from the body is an estimate presented as a measurement: it assumes the same arm and forearm length for every worker. Label it as an estimate.</td></tr>
   </tbody>
 </table>
 
-<h2 class="pb">Low</h2>
-<p class="sectionnote">
-  Cheap, cosmetic, or latent traps. Do them when someone is already in the file.
-</p>
+<h2 class="pb">C · Security — nothing is broken, but the server trusts the app</h2>
+<div class="box">
+  <span class="tag">Read before assigning</span>
+  <h3>None of these affect a user, and none of them will show up in testing.</h3>
+  <p>
+    Our apps always send the right values, so the product works correctly. The gap is that the login proves
+    <strong>who</strong> someone is, not <strong>what they are allowed to touch</strong> — so someone calling the API
+    directly, outside our apps, can send something ours never would. There is no evidence any of this has been used.
+    Whether that is worth funding now is a business call: we sell to multiple companies, and one customer reading
+    another's data is the kind of thing that ends a deal.
+  </p>
+</div>
+
+<div class="task">
+  <h3><span class="id">C1</span>The backend decides whose data to return from the request, not from who is logged in<span class="badge p1">High</span><span class="badge be">Backend</span></h3>
+  <p class="desc">
+    Several endpoints behind the Work Library — activities, conditions, and the labels placed on a recording — decide
+    which company's data to use based on a number in the request address rather than on the signed-in user. Any valid
+    login can read, create, edit or delete another company's data by sending a different number. Take the company from
+    the signed-in user everywhere and ignore the one in the address.
+  </p>
+  <div class="explain"><span class="tag">Note for you</span>
+    <p>Six endpoints still work this way; four in the same area were already corrected, so there is a pattern in our
+    own code to copy.</p>
+    <p>This is <em>not</em> dead legacy code, even though the names say "categories" and "labels". Those rows are
+    today's activities and conditions — the session timeline and the chips on the measurements table read from them,
+    and both apps call these endpoints. Cleaning up the old naming is worth doing separately, but it does not close
+    this.</p>
+  </div>
+</div>
 
 <table class="t">
-  <thead><tr><th style="width:62px">ID</th><th style="width:60px">Where</th><th>Task</th></tr></thead>
+  <thead><tr><th style="width:52px">ID</th><th style="width:58px">Where</th><th>Task</th></tr></thead>
   <tbody>
-    <tr class="grouphead"><td colspan="3">Reports and results wording</td></tr>
-    <tr><td class="tid">UI-32</td><td><span class="pill we">Web</span></td><td class="what">RAMP item 1.3 prints item 1.1's sentence. It says "forward bending more than 30 degrees" and measures the 20–45° band, so the same sentence appears twice on one screen with two different percentages under it. The correct sentence was never written.</td></tr>
-    <tr><td class="tid">UI-33</td><td><span class="pill we">Web</span></td><td class="what">"Onset (T1°)" is labelled in degrees. It is seconds. The user is told 5 means 5 degrees; the backend treats it as 5 seconds.</td></tr>
-    <tr><td class="tid">UI-34</td><td><span class="pill we">Web</span></td><td class="what">RAMP sub-rows restart at 1.1 inside every item and each repeats all three explanation sentences. They are variables — forward, side and backward bending — not sub-questions. Label them by variable name.</td></tr>
-    <tr><td class="tid">UI-35</td><td><span class="pill we">Web</span></td><td class="what">Comparison columns say "Session 1 / Session 2" instead of the measurement numbers, and body parts that were not recorded show as full tables of dashes instead of being hidden.</td></tr>
-    <tr><td class="tid">UI-36</td><td><span class="pill we">Web</span></td><td class="what">Measurement detail shows one "View RAMP" link even when five assessments exist — duplicates are invisible from there.</td></tr>
-    <tr><td class="tid">UI-37</td><td><span class="pill we">Web</span></td><td class="what">Hand distance from the body is an estimate presented as a measurement — it assumes a 32 cm upper arm and 27 cm forearm for every worker. Label it as an estimate.</td></tr>
-    <tr><td class="tid">UI-38</td><td><span class="pill we">Web</span></td><td class="what">Plurals are hardcoded ("1 lines", "1 stations"), gender renders raw and inconsistently — "male" next to "MALE" in the same column — and times under one second show as 00:00:00 next to a non-zero percentage.</td></tr>
-    <tr><td class="tid">UI-29</td><td><span class="pill be">Backend</span></td><td class="what">Three notification settings do nothing. "Notify on measurement complete", "on measurement failed" and "on risk assessment generated" can be toggled and saved and are read by nothing — the notification is sent regardless.</td></tr>
+    <tr><td class="tid">C2</td><td><span class="pill be">Backend</span></td><td>A session's activity or condition can be re-pointed at another company's. Attaching one is checked; editing that attachment afterwards is not. Apply the same check on edit.</td></tr>
+    <tr><td class="tid">C3</td><td><span class="pill be">Backend</span></td><td>The default for the whole API is "anyone may call this", so any endpoint where a developer forgets to say otherwise is public. Make the default "must be signed in" and mark the genuinely public ones — sign-in, register, password reset — explicitly.</td></tr>
+    <tr><td class="tid">C4</td><td><span class="pill be">Backend</span></td><td>The backend answers to any address, and the full list of its endpoints is readable without signing in. Restrict both outside development.</td></tr>
+    <tr><td class="tid">C5</td><td><span class="pill be">Backend</span></td><td>The statistics export answers differently for a session that exists in another company than for one that does not exist at all, which lets an outsider work out which session numbers are real. Answer the same way in both cases. <em>The ownership check itself was added — only the two different answers remain.</em></td></tr>
+    <tr><td class="tid">C6</td><td><span class="pill be">Backend</span></td><td>Sign-in treats every unexpected failure as "not signed in", so a database outage would quietly make every request anonymous rather than reporting a problem.</td></tr>
+  </tbody>
+</table>
 
-    <tr class="grouphead"><td colspan="3">Cleanup and latent traps</td></tr>
-    <tr><td class="tid">DEAD-3</td><td><span class="pill we">Web</span></td><td class="what">Remove the three remaining "stop type-checking this" escapes on backend data. One of them was the direct cause of the "Measured this month: 0" bug, which is the only reason this is worth raising at all.</td></tr>
-    <tr><td class="tid">DEAD-4</td><td><span class="pill we">Web</span></td><td class="what">Clean up dead admin UI: a commented-out bulk archive action, a removed notifications bell whose button would not have worked anyway, and a "?" icon that shows the hand cursor and click animation but only has a hover tooltip.</td></tr>
-    <tr><td class="tid">DEAD-5</td><td><span class="pill we">Web</span></td><td class="what">Remove the RULA help dialog whose entire content is the placeholder word "test" and which nothing on the page can open.</td></tr>
-    <tr><td class="tid">DEAD-6</td><td><span class="pill we">Web</span></td><td class="what">Give paired exports matching filenames. The spreadsheet and the PDF calculate their timestamp separately, so if the clock ticks between them the customer gets two files that look unrelated — and around midnight, two different dates.</td></tr>
-    <tr><td class="tid">DEAD-7</td><td><span class="pill we">Web</span></td><td class="what">Remove the unused cache-key file. Everything in the app uses a misspelled version of the same key, so nothing is broken today — but the first developer who uses the correct file will silently break assessment refreshing, and the symptom looks exactly like an intermittent bug we would spend a day chasing.</td></tr>
-    <tr><td class="tid">DEAD-8</td><td><span class="pill be">Backend</span><span class="pill mo">Mobile</span></td><td class="what">Remove the leftover first name and last name fields on worker profiles. Both apps still send them, the backend ignores them, and mobile splits the Worker ID into a pretend first and last name for display. Nothing is lost — it is just confusing to read.</td></tr>
-    <tr><td class="tid">DEAD-9</td><td><span class="pill be">Backend</span></td><td class="what">Firebase authentication catches every exception and returns "not logged in", so a database outage would silently treat every request as anonymous. It also stores a timestamp without a timezone while the rest of the system uses them.</td></tr>
-    <tr><td class="tid">PERF-7</td><td><span class="pill we">Web</span></td><td class="what">Remove the unused xlsx dependency — 7.8 MB, zero imports anywhere in the repo, and fetched from a direct download link rather than the package registry, which hides it from our security scanners.</td></tr>
-    <tr><td class="tid">PERF-8</td><td><span class="pill we">Web</span></td><td class="what">Remove the dead font families both apps fetch from Google on every page load — two in the client panel, two in admin — and load the prototype's display font only on the prototype route.</td></tr>
-    <tr><td class="tid">UI-39</td><td><span class="pill we">Web</span></td><td class="what">Console errors on every page load (Firebase App Check, plus an unhandled Sentry rejection). Harmless today, but they hide real errors.</td></tr>
-    <tr><td class="tid">UI-40</td><td><span class="pill we">Web</span></td><td class="what">The /prototype pages are reachable with no login on the live domain. They touch no real data, but anyone can open them.</td></tr>
+<h2>D · The mobile app and the backend disagree</h2>
+<p class="sectionnote">
+  Things the app sends that the backend does not accept, or reads in a shape the backend no longer uses. Each one
+  fails quietly.
+</p>
 
-    <tr class="grouphead"><td colspan="3">Mobile</td></tr>
-    <tr><td class="tid">WIRE-10</td><td><span class="pill mo">Mobile</span></td><td class="what">A stray "}" in the device info string in lite mode lands in the firmware field when the backend splits it, so that device's details are stored wrong and its body part is excluded from the session.</td></tr>
-    <tr><td class="tid">ERR-19</td><td><span class="pill mo">Mobile</span></td><td class="what">The "no organization" error is written in English regardless of the app language. Everything else is translated.</td></tr>
-    <tr><td class="tid">DEAD-10</td><td><span class="pill mo">Mobile</span></td><td class="what">The sensor clock is re-synced on every recording. A units mix-up makes "time since last sync" always look enormous, so an optimisation that should skip it never fires — extra Bluetooth round-trips and delay at the start of every recording.</td></tr>
-    <tr><td class="tid">DEAD-11</td><td><span class="pill mo">Mobile</span></td><td class="what">Switching between the two kinds of Bluetooth scan leaves the first one running, which keeps the radio busy and can leak stale devices into the new scan's results.</td></tr>
-    <tr><td class="tid">DEAD-12</td><td><span class="pill mo">Mobile</span></td><td class="what">Switching organisations while offline reports success but never tells the server, so the user believes they are in the new organisation and subsequent data is filed under the old one.</td></tr>
-    <tr><td class="tid">DEAD-13</td><td><span class="pill mo">Mobile</span></td><td class="what">The first heart-rate reading after a pause measures its time gap against the reading from before the pause, stretching that gap across the whole pause and skewing the recovery calculation.</td></tr>
-    <tr><td class="tid">ERR-18</td><td><span class="pill be">Backend</span></td><td class="what">Updating a firmware record that does not exist returns a validation error instead of "not found".</td></tr>
+<div class="task">
+  <h3><span class="id">D1</span>Mobile still uses the old address for labels and events<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
+  <p class="desc">
+    The backend moved activities and labels to a new place and the web app followed. Mobile still uses the old one for
+    labels and events. It works today only because the old one has not been switched off; when it is, every activity
+    and label action on mobile stops.
+  </p>
+  <div class="explain"><span class="tag">Note for you</span>
+    <p>Mobile is further along than the July audit said — session statuses and the activity and condition lists are
+    already done. This is a finishing job, not a migration.</p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">D2</span>Break markers never save<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
+  <p class="desc">
+    Every break is recorded against a label number that does not exist on the backend, so the upload is refused every
+    time and can take the rest of the session save with it.
+  </p>
+</div>
+
+<div class="task">
+  <h3><span class="id">D3</span>Recorded body parts are all reported as missing<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
+  <p class="desc">
+    Mobile sends body-part names the way they are displayed rather than the way the backend stores them, so none match
+    and the backend concludes the session recorded nothing. The web's body-part filter then finds nothing for that
+    session.
+  </p>
+</div>
+
+<div class="task">
+  <h3><span class="id">D4</span>A step with no time crashes the step list<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
+  <p class="desc">
+    The backend allows a work-cycle step with no duration — for example one imported from a spreadsheet with the time
+    column left blank. Mobile assumes there is always a number and the whole step list fails, so the operator cannot
+    start recording at all.
+  </p>
+</div>
+
+<table class="t">
+  <thead><tr><th style="width:52px">ID</th><th style="width:58px">Where</th><th>Task</th></tr></thead>
+  <tbody>
+    <tr><td class="tid">D5</td><td><span class="pill mo">Mobile</span></td><td>Work-cycle step timing is thrown away. Mobile labels the recording type slightly differently from what the backend expects, so no step events are recognised and the per-step timing of the whole session is lost.</td></tr>
+    <tr><td class="tid">D6</td><td><span class="pill mo">Mobile</span></td><td>Choosing an operator returns every work cycle in the company instead of that operator's, because mobile asks under the wrong name and the backend quietly ignores it. The drop-down effectively does nothing.</td></tr>
+    <tr><td class="tid">D7</td><td><span class="pill mo">Mobile</span></td><td>A category that sits inside another category crashes the labels screen. It only works today because none of the categories in use have a parent.</td></tr>
+    <tr><td class="tid">D8</td><td><span class="pill mo">Mobile</span></td><td>Mobile can only ever create one kind of category, regardless of what the user picked — and the request succeeds, so the mistake is invisible.</td></tr>
+    <tr><td class="tid">D9</td><td><span class="pill mo">Mobile</span></td><td>Mobile still reads a field the backend deleted, so anything that depended on it is quietly dead.</td></tr>
+    <tr><td class="tid">D10</td><td><span class="pill mo">Mobile</span></td><td>A stray character in the sensor details sent from lite mode ends up inside one of the stored values, so that sensor's details are wrong and its body part is left out of the session.</td></tr>
+  </tbody>
+</table>
+
+<h2 class="pb">E · The system knows what went wrong and does not say</h2>
+<p class="sectionnote">
+  Every one of these is a support call. The information exists and is thrown away before it reaches the person who
+  could act on it.
+</p>
+
+<div class="task">
+  <h3><span class="id">E1</span>Pages show a developer's note instead of the reason<span class="badge p1">High</span><span class="badge we">Web</span></h3>
+  <p class="desc">
+    When a page fails to load, the customer is shown text a developer typed for themselves — one screen literally
+    reads "React query error thrown manually from RULADetailPage". The real reason from the server is captured and
+    never displayed. It happens in twenty-six places. Find the fix that covers them all rather than doing them one by
+    one.
+  </p>
+  <div class="explain"><span class="tag">Note for you</span>
+    <p>We already paid to fix exactly this on one page. Still the best value on the list. It depends on E2 — do that
+    first or together, or the team will build against a shape that is about to change.</p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">E2</span>Anything a user gets wrong comes back as a server error<span class="badge p1">High</span><span class="badge be">Backend</span></h3>
+  <p class="desc">
+    Creating a session, importing a session, registering firmware and creating an organisation all report a duplicate
+    value, a missing field and a genuine crash identically, so no app can show anything useful. Things the user can fix
+    should say what to fix; only real failures should look like failures.
+  </p>
+  <div class="explain"><span class="tag">Note for you</span>
+    <p>Session import is the one that costs us most — an import failing with no reason is a support call every time.
+    It also hides our real error rate, because everything arrives in Sentry as one generic exception.</p>
+  </div>
+</div>
+
+<div class="task">
+  <h3><span class="id">E3</span>The app knows which field is wrong and does not point at it<span class="badge p1">High</span><span class="badge we">Web</span></h3>
+  <p class="desc">
+    When the backend rejects a form and names the field, the client panel only reads the general message and shows a
+    vague — sometimes empty — notification, with nothing marking the field. Show the message against the field it
+    belongs to.
+  </p>
+</div>
+
+<div class="task">
+  <h3><span class="id">E4</span>The error screen can lock up the browser tab<span class="badge p1">High</span><span class="badge we">Web</span></h3>
+  <p class="desc">
+    When the app catches an unexpected error it immediately resets, which causes the error again, which resets again.
+    It spins until the tab freezes. Same in both apps.
+  </p>
+</div>
+
+<table class="t">
+  <thead><tr><th style="width:52px">ID</th><th style="width:58px">Where</th><th>Task</th></tr></thead>
+  <tbody>
+    <tr><td class="tid">E5</td><td><span class="pill mo">Mobile</span></td><td>Opening the sensor scan with Bluetooth switched off leaves the user watching a spinner forever. Say "Bluetooth is off".</td></tr>
+    <tr><td class="tid">E6</td><td><span class="pill mo">Mobile</span><span class="pill we">Web</span></td><td>Fields accept values the backend will refuse, so the user only finds out after submitting. Mobile: Worker ID, workplace, comment, age, weight, resting heart rate. Web: organisation name, ticket subject, work-cycle step name — and the organisation form closes on a failed save, losing everything typed.</td></tr>
+    <tr><td class="tid">E7</td><td><span class="pill we">Web</span></td><td>Adding a factory with a name that already exists shows nothing on the field and the dialog just sits there. The team invite form also sends whatever is typed without checking it is a valid email address.</td></tr>
+    <tr><td class="tid">E8</td><td><span class="pill be">Backend</span></td><td>Values that are too long reach the database and come back as an unreadable error. For the Work Library import in particular, say which row and column was too long.</td></tr>
+    <tr><td class="tid">E9</td><td><span class="pill be">Backend</span></td><td>Updating several archive settings at once quietly skips any the user is not allowed to change and still reports success. Say what was changed and what was not.</td></tr>
+    <tr><td class="tid">E10</td><td><span class="pill be">Backend</span></td><td>Nothing stops two labels with the same name in one category, two operators with the same name on one workstation, or two report templates with the same name for one user — so the user sees identical entries in a drop-down with no way to tell them apart.</td></tr>
+    <tr><td class="tid">E11</td><td><span class="pill we">Web</span></td><td>"Try again" on the error screen does not retry anything.</td></tr>
+    <tr><td class="tid">E12</td><td><span class="pill mo">Mobile</span></td><td>The "no organisation" message is English regardless of the app language. Everything else is translated.</td></tr>
+    <tr><td class="tid">E13</td><td><span class="pill be">Backend</span></td><td>Updating firmware that does not exist reports a validation problem instead of "not found".</td></tr>
+  </tbody>
+</table>
+
+<h2>F · Slow</h2>
+<table class="t">
+  <thead><tr><th style="width:52px">ID</th><th style="width:58px">Where</th><th>Task</th></tr></thead>
+  <tbody>
+    <tr><td class="tid">F1</td><td><span class="pill we">Web</span></td><td><strong>High.</strong> Every user downloads all five languages before the app starts — about 956 KB, of which they need a fifth. Load only the one they are using and fetch another if they switch. Biggest saving on this list, and it does not touch a single page. Adding a sixth language today would add roughly 180 KB to every first visit worldwide.</td></tr>
+    <tr><td class="tid">F2</td><td><span class="pill we">Web</span></td><td><strong>High.</strong> Roughly 1.45 MB is downloaded before the login screen appears, much of it components the app never uses. Work out why the shared library cannot be trimmed per app and cut it down.</td></tr>
+    <tr><td class="tid">F3</td><td><span class="pill we">Web</span></td><td>Three pages — the invitation page and the two privacy pages — load up front on every visit while everything else loads on demand. They are what drag F2's weight into the first download.</td></tr>
+    <tr><td class="tid">F4</td><td><span class="pill we">Web</span></td><td>Comparison and export pages build the whole downloadable PDF as soon as they open, even though most users never click Download. Build it when they ask for it. The single-assessment pages already do this correctly.</td></tr>
+    <tr><td class="tid">F5</td><td><span class="pill we">Web</span></td><td>The admin app downloads as one large file, so nothing works until all of it arrives and any library update forces returning users to re-download everything. The client panel is already split; copy that.</td></tr>
+    <tr><td class="tid">F6</td><td><span class="pill we">Web</span></td><td>We ship two charting libraries. The larger one — 1.17 MB — is used by no screen that is still in the product. Delete it rather than leaving it unused; it still slows every install and still appears in security scanning.</td></tr>
+    <tr><td class="tid">F7</td><td><span class="pill be">Backend</span></td><td>Live-update features (WebSockets) work in one server process only, so they fail silently as soon as we run more than one.</td></tr>
+    <tr><td class="tid">F8</td><td><span class="pill we">Web</span></td><td>A 7.8 MB spreadsheet library is installed and imported by nothing. It is also fetched from a direct link rather than the normal registry, which hides it from our security scanners.</td></tr>
+    <tr><td class="tid">F9</td><td><span class="pill we">Web</span></td><td>Both apps fetch fonts on every page load that nothing in the live product uses, plus the prototype's font for everyone.</td></tr>
+    <tr><td class="tid">F10</td><td><span class="pill mo">Mobile</span></td><td>The session list builds up open work as you scroll — each row starts several background jobs and cleans up one, so a sync you started can keep running after you leave the screen.</td></tr>
+    <tr><td class="tid">F11</td><td><span class="pill mo">Mobile</span></td><td>The sensor clock is re-synced before every recording. There is an optimisation meant to skip it if it was done recently, and a units mistake means it never fires — so every recording starts slower than it needs to.</td></tr>
+    <tr><td class="tid">F12</td><td><span class="pill mo">Mobile</span></td><td>Switching between the two kinds of Bluetooth scan leaves the first one running, keeping the radio busy and letting stale devices appear in the new results.</td></tr>
+  </tbody>
+</table>
+
+<h2 class="pb">G · Build, deploy and safety nets</h2>
+
+<div class="task">
+  <h3><span class="id">G1</span>Broken code can be deployed<span class="badge p0">Do first</span><span class="badge we">Web</span></h3>
+  <p class="desc">
+    The pipeline builds and ships the web apps from a job that never checks whether the type check, the linter, the
+    build or the tests passed. Nothing currently stops broken code reaching customers. Make shipping depend on the
+    checks passing.
+  </p>
+  <div class="explain"><span class="tag">Note for you</span>
+    <p>Top item on 10 July, top item again on 27 July, still unchanged. Everything else on the web side can quietly
+    come back the week after it is fixed until this is done — and we have proof: two paid fixes (A5 and A16) were
+    merged in May and silently reverted by one merge in June. Nobody found out for eight weeks.</p>
+    <p>The backend now has the safety net the web apps do not. Same company, same standard.</p>
+  </div>
+</div>
+
+<table class="t">
+  <thead><tr><th style="width:52px">ID</th><th style="width:58px">Where</th><th>Task</th></tr></thead>
+  <tbody>
+    <tr><td class="tid">G2</td><td><span class="pill we">Web</span></td><td><strong>High.</strong> The linter reports 430 problems, 52 of them errors, and the pipeline is told to carry on regardless so nobody sees them. Nearly half come from the admin app using a library it never declared — it works only because another app happens to install it. Clear them, declare the library, then let the linter stop a bad build.</td></tr>
+    <tr><td class="tid">G3</td><td><span class="pill we">Web</span></td><td><strong>High.</strong> The web apps have two test files and both assert that true is true. Start with the RULA and RAMP scoring — the number that tells a customer whether their worker is at risk. The backend went from nothing to a full suite in about a week this month; point the web devs at what they did.</td></tr>
+    <tr><td class="tid">G4</td><td><span class="pill we">Web</span></td><td><strong>High.</strong> Neither app is given the backend's address properly when it is built, so any image built the normal way has no valid address — and yet production works, which means something undocumented is supplying it and nobody knows what. Find out, wire it properly, and fail the build loudly if it is missing. This is the difference between "we deploy" and "we can deploy again if the machine dies."</td></tr>
+    <tr><td class="tid">G5</td><td><span class="pill be">Backend</span></td><td><strong>High.</strong> A housekeeping job meant to run every few hours runs every minute, in every server process at once. It hammers the cloud database with redundant reads and races against itself, which costs money and makes behaviour unpredictable.</td></tr>
+    <tr><td class="tid">G6</td><td><span class="pill we">Web</span></td><td>A broken image build keeps the pipeline green — both image builds are told to carry on after a failure, so a broken build and a good one look identical on the pull request.</td></tr>
+    <tr><td class="tid">G7</td><td><span class="pill we">Web</span></td><td>The admin build ignores the record of which library versions we tested against, so two builds of the same code can install different software.</td></tr>
+  </tbody>
+</table>
+
+<h2>H · Cleanup and dead ends</h2>
+<p class="sectionnote">Nothing here affects a customer today. Most are traps for the next developer.</p>
+
+<table class="t">
+  <thead><tr><th style="width:52px">ID</th><th style="width:58px">Where</th><th>Task</th></tr></thead>
+  <tbody>
+    <tr><td class="tid">H1</td><td><span class="pill we">Web</span></td><td>A developer debugging panel is shipped to customers in both apps, and it is installed as a normal dependency rather than a development one, which is why nobody noticed.</td></tr>
+    <tr><td class="tid">H2</td><td><span class="pill we">Web</span></td><td>The old v1 pages still exist behind switches that can no longer be turned on, and a couple of old pages are still reachable by typing the address. Remove the unreachable code and retire those addresses. <em>Do this only once we are sure v2 is not being rolled back — the switches are the emergency brake.</em></td></tr>
+    <tr><td class="tid">H3</td><td><span class="pill we">Web</span></td><td>Three places switch off type checking on data coming back from the backend, so a backend change breaks them for the user instead of failing the build. One of these caused the "Measured this month: 0" bug.</td></tr>
+    <tr><td class="tid">H4</td><td><span class="pill we">Web</span></td><td>Dead admin interface: a bulk archive action left commented out, a removed notifications bell whose button would not have worked, and a "?" icon that looks pressable and only has a tooltip.</td></tr>
+    <tr><td class="tid">H5</td><td><span class="pill we">Web</span></td><td>When a user exports a comparison they get a spreadsheet and a PDF that should share a name. The timestamp is worked out twice, so if the clock ticks between them the two files look unrelated — and around midnight they get different dates.</td></tr>
+    <tr><td class="tid">H6</td><td><span class="pill we">Web</span></td><td>An unused file defines the "correct" names for cached assessment data while the whole app uses a misspelled version. Nothing is broken because everyone is wrong the same way — but the first developer who uses the correct file will silently break assessment refreshing, and it will look like an intermittent bug.</td></tr>
+    <tr><td class="tid">H7</td><td><span class="pill be">Backend</span><span class="pill mo">Mobile</span></td><td>Worker records no longer have a first and last name, but both apps still send them, the backend ignores them, and mobile splits the Worker ID into a pretend first and last name to display it. Nothing is lost — it is just confusing to read.</td></tr>
+    <tr><td class="tid">H8</td><td><span class="pill mo">Mobile</span></td><td>Switching company while offline reports success and never tells the server, so the user believes they are in the new company and their next data is filed under the old one.</td></tr>
+    <tr><td class="tid">H9</td><td><span class="pill mo">Mobile</span></td><td>The first heart-rate reading after a pause measures its gap from before the pause, stretching it across the whole break and skewing the recovery figure.</td></tr>
+    <tr><td class="tid">H10</td><td><span class="pill mo">Mobile</span></td><td>A single malformed record crashes the whole work-cycle list instead of being skipped, and the company list and email sign-in both crash on a reply they did not expect, leaving the screen stuck loading.</td></tr>
+    <tr><td class="tid">H11</td><td><span class="pill we">Web</span></td><td>Errors appear in the browser console on every page load. Harmless in themselves, but they bury real errors.</td></tr>
+    <tr><td class="tid">H12</td><td><span class="pill we">Web</span></td><td>The prototype pages are reachable with no login on the live domain. They touch no real data, but anyone can open them.</td></tr>
+    <tr><td class="tid">H13</td><td><span class="pill we">Web</span></td><td>Plurals are hardcoded ("1 lines", "1 stations"), gender shows raw and inconsistently — "male" next to "MALE" in one column — and times under a second show as 00:00:00 beside a non-zero percentage.</td></tr>
+    <tr><td class="tid">H14</td><td><span class="pill we">Web</span></td><td>Comparison columns say "Session 1 / Session 2" instead of the measurement numbers, and body parts that were not recorded show as full tables of dashes rather than being hidden.</td></tr>
+    <tr><td class="tid">H15</td><td><span class="pill we">Web</span></td><td>The measurement page shows one "View RAMP" link even when several assessments exist, so duplicates are invisible from there.</td></tr>
+    <tr><td class="tid">H16</td><td><span class="pill we">Web</span></td><td>The Home to-do count and the notification bell count what has been loaded rather than the real total, so both stop being right past a few hundred items. <em>This used to stop at 10 and was largely fixed — what is left is the last step.</em></td></tr>
+    <tr><td class="tid">H17</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td>The Workers list still counts records that were created automatically for staff before that behaviour was removed. New staff no longer get one, but the old rows are now indistinguishable from real workers, so this is a data clean-up rather than a filter.</td></tr>
   </tbody>
 </table>
 
 <h2 class="pb">Decisions for you</h2>
-<p class="sectionnote">
-  Seven items that are not developer calls. Nothing below should be written as a ticket until it is answered.
-</p>
+<p class="sectionnote">Not developer calls. Nothing here should become a ticket until it is answered.</p>
 
 <div class="box bad">
   <span class="tag">DEC-1 · answer this first</span>
   <h3>Head backward bending: −5° or −10°?</h3>
   <p>
-    On <strong>3 August</strong> Farhad reviewed the calculation issues and ruled: <em>"It should be 5° backward. Zero is
-    the main criteria but not practical."</em> The mobile app was changed to −5° and that work shipped.
+    On <strong>3 August</strong> Farhad ruled: <em>"It should be 5° backward. Zero is the main criteria but not
+    practical."</em> The mobile app was changed to −5° and shipped. On <strong>6 August</strong> a backend developer
+    rewrote the tests to state that <strong>−10° is intended</strong>, noting it was "confirmed by the team" and that
+    the audit's −5° reading "was overruled". On <strong>7 August</strong> those tests were deleted.
   </p>
   <p>
-    On <strong>6 August</strong> a backend developer rewrote the tests to state that <strong>−10° is intended</strong>,
-    with a comment reading "confirmed by the team… the original audit read this as head-should-be −5, but that was
-    overruled". On <strong>7 August</strong> those tests were deleted.
+    The product code was never touched, so the risk verdict and the Word report still say −10°, RAMP says −5°, and the
+    phone says −5°. What shipped is not what was decided. The same happened to the RAMP score of 1.5, which Farhad
+    called a bug and which the code still produces.
   </p>
   <p>
-    The product code was never changed. So today the risk verdict and the Word report use <strong>−10°</strong> for the
-    head, RAMP uses <strong>−5°</strong>, and the phone uses <strong>−5°</strong>. The three disagree, and what shipped
-    is not what was decided in writing.
-  </p>
-  <p>
-    <strong>What is needed:</strong> one ruling from you, then one fix applied everywhere. Trunk backward stays −10°
-    either way — that one is a deliberate modification of the RAMP standard and is not in question. Do not let anyone
-    "harmonise" head and trunk into a single value.
+    <strong>What is needed:</strong> one answer from you, then one fix applied everywhere (B1). Trunk backward stays
+    −10° either way. The bigger question is the process — a written decision was reversed in code and the record of it
+    removed, with no ticket and no conversation.
   </p>
 </div>
 
-<div class="box bad">
+<div class="box">
   <span class="tag">DEC-2</span>
-  <h3>RAMP score 1.5 — bug or intended?</h3>
+  <h3>Which way of adding a worker is the real one?</h3>
   <p>
-    Same story, same week, same developer. Farhad ruled: <em>"It is a bug — should be % of time and will never be 1.5."</em>
-    The tests were then rewritten to say 1.5 is "a valid half-step" and "confirmed by the team", and then deleted.
-    The code still returns 1.5, and two colour functions in the web app still disagree about what colour 1.5 should be.
-  </p>
-  <p>
-    Handle this in the same conversation as DEC-1. The pattern matters more than either number: <strong>a written CEO
-    decision was reversed in the code and the record of it removed.</strong>
+    The Workers page collects a Worker ID and sets the worker up correctly. The Users page does not, and produces an
+    account that fails on its first recording. Your answer decides whether A1 is a fix or a removal.
   </p>
 </div>
 
 <div class="box">
   <span class="tag">DEC-3</span>
-  <h3>Which worker-creation path is the real one?</h3>
+  <h3>Do gender and dominant arm affect any calculation?</h3>
   <p>
-    Workers can be added from the Workers page, which collects a Worker ID and creates the profile correctly, or from
-    the Users page, which does not and produces an account that fails on its first session. Two paths, one broken.
-    Your answer decides whether DATA-2 is a fix or a removal.
+    Ask Farhad. Every recording has been storing invalid values in both (A2). If they feed a calculation, results have
+    been affected and we need to know how far back. If they do not, A2 is still worth fixing but is not urgent.
   </p>
 </div>
 
 <div class="box">
   <span class="tag">DEC-4</span>
-  <h3>Do gender and dominant arm feed any ergonomic calculation?</h3>
+  <h3>How much is section C worth to us?</h3>
   <p>
-    Ask Farhad. Every mobile session has been writing invalid values into both fields (DATA-1). If they feed a
-    calculation, results have been quietly affected and we need to know how far back. If they do not, DATA-1 is still
-    worth fixing but is not urgent for accuracy.
+    Nothing in section C affects a customer, and there is no sign any of it has been used. Fixing it properly is real
+    work. The counter-argument is that we sell to multiple companies and one reading another's data ends a deal and
+    starts a GDPR conversation. Decide whether it is funded now or scheduled.
   </p>
 </div>
 
@@ -915,9 +762,9 @@
   <span class="tag">DEC-5</span>
   <h3>Should two companies be allowed the same name?</h3>
   <p>
-    Company names are unique across the entire system today, so the second company called "Nordic Logistics" to sign up
-    is refused with "This company name is already taken". This may be deliberate. It is the same shape as the Worker ID
-    rule we just fixed, so it is worth answering deliberately rather than by accident.
+    Company names are unique across the whole system, so the second company called "Nordic Logistics" to sign up is
+    refused. This may be deliberate. It is the same shape as the Worker ID rule we just fixed, so answer it on purpose
+    rather than by accident.
   </p>
 </div>
 
@@ -925,153 +772,129 @@
   <span class="tag">DEC-6</span>
   <h3>Self-signup: build it or delete the page?</h3>
   <p>
-    There is a "Create an Account" page with an email field and a Submit button that does nothing, and no link anywhere
-    in the product leads to it. Given that passwordless sign-in and referral registration both shipped recently, the
-    real question is whether self-signup is on the roadmap at all.
-  </p>
-</div>
-
-<div class="box">
-  <span class="tag">DEC-7</span>
-  <h3>Head exposure limits — publish them or stop colouring them?</h3>
-  <p>
-    The exposure limits card colours the head's bands red and amber while showing "—" for every recommended limit,
-    because the code treats anything that is not an arm as a trunk. Either the head gets its own published limits, or
-    we stop showing a risk colour for it. This is an ergonomics call, not a UI one. Relates to UI-5.
+    There is a "Create an Account" page with a button that does nothing, and nothing in the product links to it. Given
+    that email sign-in and referral registration both shipped recently, the real question is whether self-signup is on
+    the roadmap at all.
   </p>
 </div>
 
 <h2>Parked on purpose</h2>
-<p class="sectionnote">
-  Real findings that are deliberately not scheduled. Listed so they are not rediscovered and re-reported.
-</p>
-
+<p class="sectionnote">Real findings, deliberately not scheduled. Listed so nobody re-reports them.</p>
 <ul>
-  <li><strong>TNO analysis discards a whole middle angle range</strong> — for the trunk that is 0° to 20°, which is most
-  normal working posture. Farhad: <em>"Might be a bug, but let's skip TNO for now."</em> If TNO is ever sold again, this
-  is the first thing to check.</li>
-  <li><strong>Phone vs report warning thresholds for the head</strong> — Farhad wants a table of the phone's criteria
-  against the report's criteria built first, then a decision. Different reference standards are in play.</li>
-  <li><strong>Three different colouring rules for one session</strong> — the pie charts, the risk gauges and the
-  measurement screen each colour the same arm differently. Farhad wants an example report and a discussion with Liyun
-  and Micke before anything changes.</li>
-  <li><strong>Overlapping wording in the printed risk criteria</strong> — "0–5% low, 5–10% moderate, 10–100% high"
-  puts 5 and 10 in two bands each. Farhad: fine, but "less than 5 / more than 10" would be clearer. Editorial, optional.</li>
-  <li><strong>Four invitation-flow flaws</strong> — the admin invite path emails a dead link; a failed email locks the
-  invite for seven days with no resend; member limits are stored but never enforced; and deleting a pending invitee can
-  delete the person entirely, wiping their invitations from other companies. You asked to hold these until you ask.</li>
-  <li><strong>Five sensor-configuration problems</strong> — the one that matters is that a session can be processed at
-  the wrong sample rate when the phone does not report which rate it used, producing wrong durations and wrong angle
-  statistics with nothing flagging it. You asked for no tickets on these.</li>
+  <li><strong>TNO analysis drops a whole middle range of angles</strong> — for the trunk that is 0° to 20°, most
+  normal working posture. Farhad: skip TNO for now. If TNO is ever sold again, check this first.</li>
+  <li><strong>Phone warnings versus report thresholds for the head</strong> — Farhad wants a table comparing the two
+  sets of criteria before deciding.</li>
+  <li><strong>Three different colouring rules for one session</strong> — pie charts, risk gauges and the measurement
+  screen each colour the same arm differently. Farhad wants an example report and a discussion with Liyun and Micke.</li>
+  <li><strong>Overlapping wording in the printed risk criteria</strong> — optional rewording only.</li>
+  <li><strong>Four invitation-flow flaws</strong> — the admin invite path emails a dead link, a failed email locks the
+  invite for seven days with no resend, member limits are stored but never enforced, and deleting a pending invitee
+  can delete the person entirely. You asked to hold these.</li>
+  <li><strong>Five sensor-configuration problems</strong> — the one that matters is a recording being processed at the
+  wrong sample rate when the phone does not report which it used, producing wrong durations and angle statistics with
+  nothing flagging it. You asked for no tickets.</li>
 </ul>
 
 <h2>Kept separately — not bugs</h2>
-<p class="sectionnote">
-  These documents stay as they are. They describe work we want to do, not work that is broken.
-</p>
-
 <table class="t">
   <thead><tr><th style="width:38%">Document</th><th>What it is</th></tr></thead>
   <tbody>
-    <tr><td class="what">Mobile App — Improvement Tasks</td><td>The five-phase redesign brief for the mobile app: terminology, the setup wizard, the measurement screen, completion, and settings. A design and product brief, still current.</td></tr>
-    <tr><td class="what">Client Panel — v1 Restructure Tasks</td><td>The 34 tasks that bring the real client panel in line with the agreed prototype. Structure, terminology and what each section shows. Partly delivered; still the spec.</td></tr>
-    <tr><td class="what">Planned Functional Changes</td><td>The two-week customer-facing plan. Referral registration and the time-series default have shipped; the demo organisation, session cleanup and the mobile items have not.</td></tr>
-    <tr><td class="what">Firebase Migration Proposal</td><td>A proposal, not scheduled work.</td></tr>
-    <tr><td class="what">DNS Rebuild Plan</td><td>Infrastructure plan, separate track.</td></tr>
-    <tr><td class="what">Calculation Issues — CEO Review</td><td>Farhad's written rulings on all nineteen calculation issues. Kept as the decision record — it is the evidence behind DEC-1 and DEC-2.</td></tr>
+    <tr><td>Mobile App — Improvement Tasks</td><td>The five-phase redesign brief: terminology, setup wizard, measurement screen, completion, settings. Still current.</td></tr>
+    <tr><td>Client Panel — v1 Restructure Tasks</td><td>The 34 tasks that bring the client panel in line with the agreed prototype. Partly delivered; still the spec.</td></tr>
+    <tr><td>Planned Functional Changes</td><td>The two-week customer-facing plan. Referral registration and the time-series default shipped; the demo organisation, session cleanup and the mobile items did not.</td></tr>
+    <tr><td>Firebase Migration Proposal · DNS Rebuild Plan</td><td>Proposals and infrastructure planning, separate tracks.</td></tr>
+    <tr><td>Calculation Issues — CEO Review</td><td>Farhad's written rulings. Kept as the decision record — it is the evidence behind DEC-1.</td></tr>
   </tbody>
 </table>
 
-<h2 class="pb">Closed since the July and August audits</h2>
+<h2 class="pb">Already fixed — do not re-raise</h2>
 <p class="sectionnote">
-  Thirty-seven items verified fixed in the code today. Listed so you can stop tracking them and so the effort is visible.
-  Backend items are fixed on <code>dev</code> and are not in <code>main</code> yet.
+  Fifty-four items from the July and August audits, verified done in the code today. Backend items are done on
+  <code>dev</code>, which is twenty commits ahead of <code>main</code> — so they are not in production yet. The web
+  and mobile fixes are live.
 </p>
 
 <div class="box good">
-  <span class="tag">Backend · 21 closed</span>
-  <h3>A full test suite from nothing, plus fourteen audit findings.</h3>
+  <span class="tag">Backend</span>
+  <h3>A full test suite from nothing, plus sixteen findings.</h3>
   <p>
-    <strong>Test infrastructure and coverage</strong> — the whole four-phase testing epic was delivered: infrastructure
-    and fixtures, pure calculation logic, tenant isolation and integration, signal processing and report maths, and the
-    nice-to-have backlog. The backend went from 17 real test methods to a suite CI runs.
+    <strong>Testing</strong> — the entire four-phase epic was delivered: infrastructure and fixtures, calculation
+    logic, company separation and integration, signal processing and report maths. The backend went from 17 real test
+    methods to a suite the pipeline runs.
   </p>
   <p>
-    <strong>Access and separation</strong> — support tickets are now scoped to the caller's organisation; the AI report
-    read path checks the company; worker IDs are unique per organisation instead of globally, with an availability
-    endpoint the apps can call while the user types.
+    <strong>Correctness</strong> — static time was 60× too small; the arm filter never ran because of a spelling
+    mistake; decimals were chopped so "more than 30" meant "31 or more"; the Excel export wrote head values over
+    trunk values; a trunk data situation quietly produced incomplete assessments. All fixed.
   </p>
   <p>
-    <strong>Wrong numbers</strong> — static time was 60× too small and is now correct; the arm-elevation filter typo
-    that stopped a filter from ever running is fixed; the decimal truncation that made "more than 30" mean "31 or more"
-    is gone; the Excel export no longer writes head values over trunk values; the trunk MEC crash that quietly produced
-    incomplete assessments is fixed.
+    <strong>Behaviour</strong> — a generated RAMP now has its own status instead of pretending to be complete;
+    notifications name the measurement rather than the assessment; the three notification settings that did nothing
+    were removed; failed-measurement alerts are filed under the right company; the auto-archive rule matches the
+    renamed statuses; merging a condition no longer fails every time; the per-minute job no longer crashes on a
+    deleted worker; session merge was rebuilt to recompute from the merged file and delete sources only on success.
   </p>
   <p>
-    <strong>Reliability</strong> — the per-minute job no longer crashes on a session whose worker was deleted; the
-    permission check that had the same crash is fixed; the auto-archive rule now matches the renamed statuses instead of
-    matching nothing; failed-measurement notifications are filed under the session's company, not the recipient's;
-    session merge was reworked to recompute from the merged file and delete the sources only on success, with a watchdog
-    for stuck processing; merging a condition no longer fails with a server error every time; invitations no longer all
-    share one expiry timestamp; plaintext passwords are no longer emailed; the N+1 queries on the user and organisation
-    lists are gone; the dead Slack notifier and its secrets were removed; temperature now prints with °C.
+    <strong>Access</strong> — support tickets and the AI report are now scoped to the caller's company; Worker IDs are
+    unique per company with an availability check; the statistics export checks ownership. <strong>Other</strong> —
+    invitations no longer share one expiry, plaintext passwords are no longer emailed, the N+1 queries on user and
+    organisation lists are gone, the dead Slack notifier was removed, temperature prints with °C.
   </p>
 </div>
 
 <div class="box good">
-  <span class="tag">Web · 6 closed</span>
-  <h3>Four of thirty-seven, plus two from the planned-changes list.</h3>
+  <span class="tag">Web</span>
+  <h3>More than the July list suggested — the v2 work closed a lot of it.</h3>
   <p>
-    "Measured this month" now reads the real number instead of always 0; the shared v2 table has a proper error state
-    with a retry; the auth footer no longer points three different links at the privacy policy; temperature prints with
-    °C in both PDFs; full time series open by default on measurement details; and session merge is now pre-validated
-    (same worker, sane timestamps, no overlap) before it is offered.
+    "Measured this month" reads the real number; the shared table has a proper error state with a retry; the auth
+    footer links point at the right pages; temperature prints with °C in both PDFs; full time series open by default;
+    session merge is pre-validated before it is offered.
+  </p>
+  <p>
+    And, found during this re-check: exposure limit colours now compare real values against real thresholds and the
+    head has its own limit; Home has loading and error states instead of showing a dashboard of zeros; the Home inbox
+    was rebuilt so archived items are excluded and "needs an assessment" is answered by the server; the generated-RAMP
+    status is handled properly on both sides; multi-task MEC rows are labelled with their task; the placeholder RULA
+    dialog is gone; the notifications dropdown has its New and Earlier grouping.
   </p>
 </div>
 
 <div class="box good">
-  <span class="tag">Mobile · 10 closed</span>
-  <h3>The client's incident is fixed end to end, and all four calculation fixes shipped.</h3>
+  <span class="tag">Mobile</span>
+  <h3>The client's incident is closed end to end, and all four calculation corrections shipped.</h3>
   <p>
-    The app now shows the message the backend actually sent instead of "Bad request"; the Worker ID is checked before
-    the session starts rather than after the recording is finished; syncing resolves an existing worker profile instead
-    of creating a duplicate.
+    The app shows the message the backend actually sent instead of "Bad request"; the Worker ID is checked before the
+    session starts rather than after the recording; syncing adopts an existing worker instead of creating a duplicate.
   </p>
   <p>
-    All four calculation corrections Farhad asked for are in: head bending now warns at 30° instead of 45°, backward
-    bending counts from −5° instead of any lean at all, arm speed warns at 30°/s instead of 60, and the PDF's
-    recommended arm-speed limit reads 30°/s instead of 20.
-  </p>
-  <p>
-    Session status now uses the renamed values the backend expects. Calibration videos no longer exhaust the decoder,
-    firmware update is reachable again, and any Movesense sensor is accepted rather than only ours.
+    All four corrections Farhad asked for are in: head bending warns at 30° instead of 45°, backward bending counts
+    from −5° instead of any lean at all, arm speed warns at 30°/s instead of 60, and the PDF's recommended arm-speed
+    limit reads 30°/s instead of 20. Session statuses use the values the backend expects. Calibration videos no longer
+    exhaust the decoder, firmware update is reachable again, and any Movesense sensor is accepted.
   </p>
 </div>
 
 <h2>How this was checked</h2>
-<p class="sectionnote">So you know what the confidence level actually is.</p>
-
 <ul>
-  <li>All four repositories were pulled first. Everything was read against <code>dev</code>: backend
-  <code>ce515fb</code>, web apps <code>18dcf7af</code>, mobile <code>7a808f6a</code>, landing page <code>bb99528</code>.</li>
-  <li>Nine source documents were merged: the QA bug report of 13 July, the general audit of 20 July, the calculation
-  issues of 27 July and Farhad's review of 3 August, the silent-failure audit of 6 August, the web improvement tasks of
-  27 July, the backend testing epic of 5 August, the April task backlog, and the planned functional changes.</li>
-  <li>Every item that survived was re-read in the current code before being written down. Items that no longer exist
-  were moved to the closed list. Two were corrected rather than deleted: <strong>UI-21</strong> (the AI setting is
-  reachable, contrary to the July task) and the head threshold, where the code now contradicts the CEO's ruling in a way
-  no earlier document could have known.</li>
-  <li><strong>Not verified:</strong> nothing was reproduced against a running system, and production was not queried, so
-  the number of records affected by DATA-1 is still unknown. The landing-page backlog was not re-audited — it is a
-  static marketing site and its items are unchanged since April.</li>
-  <li>Backend fixes live on <code>dev</code>, which is twenty commits ahead of <code>main</code>. The web apps and the
-  mobile app have <code>dev</code> and <code>main</code> level.</li>
+  <li>All four repositories were pulled first and read on <code>dev</code>: backend <code>ce515fb</code>, web apps
+  <code>18dcf7af</code>, mobile <code>7a808f6a</code>, landing page <code>bb99528</code>.</li>
+  <li>Nine documents were merged: the QA bug report (13 Jul), the general audit (20 Jul), the calculation issues
+  (27 Jul) and Farhad's review (3 Aug), the silent-failure audit (6 Aug), the web improvement tasks (27 Jul), the
+  backend testing epic (5 Aug), the April backlog, and the planned functional changes.</li>
+  <li><strong>Every item was re-read in the current code.</strong> An earlier draft of this document carried some
+  findings over from the older audits without re-checking them; eleven of those turned out to be already fixed and
+  have been moved to the back. Two were re-graded rather than removed: the AI setting is reachable (it just has a
+  confusing order), and the Home counts problem is much smaller than reported.</li>
+  <li><strong>Not verified:</strong> nothing was reproduced against a running system and production was not queried,
+  so the number of records affected by A2 is unknown. The landing-page backlog was not re-audited — it is a static
+  marketing site and its items are unchanged since April.</li>
 </ul>
 
 <footer>
-  Wergonic — Open Work · 10 August 2026 · 115 open items · replaces the QA bug report (13 Jul), general audit (20 Jul),
+  Wergonic — Open Work · 10 August 2026 · 98 open items · replaces the QA bug report (13 Jul), general audit (20 Jul),
   calculation issues (27 Jul), silent-failure audit (6 Aug), web improvement tasks (27 Jul), backend testing epic
-  (5 Aug) and the April task backlog.
+  (5 Aug) and the April backlog.
 </footer>
 
 </body>
