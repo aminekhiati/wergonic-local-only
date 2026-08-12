@@ -136,10 +136,10 @@
     RAMP you save cannot be reopened.
   </p>
   <p>
-    <strong>Sections B to H have not had that treatment yet.</strong> They were read in the code on 10 August, but
-    that pass did not check whether the screen an item describes is still the one the product shows. That is exactly
-    what went wrong before. The backend and mobile items are not affected by it; the web items in B, E, F and H are.
-    Say the word and I will do the same pass on them.
+    <strong>The web items in B, E, F and H were then checked the same way.</strong> One more was removed and three
+    were corrected — the details are in "Removed from the list" and in the items themselves. What is left unchecked
+    is a handful of small cleanup items in section H that cannot be judged by reading code alone; they are marked
+    where they appear.
   </p>
 </div>
 
@@ -298,6 +298,8 @@
   how many rows you see at all; adding one would be a new feature, not a fix.</li>
   <li><strong>"Onset (T1°) is labelled in degrees but means seconds"</strong> — the Run assessment window now says
   "Static time (T1, s)" and "Angle window (A1, °)". The wrong label is only on a dead screen.</li>
+  <li><strong>"RAMP item 1.3 shows item 1.1's sentence"</strong> — 1.3 reads correctly now. The wrong question moved:
+  it is item 1.5 that shows 1.3's question. Rewritten as B10 rather than dropped.</li>
 </ul>
 
 <h2>B · The numbers we report are wrong</h2>
@@ -365,8 +367,8 @@
     <tr><td class="tid">B7</td><td><span class="pill be">Backend</span></td><td>The total time reported for a limb can be longer than the recording itself, because nothing limits it to the session and readings from up to a day either side are counted.</td></tr>
     <tr><td class="tid">B8</td><td><span class="pill be">Backend</span></td><td>The AI section can go missing from a report with nothing said. If the company has AI switched off, ticking the box is ignored. If the AI call fails, that is swallowed too. Either way the user is told the report worked and gets a document without the section they asked for. Say it could not be produced.</td></tr>
     <tr><td class="tid">B9</td><td><span class="pill be">Backend</span></td><td>Six checkboxes in Generate report do nothing. Remove four of them — Worker details, Recorder details, Session duration, Session metadata — the report makes no sense without those tables, so they should not be optional. Make the other two, AI risk summary and Appendix, actually include or exclude their section.</td></tr>
-    <tr><td class="tid">B10</td><td><span class="pill we">Web</span></td><td>RAMP item 1.3 shows item 1.1's sentence. It reads "forward bending more than 30 degrees" while measuring the 20–45° band, so the same sentence appears twice on one screen with different numbers underneath. The right wording was never written.</td></tr>
-    <tr><td class="tid">B11</td><td><span class="pill we">Web</span></td><td>RAMP sub-rows restart at 1.1 inside every item and each one repeats all three explanations. They are the measured variables — forward, side and backward bending — not sub-questions. Name them.</td></tr>
+    <tr><td class="tid">B10</td><td><span class="pill we">Web</span></td><td>RAMP item 1.5 asks the wrong question. It is titled "Upper arm posture — hand in or above shoulder height" but the question under it reads "Does moderate bending of the upper body forwards or to the side occur?" — that is item 1.3's question, word for word. So an ergonomist reading 1.5 is asked about the back while the score underneath is about the arm.</td></tr>
+    <tr><td class="tid">B11</td><td><span class="pill we">Web</span></td><td>RAMP sub-rows restart at 1.1 inside every item, so "1.1" appears under item 1.1, again under item 1.2, and so on. They are not sub-questions — they are the things we measured: forward bending, side bending, backward bending. Name them instead of numbering them.</td></tr>
     <tr><td class="tid">B12</td><td><span class="pill we">Web</span></td><td>Hand distance from the body is an estimate shown as a measurement: it assumes the same arm and forearm length for every worker. Label it as an estimate.</td></tr>
   </tbody>
 </table>
@@ -515,7 +517,7 @@
     <tr><td class="tid">E8</td><td><span class="pill be">Backend</span></td><td>Values that are too long reach the database and come back as an unreadable error. For the Work Library import, say which row and column was too long.</td></tr>
     <tr><td class="tid">E9</td><td><span class="pill be">Backend</span></td><td>Updating several archive settings at once quietly skips any the user is not allowed to change and still reports success. Say what changed and what did not.</td></tr>
     <tr><td class="tid">E10</td><td><span class="pill be">Backend</span></td><td>Nothing stops two labels with the same name in one category, two operators with the same name on one workstation, or two report templates with the same name — so the user sees identical entries in a drop-down with no way to tell them apart.</td></tr>
-    <tr><td class="tid">E11</td><td><span class="pill we">Web</span></td><td>"Try again" on the error screen does not retry anything.</td></tr>
+    <tr><td class="tid">E11</td><td><span class="pill we">Web</span></td><td>"Try again" on the error screen only clears the error and draws the page again — it never asks the server for the data a second time, so the same error comes straight back. That screen is also hardcoded English: "Something went wrong" and "Try again" stay in English in every language.</td></tr>
     <tr><td class="tid">E12</td><td><span class="pill mo">Mobile</span></td><td>The "no organisation" message is in English whatever the app language. Everything else is translated.</td></tr>
     <tr><td class="tid">E13</td><td><span class="pill be">Backend</span></td><td>Updating firmware that does not exist reports a validation problem instead of "not found".</td></tr>
   </tbody>
@@ -530,7 +532,7 @@
     <tr><td class="tid">F3</td><td><span class="pill we">Web</span></td><td>Three pages — the invitation page and the two privacy pages — load up front on every visit while everything else loads on demand. They are what drags F2's weight into the first download.</td></tr>
     <tr><td class="tid">F4</td><td><span class="pill we">Web</span></td><td>Comparison and export pages build the whole downloadable PDF the moment they open, even though most users never press Download. Build it when they ask. The single-assessment pages already do this properly.</td></tr>
     <tr><td class="tid">F5</td><td><span class="pill we">Web</span></td><td>The admin app downloads as one large file, so nothing works until all of it arrives, and any library update forces returning users to download everything again. The client panel is already split; copy it.</td></tr>
-    <tr><td class="tid">F6</td><td><span class="pill we">Web</span></td><td>We ship two charting libraries. The larger — 1.17 MB — is used by no screen still in the product. Delete it; unused, it still slows every install and still shows up in security scanning.</td></tr>
+    <tr><td class="tid">F6</td><td><span class="pill we">Web</span></td><td>We ship two charting libraries. The charts you actually see use one of them; the other — 1.17 MB — is used by no screen in the product and is still installed. Delete it. Unused, it still slows every install and still shows up in security scanning.</td></tr>
     <tr><td class="tid">F7</td><td><span class="pill be">Backend</span></td><td>Live-update features work in one server process only, so they fail silently the moment we run more than one.</td></tr>
     <tr><td class="tid">F8</td><td><span class="pill we">Web</span></td><td>A 7.8 MB spreadsheet library is installed and used by nothing. It is also fetched from a direct link rather than the normal registry, which hides it from our security scanners.</td></tr>
     <tr><td class="tid">F9</td><td><span class="pill we">Web</span></td><td>Both apps fetch fonts on every page load that nothing in the live product uses, plus the prototype's font for everyone.</td></tr>
@@ -710,8 +712,12 @@
   <li><strong>Section A was re-read in the code today</strong>, including whether the screen each item describes is
   still the one the product shows. Four items were removed as no longer real and are listed under "Removed from the
   list"; one new problem was found (A2).</li>
-  <li><strong>Sections B to H were read on 10 August</strong> but have not had the same reachability check. The
-  backend and mobile items do not depend on it. The web items in B, E, F and H do.</li>
+  <li><strong>The web items in B, E, F and H were re-read the same way.</strong> The RAMP wording problem turned out
+  to have moved to a different item, the error-screen and "Try again" behaviour was checked in the live component,
+  and the two unused libraries and the shipped debugging panel were confirmed still installed. The backend and mobile
+  items were read on 10 August and do not depend on which screen renders.</li>
+  <li><strong>Not checked:</strong> H3 to H6 and H12 to H18 are small cleanup items that cannot be settled by reading
+  code — they need someone to open the screen. Nothing on the list depends on them.</li>
   <li><strong>Checked against production earlier in this work:</strong> no worker account has ever signed in, and
   there are no orphan work-cycle steps.</li>
 </ul>
