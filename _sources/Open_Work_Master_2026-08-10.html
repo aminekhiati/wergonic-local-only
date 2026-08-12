@@ -117,20 +117,21 @@
   </p>
   <p class="lede">
     Items are grouped by <strong>what is actually wrong from a user's point of view</strong>, not by which part of the
-    code it lives in. Each one says what happens today and what has to be true when it is done. It does not name files
-    or prescribe a solution — the developer decides that. Where you personally need to know something, there is a
-    shaded note. Simple items have none.
+    code it lives in. Each one says what happens today and <strong>what the product should do instead</strong> —
+    including new statuses, which buttons appear and how the workflow changes. Those are product decisions and they
+    are made here, not left to the developer. How to build it is theirs. Where you personally need to know something,
+    there is a shaded note. Simple items have none.
   </p>
   <div class="meta">
-    98 open items · 5 do first · 6 decisions for you · 10 August 2026<br />
+    108 open items · 6 do first · 5 decisions for you · rev 3, 12 August 2026<br />
     Read against <code>dev</code>: backend <code>ce515fb</code> · web apps <code>18dcf7af</code> · mobile <code>7a808f6a</code> · landing page <code>bb99528</code>
   </div>
 </div>
 
 <div class="kpis">
-  <div class="kpi red"><div class="n">5</div><div class="l">Do first</div></div>
+  <div class="kpi red"><div class="n">6</div><div class="l">Do first</div></div>
   <div class="kpi amber"><div class="n">28</div><div class="l">High</div></div>
-  <div class="kpi grey"><div class="n">65</div><div class="l">Medium &amp; low</div></div>
+  <div class="kpi grey"><div class="n">74</div><div class="l">Medium &amp; low</div></div>
   <div class="kpi green"><div class="n">54</div><div class="l">Already fixed</div></div>
 </div>
 
@@ -165,20 +166,38 @@
 
 <h2>A · Broken for users right now</h2>
 <p class="sectionnote">
-  Someone hits these by using the product normally. Thirty-three items; the first five are the do-first list.
+  Someone hits these by using the product normally. Twenty-nine items; the first five are the do-first list, together
+  with G1.
 </p>
 
 <div class="task">
-  <h3><span class="id">A1</span>A worker invited from the Users page can never record a session<span class="badge p0">Do first</span><span class="badge we">Web</span><span class="badge be">Backend</span></h3>
+  <h3><span class="id">A1</span>Workers should not have logins at all, and one way of creating them is broken<span class="badge p0">Do first</span><span class="badge we">Web</span><span class="badge be">Backend</span><span class="badge mo">Mobile</span></h3>
   <p class="desc">
-    Adding someone as a worker from the Users page creates their login and sends the invitation, but never sets up
-    their worker record and never asks for a Worker ID. When they open the mobile app and press start, the session
-    fails with a server error and no explanation. Make that path either create the worker properly, or stop offering
-    the worker role there and send admins to the Workers page, which works.
+    A worker is a profile we measure, not a person with an account. Today there are two ways to create one, and the
+    one on the Team page creates a real login that has never worked — the person is invited, signs in on the phone,
+    presses start, and the session fails with a server error and no explanation.
   </p>
+  <p class="desc">
+    <strong>The decision is that workers never get a login.</strong> Worker profiles are created on the Workers page
+    only. The work has to happen in this order:
+  </p>
+  <ul>
+    <li><strong>First</strong> — the Workers list must find workers by the company stored on the worker record,
+    instead of through the account that created them. Nothing else can start before this.</li>
+    <li>Remove Worker from the roles offered when inviting someone on the Team page, and from Add new user in the
+    admin panel along with its worker-details step. Invitations offer <strong>Admin</strong> and
+    <strong>Ergonomist</strong> only.</li>
+    <li>The backend refuses any invitation or account creation asking for the worker role, and stops silently
+    defaulting to worker when no role is given — the role must be stated.</li>
+    <li>Remove the worker sign-in path from the mobile app and retire the five worker accounts that exist. Mobile
+    sign-in stays as it is for admins and ergonomists.</li>
+  </ul>
   <div class="explain"><span class="tag">Note for you</span>
-    <p>The real problem is that there are two ways to add a worker and one has never worked. Decide which is the
-    real one before anyone writes code — that is DEC-2.</p>
+    <p><strong>The order is not optional.</strong> The Workers list currently finds workers through the account that
+    created them. If the accounts are retired first, five workers disappear from the list and twenty-three
+    measurements point at a worker nobody can see.</p>
+    <p>Checked on production: <strong>no worker account has ever signed in</strong> — five accounts, zero logins.
+    Nothing is lost by removing the feature.</p>
   </div>
 </div>
 
@@ -193,7 +212,7 @@
   </p>
   <div class="explain"><span class="tag">Note for you</span>
     <p>This also re-breaks workers whose details were entered correctly on the web. Ask Farhad whether gender or
-    dominant arm feed any calculation (DEC-3) — that decides whether results have been affected and how far back.</p>
+    dominant arm feed any calculation (DEC-2) — that decides whether results have been affected and how far back.</p>
   </div>
 </div>
 
@@ -201,8 +220,8 @@
   <h3><span class="id">A3</span>Logging in can hang forever with no way past it<span class="badge p0">Do first</span><span class="badge we">Web</span></h3>
   <p class="desc">
     If the request that loads the user's profile fails at the moment they sign in, the app sits on the loading spinner
-    and never moves. No error, no retry, no way forward except reloading the page and hoping. Show the user what
-    happened and let them try again.
+    and never moves. No error, no retry, no way forward except reloading the page and hoping. Show what happened and
+    give them a Try again button that actually signs them in.
   </p>
   <div class="explain"><span class="tag">Note for you</span>
     <p>It is on the path every user takes every day, and the admin app already handles it correctly — so there is a
@@ -211,15 +230,11 @@
 </div>
 
 <div class="task">
-  <h3><span class="id">A4</span>A worker who resets their password lands on a "page not found"<span class="badge p0">Do first</span><span class="badge we">Web</span></h3>
+  <h3><span class="id">A4</span>A user who resets their password lands on a "page not found"<span class="badge p0">Do first</span><span class="badge we">Web</span></h3>
   <p class="desc">
     They type the new password, press Save, and get a 404. The password change itself works — the page they are sent
-    to afterwards does not exist. Send them somewhere real.
+    to afterwards does not exist. Send them to the sign-in page with a confirmation that the password was changed.
   </p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>It is on the workers' path, not the office users' path, which is why it has lasted — the people who hit it are
-    not the people who talk to us.</p>
-  </div>
 </div>
 
 <div class="task">
@@ -256,43 +271,26 @@
 </div>
 
 <div class="task">
-  <h3><span class="id">A7</span>Work-cycle steps belonging to nobody show up in every company's list<span class="badge p1">High</span><span class="badge be">Backend</span></h3>
+  <h3><span class="id">A7</span>The web app can show the wrong company's data<span class="badge p1">High</span><span class="badge be">Backend</span></h3>
   <p class="desc">
-    The work-cycle step list is meant to show only your own company's steps. It also returns every step that is not
-    attached to a work cycle — which happens with imported or legacy data — and those are visible, editable and
-    deletable by everyone. Show only the company's own steps.
+    When someone belongs to more than one company, the system marks one membership as the current one. Every time a
+    membership is created it is marked current <em>without clearing the others</em>, so a user can end up with several
+    companies marked current at once. The app then picks one of them with no rule, and the answer can differ from one
+    request to the next. Someone who has never used the company switcher on the web is the most exposed.
+  </p>
+  <p class="desc">
+    <strong>The rule is that exactly one company is current at a time.</strong> Creating or accepting a membership
+    clears the others. If the app still cannot tell, it uses the company the user last chose; if there is none, it
+    asks instead of guessing.
   </p>
   <div class="explain"><span class="tag">Note for you</span>
-    <p>Unlike the items in section C, nobody has to try anything here: the list simply hands them over. Worth deciding
-    what should happen to those orphan steps at the same time — hiding them may just hide a data problem.</p>
+    <p>We do not yet know how many accounts are already in this state — it needs two queries on production, which I
+    can give you to run.</p>
   </div>
 </div>
 
 <div class="task">
-  <h3><span class="id">A8</span>The web app can end up showing the wrong company's data<span class="badge p1">High</span><span class="badge be">Backend</span></h3>
-  <p class="desc">
-    Web and mobile each remember their own selected company. If a user has never used the company switcher on the web,
-    the web quietly falls back to whichever company their phone is on — and if they belong to several, that fallback
-    picks one at random. Set the web company properly on first sign-in, make the choice deterministic, and refuse a
-    request that does not say which app it came from instead of guessing.
-  </p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>This was demonstrated in July: the same account and the same page, one request with the app header and one
-    without, returned two different companies' assessments. No error either time. It is the quietest thing on this
-    list and the hardest to explain to a customer.</p>
-  </div>
-</div>
-
-<div class="task">
-  <h3><span class="id">A9</span>Location stops being recorded after the first session<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
-  <p class="desc">
-    With location tracking on, it works for the first session after the app opens and never again — every session after
-    that records nothing, silently. It should work for every session.
-  </p>
-</div>
-
-<div class="task">
-  <h3><span class="id">A10</span>Hand data is uploaded misaligned when vibration detection is off<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
+  <h3><span class="id">A8</span>Hand data is uploaded misaligned when vibration detection is off<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
   <p class="desc">
     The uploaded file always has the vibration columns in its header, but the rows only fill them when the setting is
     on. Everything after that point shifts across, so values sit under the wrong headings and the backend reads the
@@ -301,7 +299,7 @@
 </div>
 
 <div class="task">
-  <h3><span class="id">A11</span>Female workers are stored as "other"<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
+  <h3><span class="id">A9</span>Female workers are stored as "other"<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
   <p class="desc">
     Gender is written one way and read back another, so the two never match and any female worker is quietly recorded
     as "other". Do this with A2 — it is the same underlying carelessness about the allowed values.
@@ -309,11 +307,17 @@
 </div>
 
 <div class="task">
-  <h3><span class="id">A12</span>Finishing a session says it worked when it did not<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
+  <h3><span class="id">A10</span>Finishing a recording makes the user wait, then tells them it worked when it did not<span class="badge p1">High</span><span class="badge mo">Mobile</span></h3>
   <p class="desc">
-    When a user presses Finish, the app asks the recording and the data file to close, waits, and then moves to the
-    summary whether or not either succeeded. The user sees a finished session with numbers that may be incomplete.
-    If a step fails, say so and offer to try again instead of presenting partial results as final.
+    When the user presses Finish, the app waits about ten seconds for the recording and the data file to close, then
+    moves to the summary whether or not either succeeded. So the user waits, and can still be shown a finished
+    recording with incomplete numbers.
+  </p>
+  <p class="desc">
+    <strong>Do not make them wait.</strong> Go to the summary immediately and finish the upload in the background,
+    retrying on its own. While it is still finishing, the summary says the recording is still being saved. If it
+    fails for good, the recording appears in the list as <strong>not properly closed</strong>, with a Retry action —
+    never as finished.
   </p>
   <div class="explain"><span class="tag">Note for you</span>
     <p>This is the worst version of a pattern that runs through this document: the user is shown success for something
@@ -323,19 +327,7 @@
 </div>
 
 <div class="task">
-  <h3><span class="id">A13</span>Nothing warns you before you lose a half-filled assessment<span class="badge p1">High</span><span class="badge we">Web</span></h3>
-  <p class="desc">
-    Fill in half a RULA, REBA or RAMP, click away or close the tab, and everything since the last save is gone with no
-    warning. There is no autosave either. Warn before leaving, or save as they go.
-  </p>
-  <div class="explain"><span class="tag">Note for you</span>
-    <p>Probably the thing our users hit most often. It was never built rather than broken, and it was promised as
-    "will be done today" back in July.</p>
-  </div>
-</div>
-
-<div class="task">
-  <h3><span class="id">A14</span>Settings and the email sign-in page are English only<span class="badge p1">High</span><span class="badge we">Web</span></h3>
+  <h3><span class="id">A11</span>Settings and the email sign-in page are English only<span class="badge p1">High</span><span class="badge we">Web</span></h3>
   <p class="desc">
     The Settings page and the page that opens from a sign-in email are English in every language, as is the message
     shown after submitting a support ticket. Translate them into all five languages. Separately, check Swedish end to
@@ -348,7 +340,7 @@
 </div>
 
 <div class="task">
-  <h3><span class="id">A15</span>Forms crash if you submit while the cursor is still in a field<span class="badge p1">High</span><span class="badge we">Web</span></h3>
+  <h3><span class="id">A12</span>Forms crash if you submit while the cursor is still in a field<span class="badge p1">High</span><span class="badge we">Web</span></h3>
   <p class="desc">
     To reproduce: open an assessment result, click into the comment box, and press Submit without clicking away first.
     The page crashes. This was fixed once for one kind of field; the rest are still affected. Find the one fix that
@@ -357,7 +349,7 @@
 </div>
 
 <div class="task">
-  <h3><span class="id">A16</span>The admin panel stops working about an hour after login<span class="badge p1">High</span><span class="badge we">Web</span></h3>
+  <h3><span class="id">A13</span>The admin panel stops working about an hour after login<span class="badge p1">High</span><span class="badge we">Web</span></h3>
   <p class="desc">
     Once the login expires, every action fails and the app never recovers — the user has to sign out and back in.
     It should renew the login quietly and carry on, and sign the user out cleanly if it genuinely cannot. The client
@@ -371,26 +363,38 @@
 
 <h3 class="grp">Medium</h3>
 
+<div class="task">
+  <h3><span class="id">A14</span>An assessment can get stuck at "In progress" with no way out<span class="badge we">Web</span><span class="badge be">Backend</span></h3>
+  <p class="desc">
+    If the calculation behind an assessment dies, the assessment stays at "In progress" forever. The row looks
+    clickable but does nothing, and deleting it is the only way out.
+  </p>
+  <p class="desc">
+    <strong>Add "Failed" as a new value in the status column.</strong> Anything still "In progress" after one hour is
+    marked Failed automatically. While it is "In progress" the row is not clickable. Once it is Failed, the row gets a
+    <strong>Retry</strong> action that re-runs the same assessment — it must not create a second one. The assessments
+    that are already stuck get marked Failed too, so they can be retried like the rest.
+  </p>
+</div>
+
 <table class="t">
   <thead><tr><th style="width:52px">ID</th><th style="width:58px">Where</th><th>Task</th></tr></thead>
   <tbody>
-    <tr><td class="tid">A17</td><td><span class="pill be">Backend</span></td><td>An assessment can get stuck at "In progress" forever. If the job generating it dies, nothing ever touches the row again — no timeout, no retry, no failed state. The row looks clickable but does nothing, and deleting it is the only option. Sessions already have a recovery job; assessments need the same.</td></tr>
-    <tr><td class="tid">A18</td><td><span class="pill we">Web</span></td><td>Changing "rows per page" breaks the list. If you were on page 3 and there is no longer a page 3, the list asks for it anyway and shows an error. Go back to page 1 when the page size changes. Affects every list in both apps.</td></tr>
-    <tr><td class="tid">A19</td><td><span class="pill we">Web</span></td><td>Submit and Save-and-continue are always clickable on an assessment form, even when it is incomplete, so the user clicks and gets told off. Grey them out until the form is valid — the app already knows whether it is.</td></tr>
-    <tr><td class="tid">A20</td><td><span class="pill we">Web</span></td><td>The Run assessment window clears your choices a fraction of a second after it opens, because the recording's length arrives late and resets the form. Set it up once when it opens.</td></tr>
-    <tr><td class="tid">A21</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td>Clicking Generate twice produces two identical assessments. Several assessments on one measurement is normal — identical duplicates from one button is not.</td></tr>
-    <tr><td class="tid">A22</td><td><span class="pill we">Web</span></td><td>Dismissing something from the Home inbox only applies on that computer, and does not clear for a colleague who deals with it. Opening an item also counts as dealing with it. Store it on the server and only clear it when something actually happened.</td></tr>
-    <tr><td class="tid">A23</td><td><span class="pill be">Backend</span></td><td>Changing a user's email to one already in use leaves the account unusable — our records get the new address, the login keeps the old one, and the admin just sees a server error. Check the address is free before changing anything.</td></tr>
-    <tr><td class="tid">A24</td><td><span class="pill be">Backend</span></td><td>A deactivated member cannot be brought back. Re-inviting them is refused with a message telling the admin to reactivate them from the team list, and there is no reactivation control there. Either make the invitation reactivate them, or build the control the message refers to.</td></tr>
-    <tr><td class="tid">A25</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td>Workers can never be removed or deactivated, so anyone who leaves stays in the list and the counts forever. There is also no duplicate check and no validation — age is free text, and "333" is in the data now — and searching a full name finds nothing, because it only matches the start of a first or last name.</td></tr>
-    <tr><td class="tid">A26</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td>A recording of zero seconds is treated as a real measurement, marked complete, and offered for a risk assessment.</td></tr>
-    <tr><td class="tid">A27</td><td><span class="pill mo">Mobile</span></td><td>Picking an activity closes the picker whether or not the choice saved, so the user goes back to the recording screen believing they chose something. Same on the conditions screen, where a failure flashes up and disappears.</td></tr>
-    <tr><td class="tid">A28</td><td><span class="pill mo">Mobile</span></td><td>A recording can end up on the server twice. If the app fails to remember the server's ID after uploading, the next attempt uploads it again — and the data attaches to only one copy.</td></tr>
-    <tr><td class="tid">A29</td><td><span class="pill be">Backend</span></td><td>Importing a Work Library file is not all-or-nothing: if row 500 fails, rows 1 to 499 are already saved. The server knows which row and column was wrong and that message is replaced with "Something went wrong", so the user cannot fix their file.</td></tr>
-    <tr><td class="tid">A30</td><td><span class="pill we">Web</span></td><td>Admin panel input loss: a failed save closes the organisation form and throws away everything typed; filters break on names containing "&amp;" or spaces; the organisation filter silently drops selections you did not touch; and the counts do not refresh after adding a user.</td></tr>
-    <tr><td class="tid">A31</td><td><span class="pill mo">Mobile</span></td><td>Mobile ignores the order an ergonomist set for work-cycle steps on the web and shows them in whatever order the server returned, so the operator can be walked through the cycle in the wrong sequence.</td></tr>
-    <tr><td class="tid">A32</td><td><span class="pill we">Web</span></td><td>Work Library rough edges: the drag handle on steps does nothing and there is no ordering behind it; the stated 5 MB import limit is not enforced and .xlsx is accepted by a button that says Import CSV; merging has no confirmation and cannot be undone; and the delete warning does not say that measurement tags go with it.</td></tr>
-    <tr><td class="tid">A33</td><td><span class="pill we">Web</span></td><td>Compare, Merge and Combined report are greyed out with no explanation, so nobody knows they need to select two to four measurements first.</td></tr>
+    <tr><td class="tid">A15</td><td><span class="pill we">Web</span></td><td>Submit and Save-and-continue are always clickable on an assessment form, even when it is incomplete, so the user clicks and gets told off. Grey them out until the form is valid — the app already knows whether it is.</td></tr>
+    <tr><td class="tid">A16</td><td><span class="pill we">Web</span></td><td>The Run assessment window clears your choices a fraction of a second after it opens, because the recording's length arrives late and resets the form. Set it up once when it opens.</td></tr>
+    <tr><td class="tid">A17</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td>Clicking Generate twice produces two identical assessments. Several assessments on one measurement is normal — identical duplicates from one button is not. The button is disabled while a generation is running, and the backend refuses a second identical assessment for the same measurement and task while one is still In progress.</td></tr>
+    <tr><td class="tid">A18</td><td><span class="pill we">Web</span></td><td>Dismissing something from the Home inbox only applies on that computer, and does not clear for a colleague who deals with it. Store the dismissal on the server. Opening an item must <em>not</em> count as dealing with it — only the actual action clears it.</td></tr>
+    <tr><td class="tid">A19</td><td><span class="pill be">Backend</span></td><td>Changing a user's email to one already in use leaves the account unusable — our records get the new address, the login keeps the old one, and the admin just sees a server error. Check the address is free before changing anything, and say "this email is already in use" on the field.</td></tr>
+    <tr><td class="tid">A20</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td>A deactivated member cannot be brought back. Re-inviting them is refused with a message telling the admin to reactivate them from the team list, and there is no reactivation control there. Add a <strong>Reactivate</strong> action on deactivated members in the team list, next to Deactivate. If someone invites an email belonging to a deactivated member, the form says so and offers to reactivate instead of failing.</td></tr>
+    <tr><td class="tid">A21</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td>Workers can never be removed, so anyone who leaves stays in the list and the counts forever. Add <strong>Deactivate</strong> on a worker — not delete. Deactivated workers are hidden from the list by default with a filter to show them, are excluded from the counts, and keep all their past measurements. Age becomes a number with a sensible range ("333" is in the data now), duplicates are refused, and search matches anywhere in the first or last name instead of only the beginning.</td></tr>
+    <tr><td class="tid">A22</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td>A recording of zero seconds is treated as a real measurement, marked complete, and offered for a risk assessment. A recording with no usable data is marked <strong>Failed</strong> instead of Complete and cannot be selected for an assessment.</td></tr>
+    <tr><td class="tid">A23</td><td><span class="pill mo">Mobile</span></td><td>Picking an activity closes the picker whether or not the choice saved, so the user goes back to the recording screen believing they chose something. Keep the picker open and show the failure until it succeeds. Same on the conditions screen, where a failure flashes up and disappears.</td></tr>
+    <tr><td class="tid">A24</td><td><span class="pill mo">Mobile</span></td><td>A recording can end up on the server twice. If the app fails to remember the server's ID after uploading, the next attempt uploads it again — and the data attaches to only one copy.</td></tr>
+    <tr><td class="tid">A25</td><td><span class="pill be">Backend</span></td><td>Importing a Work Library file is not all-or-nothing: if row 500 fails, rows 1 to 499 are already saved. Either the whole file imports or none of it does. The server knows which row and column was wrong and that message is replaced with "Something went wrong" — show the real one so the user can fix their file.</td></tr>
+    <tr><td class="tid">A26</td><td><span class="pill we">Web</span></td><td>Admin panel input loss: a failed save closes the organisation form and throws away everything typed; filters break on names containing "&amp;" or spaces; the organisation filter silently drops selections you did not touch; and the counts do not refresh after adding a user.</td></tr>
+    <tr><td class="tid">A27</td><td><span class="pill we">Web</span><span class="pill mo">Mobile</span></td><td>Work-cycle steps have no real order. The drag handle on the web does nothing, and mobile shows steps in whatever order the server returned — so the operator can be walked through the cycle in the wrong sequence. Give steps a saved order, make the drag handle set it, and make mobile follow it.</td></tr>
+    <tr><td class="tid">A28</td><td><span class="pill we">Web</span></td><td>Work Library rough edges: the stated 5 MB import limit is not enforced and .xlsx is accepted by a button that says Import CSV; merging has no confirmation and cannot be undone; and the delete warning does not say that measurement tags go with it.</td></tr>
+    <tr><td class="tid">A29</td><td><span class="pill we">Web</span></td><td>Compare, Merge and Combined report are greyed out with no explanation. Keep them disabled, but show why on hover — "Select 2 to 4 measurements".</td></tr>
   </tbody>
 </table>
 
@@ -459,8 +463,8 @@
   <tbody>
     <tr><td class="tid">B6</td><td><span class="pill be">Backend</span></td><td>In one calculation the head and trunk readings are still matched by their position in the list rather than by time. The two sensors record at different rates, so from the first dropped reading onwards it compares the head at one moment with the trunk at another. The rest of the pipeline was already changed to match by time — this one place was missed. <em>Ask why the earlier attempt at this was reverted before redoing it.</em></td></tr>
     <tr><td class="tid">B7</td><td><span class="pill be">Backend</span></td><td>The total time reported for a limb can be longer than the recording itself. Nothing limits it to the session, and readings from up to a day outside the session are counted.</td></tr>
-    <tr><td class="tid">B8</td><td><span class="pill be">Backend</span></td><td>The AI section goes missing from a report with no warning. If the organisation has AI switched off, ticking the box is ignored; if the AI call fails, that is swallowed too. Either way the user is told the report succeeded and gets a document without the section they asked for.</td></tr>
-    <tr><td class="tid">B9</td><td><span class="pill be">Backend</span></td><td>Six of the checkboxes in Generate report have no effect — Worker details, Recorder details, Session duration, Session metadata, AI risk summary and Appendix. Four of them claim to control a table the report is meaningless without, so those should simply go. Wire up or remove the other two.</td></tr>
+    <tr><td class="tid">B8</td><td><span class="pill be">Backend</span></td><td>The AI section goes missing from a report with no warning. If the organisation has AI switched off, ticking the box is ignored; if the AI call fails, that is swallowed too. Either way the user is told the report succeeded and gets a document without the section they asked for. The report must say the section could not be produced.</td></tr>
+    <tr><td class="tid">B9</td><td><span class="pill be">Backend</span></td><td>Six of the checkboxes in Generate report have no effect. <strong>Remove four of them</strong> — Worker details, Recorder details, Session duration and Session metadata — the report is meaningless without those tables, so they should not be optional. <strong>Wire up the other two</strong>, AI risk summary and Appendix, so they genuinely include or exclude their section.</td></tr>
     <tr><td class="tid">B10</td><td><span class="pill we">Web</span></td><td>RAMP item 1.3 shows item 1.1's sentence. It reads "forward bending more than 30 degrees" while measuring the 20–45° band, so the same sentence appears twice on one screen with different numbers under it. The correct wording was never written.</td></tr>
     <tr><td class="tid">B11</td><td><span class="pill we">Web</span></td><td>"Onset (T1°)" is labelled in degrees and is actually seconds, so a user entering 5 thinks they set 5 degrees while the backend uses 5 seconds.</td></tr>
     <tr><td class="tid">B12</td><td><span class="pill we">Web</span></td><td>RAMP sub-rows restart at 1.1 inside every item and each repeats all three explanations. They are the measured variables — forward, side and backward bending — not sub-questions. Name them.</td></tr>
@@ -662,7 +666,7 @@
   </p>
   <div class="explain"><span class="tag">Note for you</span>
     <p>Top item on 10 July, top item again on 27 July, still unchanged. Everything else on the web side can quietly
-    come back the week after it is fixed until this is done — and we have proof: two paid fixes (A5 and A16) were
+    come back the week after it is fixed until this is done — and we have proof: two paid fixes (A5 and A13) were
     merged in May and silently reverted by one merge in June. Nobody found out for eight weeks.</p>
     <p>The backend now has the safety net the web apps do not. Same company, same standard.</p>
   </div>
@@ -692,17 +696,18 @@
     <tr><td class="tid">H4</td><td><span class="pill we">Web</span></td><td>Dead admin interface: a bulk archive action left commented out, a removed notifications bell whose button would not have worked, and a "?" icon that looks pressable and only has a tooltip.</td></tr>
     <tr><td class="tid">H5</td><td><span class="pill we">Web</span></td><td>When a user exports a comparison they get a spreadsheet and a PDF that should share a name. The timestamp is worked out twice, so if the clock ticks between them the two files look unrelated — and around midnight they get different dates.</td></tr>
     <tr><td class="tid">H6</td><td><span class="pill we">Web</span></td><td>An unused file defines the "correct" names for cached assessment data while the whole app uses a misspelled version. Nothing is broken because everyone is wrong the same way — but the first developer who uses the correct file will silently break assessment refreshing, and it will look like an intermittent bug.</td></tr>
-    <tr><td class="tid">H7</td><td><span class="pill be">Backend</span><span class="pill mo">Mobile</span></td><td>Worker records no longer have a first and last name, but both apps still send them, the backend ignores them, and mobile splits the Worker ID into a pretend first and last name to display it. Nothing is lost — it is just confusing to read.</td></tr>
-    <tr><td class="tid">H8</td><td><span class="pill mo">Mobile</span></td><td>Switching company while offline reports success and never tells the server, so the user believes they are in the new company and their next data is filed under the old one.</td></tr>
-    <tr><td class="tid">H9</td><td><span class="pill mo">Mobile</span></td><td>The first heart-rate reading after a pause measures its gap from before the pause, stretching it across the whole break and skewing the recovery figure.</td></tr>
-    <tr><td class="tid">H10</td><td><span class="pill mo">Mobile</span></td><td>A single malformed record crashes the whole work-cycle list instead of being skipped, and the company list and email sign-in both crash on a reply they did not expect, leaving the screen stuck loading.</td></tr>
-    <tr><td class="tid">H11</td><td><span class="pill we">Web</span></td><td>Errors appear in the browser console on every page load. Harmless in themselves, but they bury real errors.</td></tr>
-    <tr><td class="tid">H12</td><td><span class="pill we">Web</span></td><td>The prototype pages are reachable with no login on the live domain. They touch no real data, but anyone can open them.</td></tr>
-    <tr><td class="tid">H13</td><td><span class="pill we">Web</span></td><td>Plurals are hardcoded ("1 lines", "1 stations"), gender shows raw and inconsistently — "male" next to "MALE" in one column — and times under a second show as 00:00:00 beside a non-zero percentage.</td></tr>
-    <tr><td class="tid">H14</td><td><span class="pill we">Web</span></td><td>Comparison columns say "Session 1 / Session 2" instead of the measurement numbers, and body parts that were not recorded show as full tables of dashes rather than being hidden.</td></tr>
-    <tr><td class="tid">H15</td><td><span class="pill we">Web</span></td><td>The measurement page shows one "View RAMP" link even when several assessments exist, so duplicates are invisible from there.</td></tr>
-    <tr><td class="tid">H16</td><td><span class="pill we">Web</span></td><td>The Home to-do count and the notification bell count what has been loaded rather than the real total, so both stop being right past a few hundred items. <em>This used to stop at 10 and was largely fixed — what is left is the last step.</em></td></tr>
-    <tr><td class="tid">H17</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td>The Workers list still counts records that were created automatically for staff before that behaviour was removed. New staff no longer get one, but the old rows are now indistinguishable from real workers, so this is a data clean-up rather than a filter.</td></tr>
+    <tr><td class="tid">H7</td><td><span class="pill be">Backend</span></td><td>The work-cycle step list also returns steps that belong to no work cycle, which nobody's company owns. There are none in production today and nothing in the product can create one, so this is a guard, not a leak: return only the company's own steps, and decide what should happen to an orphan step if one ever appears rather than hiding it.</td></tr>
+    <tr><td class="tid">H8</td><td><span class="pill be">Backend</span><span class="pill mo">Mobile</span></td><td>Worker records no longer have a first and last name, but both apps still send them, the backend ignores them, and mobile splits the Worker ID into a pretend first and last name to display it. Nothing is lost — it is just confusing to read.</td></tr>
+    <tr><td class="tid">H9</td><td><span class="pill mo">Mobile</span></td><td>Switching company while offline reports success and never tells the server, so the user believes they are in the new company and their next data is filed under the old one.</td></tr>
+    <tr><td class="tid">H10</td><td><span class="pill mo">Mobile</span></td><td>The first heart-rate reading after a pause measures its gap from before the pause, stretching it across the whole break and skewing the recovery figure.</td></tr>
+    <tr><td class="tid">H11</td><td><span class="pill mo">Mobile</span></td><td>A single malformed record crashes the whole work-cycle list instead of being skipped, and the company list and email sign-in both crash on a reply they did not expect, leaving the screen stuck loading.</td></tr>
+    <tr><td class="tid">H12</td><td><span class="pill we">Web</span></td><td>Errors appear in the browser console on every page load. Harmless in themselves, but they bury real errors.</td></tr>
+    <tr><td class="tid">H13</td><td><span class="pill we">Web</span></td><td>The prototype pages are reachable with no login on the live domain. They touch no real data, but anyone can open them.</td></tr>
+    <tr><td class="tid">H14</td><td><span class="pill we">Web</span></td><td>Plurals are hardcoded ("1 lines", "1 stations"), gender shows raw and inconsistently — "male" next to "MALE" in one column — and times under a second show as 00:00:00 beside a non-zero percentage.</td></tr>
+    <tr><td class="tid">H15</td><td><span class="pill we">Web</span></td><td>Comparison columns say "Session 1 / Session 2" instead of the measurement numbers, and body parts that were not recorded show as full tables of dashes rather than being hidden.</td></tr>
+    <tr><td class="tid">H16</td><td><span class="pill we">Web</span></td><td>The measurement page shows one "View RAMP" link even when several assessments exist, so duplicates are invisible from there.</td></tr>
+    <tr><td class="tid">H17</td><td><span class="pill we">Web</span></td><td>The Home to-do count and the notification bell count what has been loaded rather than the real total, so both stop being right past a few hundred items. <em>This used to stop at 10 and was largely fixed — what is left is the last step.</em></td></tr>
+    <tr><td class="tid">H18</td><td><span class="pill we">Web</span><span class="pill be">Backend</span></td><td>The Workers list still counts records that were created automatically for staff before that behaviour was removed. New staff no longer get one, but the old rows are now indistinguishable from real workers, so this is a data clean-up rather than a filter.</td></tr>
   </tbody>
 </table>
 
@@ -732,15 +737,6 @@
 
 <div class="box">
   <span class="tag">DEC-2</span>
-  <h3>Which way of adding a worker is the real one?</h3>
-  <p>
-    The Workers page collects a Worker ID and sets the worker up correctly. The Users page does not, and produces an
-    account that fails on its first recording. Your answer decides whether A1 is a fix or a removal.
-  </p>
-</div>
-
-<div class="box">
-  <span class="tag">DEC-3</span>
   <h3>Do gender and dominant arm affect any calculation?</h3>
   <p>
     Ask Farhad. Every recording has been storing invalid values in both (A2). If they feed a calculation, results have
@@ -749,7 +745,7 @@
 </div>
 
 <div class="box">
-  <span class="tag">DEC-4</span>
+  <span class="tag">DEC-3</span>
   <h3>How much is section C worth to us?</h3>
   <p>
     Nothing in section C affects a customer, and there is no sign any of it has been used. Fixing it properly is real
@@ -759,7 +755,7 @@
 </div>
 
 <div class="box">
-  <span class="tag">DEC-5</span>
+  <span class="tag">DEC-4</span>
   <h3>Should two companies be allowed the same name?</h3>
   <p>
     Company names are unique across the whole system, so the second company called "Nordic Logistics" to sign up is
@@ -769,7 +765,7 @@
 </div>
 
 <div class="box">
-  <span class="tag">DEC-6</span>
+  <span class="tag">DEC-5</span>
   <h3>Self-signup: build it or delete the page?</h3>
   <p>
     There is a "Create an Account" page with a button that does nothing, and nothing in the product links to it. Given
@@ -778,9 +774,32 @@
   </p>
 </div>
 
+<h2>Kept aside — features, not bugs</h2>
+<p class="sectionnote">
+  Real gaps, but they are new functionality rather than something to repair. They belong on the roadmap, not in this
+  list.
+</p>
+
+<div class="box">
+  <span class="tag">Feature</span>
+  <h3>An assessment you can save and come back to</h3>
+  <p>
+    Today a RULA, REBA or RAMP form is all-or-nothing: fill in half of it, click away or close the tab, and everything
+    since the last save is gone with no warning. There is no autosave and no draft.
+  </p>
+  <p>
+    The answer is a proper in-progress state the user controls — they save what they have, the assessment shows as
+    unfinished in the list, and they open it later and carry on from where they stopped. That is a feature to design,
+    not a bug to patch, so it is out of this document until you schedule it.
+  </p>
+</div>
+
 <h2>Parked on purpose</h2>
 <p class="sectionnote">Real findings, deliberately not scheduled. Listed so nobody re-reports them.</p>
 <ul>
+  <li><strong>Location stops being recorded after the first session</strong> — with location tracking on, it works for
+  the first session after the app opens and never again. Every session after that records nothing and nothing on
+  screen indicates it, so the data simply is not there when someone looks for it later. You chose to hold this.</li>
   <li><strong>TNO analysis drops a whole middle range of angles</strong> — for the trunk that is 0° to 20°, most
   normal working posture. Farhad: skip TNO for now. If TNO is ever sold again, check this first.</li>
   <li><strong>Phone warnings versus report thresholds for the head</strong> — Farhad wants a table comparing the two
@@ -882,19 +901,25 @@
   <li>Nine documents were merged: the QA bug report (13 Jul), the general audit (20 Jul), the calculation issues
   (27 Jul) and Farhad's review (3 Aug), the silent-failure audit (6 Aug), the web improvement tasks (27 Jul), the
   backend testing epic (5 Aug), the April backlog, and the planned functional changes.</li>
-  <li><strong>Every item was re-read in the current code.</strong> An earlier draft of this document carried some
-  findings over from the older audits without re-checking them; eleven of those turned out to be already fixed and
-  have been moved to the back. Two were re-graded rather than removed: the AI setting is reachable (it just has a
-  confusing order), and the Home counts problem is much smaller than reported.</li>
-  <li><strong>Not verified:</strong> nothing was reproduced against a running system and production was not queried,
-  so the number of records affected by A2 is unknown. The landing-page backlog was not re-audited — it is a static
-  marketing site and its items are unchanged since April.</li>
+  <li><strong>Every item was re-read in the current code.</strong> An earlier draft carried some findings over from
+  the older audits without re-checking them; eleven of those turned out to be already fixed and have been moved to the
+  back. Two were re-graded rather than removed: the AI setting is reachable (it just has a confusing order), and the
+  Home counts problem is much smaller than reported.</li>
+  <li><strong>Removed in this revision.</strong> "Changing rows per page breaks the list" was dropped — the control it
+  described only exists in the old tables, and since the v2 interface was turned on everywhere in July none of those
+  screens render any more. No screen in the product lets you change how many rows you see; adding one would be a new
+  feature, not a fix. The orphan work-cycle steps item was downgraded to a guard after production showed zero of them.</li>
+  <li><strong>Checked against production.</strong> No worker account has ever signed in (five accounts, zero logins),
+  twenty-three measurements belong to worker profiles, and there are no orphan work-cycle steps. Everything else was
+  read in code only — nothing was reproduced against a running system, so the number of records affected by A2 is
+  still unknown. The landing-page backlog was not re-audited; it is a static marketing site and its items are
+  unchanged since April.</li>
 </ul>
 
 <footer>
-  Wergonic — Open Work · 10 August 2026 · 98 open items · replaces the QA bug report (13 Jul), general audit (20 Jul),
-  calculation issues (27 Jul), silent-failure audit (6 Aug), web improvement tasks (27 Jul), backend testing epic
-  (5 Aug) and the April backlog.
+  Wergonic — Open Work · rev 3, 12 August 2026 · 108 open items · replaces the QA bug report (13 Jul), general audit
+  (20 Jul), calculation issues (27 Jul), silent-failure audit (6 Aug), web improvement tasks (27 Jul), backend testing
+  epic (5 Aug) and the April backlog.
 </footer>
 
 </body>
