@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <title>Wergonic — User Manual</title>
 <style>
-@font-face{font-family:'Inter';font-weight:400;src:url('file:///Users/mac/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-Regular-slnt=0.ttf');}
-@font-face{font-family:'Inter';font-weight:500;src:url('file:///Users/mac/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-Medium-slnt=0.ttf');}
-@font-face{font-family:'Inter';font-weight:600;src:url('file:///Users/mac/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-SemiBold-slnt=0.ttf');}
-@font-face{font-family:'Inter';font-weight:700;src:url('file:///Users/mac/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-Bold-slnt=0.ttf');}
-@font-face{font-family:'Inter';font-weight:800;src:url('file:///Users/mac/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-ExtraBold-slnt=0.ttf');}
+@font-face{font-family:'Inter';font-weight:400;src:url('file:///D:/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-Regular-slnt=0.ttf');}
+@font-face{font-family:'Inter';font-weight:500;src:url('file:///D:/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-Medium-slnt=0.ttf');}
+@font-face{font-family:'Inter';font-weight:600;src:url('file:///D:/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-SemiBold-slnt=0.ttf');}
+@font-face{font-family:'Inter';font-weight:700;src:url('file:///D:/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-Bold-slnt=0.ttf');}
+@font-face{font-family:'Inter';font-weight:800;src:url('file:///D:/Projects/Wergonic/wergonic-flutter/fonts/inter/Inter-ExtraBold-slnt=0.ttf');}
 
 :root{
   --blue:#1DBBF8;--blue-deep:#0F97CE;--ink:#141a1e;--body:#33404a;--muted:#6b7681;
@@ -64,7 +64,7 @@ em{color:#26313a;font-style:italic;}
 
 /* ---------- TOC ---------- */
 .toc{margin-top:6px;}
-.toc a,.toc .row{display:flex;align-items:center;gap:14px;padding:11px 4px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;}
+.toc a,.toc .row{display:flex;align-items:center;gap:14px;padding:10px 4px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;}
 .toc .n{width:28px;height:28px;border-radius:8px;background:var(--soft2);color:var(--blue-deep);
   font-weight:800;font-size:11pt;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
 .toc .t{font-weight:600;color:var(--ink);font-size:11pt;}
@@ -108,6 +108,8 @@ th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);verti
 tr:last-child td{border-bottom:none;}
 th{background:var(--soft);font-weight:600;color:var(--ink);font-size:8.8pt;text-transform:uppercase;letter-spacing:.4px;}
 td.k{font-weight:600;color:var(--ink);width:34%;}
+table.tight td,table.tight th{padding:6px 10px;font-size:9pt;}
+td.k.narrow{width:22%;}
 
 /* ---------- misc ---------- */
 .rule{height:2px;background:linear-gradient(90deg,var(--blue),transparent);border-radius:2px;margin:6px 0 16px;}
@@ -119,6 +121,8 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
 .faqa{color:#3a454e;margin-bottom:6px;}
 .riskdot{font-weight:700;}
 .kchips{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+.refs{font-size:9pt;color:#3a454e;}
+.refs li{margin-bottom:8px;}
 </style>
 </head>
 <body>
@@ -136,7 +140,7 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
     <div class="sub">Ergonomic risk assessment &amp; work technique training, powered by wearable motion sensors.</div>
     <div class="accent"></div>
     <div class="meta">
-      <div><div class="l">Manual</div><div class="v">Version 3.0</div></div>
+      <div><div class="l">Manual</div><div class="v">Version 3.1</div></div>
       <div><div class="l">Mobile App</div><div class="v">Android v5.1.7</div></div>
       <div><div class="l">Covers</div><div class="v">App &amp; Web Dashboard</div></div>
     </div>
@@ -153,11 +157,12 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
     <div class="row"><span class="n">1</span><span class="t">The Wergonic System</span><span class="d">Overview &amp; components</span></div>
     <div class="row"><span class="n">2</span><span class="t">What's in the Kit</span><span class="d">Hardware checklist</span></div>
     <div class="row"><span class="n">3</span><span class="t">Sensors &amp; What It Measures</span><span class="d">IMUs, placement, metrics</span></div>
-    <div class="row"><span class="n">4</span><span class="t">System Setup</span><span class="d">App, pairing, phone, tags</span></div>
+    <div class="row"><span class="n">4</span><span class="t">System Setup</span><span class="d">App, pairing, phone, Work Library</span></div>
     <div class="row"><span class="n">5</span><span class="t">Running a Measurement</span><span class="d">Fit, session, calibration, live</span></div>
     <div class="row"><span class="n">6</span><span class="t">Reviewing Results</span><span class="d">In the app &amp; on the dashboard</span></div>
-    <div class="row"><span class="n">7</span><span class="t">Maintenance &amp; Return</span><span class="d">Cleaning, storage, return</span></div>
-    <div class="row"><span class="n">8</span><span class="t">Troubleshooting &amp; FAQ</span><span class="d">Common issues</span></div>
+    <div class="row"><span class="n">7</span><span class="t">Reference Values</span><span class="d">Recommended limits &amp; sources</span></div>
+    <div class="row"><span class="n">8</span><span class="t">Maintenance &amp; Return</span><span class="d">Cleaning, storage, return</span></div>
+    <div class="row"><span class="n">9</span><span class="t">Troubleshooting &amp; FAQ</span><span class="d">Common issues</span></div>
   </div>
 </section>
 
@@ -171,7 +176,7 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
       <h3>Smart Workwear</h3>
       <ul>
         <li>Motion sensors fitted into garments for easy on/off use</li>
-        <li>Tracks trunk &amp; head, arms and wrist</li>
+        <li>Tracks head, trunk, both arms, hand and wrist</li>
         <li>Estimates reachability (hand's reach)</li>
       </ul>
       <h3>Mobile App <span class="small">· Android</span></h3>
@@ -179,13 +184,13 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
         <li>Streams and records sensor data over Bluetooth</li>
         <li>Real-time posture &amp; movement metrics</li>
         <li>Annotate activities and breaks</li>
-        <li>Syncs sessions to the web dashboard</li>
+        <li>Syncs measurements to the web dashboard</li>
       </ul>
     </div>
     <div>
       <h3>Web Dashboard</h3>
       <ul>
-        <li>Programme activity &amp; work-cycle tags</li>
+        <li>Programme work cycles, activities and conditions</li>
         <li>Generate risk-assessment reports</li>
         <li>Built-in frameworks: RAMP, RULA, REBA, MEC (Volvo)</li>
         <li>AI-assisted interpretation of results</li>
@@ -224,7 +229,7 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
     <div>
       <figure class="photo">
         <img src="./manual_assets/kit_imus.jpg">
-        <figcaption>The six Wergonic / Movesense IMUs in their colour-coded moulds — Right arm Blue, Trunk Green, Head Black, Left arm Red, Hand Silver, Forearm Beige.</figcaption>
+        <figcaption>The six Wergonic / Movesense IMUs in their colour-coded moulds — Right arm Blue, Trunk Green, Head Black, Left arm Red, Hand Silver, Wrist Beige.</figcaption>
       </figure>
     </div>
   </div>
@@ -247,37 +252,82 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
       </ul>
     </div>
     <div>
-      <h4>Placement &amp; colour code</h4>
+      <h4>Colour code</h4>
       <div class="chips">
-        <span class="chip"><span class="sw" style="background:#1DBBF8"></span>Right arm — Blue</span>
-        <span class="chip"><span class="sw" style="background:#00C21E"></span>Trunk — Green</span>
         <span class="chip"><span class="sw" style="background:#111"></span>Head — Black</span>
+        <span class="chip"><span class="sw" style="background:#00C21E"></span>Trunk — Green</span>
+        <span class="chip"><span class="sw" style="background:#1DBBF8"></span>Right arm — Blue</span>
         <span class="chip"><span class="sw" style="background:#FF2A2A"></span>Left arm — Red</span>
         <span class="chip"><span class="sw" style="background:#C0C0C0"></span>Hand — Silver</span>
-        <span class="chip"><span class="sw" style="background:#C8AD7F"></span>Forearm — Beige</span>
+        <span class="chip"><span class="sw" style="background:#C8AD7F"></span>Wrist — Beige</span>
       </div>
-      <p class="small">One IMU on each arm (deltoid), one on the trunk (cervical/thoracic junction), one on the head (forehead), one on the dominant forearm and one on the dominant hand.</p>
     </div>
   </div>
 
-  <h3>Measured quantities</h3>
-  <table>
-    <tr><td class="k">Trunk &amp; head inclination</td><td>Angle (°) of trunk / head relative to a vertical reference set during calibration — flexion, extension or a combination.</td></tr>
-    <tr><td class="k">Arm elevation</td><td>Upper-arm posture (°) and speed of movement (°/s) — all shoulder movements relative to vertical.</td></tr>
-    <tr><td class="k">Wrist angular velocity</td><td>Rate of rotation (°/s) between hand and forearm, from the hand and forearm IMUs.</td></tr>
+  <h3>3.1 · Where each sensor goes</h3>
+  <table class="tight">
+    <tr><th style="width:20%">Body part</th><th style="width:16%">Colour</th><th>Placement</th></tr>
+    <tr><td class="k">Head</td><td>Black</td><td>Centre of the <strong>forehead</strong>, held by the headband.</td></tr>
+    <tr><td class="k">Trunk</td><td>Green</td><td>Upper back, at the base of the neck (cervical/thoracic junction), in the shirt's back pocket.</td></tr>
+    <tr><td class="k">Right arm</td><td>Blue</td><td>Outer side of the right upper arm, over the deltoid, in the shirt's sleeve pocket.</td></tr>
+    <tr><td class="k">Left arm</td><td>Red</td><td>Outer side of the left upper arm, over the deltoid, in the shirt's sleeve pocket.</td></tr>
+    <tr><td class="k">Hand</td><td>Silver</td><td>Back of the dominant hand, in the glove's hand pocket.</td></tr>
+    <tr><td class="k">Wrist</td><td>Beige</td><td>Dominant forearm, <strong>just above the wrist</strong>, in the glove's lower pocket.</td></tr>
   </table>
+
+  <div class="note"><b>One name: Wrist.</b> The beige sensor is the <b>wrist</b> sensor throughout this manual. In the app's <i>Pairing</i> and <i>Settings → Sensors &amp; Hardware</i> screens it is currently still labelled <i>Forearm</i> — it is the same sensor. Its results always appear under <b>Wrist</b>.</div>
+
+  <h3>3.2 · What is measured on each body part</h3>
+  <p>All angles are inclinations measured against a <strong>vertical reference</strong> set during calibration. All speeds are <strong>angular velocity</strong> — how fast the body part moves, in degrees per second.</p>
+  <table class="tight">
+    <tr><th style="width:18%">Body part</th><th style="width:41%">Angles (°)</th><th>Speed of movement (°/s)</th></tr>
+    <tr>
+      <td class="k">Head</td>
+      <td>Forward/backward bending · Side bending</td>
+      <td>Not reported</td>
+    </tr>
+    <tr>
+      <td class="k">Trunk</td>
+      <td>Forward bending · Side bending</td>
+      <td>Not reported</td>
+    </tr>
+    <tr>
+      <td class="k">Right arm<br>Left arm</td>
+      <td>Elevation of the upper arm (all shoulder movements, relative to vertical) · Forward bending · Side bending</td>
+      <td>Arm angular velocity</td>
+    </tr>
+    <tr>
+      <td class="k">Wrist</td>
+      <td>Not reported as an angle</td>
+      <td>Wrist angular velocity — the speed of the hand turning relative to the forearm, from the Hand and Wrist sensors together</td>
+    </tr>
+    <tr>
+      <td class="k">Hand</td>
+      <td>—</td>
+      <td>Hand-transmitted vibration exposure</td>
+    </tr>
+    <tr>
+      <td class="k">Heart rate <span class="small">(optional band)</span></td>
+      <td>—</td>
+      <td>Heart rate, and time spent above 33% of heart-rate reserve</td>
+    </tr>
+  </table>
+
+  <div class="note warn"><b>Rotation is not measured.</b> The system does not measure axial rotation — twisting of the trunk, turning of the head, or rotation of the upper arm. Every angle in the report is an <i>inclination</i> against vertical. The only rotational figure is the wrist's angular velocity, which is the speed of the hand turning relative to the forearm, not a twist angle.</div>
+
+  <p class="small"><b>Live tiles vs report.</b> During recording, head, trunk and arm <i>side bending</i> and arm <i>forward bending</i> are shown as extra tiles — switch them on with <b>Show extra tiles</b> in Settings. The full report is covered in chapter 6, and the recommended limits for each quantity in chapter 7.</p>
 </section>
 
 <!-- ============ 4 SETUP ============ -->
 <section class="sect">
   <div class="shead"><div class="badge">4</div><div><div class="eyebrow">Getting started</div><h2>System Setup</h2></div></div>
-  <p class="lead">Use the provided phone (mostly pre-configured) or your own Android phone. Either way, finish by creating your tags on the dashboard.</p>
+  <p class="lead">Use the provided phone (mostly pre-configured) or your own Android phone. Either way, finish by setting up your Work Library on the dashboard.</p>
 
   <h3>4.1 · Using the provided phone</h3>
   <p>The kit phone already has the correct Android version, the latest Wergonic App and pre-paired IMUs. Two steps remain:</p>
   <ol>
     <li><strong>Sign in to Google Play</strong> with a Gmail account so the app stays updated with new releases.</li>
-    <li><strong>Create your tags</strong> on the dashboard (see 4.4).</li>
+    <li><strong>Set up your Work Library</strong> on the dashboard (see 4.4).</li>
   </ol>
   <p class="small">Resetting the phone to factory settings is optional. If you do, follow the "own phone" steps below afterwards.</p>
 
@@ -296,12 +346,12 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
   <p>Open <strong>Settings</strong> (gear icon, top-right of the home screen) and go to <strong>Sensors &amp; Hardware</strong>. Each body part has a <strong>Pair</strong> button; tap it and pick the sensor from the list. Identify a sensor by the last four digits of the serial number on its back. Once connected, the row shows <strong>Paired</strong> in cyan with battery level and an <strong>Unpair</strong> option.</p>
 
   <div class="shots">
-    <figure class="shot"><div class="frame"><img src="./manual_assets/02-settings-sensors.png"></div><figcaption><span class="cn">A</span>Settings → Sensors &amp; Hardware. Pair / Unpair each body part; "Head alignment" sits below.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/02-settings-sensors.png"></div><figcaption><span class="cn">A</span>Settings → Sensors &amp; Hardware. Pair / Unpair each body part; "Head alignment" sits below. The beige wrist sensor is listed here as <i>Forearm</i>.</figcaption></figure>
     <figure class="shot"><div class="frame"><img src="./manual_assets/03-pair-dialog.png"></div><figcaption><span class="cn">B</span>"Select a sensor to pair" — tap the matching serial number to connect it to that body part.</figcaption></figure>
   </div>
 
-  <p><strong>Colour-code standard —</strong> Right arm Blue · Trunk Green · Head Black · Left arm Red · Hand Silver · Forearm Beige. The optional HR chest band pairs with the mould-free sensor.</p>
-  <div class="note"><b>Head alignment.</b> The head IMU can face either way. In Settings, set <b>Logo side facing forehead</b> (logo forward) or <b>Back side facing forehead</b> (logo backward) to match how you fit it.</div>
+  <p><strong>Colour-code standard —</strong> Head Black · Trunk Green · Right arm Blue · Left arm Red · Hand Silver · Wrist Beige. The optional HR chest band pairs with the mould-free sensor.</p>
+  <div class="note"><b>Head alignment.</b> The head IMU can face either way on the headband. In Settings, set <b>Logo side facing forehead</b> (logo turned inwards, towards the skin) or <b>Back side facing forehead</b> (logo turned outwards) to match how you fitted it.</div>
   <div class="note tip"><b>Test auto-pairing.</b> Log out, close and reopen the app — sensors should reconnect automatically. If you're not measuring right away, remove the batteries to save charge.</div>
 
   <h4>Phone settings (own phone)</h4>
@@ -312,13 +362,20 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
     <li><strong>Unused-apps / app-pausing:</strong> disable for the Wergonic App.</li>
   </ul>
 
-  <h3>4.4 · Create your tags on the dashboard</h3>
-  <p>Sign in at <strong>cloud.wergonic.com</strong> and open <strong>Tags</strong> in the left menu. Tags organise your measurements in the cloud.</p>
-  <ul>
-    <li><strong>Activities</strong> — choose <em>Work Task</em>, press <em>Add category</em>, then add activities (use <em>+ Add item</em> for several). Optional in online mode.</li>
-    <li><strong>Work Cycles</strong> — choose <em>Work Cycle</em>. Prepare them in Excel and import, or add them with the <em>+</em> button. Cycles are organised by Factory, Line, Workstation, Model, Task and Time. <strong>Required</strong> when measuring a work cycle.</li>
-  </ul>
-  <p class="small" style="margin-top:8px"><b>Note:</b> Dashboard (web) screenshots are covered separately in the online help — this manual focuses on the mobile app.</p>
+  <h3>4.4 · Set up your Work Library on the dashboard</h3>
+  <p>Sign in at <strong>cloud.wergonic.com</strong>. In the left menu, under <strong>Setup</strong>, open <strong>Work Library</strong>. This is where you prepare everything the app offers you during a measurement. The page has three tabs:</p>
+
+  <table class="tight">
+    <tr><th style="width:22%">Tab</th><th>What it holds</th></tr>
+    <tr><td class="k">Work Cycles</td><td>Your factories and the work they contain, as a tree: <strong>Factory → Line → Workstation → Operator → Work cycle → Tasks</strong>. Each task has a name, an optional description and a duration in seconds. <strong>Required</strong> when you measure a work cycle.</td></tr>
+    <tr><td class="k">Activities</td><td>Activity groups and the activities inside them. These are the buttons you tap during a free recording to mark what the worker is doing. Optional, and only available when the phone is online.</td></tr>
+    <tr><td class="k">Conditions</td><td>Condition groups and their values — the circumstances you want to tag a measurement with (single-choice or multiple-choice). Optional.</td></tr>
+  </table>
+
+  <p><strong>Adding work cycles.</strong> On the <em>Work Cycles</em> tab use <strong>Add factory</strong> to build the tree by hand, then add lines, workstations, operators, work cycles and tasks step by step. To load many at once, prepare them in Excel and use <strong>Import CSV/Excel</strong>.</p>
+  <p><strong>Adding activities and conditions.</strong> On the <em>Activities</em> or <em>Conditions</em> tab, first create a group, then add items to it. Items can later be renamed, merged into another item, or retired.</p>
+
+  <div class="note tip"><b>Menu names.</b> The left menu is grouped into <b>Overview</b> (Home), <b>Measurements</b>, <b>Risk assessments</b>, <b>Workers</b>, <b>Setup</b> (Work Library) and — for organisation admins — <b>Team</b>. This manual uses those exact names.</div>
 </section>
 
 <!-- ============ 5 MEASUREMENT ============ -->
@@ -334,32 +391,58 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
   </ul>
 
   <h3>5.2 · Start the IMUs &amp; fit the workwear</h3>
-  <p>Insert batteries and confirm each IMU shows a <strong>red blinking light</strong>. Fit the sensors with the Movesense logo <strong>facing outward and upright</strong>:</p>
+  <p>Insert batteries and confirm each IMU shows a <strong>red blinking light</strong>. Unless stated otherwise, fit each sensor with the Movesense logo <strong>facing outward and upright</strong>:</p>
   <ul>
-    <li><strong>Shirt (trunk &amp; arms):</strong> slide IMUs into the pockets — Right arm Blue, Trunk Green, Left arm Red. Shirt should fit snugly.</li>
-    <li><strong>Head:</strong> attach the black IMU to the headband, logo forward or backward — match the Head alignment setting.</li>
-    <li><strong>Glove (hand &amp; forearm):</strong> Hand Silver, Forearm Beige, in the matching pockets.</li>
+    <li><strong>Head (black) — headband.</strong> Put the headband on so the sensor sits in the <strong>centre of the forehead</strong>, just above the eyebrows and below the hairline. <em>Not</em> over the ear and not on the back of the head. The sensor may face either way; whichever you choose, set <strong>Head alignment</strong> in Settings to match (see 4.3).</li>
+    <li><strong>Trunk (green) — shirt.</strong> Slide the sensor into the pocket on the <strong>upper back</strong>, at the base of the neck. The shirt should fit snugly so the sensor cannot slide.</li>
+    <li><strong>Arms (blue, red) — shirt sleeves.</strong> Right arm blue, left arm red, in the pocket on the outer side of each upper arm.</li>
+    <li><strong>Hand (silver) and Wrist (beige) — glove.</strong> Silver on the back of the hand, beige in the lower pocket on the forearm just above the wrist. Both are worn on the <strong>dominant</strong> arm.</li>
   </ul>
   <figure class="photo sm">
     <img src="./manual_assets/shirt_pocket.jpg">
-    <figcaption>Trunk IMU seated in the shirt pocket — logo facing outward and upright.</figcaption>
+    <figcaption>Trunk IMU seated in the shirt's upper-back pocket at the base of the neck — logo facing outward and upright.</figcaption>
   </figure>
+  <div class="note"><b>The hand and wrist sensors work as a pair.</b> Connect both, or neither. The wrist result is calculated from the two together.</div>
 
   <h3>5.3 · Start a new measurement in the app</h3>
   <p>On the home screen tap <strong>New measurement</strong>, then complete the two setup pages and confirm pairing before calibration.</p>
 
   <div class="shots">
     <figure class="shot"><div class="frame"><img src="./manual_assets/01-home.png"></div><figcaption><span class="cn">C</span>Home — tap <b>New measurement</b>. The folder icon opens history; the gear opens settings.</figcaption></figure>
-    <figure class="shot"><div class="frame"><img src="./manual_assets/05-config.png"></div><figcaption><span class="cn">D</span>Page 1 — choose feedback type and <b>Measurement Type</b>: <b>Activity</b> or <b>Work Cycle</b>. Pick or search a worker.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/05-config.png"></div><figcaption><span class="cn">D</span>Page 1 — two separate choices: <b>Feedback</b> (how the worker is warned while recording) and <b>Measurement Type</b> (how the work is logged). Then pick or search a worker.</figcaption></figure>
     <figure class="shot"><div class="frame"><img src="./manual_assets/06-profile.png"></div><figcaption><span class="cn">E</span>Page 2 — worker profile (workplace, ID, gender, dominant arm, age, weight). Tap <b>Next</b>.</figcaption></figure>
   </div>
+
+  <h4>Page 1 in detail — Feedback and Measurement Type are independent</h4>
+  <p>They answer two different questions. You set both, in any combination.</p>
+  <table class="tight">
+    <tr><th style="width:26%">Setting</th><th style="width:22%">Option</th><th>What it does</th></tr>
+    <tr>
+      <td class="k narrow" rowspan="2"><strong>Feedback</strong><br><span class="small">How the worker is warned <em>during</em> the recording</span></td>
+      <td class="k">Immediate feedback</td>
+      <td>Real-time alerts the moment a limit is passed — the metric square turns orange or red, and vibration or voice cues fire if you enabled them in Settings. Use this for work-technique training.</td>
+    </tr>
+    <tr>
+      <td class="k">Accumulated feedback</td>
+      <td>No alerts while working. The worker is left undisturbed and gets a summary once the measurement ends. Use this when you want to record normal work without influencing it.</td>
+    </tr>
+    <tr>
+      <td class="k narrow" rowspan="2"><strong>Measurement Type</strong><br><span class="small">How the work is logged</span></td>
+      <td class="k">Activity</td>
+      <td>Record freely and log activities as they happen. Nothing is planned in advance — you tap the activity being done now, and the previous one ends automatically.</td>
+    </tr>
+    <tr>
+      <td class="k">Work Cycle</td>
+      <td>Follow a predefined task list for a station. Pick factory, line, workstation, operator and model first, then step through the tasks manually or let the app advance them automatically. Requires a work cycle prepared in the Work Library, and an online phone.</td>
+    </tr>
+  </table>
   <div class="note small"><b>Online vs offline.</b> To load a pre-programmed <b>Work Cycle</b> or reuse a saved worker profile you must be online. Offline, create a new profile and sync later.</div>
 
   <h3>5.4 · Confirm pairing, then calibrate</h3>
   <p>The <strong>Pairing</strong> screen shows the shirt with each body part. Paired sensors show a <strong>cyan check</strong>; tap a body part to pair, or tap a paired one to unpair. When ready, tap <strong>Next</strong> (top-right) to calibrate.</p>
 
   <div class="shots">
-    <figure class="shot"><div class="frame"><img src="./manual_assets/04-pairing.png"></div><figcaption><span class="cn">F</span>Pairing overview — connection cards show each sensor's serial and battery. Tap <b>Next</b> when the sensors you need are green.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/04-pairing.png"></div><figcaption><span class="cn">F</span>Pairing overview — connection cards show each sensor's serial and battery. Tap <b>Next</b> when the sensors you need are connected.</figcaption></figure>
     <figure class="shot"><div class="frame"><img src="./manual_assets/07-calibration.png"></div><figcaption><span class="cn">G</span>Calibration — follow the numbered steps and demo video, then <b>Start Calibration</b> and hold the pose for 5&nbsp;seconds.</figcaption></figure>
   </div>
 
@@ -385,33 +468,80 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
 <!-- ============ 6 RESULTS ============ -->
 <section class="sect">
   <div class="shead"><div class="badge">6</div><div><div class="eyebrow">Analysis</div><h2>Reviewing Results</h2></div></div>
-  <p class="lead">Review a session directly in the app, or in full on the web dashboard.</p>
+  <p class="lead">Review a measurement directly in the app, or in full on the web dashboard.</p>
 
   <div class="grid2" style="align-items:flex-start">
     <div>
       <h3>In the app</h3>
-      <p>Tap the <strong>folder icon</strong> (home, top-right) to open your sessions. On a session, tap the <strong>⋮ menu → Report</strong>. The report opens as <strong>swipeable pages</strong> — one per body part — with the numbers in tables. Reference limits are shown in <span style="color:var(--blue-deep);font-weight:600">blue</span>.</p>
+      <p>Tap the <strong>folder icon</strong> (home, top-right) to open your measurements. On a measurement, tap the <strong>⋮ menu → Report</strong>. The report opens as <strong>swipeable pages</strong> — one per body part — with the numbers in tables. Recommended limits are shown in <span style="color:var(--blue-deep);font-weight:600">blue</span> next to your result; all of them are listed in chapter 7.</p>
       <ul class="small">
         <li>The ⋮ menu also offers <b>Sync measurement</b>, <b>Share</b> and <b>Delete</b>.</li>
-        <li>Tapping a session opens its <b>timeline</b> (activities, breaks).</li>
+        <li>Tapping a measurement opens its <b>timeline</b> (activities, breaks).</li>
       </ul>
     </div>
     <div>
-      <figure class="shot" style="width:168px;margin:0 auto"><div class="frame"><img src="./manual_assets/09-report.png"></div><figcaption><span class="cn">I</span>In-app report — per-body-part tables; blue values are recommended 8-hour limits.</figcaption></figure>
+      <figure class="shot" style="width:168px;margin:0 auto"><div class="frame"><img src="./manual_assets/09-report.png"></div><figcaption><span class="cn">I</span>In-app report — per-body-part tables; blue values are the recommended 8-hour limits.</figcaption></figure>
     </div>
   </div>
 
   <h3>On the web dashboard</h3>
-  <p>Online sessions upload automatically; offline sessions upload when you reconnect (may take a few minutes). Sign in at <strong>cloud.wergonic.com</strong>, open <strong>Finished Sessions</strong>, and click <strong>Details</strong> on a session. Results are shown as:</p>
+  <p>Online measurements upload automatically; offline ones upload when you reconnect (may take a few minutes). Sign in at <strong>cloud.wergonic.com</strong> and open <strong>Measurements</strong> in the left menu. The table lists every measurement with its worker, recorded body parts, duration, start time, risk assessments and status. <strong>Click a finished measurement</strong> to open its details.</p>
+  <p>Results are shown as:</p>
   <ul>
     <li><strong>Pie charts</strong> — posture (°) first; switch to <em>Speed of movement</em> for angular velocity (°/s). Export to Excel/PDF, or open <em>Show Detailed View</em> for time plots.</li>
     <li><strong>Tables</strong> — posture, an algorithm-based reach estimate, then speed of movement.</li>
   </ul>
+  <p>The row menu on each measurement also offers <strong>Run risk assessment</strong>, <strong>Generate report</strong>, <strong>Export raw data</strong> and <strong>Archive</strong>. Select several measurements to <strong>compare</strong> them or build a <strong>combined report</strong>.</p>
 </section>
 
-<!-- ============ 7 MAINTENANCE ============ -->
+<!-- ============ 7 REFERENCE VALUES ============ -->
 <section class="sect">
-  <div class="shead"><div class="badge">7</div><div><div class="eyebrow">Care</div><h2>Maintenance &amp; Return</h2></div></div>
+  <div class="shead"><div class="badge">7</div><div><div class="eyebrow">Interpretation</div><h2>Reference Values</h2></div></div>
+  <p class="lead">These are the recommended limits the app shows in blue beside your results. They apply to a full <strong>8-hour working day</strong>. Exceeding one is not a diagnosis — it is a signal that the exposure should be reduced.</p>
+
+  <h3>7.1 · How to read the numbers</h3>
+  <ul>
+    <li><strong>50th percentile (median)</strong> — the value the worker was at or below for half of the measured time. This is the typical working posture or speed.</li>
+    <li><strong>90th percentile</strong> — the value reached during the most demanding 10% of the time. This captures the peaks.</li>
+    <li><strong>Time percent</strong> — how much of the measured time was spent inside each angle band.</li>
+  </ul>
+
+  <h3>7.2 · Recommended limits</h3>
+  <table class="tight">
+    <tr><th style="width:20%">Body part</th><th style="width:32%">Quantity</th><th style="width:22%">Recommended limit</th><th>Source</th></tr>
+    <tr><td class="k" rowspan="3">Arms<br><span class="small">(unsupported)</span></td><td>Elevation angle — 50th percentile</td><td><strong>≤ 30°</strong></td><td rowspan="2">Hansson et al., 2016</td></tr>
+    <tr><td>Elevation angle — 90th percentile</td><td><strong>≤ 60°</strong></td></tr>
+    <tr><td>Angular velocity — 50th percentile</td><td><strong>≤ 30 °/s</strong></td><td>Arvidsson et al., 2017</td></tr>
+    <tr><td class="k" rowspan="2">Trunk</td><td>Forward bending — 50th percentile</td><td><strong>≤ 20°</strong></td><td rowspan="2">Hansson et al., 2016</td></tr>
+    <tr><td>Side bending — 50th percentile</td><td><strong>≤ 20°</strong></td></tr>
+    <tr><td class="k">Head</td><td>Side bending — 50th percentile</td><td><strong>≤ 20°</strong></td><td>Hansson et al., 2016</td></tr>
+    <tr><td class="k">Wrist</td><td>Angular velocity — 50th percentile</td><td><strong>≤ 20 °/s</strong><br><span class="small">≤ 15 °/s if the work is also assessed as force-demanding</span></td><td>Arvidsson et al., 2017</td></tr>
+    <tr><td class="k">Heart rate <span class="small">(optional band)</span></td><td>Accumulated time above 33% of heart-rate reserve (HRR)</td><td>Keep as low as possible</td><td>—</td></tr>
+  </table>
+
+  <h3>7.3 · Angle bands used in the report</h3>
+  <p>The report also shows how much of the time was spent in each band. The lowest band starts at the calibrated upright posture and includes a small backward margin, so a slight lean backwards is still counted as neutral.</p>
+  <table class="tight">
+    <tr><th style="width:26%">Quantity</th><th>Bands reported</th></tr>
+    <tr><td class="k">Trunk — forward bending</td><td>10°–20° · 20°–45° · &gt; 45°</td></tr>
+    <tr><td class="k">Trunk — side bending</td><td>0°–10° · 10°–30° · &gt; 30°</td></tr>
+    <tr><td class="k">Head — forward bending</td><td>10°–20° · 20°–30° · &gt; 30°</td></tr>
+    <tr><td class="k">Arm — elevation</td><td>0°–30° · 30°–60° · &gt; 60°</td></tr>
+  </table>
+  <p class="small">Trunk bands follow the thresholds used in the RAMP tool (Lind et al., 2020).</p>
+
+  <h3>7.4 · Full references</h3>
+  <p>These are the sources cited in short form inside the mobile app.</p>
+  <ol class="refs">
+    <li>Arvidsson, I., Dahlqvist, C., Enquist, H., &amp; Nordander, C. (2017). <em>Åtgärdsnivåer mot belastningsskada</em> [Action levels against work-related musculoskeletal disorders]. Arbets- och miljömedicin Syd, Report No. 18/2017. Lund, Sweden.</li>
+    <li>Hansson, G.-Å., Arvidsson, I., &amp; Nordander, C. (2016). <em>Riktvärden för att bedöma risken för belastningsskador, baserade på tekniska mätningar av exponeringen</em> [Guideline values for assessing the risk of work-related musculoskeletal disorders, based on technical measurements of the exposure]. Arbets- och miljömedicin, Lund, Report No. 4/2016.</li>
+    <li>Lind, C. M., Forsman, M., &amp; Rose, L. M. (2020). Development and evaluation of RAMP II — a practitioner's tool for assessing musculoskeletal disorder risk factors in industrial manual handling. <em>Ergonomics, 63</em>(4), 477–504.</li>
+  </ol>
+</section>
+
+<!-- ============ 8 MAINTENANCE ============ -->
+<section class="sect">
+  <div class="shead"><div class="badge">8</div><div><div class="eyebrow">Care</div><h2>Maintenance &amp; Return</h2></div></div>
   <div class="grid2">
     <div>
       <div class="card">
@@ -437,9 +567,9 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
   </div>
 </section>
 
-<!-- ============ 8 TROUBLESHOOTING ============ -->
+<!-- ============ 9 TROUBLESHOOTING ============ -->
 <section class="sect">
-  <div class="shead"><div class="badge">8</div><div><div class="eyebrow">Support</div><h2>Troubleshooting &amp; FAQ</h2></div></div>
+  <div class="shead"><div class="badge">9</div><div><div class="eyebrow">Support</div><h2>Troubleshooting &amp; FAQ</h2></div></div>
 
   <h3>Troubleshooting</h3>
   <table>
@@ -448,6 +578,7 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
     <tr><td class="k">IMU is slow to pair</td><td>Start the IMU <em>before</em> opening the app and wait ~1 minute. Don't repeatedly tap pair/unpair. Try another location — some environments disturb Bluetooth.</td></tr>
     <tr><td class="k">Battery lid won't open</td><td>Use only CR2025, inserted the right way up. Never use CR2032 — it can jam and damage the lid.</td></tr>
     <tr><td class="k">App stuck loading after calibration</td><td>Usually an offline network search. Enable flight mode <em>with Bluetooth on</em>, or work online for best stability.</td></tr>
+    <tr><td class="k">No wrist result in the report</td><td>The Hand and Wrist sensors work as a pair. If only one was connected, no wrist value is calculated.</td></tr>
   </table>
 
   <h3>Frequently asked questions</h3>
@@ -455,6 +586,10 @@ td.k{font-weight:600;color:var(--ink);width:34%;}
   <p class="faqa">No — only Bluetooth is required. Data is stored on the phone and uploads when you're back online. Online mode is more stable and is recommended.</p>
   <p class="faqq">How far does Bluetooth reach?</p>
   <p class="faqa">Roughly 10 metres, but range depends on the environment where you measure.</p>
+  <p class="faqq">Does the system measure rotation?</p>
+  <p class="faqa">No. It measures inclination angles against vertical and speed of movement. Twisting of the trunk, head or upper arm is not measured — see chapter 3.2.</p>
+  <p class="faqq">Where exactly does the head sensor go?</p>
+  <p class="faqa">In the centre of the forehead, held by the headband — not over the ear. See chapter 5.2.</p>
 
   <div class="note tip" style="margin-top:20px"><b>Need help?</b> Contact the Wergonic team for hardware replacements or support with setup and measurements.</div>
 </section>
