@@ -272,7 +272,7 @@ td.k.narrow{width:22%;}
     <tr><td class="k">Right arm</td><td>Blue</td><td>Outer side of the right upper arm, over the deltoid, in the shirt's sleeve pocket.</td></tr>
     <tr><td class="k">Left arm</td><td>Red</td><td>Outer side of the left upper arm, over the deltoid, in the shirt's sleeve pocket.</td></tr>
     <tr><td class="k">Hand</td><td>Silver</td><td>Back of the dominant hand, in the glove's hand pocket.</td></tr>
-    <tr><td class="k">Forearm</td><td>Beige</td><td>Dominant forearm, in the glove's lower pocket near the wrist.</td></tr>
+    <tr><td class="k">Forearm</td><td>Beige</td><td>Dominant forearm, in the glove's ribbed cuff — see the photo in 5.2.</td></tr>
   </table>
 
   <div class="note"><b>Forearm and wrist are not the same thing.</b> There is no wrist sensor. The beige sensor is the <b>forearm</b> sensor — it sits on the forearm, close to the wrist, and that is what it is called everywhere in the app. The <b>wrist</b> is a result, not a sensor: it is calculated from the <i>Hand</i> and <i>Forearm</i> sensors together, as the difference in movement between them. That is why the report has a <i>Wrist</i> page even though no sensor is called Wrist.</div>
@@ -401,12 +401,18 @@ td.k.narrow{width:22%;}
     <li><strong>Head (black) — headband.</strong> Put the headband on so the sensor sits in the <strong>centre of the forehead</strong>, just above the eyebrows and below the hairline. <em>Not</em> over the ear and not on the back of the head. The sensor may face either way; whichever you choose, set <strong>Head alignment</strong> in Settings to match (see 4.3).</li>
     <li><strong>Trunk (green) — shirt.</strong> Slide the sensor into the pocket on the <strong>upper back</strong>, at the base of the neck. The shirt should fit snugly so the sensor cannot slide.</li>
     <li><strong>Arms (blue, red) — shirt sleeves.</strong> Right arm blue, left arm red, in the pocket on the outer side of each upper arm.</li>
-    <li><strong>Hand (silver) and Forearm (beige) — glove.</strong> Silver on the back of the hand, beige in the glove's lower pocket on the forearm, near the wrist. Both are worn on the <strong>dominant</strong> arm.</li>
+    <li><strong>Hand (silver) and Forearm (beige) — glove.</strong> Silver on the back of the hand, beige in the ribbed cuff that sits on the forearm. Both are worn on the <strong>dominant</strong> arm.</li>
   </ul>
-  <figure class="photo sm">
-    <img src="./manual_assets/shirt_pocket.jpg">
-    <figcaption>Trunk IMU seated in the shirt's upper-back pocket at the base of the neck — logo facing outward and upright.</figcaption>
-  </figure>
+  <div class="grid2" style="align-items:flex-start">
+    <figure class="photo">
+      <img src="./manual_assets/shirt_pocket.jpg">
+      <figcaption>Trunk IMU seated in the shirt's upper-back pocket at the base of the neck — logo facing outward and upright.</figcaption>
+    </figure>
+    <figure class="photo">
+      <img src="./manual_assets/glove_sensors.jpg">
+      <figcaption>The glove, laid flat. Beige <strong>Forearm</strong> sensor in the ribbed cuff (left), silver <strong>Hand</strong> sensor on the back of the hand (right).</figcaption>
+    </figure>
+  </div>
   <div class="note"><b>The hand and forearm sensors work as a pair.</b> Connect both, or neither. The wrist result is calculated from the two together — with only one of them connected there is no wrist result at all.</div>
 
   <h3>5.3 · Start a new measurement in the app</h3>
