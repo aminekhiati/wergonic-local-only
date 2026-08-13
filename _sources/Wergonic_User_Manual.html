@@ -176,7 +176,7 @@ td.k.narrow{width:22%;}
       <h3>Smart Workwear</h3>
       <ul>
         <li>Motion sensors fitted into garments for easy on/off use</li>
-        <li>Tracks head, trunk, both arms, hand and wrist</li>
+        <li>Tracks head, trunk, both arms, hand and forearm</li>
         <li>Estimates reachability (hand's reach)</li>
       </ul>
       <h3>Mobile App <span class="small">· Android</span></h3>
@@ -229,7 +229,7 @@ td.k.narrow{width:22%;}
     <div>
       <figure class="photo">
         <img src="./manual_assets/kit_imus.jpg">
-        <figcaption>The six Wergonic / Movesense IMUs in their colour-coded moulds — Right arm Blue, Trunk Green, Head Black, Left arm Red, Hand Silver, Wrist Beige.</figcaption>
+        <figcaption>The six Wergonic / Movesense IMUs in their colour-coded moulds — Right arm Blue, Trunk Green, Head Black, Left arm Red, Hand Silver, Forearm Beige.</figcaption>
       </figure>
     </div>
   </div>
@@ -259,7 +259,7 @@ td.k.narrow{width:22%;}
         <span class="chip"><span class="sw" style="background:#1DBBF8"></span>Right arm — Blue</span>
         <span class="chip"><span class="sw" style="background:#FF2A2A"></span>Left arm — Red</span>
         <span class="chip"><span class="sw" style="background:#C0C0C0"></span>Hand — Silver</span>
-        <span class="chip"><span class="sw" style="background:#C8AD7F"></span>Wrist — Beige</span>
+        <span class="chip"><span class="sw" style="background:#C8AD7F"></span>Forearm — Beige</span>
       </div>
     </div>
   </div>
@@ -272,10 +272,10 @@ td.k.narrow{width:22%;}
     <tr><td class="k">Right arm</td><td>Blue</td><td>Outer side of the right upper arm, over the deltoid, in the shirt's sleeve pocket.</td></tr>
     <tr><td class="k">Left arm</td><td>Red</td><td>Outer side of the left upper arm, over the deltoid, in the shirt's sleeve pocket.</td></tr>
     <tr><td class="k">Hand</td><td>Silver</td><td>Back of the dominant hand, in the glove's hand pocket.</td></tr>
-    <tr><td class="k">Wrist</td><td>Beige</td><td>Dominant forearm, <strong>just above the wrist</strong>, in the glove's lower pocket.</td></tr>
+    <tr><td class="k">Forearm</td><td>Beige</td><td>Dominant forearm, <strong>just above the wrist</strong>, in the glove's lower pocket.</td></tr>
   </table>
 
-  <div class="note"><b>One name: Wrist.</b> The beige sensor is the <b>wrist</b> sensor throughout this manual. In the app's <i>Pairing</i> and <i>Settings → Sensors &amp; Hardware</i> screens it is currently still labelled <i>Forearm</i> — it is the same sensor. Its results always appear under <b>Wrist</b>.</div>
+  <div class="note"><b>Forearm and wrist are not the same thing.</b> There is no wrist sensor. The beige sensor is the <b>forearm</b> sensor — it sits on the forearm, close to the wrist, and that is what it is called everywhere in the app. The <b>wrist</b> is a result, not a sensor: it is calculated from the <i>Hand</i> and <i>Forearm</i> sensors together, as the difference in movement between them. That is why the report has a <i>Wrist</i> page even though no sensor is called Wrist.</div>
 
   <h3>3.2 · What is measured on each body part</h3>
   <p>All angles are inclinations measured against a <strong>vertical reference</strong> set during calibration. All speeds are <strong>angular velocity</strong> — how fast the body part moves, in degrees per second.</p>
@@ -297,14 +297,19 @@ td.k.narrow{width:22%;}
       <td>Arm angular velocity</td>
     </tr>
     <tr>
-      <td class="k">Wrist</td>
-      <td>Not reported as an angle</td>
-      <td>Wrist angular velocity — the speed of the hand turning relative to the forearm, from the Hand and Wrist sensors together</td>
+      <td class="k">Forearm</td>
+      <td>Elevation of the forearm — used together with the upper-arm angle to estimate how far the hand reaches from the body</td>
+      <td>Feeds the wrist result below</td>
     </tr>
     <tr>
       <td class="k">Hand</td>
       <td>—</td>
       <td>Hand-transmitted vibration exposure</td>
+    </tr>
+    <tr>
+      <td class="k">Wrist <span class="small">(calculated)</span></td>
+      <td>Not reported as an angle</td>
+      <td>Wrist angular velocity — how fast the hand moves relative to the forearm, from the Hand and Forearm sensors together</td>
     </tr>
     <tr>
       <td class="k">Heart rate <span class="small">(optional band)</span></td>
@@ -346,11 +351,11 @@ td.k.narrow{width:22%;}
   <p>Open <strong>Settings</strong> (gear icon, top-right of the home screen) and go to <strong>Sensors &amp; Hardware</strong>. Each body part has a <strong>Pair</strong> button; tap it and pick the sensor from the list. Identify a sensor by the last four digits of the serial number on its back. Once connected, the row shows <strong>Paired</strong> in cyan with battery level and an <strong>Unpair</strong> option.</p>
 
   <div class="shots">
-    <figure class="shot"><div class="frame"><img src="./manual_assets/02-settings-sensors.png"></div><figcaption><span class="cn">A</span>Settings → Sensors &amp; Hardware. Pair / Unpair each body part; "Head alignment" sits below. The beige wrist sensor is listed here as <i>Forearm</i>.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/02-settings-sensors.png"></div><figcaption><span class="cn">A</span>Settings → Sensors &amp; Hardware. Pair / Unpair each body part; "Head alignment" sits below.</figcaption></figure>
     <figure class="shot"><div class="frame"><img src="./manual_assets/03-pair-dialog.png"></div><figcaption><span class="cn">B</span>"Select a sensor to pair" — tap the matching serial number to connect it to that body part.</figcaption></figure>
   </div>
 
-  <p><strong>Colour-code standard —</strong> Head Black · Trunk Green · Right arm Blue · Left arm Red · Hand Silver · Wrist Beige. The optional HR chest band pairs with the mould-free sensor.</p>
+  <p><strong>Colour-code standard —</strong> Head Black · Trunk Green · Right arm Blue · Left arm Red · Hand Silver · Forearm Beige. The optional HR chest band pairs with the mould-free sensor.</p>
   <div class="note"><b>Head alignment.</b> The head IMU can face either way on the headband. In Settings, set <b>Logo side facing forehead</b> (logo turned inwards, towards the skin) or <b>Back side facing forehead</b> (logo turned outwards) to match how you fitted it.</div>
   <div class="note tip"><b>Test auto-pairing.</b> Log out, close and reopen the app — sensors should reconnect automatically. If you're not measuring right away, remove the batteries to save charge.</div>
 
@@ -396,13 +401,13 @@ td.k.narrow{width:22%;}
     <li><strong>Head (black) — headband.</strong> Put the headband on so the sensor sits in the <strong>centre of the forehead</strong>, just above the eyebrows and below the hairline. <em>Not</em> over the ear and not on the back of the head. The sensor may face either way; whichever you choose, set <strong>Head alignment</strong> in Settings to match (see 4.3).</li>
     <li><strong>Trunk (green) — shirt.</strong> Slide the sensor into the pocket on the <strong>upper back</strong>, at the base of the neck. The shirt should fit snugly so the sensor cannot slide.</li>
     <li><strong>Arms (blue, red) — shirt sleeves.</strong> Right arm blue, left arm red, in the pocket on the outer side of each upper arm.</li>
-    <li><strong>Hand (silver) and Wrist (beige) — glove.</strong> Silver on the back of the hand, beige in the lower pocket on the forearm just above the wrist. Both are worn on the <strong>dominant</strong> arm.</li>
+    <li><strong>Hand (silver) and Forearm (beige) — glove.</strong> Silver on the back of the hand, beige in the lower pocket on the forearm just above the wrist. Both are worn on the <strong>dominant</strong> arm.</li>
   </ul>
   <figure class="photo sm">
     <img src="./manual_assets/shirt_pocket.jpg">
     <figcaption>Trunk IMU seated in the shirt's upper-back pocket at the base of the neck — logo facing outward and upright.</figcaption>
   </figure>
-  <div class="note"><b>The hand and wrist sensors work as a pair.</b> Connect both, or neither. The wrist result is calculated from the two together.</div>
+  <div class="note"><b>The hand and forearm sensors work as a pair.</b> Connect both, or neither. The wrist result is calculated from the two together — with only one of them connected there is no wrist result at all.</div>
 
   <h3>5.3 · Start a new measurement in the app</h3>
   <p>On the home screen tap <strong>New measurement</strong>, then complete the two setup pages and confirm pairing before calibration.</p>
@@ -578,7 +583,7 @@ td.k.narrow{width:22%;}
     <tr><td class="k">IMU is slow to pair</td><td>Start the IMU <em>before</em> opening the app and wait ~1 minute. Don't repeatedly tap pair/unpair. Try another location — some environments disturb Bluetooth.</td></tr>
     <tr><td class="k">Battery lid won't open</td><td>Use only CR2025, inserted the right way up. Never use CR2032 — it can jam and damage the lid.</td></tr>
     <tr><td class="k">App stuck loading after calibration</td><td>Usually an offline network search. Enable flight mode <em>with Bluetooth on</em>, or work online for best stability.</td></tr>
-    <tr><td class="k">No wrist result in the report</td><td>The Hand and Wrist sensors work as a pair. If only one was connected, no wrist value is calculated.</td></tr>
+    <tr><td class="k">No wrist result in the report</td><td>The Hand and Forearm sensors work as a pair. If only one of them was connected, no wrist value can be calculated.</td></tr>
   </table>
 
   <h3>Frequently asked questions</h3>
@@ -588,6 +593,8 @@ td.k.narrow{width:22%;}
   <p class="faqa">Roughly 10 metres, but range depends on the environment where you measure.</p>
   <p class="faqq">Does the system measure rotation?</p>
   <p class="faqa">No. It measures inclination angles against vertical and speed of movement. Twisting of the trunk, head or upper arm is not measured — see chapter 3.2.</p>
+  <p class="faqq">Why does the app say "Forearm" but the report says "Wrist"?</p>
+  <p class="faqa">Because they are two different things. The beige sensor sits on the forearm and is called Forearm everywhere it is set up. There is no wrist sensor — the wrist figure is calculated from the Hand and Forearm sensors together. See chapter 3.1.</p>
   <p class="faqq">Where exactly does the head sensor go?</p>
   <p class="faqa">In the centre of the forehead, held by the headband — not over the ear. See chapter 5.2.</p>
 

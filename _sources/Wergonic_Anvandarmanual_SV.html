@@ -166,7 +166,7 @@ td.k.narrow{width:22%;}
       <h3>Smarta arbetskläder</h3>
       <ul>
         <li>Rörelsesensorer sitter i plagg som är enkla att ta på och av</li>
-        <li>Mäter huvud, rygg, båda armarna, hand och handled</li>
+        <li>Mäter huvud, rygg, båda armarna, hand och underarm</li>
         <li>Beräknar räckvidd (handens räckhåll)</li>
       </ul>
       <h3>Mobilapp <span class="small">· Android</span></h3>
@@ -219,7 +219,7 @@ td.k.narrow{width:22%;}
     <div>
       <figure class="photo">
         <img src="./manual_assets/kit_imus.jpg">
-        <figcaption>De sex Wergonic-/Movesense-sensorerna i sina färgkodade hållare — Höger arm blå, Rygg grön, Huvud svart, Vänster arm röd, Hand silver, Handled beige.</figcaption>
+        <figcaption>De sex Wergonic-/Movesense-sensorerna i sina färgkodade hållare — Höger arm blå, Rygg grön, Huvud svart, Vänster arm röd, Hand silver, Underarm beige.</figcaption>
       </figure>
     </div>
   </div>
@@ -249,7 +249,7 @@ td.k.narrow{width:22%;}
         <span class="chip"><span class="sw" style="background:#1DBBF8"></span>Höger arm — blå</span>
         <span class="chip"><span class="sw" style="background:#FF2A2A"></span>Vänster arm — röd</span>
         <span class="chip"><span class="sw" style="background:#C0C0C0"></span>Hand — silver</span>
-        <span class="chip"><span class="sw" style="background:#C8AD7F"></span>Handled — beige</span>
+        <span class="chip"><span class="sw" style="background:#C8AD7F"></span>Underarm — beige</span>
       </div>
     </div>
   </div>
@@ -262,10 +262,10 @@ td.k.narrow{width:22%;}
     <tr><td class="k">Höger arm</td><td>Blå</td><td>Utsidan av höger överarm, över deltamuskeln, i tröjans ärmficka.</td></tr>
     <tr><td class="k">Vänster arm</td><td>Röd</td><td>Utsidan av vänster överarm, över deltamuskeln, i tröjans ärmficka.</td></tr>
     <tr><td class="k">Hand</td><td>Silver</td><td>Handryggen på den dominanta handen, i handskens handficka.</td></tr>
-    <tr><td class="k">Handled</td><td>Beige</td><td>Den dominanta underarmen, <strong>strax ovanför handleden</strong>, i handskens nedre ficka.</td></tr>
+    <tr><td class="k">Underarm</td><td>Beige</td><td>Den dominanta underarmen, <strong>strax ovanför handleden</strong>, i handskens nedre ficka.</td></tr>
   </table>
 
-  <div class="note"><b>Ett namn: Handled.</b> Den beiga sensorn kallas <b>Handled</b> i hela den här manualen. I appens skärmar <i>Parkoppling</i> och <i>Inställningar → Sensorer och hårdvara</i> står den för närvarande fortfarande som <i>Underarm</i> — det är samma sensor. Dess resultat visas alltid under <b>Handleden</b>.</div>
+  <div class="note"><b>Underarm och handled är inte samma sak.</b> Det finns ingen handledssensor. Den beiga sensorn är <b>underarmssensorn</b> — den sitter på underarmen, nära handleden, och heter Underarm överallt där den ställs in. <b>Handleden</b> är ett resultat, inte en sensor: den räknas fram ur sensorerna <i>Hand</i> och <i>Underarm</i> tillsammans, som skillnaden i rörelse mellan dem. Därför finns det en <i>Handled</i>-sida i rapporten trots att ingen sensor heter Handled.</div>
 
   <h3>3.2 · Vad som mäts på varje kroppsdel</h3>
   <p>Alla vinklar är lutningar i förhållande till en <strong>lodrät referens</strong> som ställs in vid kalibreringen. Alla hastigheter är <strong>vinkelhastighet</strong> — hur snabbt kroppsdelen rör sig, i grader per sekund.</p>
@@ -287,14 +287,19 @@ td.k.narrow{width:22%;}
       <td>Armens vinkelhastighet</td>
     </tr>
     <tr>
-      <td class="k">Handled</td>
-      <td>Redovisas inte som vinkel</td>
-      <td>Handledens vinkelhastighet — hur snabbt handen vrids i förhållande till underarmen, beräknad ur sensorerna Hand och Handled tillsammans</td>
+      <td class="k">Underarm</td>
+      <td>Underarmens elevationsvinkel — används tillsammans med överarmens vinkel för att beräkna hur långt handen når från kroppen</td>
+      <td>Ligger till grund för handledsvärdet nedan</td>
     </tr>
     <tr>
       <td class="k">Hand</td>
       <td>—</td>
       <td>Exponering för hand-arm-vibrationer</td>
+    </tr>
+    <tr>
+      <td class="k">Handled <span class="small">(beräknad)</span></td>
+      <td>Redovisas inte som vinkel</td>
+      <td>Handledens vinkelhastighet — hur snabbt handen rör sig i förhållande till underarmen, beräknad ur sensorerna Hand och Underarm tillsammans</td>
     </tr>
     <tr>
       <td class="k">Puls <span class="small">(pulsband, tillval)</span></td>
@@ -336,11 +341,11 @@ td.k.narrow{width:22%;}
   <p>Öppna <strong>Inställningar</strong> (kugghjulet uppe till höger på startskärmen) och gå till <strong>Sensorer och hårdvara</strong>. Varje kroppsdel har en <strong>Parkoppla</strong>-knapp; tryck på den och välj sensorn i listan. Du känner igen en sensor på de fyra sista siffrorna i serienumret på baksidan. När den är ansluten visar raden <strong>Parkopplad</strong> i cyan, med batterinivå och alternativet <strong>Koppla från</strong>.</p>
 
   <div class="shots">
-    <figure class="shot"><div class="frame"><img src="./manual_assets/02-settings-sensors.png"></div><figcaption><span class="cn">A</span>Inställningar → Sensorer och hårdvara. Parkoppla eller koppla från varje kroppsdel; ”Huvudjustering” ligger längst ned. Den beiga handledssensorn står här som <i>Underarm</i>.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/02-settings-sensors.png"></div><figcaption><span class="cn">A</span>Inställningar → Sensorer och hårdvara. Parkoppla eller koppla från varje kroppsdel; ”Huvudjustering” ligger längst ned.</figcaption></figure>
     <figure class="shot"><div class="frame"><img src="./manual_assets/03-pair-dialog.png"></div><figcaption><span class="cn">B</span>”Välj en sensor att parkoppla” — tryck på rätt serienummer för att koppla sensorn till kroppsdelen.</figcaption></figure>
   </div>
 
-  <p><strong>Färgkodstandard —</strong> Huvud svart · Rygg grön · Höger arm blå · Vänster arm röd · Hand silver · Handled beige. Pulsbandet (tillval) parkopplas med sensorn utan hållare.</p>
+  <p><strong>Färgkodstandard —</strong> Huvud svart · Rygg grön · Höger arm blå · Vänster arm röd · Hand silver · Underarm beige. Pulsbandet (tillval) parkopplas med sensorn utan hållare.</p>
   <div class="note"><b>Huvudjustering.</b> Huvudsensorn kan vändas åt båda hållen i pannbandet. Ställ in <b>Logosidan vänd mot pannan</b> (logotypen inåt, mot huden) eller <b>Baksidan mot pannan</b> (logotypen utåt) så att inställningen stämmer med hur du satt fast den.</div>
   <div class="note tip"><b>Testa automatisk parkoppling.</b> Logga ut, stäng appen och öppna den igen — sensorerna ska återansluta automatiskt. Ska du inte mäta direkt, ta ur batterierna för att spara ström.</div>
 
@@ -386,13 +391,13 @@ td.k.narrow{width:22%;}
     <li><strong>Huvud (svart) — pannband.</strong> Sätt på pannbandet så att sensorn hamnar <strong>mitt på pannan</strong>, strax ovanför ögonbrynen och nedanför hårfästet. <em>Inte</em> över örat och inte på bakhuvudet. Sensorn får vändas åt vilket håll du vill; ställ in <strong>Huvudjustering</strong> i Inställningar så att det stämmer (se 4.3).</li>
     <li><strong>Rygg (grön) — tröja.</strong> Skjut in sensorn i fickan på <strong>övre delen av ryggen</strong>, vid nackens bas. Tröjan ska sitta åt så att sensorn inte kan glida.</li>
     <li><strong>Armar (blå, röd) — tröjans ärmar.</strong> Blå på höger arm, röd på vänster, i fickan på utsidan av varje överarm.</li>
-    <li><strong>Hand (silver) och Handled (beige) — handske.</strong> Silver på handryggen, beige i den nedre fickan på underarmen strax ovanför handleden. Båda bärs på den <strong>dominanta</strong> armen.</li>
+    <li><strong>Hand (silver) och Underarm (beige) — handske.</strong> Silver på handryggen, beige i den nedre fickan på underarmen strax ovanför handleden. Båda bärs på den <strong>dominanta</strong> armen.</li>
   </ul>
   <figure class="photo sm">
     <img src="./manual_assets/shirt_pocket.jpg">
     <figcaption>Ryggsensorn i tröjans ficka på övre ryggen, vid nackens bas — logotypen utåt och rättvänd.</figcaption>
   </figure>
-  <div class="note"><b>Hand- och handledssensorn hör ihop.</b> Anslut båda, eller ingen av dem. Handledsresultatet räknas fram ur de två tillsammans.</div>
+  <div class="note"><b>Hand- och underarmssensorn hör ihop.</b> Anslut båda, eller ingen av dem. Handledsresultatet räknas fram ur de två tillsammans — är bara den ena ansluten får du inget handledsresultat alls.</div>
 
   <h3>5.3 · Starta en ny mätning i appen</h3>
   <p>Tryck på <strong>Ny mätning</strong> på startskärmen, fyll i de två inställningssidorna och bekräfta parkopplingen före kalibreringen.</p>
@@ -568,7 +573,7 @@ td.k.narrow{width:22%;}
     <tr><td class="k">Sensorn är långsam att parkoppla</td><td>Starta sensorn <em>innan</em> du öppnar appen och vänta cirka en minut. Tryck inte upprepade gånger på parkoppla/koppla från. Prova en annan plats — vissa miljöer stör Bluetooth.</td></tr>
     <tr><td class="k">Batteriluckan går inte att öppna</td><td>Använd endast CR2025, isatt åt rätt håll. Använd aldrig CR2032 — den kan fastna och skada locket.</td></tr>
     <tr><td class="k">Appen fastnar i laddning efter kalibreringen</td><td>Beror oftast på att den söker nätverk offline. Slå på flygplansläge <em>med Bluetooth på</em>, eller arbeta online för bästa stabilitet.</td></tr>
-    <tr><td class="k">Inget handledsresultat i rapporten</td><td>Sensorerna Hand och Handled hör ihop. Om bara den ena var ansluten beräknas inget handledsvärde.</td></tr>
+    <tr><td class="k">Inget handledsresultat i rapporten</td><td>Sensorerna Hand och Underarm hör ihop. Om bara den ena var ansluten kan inget handledsvärde beräknas.</td></tr>
   </table>
 
   <h3>Vanliga frågor</h3>
@@ -578,6 +583,8 @@ td.k.narrow{width:22%;}
   <p class="faqa">Cirka 10 meter, men räckvidden beror på miljön där du mäter.</p>
   <p class="faqq">Mäter systemet rotation?</p>
   <p class="faqa">Nej. Det mäter lutningsvinklar mot lodlinjen och rörelsehastighet. Vridning av bål, huvud eller överarm mäts inte — se kapitel 3.2.</p>
+  <p class="faqq">Varför står det ”Underarm” i appen men ”Handled” i rapporten?</p>
+  <p class="faqa">Därför att det är två olika saker. Den beiga sensorn sitter på underarmen och heter Underarm överallt där den ställs in. Det finns ingen handledssensor — handledsvärdet räknas fram ur sensorerna Hand och Underarm tillsammans. Se kapitel 3.1.</p>
   <p class="faqq">Var exakt ska huvudsensorn sitta?</p>
   <p class="faqa">Mitt på pannan, fastsatt i pannbandet — inte över örat. Se kapitel 5.2.</p>
 
