@@ -146,7 +146,7 @@ td.k.narrow{width:22%;}
     <div class="row"><span class="n">1</span><span class="t">Wergonic-systemet</span><span class="d">Översikt och delar</span></div>
     <div class="row"><span class="n">2</span><span class="t">Vad som ingår i kitet</span><span class="d">Checklista för utrustningen</span></div>
     <div class="row"><span class="n">3</span><span class="t">Sensorer och vad som mäts</span><span class="d">IMU:er, placering, mätvärden</span></div>
-    <div class="row"><span class="n">4</span><span class="t">Konfigurera systemet</span><span class="d">App, parkoppling, telefon, arbetsbibliotek</span></div>
+    <div class="row"><span class="n">4</span><span class="t">Konfigurera systemet</span><span class="d">App, sammankoppling, telefon, arbetsbibliotek</span></div>
     <div class="row"><span class="n">5</span><span class="t">Genomföra en mätning</span><span class="d">Påklädning, mätning, kalibrering, live</span></div>
     <div class="row"><span class="n">6</span><span class="t">Granska resultat</span><span class="d">I appen och i webbpanelen</span></div>
     <div class="row"><span class="n">7</span><span class="t">Referensvärden</span><span class="d">Rekommenderade gränser och källor</span></div>
@@ -200,7 +200,7 @@ td.k.narrow{width:22%;}
     <div>
       <ul>
         <li><strong>Sex IMU:er</strong> i färgkodade hållare</li>
-        <li><strong>Android-telefon</strong> med Wergonic-appen installerad och sensorerna redan parkopplade</li>
+        <li><strong>Android-telefon</strong> med Wergonic-appen installerad och sensorerna redan sammankopplade</li>
         <li><strong>Wergonic-tröjor</strong> i sex storlekar (XS–XXL)</li>
         <li><strong>Wergonic-handske</strong> och <strong>pannband</strong></li>
         <li><strong>Sex CR2025</strong> knappcellsbatterier + en <strong>telefonladdare</strong></li>
@@ -262,7 +262,7 @@ td.k.narrow{width:22%;}
     <tr><td class="k">Höger arm</td><td>Blå</td><td>Utsidan av höger överarm, över deltamuskeln, i tröjans ärmficka.</td></tr>
     <tr><td class="k">Vänster arm</td><td>Röd</td><td>Utsidan av vänster överarm, över deltamuskeln, i tröjans ärmficka.</td></tr>
     <tr><td class="k">Hand</td><td>Silver</td><td>Handryggen på den dominanta handen, i handskens handficka.</td></tr>
-    <tr><td class="k">Underarm</td><td>Beige</td><td>Den dominanta underarmen, <strong>strax ovanför handleden</strong>, i handskens nedre ficka.</td></tr>
+    <tr><td class="k">Underarm</td><td>Beige</td><td>Den dominanta underarmen, i handskens nedre ficka nära handleden.</td></tr>
   </table>
 
   <div class="note"><b>Underarm och handled är inte samma sak.</b> Det finns ingen handledssensor. Den beiga sensorn är <b>underarmssensorn</b> — den sitter på underarmen, nära handleden, och heter Underarm överallt där den ställs in. <b>Handleden</b> är ett resultat, inte en sensor: den räknas fram ur sensorerna <i>Hand</i> och <i>Underarm</i> tillsammans, som skillnaden i rörelse mellan dem. Därför finns det en <i>Handled</i>-sida i rapporten trots att ingen sensor heter Handled.</div>
@@ -294,7 +294,7 @@ td.k.narrow{width:22%;}
     <tr>
       <td class="k">Hand</td>
       <td>—</td>
-      <td>Exponering för hand-arm-vibrationer</td>
+      <td>Vibrationsdetektering — en indikator i realtid (%) för hur säker appen är på att handen utsätts för vibration. Visas endast live; ingår inte i rapporten</td>
     </tr>
     <tr>
       <td class="k">Handled <span class="small">(beräknad)</span></td>
@@ -319,7 +319,7 @@ td.k.narrow{width:22%;}
   <p class="lead">Använd den medföljande telefonen (mestadels färdiginställd) eller en egen Android-telefon. Oavsett vilket avslutar du med att lägga upp ditt arbetsbibliotek i webbpanelen.</p>
 
   <h3>4.1 · Med den medföljande telefonen</h3>
-  <p>Kittets telefon har redan rätt Android-version, den senaste Wergonic-appen och färdigt parkopplade sensorer. Två steg återstår:</p>
+  <p>Kittets telefon har redan rätt Android-version, den senaste Wergonic-appen och färdigt sammankopplade sensorer. Två steg återstår:</p>
   <ol>
     <li><strong>Logga in på Google Play</strong> med ett Gmail-konto så att appen håller sig uppdaterad.</li>
     <li><strong>Lägg upp ditt arbetsbibliotek</strong> i webbpanelen (se 4.4).</li>
@@ -337,17 +337,17 @@ td.k.narrow{width:22%;}
     <figcaption>Batteriluckan öppnas och ett CR2025-knappcellsbatteri sätts i — bänd upp locket med ett mynt (eller en liten sked) och sätt tillbaka det.</figcaption>
   </figure>
 
-  <h3>4.3 · Parkoppla sensorerna</h3>
-  <p>Öppna <strong>Inställningar</strong> (kugghjulet uppe till höger på startskärmen) och gå till <strong>Sensorer och hårdvara</strong>. Varje kroppsdel har en <strong>Parkoppla</strong>-knapp; tryck på den och välj sensorn i listan. Du känner igen en sensor på de fyra sista siffrorna i serienumret på baksidan. När den är ansluten visar raden <strong>Parkopplad</strong> i cyan, med batterinivå och alternativet <strong>Koppla från</strong>.</p>
+  <h3>4.3 · Koppla samman sensorerna</h3>
+  <p>Öppna <strong>Inställningar</strong> (kugghjulet uppe till höger på startskärmen) och gå till <strong>Sensorer &amp; hårdvara</strong>. Varje kroppsdel har en <strong>Koppla samman</strong>-knapp; tryck på den och välj sensorn i listan. Du känner igen en sensor på de fyra sista siffrorna i serienumret på baksidan. När den är ansluten visar raden <strong>Sammankopplade</strong> i cyan, med batterinivå och alternativet <strong>Koppla ifrån</strong>.</p>
 
   <div class="shots">
-    <figure class="shot"><div class="frame"><img src="./manual_assets/02-settings-sensors.png"></div><figcaption><span class="cn">A</span>Inställningar → Sensorer och hårdvara. Parkoppla eller koppla från varje kroppsdel; ”Huvudjustering” ligger längst ned.</figcaption></figure>
-    <figure class="shot"><div class="frame"><img src="./manual_assets/03-pair-dialog.png"></div><figcaption><span class="cn">B</span>”Välj en sensor att parkoppla” — tryck på rätt serienummer för att koppla sensorn till kroppsdelen.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/02-settings-sensors.png"></div><figcaption><span class="cn">A</span>Inställningar → Sensorer &amp; hårdvara. Koppla samman eller koppla ifrån varje kroppsdel; ”Huvudjustering” ligger längst ned.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/03-pair-dialog.png"></div><figcaption><span class="cn">B</span>”Välj en sensor att sammankoppla” — tryck på rätt serienummer för att koppla sensorn till kroppsdelen.</figcaption></figure>
   </div>
 
-  <p><strong>Färgkodstandard —</strong> Huvud svart · Rygg grön · Höger arm blå · Vänster arm röd · Hand silver · Underarm beige. Pulsbandet (tillval) parkopplas med sensorn utan hållare.</p>
+  <p><strong>Färgkodstandard —</strong> Huvud svart · Rygg grön · Höger arm blå · Vänster arm röd · Hand silver · Underarm beige. Pulsbandet (tillval) kopplas samman med sensorn utan hållare.</p>
   <div class="note"><b>Huvudjustering.</b> Huvudsensorn kan vändas åt båda hållen i pannbandet. Ställ in <b>Logosidan vänd mot pannan</b> (logotypen inåt, mot huden) eller <b>Baksidan mot pannan</b> (logotypen utåt) så att inställningen stämmer med hur du satt fast den.</div>
-  <div class="note tip"><b>Testa automatisk parkoppling.</b> Logga ut, stäng appen och öppna den igen — sensorerna ska återansluta automatiskt. Ska du inte mäta direkt, ta ur batterierna för att spara ström.</div>
+  <div class="note tip"><b>Testa automatisk sammankoppling.</b> Logga ut, stäng appen och öppna den igen — sensorerna ska återansluta automatiskt. Ska du inte mäta direkt, ta ur batterierna för att spara ström.</div>
 
   <h4>Telefoninställningar (egen telefon)</h4>
   <ul>
@@ -358,7 +358,7 @@ td.k.narrow{width:22%;}
   </ul>
 
   <h3>4.4 · Lägg upp ditt arbetsbibliotek i webbpanelen</h3>
-  <p>Logga in på <strong>cloud.wergonic.com</strong>. I vänstermenyn, under <strong>Setup</strong>, öppnar du <strong>Work Library</strong> (arbetsbiblioteket). Här förbereder du allt som appen sedan erbjuder dig under en mätning. Sidan har tre flikar:</p>
+  <p>Logga in på <strong>cloud.wergonic.com</strong>. I vänstermenyn, under <strong>Setup</strong>, öppnar du <strong>Work Library</strong> (<strong>Arbetsbibliotek</strong>). Här förbereder du allt som appen sedan erbjuder dig under en mätning. Sidan har tre flikar:</p>
 
   <table class="tight">
     <tr><th style="width:26%">Flik</th><th>Vad den innehåller</th></tr>
@@ -379,7 +379,7 @@ td.k.narrow{width:22%;}
 
   <h3>5.1 · Förbered</h3>
   <ul>
-    <li>Fulladdad telefon och sex parkopplade sensorer</li>
+    <li>Fulladdad telefon och sex sammankopplade sensorer</li>
     <li>Färska CR2025-batterier (rekommenderas)</li>
     <li>Ren Wergonic-tröja och handske i rätt storlek, samt ett pannband för huvudsensorn</li>
     <li>En vikt på cirka 2 kg för armkalibreringen</li>
@@ -391,7 +391,7 @@ td.k.narrow{width:22%;}
     <li><strong>Huvud (svart) — pannband.</strong> Sätt på pannbandet så att sensorn hamnar <strong>mitt på pannan</strong>, strax ovanför ögonbrynen och nedanför hårfästet. <em>Inte</em> över örat och inte på bakhuvudet. Sensorn får vändas åt vilket håll du vill; ställ in <strong>Huvudjustering</strong> i Inställningar så att det stämmer (se 4.3).</li>
     <li><strong>Rygg (grön) — tröja.</strong> Skjut in sensorn i fickan på <strong>övre delen av ryggen</strong>, vid nackens bas. Tröjan ska sitta åt så att sensorn inte kan glida.</li>
     <li><strong>Armar (blå, röd) — tröjans ärmar.</strong> Blå på höger arm, röd på vänster, i fickan på utsidan av varje överarm.</li>
-    <li><strong>Hand (silver) och Underarm (beige) — handske.</strong> Silver på handryggen, beige i den nedre fickan på underarmen strax ovanför handleden. Båda bärs på den <strong>dominanta</strong> armen.</li>
+    <li><strong>Hand (silver) och Underarm (beige) — handske.</strong> Silver på handryggen, beige i handskens nedre ficka på underarmen, nära handleden. Båda bärs på den <strong>dominanta</strong> armen.</li>
   </ul>
   <figure class="photo sm">
     <img src="./manual_assets/shirt_pocket.jpg">
@@ -400,11 +400,11 @@ td.k.narrow{width:22%;}
   <div class="note"><b>Hand- och underarmssensorn hör ihop.</b> Anslut båda, eller ingen av dem. Handledsresultatet räknas fram ur de två tillsammans — är bara den ena ansluten får du inget handledsresultat alls.</div>
 
   <h3>5.3 · Starta en ny mätning i appen</h3>
-  <p>Tryck på <strong>Ny mätning</strong> på startskärmen, fyll i de två inställningssidorna och bekräfta parkopplingen före kalibreringen.</p>
+  <p>Tryck på <strong>Ny mätning</strong> på startskärmen, fyll i de två inställningssidorna och bekräfta sammankopplingen före kalibreringen.</p>
 
   <div class="shots">
     <figure class="shot"><div class="frame"><img src="./manual_assets/01-home.png"></div><figcaption><span class="cn">C</span>Startskärm — tryck på <b>Ny mätning</b>. Mappikonen öppnar historiken, kugghjulet öppnar inställningarna.</figcaption></figure>
-    <figure class="shot"><div class="frame"><img src="./manual_assets/05-config.png"></div><figcaption><span class="cn">D</span>Sida 1 — två separata val: <b>Feedback</b> (hur operatören varnas under inspelningen) och <b>Typ av mätning</b> (hur arbetet loggas). Välj eller sök därefter fram en operatör.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/05-config.png"></div><figcaption><span class="cn">D</span>Sida 1 — två separata val: <b>Feedback</b> (vad de färgade rutorna reagerar på under inspelningen) och <b>Typ av mätning</b> (hur arbetet loggas). Välj eller sök därefter fram en operatör.</figcaption></figure>
     <figure class="shot"><div class="frame"><img src="./manual_assets/06-profile.png"></div><figcaption><span class="cn">E</span>Sida 2 — operatörsprofil (arbetsplats, ID, kön, dominant arm, ålder, vikt). Tryck på <b>Nästa</b>.</figcaption></figure>
   </div>
 
@@ -413,13 +413,13 @@ td.k.narrow{width:22%;}
   <table class="tight">
     <tr><th style="width:26%">Inställning</th><th style="width:22%">Alternativ</th><th>Vad den gör</th></tr>
     <tr>
-      <td class="k narrow" rowspan="2"><strong>Feedback</strong><br><span class="small">Hur operatören varnas <em>under</em> inspelningen</span></td>
+      <td class="k narrow" rowspan="2"><strong>Feedback</strong><br><span class="small">Vad de färgade rutorna reagerar på under inspelningen</span></td>
       <td class="k">Omedelbar feedback</td>
-      <td>Varningar i realtid så snart en gräns passeras — mätrutan blir orange eller röd, och vibration eller röstsignal utlöses om du slagit på det i Inställningar. Använd detta vid arbetsteknikträning.</td>
+      <td>Rutan reagerar på arbetsställningen <strong>just nu</strong>. Passeras en gräns blir den orange eller röd direkt, och vibration eller röstsignal utlöses om du slagit på det i Inställningar. Använd detta vid arbetsteknikträning, där operatören ska märka effekten av varje rörelse.</td>
     </tr>
     <tr>
       <td class="k">Ackumulerad feedback</td>
-      <td>Inga varningar under arbetet. Operatören lämnas ostörd och får en sammanfattning när mätningen avslutas. Använd detta när du vill spela in normalt arbete utan att påverka det.</td>
+      <td>Rutan reagerar på <strong>hur stor del av tiden hittills</strong> som tillbringats i en riskfylld arbetsställning, inte på den aktuella rörelsen. Den är grå de första minuterna medan den samlar in data — 10 minuter som standard, justerbart i Inställningar — och visar en nedräkning. Därefter blir den orange eller röd om för stor del av den mätta tiden har legat över en gräns. Använd detta för att bedöma arbetet som helhet i stället för en enskild rörelse.</td>
     </tr>
     <tr>
       <td class="k narrow" rowspan="2"><strong>Typ av mätning</strong><br><span class="small">Hur arbetet loggas</span></td>
@@ -433,11 +433,11 @@ td.k.narrow{width:22%;}
   </table>
   <div class="note small"><b>Online eller offline.</b> För att läsa in en färdig <b>Arbetscykel</b> eller återanvända en sparad operatörsprofil måste du vara online. Offline skapar du en ny profil och synkar senare.</div>
 
-  <h3>5.4 · Bekräfta parkopplingen och kalibrera</h3>
-  <p>Skärmen <strong>Parkoppling</strong> visar tröjan med varje kroppsdel. Parkopplade sensorer visas med en <strong>cyan bock</strong>; tryck på en kroppsdel för att parkoppla, eller på en parkopplad för att koppla från. Tryck på <strong>Nästa</strong> (uppe till höger) när du är klar, för att gå vidare till kalibreringen.</p>
+  <h3>5.4 · Bekräfta sammankopplingen och kalibrera</h3>
+  <p>Skärmen <strong>Sammankoppling</strong> visar tröjan med varje kroppsdel. Sammankopplade sensorer visas med en <strong>cyan bock</strong>; tryck på en kroppsdel för att koppla samman, eller på en sammankopplad för att koppla ifrån. Tryck på <strong>Nästa</strong> (uppe till höger) när du är klar, för att gå vidare till kalibreringen.</p>
 
   <div class="shots">
-    <figure class="shot"><div class="frame"><img src="./manual_assets/04-pairing.png"></div><figcaption><span class="cn">F</span>Översikt över parkoppling — korten visar varje sensors serienummer och batterinivå. Tryck på <b>Nästa</b> när de sensorer du behöver är anslutna.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/04-pairing.png"></div><figcaption><span class="cn">F</span>Översikt över sammankoppling — korten visar varje sensors serienummer och batterinivå. Tryck på <b>Nästa</b> när de sensorer du behöver är anslutna.</figcaption></figure>
     <figure class="shot"><div class="frame"><img src="./manual_assets/07-calibration.png"></div><figcaption><span class="cn">G</span>Kalibrering — följ de numrerade stegen och instruktionsfilmen, tryck på <b>Starta kalibrering</b> och håll ställningen i 5&nbsp;sekunder.</figcaption></figure>
   </div>
 
@@ -450,12 +450,12 @@ td.k.narrow{width:22%;}
       <ul>
         <li><strong>Välj mätvärden:</strong> håll in en ruta, kryssa i de mätvärden du vill se och tryck på <strong>Spara</strong> (uppe till vänster).</li>
         <li><strong>Kalibrera om:</strong> innan du startar (timern på 00:00:00), tryck på kugghjulet → en kroppsdel.</li>
-        <li><strong>Spela in:</strong> tryck på <strong>Starta</strong>; använd <strong>Rast</strong> för att pausa; tryck på <strong>Avsluta</strong> för att stoppa och spara.</li>
+        <li><strong>Spela in:</strong> tryck på <strong>Starta</strong>; använd <strong>Paus</strong> för att pausa; tryck på <strong>Avsluta</strong> för att stoppa och spara.</li>
         <li>När du är online kan du även lägga till aktiviteter under inspelningen.</li>
       </ul>
     </div>
     <div>
-      <figure class="shot" style="width:172px;margin:0 auto"><div class="frame"><img src="./manual_assets/08-live.png"></div><figcaption><span class="cn">H</span>Live-läge — knapparna Starta / Rast / Avsluta, med riskfärgade mätrutor.</figcaption></figure>
+      <figure class="shot" style="width:172px;margin:0 auto"><div class="frame"><img src="./manual_assets/08-live.png"></div><figcaption><span class="cn">H</span>Live-läge — knapparna Starta / Paus / Avsluta, med riskfärgade mätrutor.</figcaption></figure>
     </div>
   </div>
 </section>
@@ -470,7 +470,7 @@ td.k.narrow{width:22%;}
       <h3>I appen</h3>
       <p>Tryck på <strong>mappikonen</strong> (startskärmen, uppe till höger) för att öppna dina mätningar. Tryck på <strong>⋮-menyn → Rapport</strong> för en mätning. Rapporten öppnas som <strong>sidor du bläddrar mellan</strong> — en per kroppsdel — med siffrorna i tabeller. Rekommenderade gränser visas i <span style="color:var(--blue-deep);font-weight:600">blått</span> bredvid ditt resultat; alla finns samlade i kapitel 7.</p>
       <ul class="small">
-        <li>⋮-menyn erbjuder även <b>Synka mätning</b>, <b>Dela</b> och <b>Ta bort</b>.</li>
+        <li>⋮-menyn erbjuder även <b>Synkronisera mätning</b>, <b>Dela</b> och <b>Ta bort</b>.</li>
         <li>Tryck på en mätning för att öppna dess <b>tidslinje</b> (aktiviteter, raster).</li>
       </ul>
     </div>
@@ -504,18 +504,19 @@ td.k.narrow{width:22%;}
   <h3>7.2 · Rekommenderade gränser</h3>
   <table class="tight">
     <tr><th style="width:20%">Kroppsdel</th><th style="width:32%">Mätvärde</th><th style="width:22%">Rekommenderad gräns</th><th>Källa</th></tr>
-    <tr><td class="k" rowspan="3">Armar<br><span class="small">(utan understöd)</span></td><td>Elevationsvinkel — 50:e percentilen</td><td><strong>≤ 30°</strong></td><td rowspan="2">Hansson m.fl., 2016</td></tr>
+    <tr><td class="k" rowspan="3">Armar<br><span class="small">(utan understöd)</span></td><td>Elevationsvinkel — 50:e percentilen</td><td><strong>≤ 30°</strong></td><td rowspan="3">Hansson m.fl., 2016</td></tr>
     <tr><td>Elevationsvinkel — 90:e percentilen</td><td><strong>≤ 60°</strong></td></tr>
-    <tr><td>Vinkelhastighet — 50:e percentilen</td><td><strong>≤ 30 °/s</strong></td><td>Arvidsson m.fl., 2017</td></tr>
+    <tr><td>Vinkelhastighet — 50:e percentilen</td><td><strong>≤ 30 °/s</strong></td></tr>
     <tr><td class="k" rowspan="2">Rygg</td><td>Framåtböjning — 50:e percentilen</td><td><strong>≤ 20°</strong></td><td rowspan="2">Hansson m.fl., 2016</td></tr>
     <tr><td>Sidoböjning — 50:e percentilen</td><td><strong>≤ 20°</strong></td></tr>
-    <tr><td class="k">Huvud</td><td>Sidoböjning — 50:e percentilen</td><td><strong>≤ 20°</strong></td><td>Hansson m.fl., 2016</td></tr>
+    <tr><td class="k">Huvud</td><td>Sidoböjning — 50:e percentilen</td><td><strong>≤ 20°</strong></td><td><span class="small">Ingen källa anges i appen</span></td></tr>
     <tr><td class="k">Handled</td><td>Vinkelhastighet — 50:e percentilen</td><td><strong>≤ 20 °/s</strong><br><span class="small">≤ 15 °/s om arbetet också bedöms som kraftkrävande</span></td><td>Arvidsson m.fl., 2017</td></tr>
-    <tr><td class="k">Puls <span class="small">(pulsband, tillval)</span></td><td>Sammanlagd tid över 33 % av pulsreserven</td><td>Håll så låg som möjligt</td><td>—</td></tr>
+    <tr><td class="k">Puls <span class="small">(pulsband, tillval)</span></td><td>Sammanlagd tid över 33 % av pulsreserven</td><td><span class="small">Redovisas som ett värde; appen anger ingen rekommenderad gräns</span></td><td>—</td></tr>
   </table>
+  <p class="small">Gränserna ovan är de som appen visar. Huvudets framåtböjning redovisas utan gränsvärde.</p>
 
   <h3>7.3 · Vinkelintervall i rapporten</h3>
-  <p>Rapporten visar också hur stor del av tiden som tillbringades i varje intervall. Det lägsta intervallet utgår från den kalibrerade upprätta ställningen och rymmer en liten marginal bakåt, så att en lätt lutning bakåt fortfarande räknas som neutral.</p>
+  <p>Rapporten visar också hur stor del av tiden som tillbringades i varje intervall. Allt under 10° räknas som neutralt och redovisas inte. Att luta sig bakåt mer än 5° räknas separat — den ackumulerade feedbacken använder det under inspelningen, men det visas inte i de här tabellerna.</p>
   <table class="tight">
     <tr><th style="width:26%">Mätvärde</th><th>Intervall som redovisas</th></tr>
     <tr><td class="k">Rygg — framåtböjning</td><td>10°–20° · 20°–45° · &gt; 45°</td></tr>
@@ -523,14 +524,11 @@ td.k.narrow{width:22%;}
     <tr><td class="k">Huvud — framåtböjning</td><td>10°–20° · 20°–30° · &gt; 30°</td></tr>
     <tr><td class="k">Arm — elevation</td><td>0°–30° · 30°–60° · &gt; 60°</td></tr>
   </table>
-  <p class="small">Ryggens intervall följer de gränsvärden som används i RAMP-verktyget (Lind m.fl., 2020).</p>
-
   <h3>7.4 · Fullständiga referenser</h3>
-  <p>Det här är källorna som anges i kortform inne i mobilappen.</p>
+  <p>Appen anger sina källor i kortform. Utskrivna i sin helhet är de:</p>
   <ol class="refs">
-    <li>Arvidsson, I., Dahlqvist, C., Enquist, H. &amp; Nordander, C. (2017). <em>Åtgärdsnivåer mot belastningsskada.</em> Arbets- och miljömedicin Syd, Rapport nr 18/2017. Lund.</li>
-    <li>Hansson, G.-Å., Arvidsson, I. &amp; Nordander, C. (2016). <em>Riktvärden för att bedöma risken för belastningsskador, baserade på tekniska mätningar av exponeringen.</em> Arbets- och miljömedicin, Lund, Rapport nr 4/2016.</li>
-    <li>Lind, C. M., Forsman, M. &amp; Rose, L. M. (2020). Development and evaluation of RAMP II — a practitioner's tool for assessing musculoskeletal disorder risk factors in industrial manual handling. <em>Ergonomics, 63</em>(4), 477–504.</li>
+    <li>Hansson, G.-Å., Arvidsson, I. &amp; Nordander, C. (2016). <em>Riktvärden för att bedöma risken för belastningsskador, baserade på tekniska mätningar av exponeringen.</em> Arbets- och miljömedicin, Lund, Rapport nr 4/2016.<br><span class="small">Anges på arm- och ryggsidorna i rapporten. Gränserna gäller arbete där armarna inte har understöd.</span></li>
+    <li>Arvidsson, I., Dahlqvist, C., Enquist, H. &amp; Nordander, C. (2017). <em>Åtgärdsnivåer mot belastningsskada.</em> Arbets- och miljömedicin Syd, Rapport nr 18/2017. Lund.<br><span class="small">Anges på handledssidan i rapporten.</span></li>
   </ol>
 </section>
 
@@ -570,7 +568,7 @@ td.k.narrow{width:22%;}
   <table>
     <tr><th style="width:40%">Problem</th><th>Så gör du</th></tr>
     <tr><td class="k">Sensorn blinkar inte / verkar avstängd</td><td>Fuktiga fingrar kan ladda ur knappcellsbatterier. Prova ett nytt batteri; startar den ändå inte, kontakta Wergonic för ett byte.</td></tr>
-    <tr><td class="k">Sensorn är långsam att parkoppla</td><td>Starta sensorn <em>innan</em> du öppnar appen och vänta cirka en minut. Tryck inte upprepade gånger på parkoppla/koppla från. Prova en annan plats — vissa miljöer stör Bluetooth.</td></tr>
+    <tr><td class="k">Sensorn är långsam att koppla samman</td><td>Starta sensorn <em>innan</em> du öppnar appen och vänta cirka en minut. Tryck inte upprepade gånger på koppla samman/koppla ifrån. Prova en annan plats — vissa miljöer stör Bluetooth.</td></tr>
     <tr><td class="k">Batteriluckan går inte att öppna</td><td>Använd endast CR2025, isatt åt rätt håll. Använd aldrig CR2032 — den kan fastna och skada locket.</td></tr>
     <tr><td class="k">Appen fastnar i laddning efter kalibreringen</td><td>Beror oftast på att den söker nätverk offline. Slå på flygplansläge <em>med Bluetooth på</em>, eller arbeta online för bästa stabilitet.</td></tr>
     <tr><td class="k">Inget handledsresultat i rapporten</td><td>Sensorerna Hand och Underarm hör ihop. Om bara den ena var ansluten kan inget handledsvärde beräknas.</td></tr>

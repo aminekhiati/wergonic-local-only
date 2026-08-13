@@ -272,7 +272,7 @@ td.k.narrow{width:22%;}
     <tr><td class="k">Right arm</td><td>Blue</td><td>Outer side of the right upper arm, over the deltoid, in the shirt's sleeve pocket.</td></tr>
     <tr><td class="k">Left arm</td><td>Red</td><td>Outer side of the left upper arm, over the deltoid, in the shirt's sleeve pocket.</td></tr>
     <tr><td class="k">Hand</td><td>Silver</td><td>Back of the dominant hand, in the glove's hand pocket.</td></tr>
-    <tr><td class="k">Forearm</td><td>Beige</td><td>Dominant forearm, <strong>just above the wrist</strong>, in the glove's lower pocket.</td></tr>
+    <tr><td class="k">Forearm</td><td>Beige</td><td>Dominant forearm, in the glove's lower pocket near the wrist.</td></tr>
   </table>
 
   <div class="note"><b>Forearm and wrist are not the same thing.</b> There is no wrist sensor. The beige sensor is the <b>forearm</b> sensor — it sits on the forearm, close to the wrist, and that is what it is called everywhere in the app. The <b>wrist</b> is a result, not a sensor: it is calculated from the <i>Hand</i> and <i>Forearm</i> sensors together, as the difference in movement between them. That is why the report has a <i>Wrist</i> page even though no sensor is called Wrist.</div>
@@ -304,7 +304,7 @@ td.k.narrow{width:22%;}
     <tr>
       <td class="k">Hand</td>
       <td>—</td>
-      <td>Hand-transmitted vibration exposure</td>
+      <td>Vibration detection — a live indicator (%) of how sure the app is that the hand is exposed to vibration. Live only; not included in the report</td>
     </tr>
     <tr>
       <td class="k">Wrist <span class="small">(calculated)</span></td>
@@ -401,7 +401,7 @@ td.k.narrow{width:22%;}
     <li><strong>Head (black) — headband.</strong> Put the headband on so the sensor sits in the <strong>centre of the forehead</strong>, just above the eyebrows and below the hairline. <em>Not</em> over the ear and not on the back of the head. The sensor may face either way; whichever you choose, set <strong>Head alignment</strong> in Settings to match (see 4.3).</li>
     <li><strong>Trunk (green) — shirt.</strong> Slide the sensor into the pocket on the <strong>upper back</strong>, at the base of the neck. The shirt should fit snugly so the sensor cannot slide.</li>
     <li><strong>Arms (blue, red) — shirt sleeves.</strong> Right arm blue, left arm red, in the pocket on the outer side of each upper arm.</li>
-    <li><strong>Hand (silver) and Forearm (beige) — glove.</strong> Silver on the back of the hand, beige in the lower pocket on the forearm just above the wrist. Both are worn on the <strong>dominant</strong> arm.</li>
+    <li><strong>Hand (silver) and Forearm (beige) — glove.</strong> Silver on the back of the hand, beige in the glove's lower pocket on the forearm, near the wrist. Both are worn on the <strong>dominant</strong> arm.</li>
   </ul>
   <figure class="photo sm">
     <img src="./manual_assets/shirt_pocket.jpg">
@@ -414,7 +414,7 @@ td.k.narrow{width:22%;}
 
   <div class="shots">
     <figure class="shot"><div class="frame"><img src="./manual_assets/01-home.png"></div><figcaption><span class="cn">C</span>Home — tap <b>New measurement</b>. The folder icon opens history; the gear opens settings.</figcaption></figure>
-    <figure class="shot"><div class="frame"><img src="./manual_assets/05-config.png"></div><figcaption><span class="cn">D</span>Page 1 — two separate choices: <b>Feedback</b> (how the worker is warned while recording) and <b>Measurement Type</b> (how the work is logged). Then pick or search a worker.</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="./manual_assets/05-config.png"></div><figcaption><span class="cn">D</span>Page 1 — two separate choices: <b>Feedback</b> (what the coloured squares react to while recording) and <b>Measurement Type</b> (how the work is logged). Then pick or search a worker.</figcaption></figure>
     <figure class="shot"><div class="frame"><img src="./manual_assets/06-profile.png"></div><figcaption><span class="cn">E</span>Page 2 — worker profile (workplace, ID, gender, dominant arm, age, weight). Tap <b>Next</b>.</figcaption></figure>
   </div>
 
@@ -423,13 +423,13 @@ td.k.narrow{width:22%;}
   <table class="tight">
     <tr><th style="width:26%">Setting</th><th style="width:22%">Option</th><th>What it does</th></tr>
     <tr>
-      <td class="k narrow" rowspan="2"><strong>Feedback</strong><br><span class="small">How the worker is warned <em>during</em> the recording</span></td>
+      <td class="k narrow" rowspan="2"><strong>Feedback</strong><br><span class="small">What the coloured squares react to while recording</span></td>
       <td class="k">Immediate feedback</td>
-      <td>Real-time alerts the moment a limit is passed — the metric square turns orange or red, and vibration or voice cues fire if you enabled them in Settings. Use this for work-technique training.</td>
+      <td>The square reacts to the posture <strong>right now</strong>. Go past a limit and it turns orange or red straight away, and vibration or voice cues fire if you switched them on in Settings. Use this for work-technique training, where the worker should feel the effect of each movement.</td>
     </tr>
     <tr>
       <td class="k">Accumulated feedback</td>
-      <td>No alerts while working. The worker is left undisturbed and gets a summary once the measurement ends. Use this when you want to record normal work without influencing it.</td>
+      <td>The square reacts to <strong>how much of the time so far</strong> has been spent in a risky posture, not to the current movement. It stays grey for the first minutes while it gathers data — 10 minutes by default, adjustable in Settings — and shows a countdown. After that it turns orange or red if too large a share of the measured time has been spent past a limit. Use this to judge the job as a whole rather than a single movement.</td>
     </tr>
     <tr>
       <td class="k narrow" rowspan="2"><strong>Measurement Type</strong><br><span class="small">How the work is logged</span></td>
@@ -514,18 +514,19 @@ td.k.narrow{width:22%;}
   <h3>7.2 · Recommended limits</h3>
   <table class="tight">
     <tr><th style="width:20%">Body part</th><th style="width:32%">Quantity</th><th style="width:22%">Recommended limit</th><th>Source</th></tr>
-    <tr><td class="k" rowspan="3">Arms<br><span class="small">(unsupported)</span></td><td>Elevation angle — 50th percentile</td><td><strong>≤ 30°</strong></td><td rowspan="2">Hansson et al., 2016</td></tr>
+    <tr><td class="k" rowspan="3">Arms<br><span class="small">(unsupported)</span></td><td>Elevation angle — 50th percentile</td><td><strong>≤ 30°</strong></td><td rowspan="3">Hansson et al., 2016</td></tr>
     <tr><td>Elevation angle — 90th percentile</td><td><strong>≤ 60°</strong></td></tr>
-    <tr><td>Angular velocity — 50th percentile</td><td><strong>≤ 30 °/s</strong></td><td>Arvidsson et al., 2017</td></tr>
+    <tr><td>Angular velocity — 50th percentile</td><td><strong>≤ 30 °/s</strong></td></tr>
     <tr><td class="k" rowspan="2">Trunk</td><td>Forward bending — 50th percentile</td><td><strong>≤ 20°</strong></td><td rowspan="2">Hansson et al., 2016</td></tr>
     <tr><td>Side bending — 50th percentile</td><td><strong>≤ 20°</strong></td></tr>
-    <tr><td class="k">Head</td><td>Side bending — 50th percentile</td><td><strong>≤ 20°</strong></td><td>Hansson et al., 2016</td></tr>
+    <tr><td class="k">Head</td><td>Side bending — 50th percentile</td><td><strong>≤ 20°</strong></td><td><span class="small">No source shown in the app</span></td></tr>
     <tr><td class="k">Wrist</td><td>Angular velocity — 50th percentile</td><td><strong>≤ 20 °/s</strong><br><span class="small">≤ 15 °/s if the work is also assessed as force-demanding</span></td><td>Arvidsson et al., 2017</td></tr>
-    <tr><td class="k">Heart rate <span class="small">(optional band)</span></td><td>Accumulated time above 33% of heart-rate reserve (HRR)</td><td>Keep as low as possible</td><td>—</td></tr>
+    <tr><td class="k">Heart rate <span class="small">(optional band)</span></td><td>Accumulated time above 33% of heart-rate reserve (HRR)</td><td><span class="small">Reported as a figure; the app shows no recommended limit</span></td><td>—</td></tr>
   </table>
+  <p class="small">The limits above are the ones the app displays. Head forward bending is reported without a limit value.</p>
 
   <h3>7.3 · Angle bands used in the report</h3>
-  <p>The report also shows how much of the time was spent in each band. The lowest band starts at the calibrated upright posture and includes a small backward margin, so a slight lean backwards is still counted as neutral.</p>
+  <p>The report also shows how much of the time was spent in each band. Anything below 10° counts as neutral and is not listed. Leaning backwards more than 5° is counted separately — the accumulated feedback uses it during recording, but it is not shown in these tables.</p>
   <table class="tight">
     <tr><th style="width:26%">Quantity</th><th>Bands reported</th></tr>
     <tr><td class="k">Trunk — forward bending</td><td>10°–20° · 20°–45° · &gt; 45°</td></tr>
@@ -533,14 +534,11 @@ td.k.narrow{width:22%;}
     <tr><td class="k">Head — forward bending</td><td>10°–20° · 20°–30° · &gt; 30°</td></tr>
     <tr><td class="k">Arm — elevation</td><td>0°–30° · 30°–60° · &gt; 60°</td></tr>
   </table>
-  <p class="small">Trunk bands follow the thresholds used in the RAMP tool (Lind et al., 2020).</p>
-
   <h3>7.4 · Full references</h3>
-  <p>These are the sources cited in short form inside the mobile app.</p>
+  <p>The app cites its sources in short form. Written out in full, they are:</p>
   <ol class="refs">
-    <li>Arvidsson, I., Dahlqvist, C., Enquist, H., &amp; Nordander, C. (2017). <em>Åtgärdsnivåer mot belastningsskada</em> [Action levels against work-related musculoskeletal disorders]. Arbets- och miljömedicin Syd, Report No. 18/2017. Lund, Sweden.</li>
-    <li>Hansson, G.-Å., Arvidsson, I., &amp; Nordander, C. (2016). <em>Riktvärden för att bedöma risken för belastningsskador, baserade på tekniska mätningar av exponeringen</em> [Guideline values for assessing the risk of work-related musculoskeletal disorders, based on technical measurements of the exposure]. Arbets- och miljömedicin, Lund, Report No. 4/2016.</li>
-    <li>Lind, C. M., Forsman, M., &amp; Rose, L. M. (2020). Development and evaluation of RAMP II — a practitioner's tool for assessing musculoskeletal disorder risk factors in industrial manual handling. <em>Ergonomics, 63</em>(4), 477–504.</li>
+    <li>Hansson, G.-Å., Arvidsson, I., &amp; Nordander, C. (2016). <em>Riktvärden för att bedöma risken för belastningsskador, baserade på tekniska mätningar av exponeringen</em> [Guideline values for assessing the risk of work-related musculoskeletal disorders, based on technical measurements of the exposure]. Arbets- och miljömedicin, Lund, Report No. 4/2016.<br><span class="small">Cited on the arm and trunk pages of the report. The limits apply to work with unsupported arms.</span></li>
+    <li>Arvidsson, I., Dahlqvist, C., Enquist, H., &amp; Nordander, C. (2017). <em>Åtgärdsnivåer mot belastningsskada</em> [Action levels against work-related musculoskeletal disorders]. Arbets- och miljömedicin Syd, Report No. 18/2017. Lund, Sweden.<br><span class="small">Cited on the wrist page of the report.</span></li>
   </ol>
 </section>
 
