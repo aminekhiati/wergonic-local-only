@@ -1,0 +1,229 @@
+WERGONIC REPO BASELINE - 2026-08-13
+Frozen mirror location: D:\Backups\Wergonic_Repos_2026-08-13
+Purpose: reference point for reviewing what the departing mobile dev pushes during his notice period.
+DO NOT run 'git remote update' or 'git fetch' inside the mirror - it must stay frozen.
+
+================================================================
+REPO: wergonic-django-backend
+================================================================
+  114313ca4d7eed6b235a4c60a5761c95fea6d657 WH-702-remove-next-worker-id-endpoint | 2026-07-24 22:01:09 +0100 | marwa
+  58711a4f652c260876ad8894b03a744fae043127 add-depandabot | 2024-01-25 10:50:45 +0100 | El-mogherbi Mohammed Fayçal
+  a4a95218ff33ec9063d794cc86361c4054a3bd48 backend-automated-test | 2026-08-06 13:42:28 +0100 | marwa
+  0ec8c0d0e31981750fb6db7672cf35d36c22d50b chore/deploy-branch-staging-to-dev | 2026-08-03 12:02:04 +0100 | marwa
+  0d49b9184222dc693fe41567be97a569ca5d8cbe chore/merge-data-mismatch-into-staging | 2026-07-05 15:35:53 +0100 | assia-mad
+  a8467eadb1eed214845b15cb98b74bbab879a9bb chore/merge-main-into-staging | 2026-05-18 14:52:33 +0100 | assia-mad
+  acd1c684d87168db3f0b7c29731e83b2e5da38eb chore/remove-dead-slack-and-database-id | 2026-08-03 14:20:42 +0100 | marwa
+  f764313736359e958234e1d4192a6e498dce4dd9 dependabot/pip/aiohttp-3.13.3 | 2026-01-06 00:15:13 +0000 | dependabot[bot]
+  079990b831972676afaa57d11fb422a449c1448d dependabot/pip/django-5.1.15 | 2025-12-03 14:17:05 +0000 | dependabot[bot]
+  034c6a2bbd3ececdbf1947e360ea3d86a7084d47 dependabot/pip/fonttools-4.61.0 | 2025-12-01 21:14:31 +0000 | dependabot[bot]
+  de349e762240fd6c7c7475626de40053a21bf3e9 dependabot/pip/h2-4.3.0 | 2025-09-12 08:35:01 +0000 | dependabot[bot]
+  41a46141feff393a91a5ef7fa2aca68a8ae95fcf dependabot/pip/urllib3-2.6.3 | 2026-01-08 06:12:19 +0000 | dependabot[bot]
+  41e9aaac1d77470563e1c23a4baeacd24ee07032 dev | 2026-08-13 11:53:48 +0100 | Maroua Adem
+  ffd2dc6db30054b0034f5232546e6d9511aa5223 dev-old-2024 | 2024-11-20 11:06:30 +0100 | assia-mad
+  4d65fc68567cd5386f4b49e3610421f7a4406fdb farhad | 2025-08-14 13:35:21 +0200 | farhad-abtahi
+  217d3a6f55e2bda43bbc6fce962220696ca6732d farhad_performanceOptimzation | 2025-10-01 22:23:12 +0200 | farhad-abtahi
+  4c5f327e41eba50847c3222f55a3b90f8da15de7 feat/#85ztz4n16/add-cron-job | 2024-01-29 14:32:23 +0100 | El-mogherbi Mohammed Fayçal
+  07515bc7eec186023e39ed5ca4273262853609e1 feat/#8693eng1r/new-limbs-in-database | 2024-01-17 09:15:24 +0100 | El-mogherbi Mohammed Fayçal
+  2c4d01f687ac69de526350454f91c4891a118b05 feat/#8693enh6d/devsecops | 2024-01-11 12:54:28 +0100 | El-mogherbi Mohammed Fayçal
+  c926495abc64858612137b20c6324558ed855836 feat/#8693nrfuv/multi-org | 2024-02-13 11:13:16 +0100 | El-mogherbi Mohammed Fayçal
+  ad8582d4b6687844be5e1e5fe7201fb06b6bb6ae feat/#8693vjr2r/new-limbs | 2024-02-26 09:49:52 +0100 | El-mogherbi Mohammed Fayçal
+  bace5ac670d82cfce846794459492524b10132f2 feat/#86941f6jk/MEC-mapping | 2024-03-29 08:13:33 +0100 | El-mogherbi Mohammed Fayçal
+  1cad3f6577fb654853362116a034e82294784a3b feat/#869455vjq/work-tags-and-labels | 2024-04-02 12:39:55 +0100 | El-mogherbi Mohammed Fayçal
+  e250e87b5605a720a56e50556cdfbc69509a3bf3 feat/#8694agrnv/integrate-firestore-notifications | 2024-04-15 12:22:09 +0100 | berrezougAbdelhak
+  9676d1b0be39261721c36e1f91c7298adc5c9cc2 feat/#8694b40w0/Create-organization-invitation-process | 2024-04-18 09:19:03 +0100 | berrezougAbdelhak
+  8c48ca61aecb0cf53080f3d8d3d52f7d3d01cfac feat/#8694k9xef/improve-database-performance | 2024-05-30 11:12:21 +0100 | El-mogherbi Mohammed Fayçal
+  7f2cc07cc766fa684ac179709e9e722fdd919611 feat/#8694nk1j0/update-work-labels-tagging | 2024-06-02 14:44:21 +0100 | El-mogherbi Mohammed Fayçal
+  94f88c3416ea8bacf38109d46111748bd95d149a feat/assessment-naming-convention | 2026-07-16 17:54:13 +0100 | marwa
+  b4d79eaf8b8815e797a6e6490661a5bb820c7e70 feat/no-ref/change-response-for-magic-link | 2024-06-26 00:41:53 +0100 | El-mogherbi Mohammed Fayçal
+  b7cd685d93c0c80ef9d6430e9ae310c144614af0 feat/no-ref/february-bugs | 2024-03-11 10:42:41 +0100 | El-mogherbi Mohammed Fayçal
+  af2442e7f1aee15fb699d148abd42322c33cd4e5 feat/no-ref/fix-multi-user-issues | 2024-02-15 11:44:19 +0100 | El-mogherbi Mohammed Fayçal
+  4eb38bde522249b76516b6984a8d4e34d2131cc9 feat/notifications-dropdown | 2026-07-09 12:00:11 +0100 | marwa
+  f0943a52793f36865073bdc604ff3e066fd4162a feat/prototype-api-updates | 2026-07-03 01:03:16 +0100 | assia-mad
+  7bd805f57abdd0c98149524438e56a1f9276915c feat/ramp-generated-status | 2026-07-14 15:00:40 +0100 | marwa
+  d48c3dccee066158940b6b728367a561f4ee285d feat/remove-activity-feed | 2026-07-14 19:01:41 +0100 | marwa
+  4649dd2aad52e84b514523fd10a8c2419fe9b3dc feat/settings-cleanup | 2026-07-15 16:21:04 +0100 | marwa
+  79d04d82dbdfb00776d56b62769f10dd71458633 feat/settings-preferences-fields | 2026-07-08 19:24:20 +0100 | marwa
+  bca371f870e3b336fdc4f4c682bb7f2b140cb2d1 feat/wh-843-stuck-assessment-recovery | 2026-08-13 11:33:28 +0100 | marwa
+  dc0aaaf7d1e14f53ae2d20e90e7c5971fe5303f1 feat/worker-id-required | 2026-07-30 11:10:06 +0100 | Maroua Adem
+  dd3c98240aeeb1ea3169945843a7b0ecd051be17 feature/multi-session-stats-limbs-and-assessments | 2026-07-23 12:44:18 +0100 | marwa
+  c9b9bfea37fd4a654c924c45e51e714871e0e057 feature/no-auto-profile-on-user-create | 2026-07-21 16:32:36 +0100 | marwa
+  3188a68720434454ffb3512567e80b74bde50b33 feature/organization-status-refactor | 2026-06-19 11:01:25 +0100 | Maroua Adem
+  d720d35c87204a92efdc0762d1002d7741b1db67 feature/temperature-celsius-unit | 2026-08-04 12:56:05 +0100 | marwa
+  ea6026a42f582923699d828fea72641e2eb0b504 fix/#8693jb2fp/fix-tno-issues | 2024-01-17 12:13:40 +0100 | El-mogherbi Mohammed Fayçal
+  752d80163d37f97f7ef2f52aab3a22e3e1f2ab84 fix/#8694fbhft/change-calculations-function | 2024-05-17 16:18:51 +0100 | El-mogherbi Mohammed Fayçal
+  aee05ac202b7ab5bad8b50a0edde3bcaa77e3fe7 fix/#no-ref/change-files-names | 2024-01-18 13:16:12 +0100 | El-mogherbi Mohammed Fayçal
+  92488069e4c6ea633edb42ad436e4b635e27ec12 fix/#no-ref/fix-assesment-listing-issue | 2024-04-10 04:31:39 +0100 | El-mogherbi Mohammed Fayçal
+  39607dcbc6e8d5c6168973b23ef8df209dbf2065 fix/#no-ref/sessions-issues | 2024-04-04 11:30:13 +0100 | El-mogherbi Mohammed Fayçal
+  43390ce9f77b673d7ca9bbd0b173627916acbc9e fix/#no-ref/update-file-naming | 2024-02-08 16:39:38 +0100 | El-mogherbi Mohammed Fayçal
+  fd0ff8a0889b7ed73ae561edf7a5938678597637 fix/DO-error | 2026-06-24 12:03:49 +0100 | assia-mad
+  a476f47117e3c4d9732cc0335c25b159f65c7c10 fix/clean-backend-code | 2026-05-06 22:53:12 +0100 | assia-mad
+  f764e08afc8ce884621bf26cfc2046fbc8d2fa24 fix/delete-user-firebase-not-found | 2026-06-22 14:29:14 +0100 | marwa
+  80845187984668294fba4d962da8a2b17a5370da fix/export-filename-cors | 2026-07-17 11:16:20 +0100 | marwa
+  83861660cff2b481c71748e154bab862ce3f441b fix/fix-celery-config | 2026-06-27 00:44:58 +0100 | assia-mad
+  e2b6b8579f0d8b4912bf35e71a60405d25b86e5a fix/fix-ci-cd | 2026-06-19 11:24:17 +0100 | assia-mad
+  173407edc0c9cac632352cd2d1e1c0b6dde28b5d fix/fix-sync-session | 2026-05-18 09:26:39 +0100 | assia-mad
+  e581a24aac88f0cd32a5a6ee547f1bd20dc6d0bd fix/fix-user-activation/no-ref | 2025-05-07 11:16:34 +0100 | assia-mad
+  95548c545b06a1e8d97bb5491b6ee98142165122 fix/idor-session-compare-logs-assessments | 2026-06-24 11:08:59 +0100 | marwa
+  def052dfeab0bb4541b871cef3c10bc025b55c42 fix/idor-session-endpoints-org-scoping | 2026-06-23 13:11:55 +0100 | Maroua Adem
+  e8f8bae633b02193c58ac837610b6a46ddc54e88 fix/lock-in-intended-behaviour | 2026-08-06 16:32:05 +0100 | marwa
+  f226790da4ab9bd2175de531f7e3dc04f6c8232c fix/mec-generated-status | 2026-07-17 12:25:52 +0100 | marwa
+  ca41cfb197cda2b222a80291614d16e7fa6f2e0b fix/naming-convention-remaining-gaps | 2026-07-16 22:07:33 +0100 | marwa
+  c71666f7a492cbdfa3c3494790fd7ae0d9329e6b fix/no-ref/fix-new-limbs-names | 2024-04-29 12:11:11 +0100 | El-mogherbi Mohammed Fayçal
+  cbc989d9ccb9c3fd4a4389e8297c892387b68499 fix/notification-titles-consistency | 2026-07-16 16:07:10 +0100 | marwa
+  428ea843cd133c1c55a83e79948f72752e02308d fix/org-list-n-plus-one | 2026-08-05 12:43:23 +0100 | marwa
+  02fd252e46daaab6648c74fa63da6afed4b982a8 fix/organization-and-user-list-access-control | 2026-06-24 13:45:41 +0100 | marwa
+  d087c92f1679c81e169aecb6841acf4a165eb145 fix/ramp-assessment-org-scoping | 2026-06-18 09:45:36 +0100 | Maroua Adem
+  2c063d18dfb7b1306036b939330a110993321cb9 fix/ramp-mec-view-session-stats-500 | 2026-07-01 11:47:55 +0100 | marwa
+  27c5d6278bde7c70620e63876bdfa6aedd1b365f fix/registry-gc-less-aggressive | 2026-08-03 17:20:12 +0100 | marwa
+  0055d5f9d435ffb5c108343fd552c1204b992668 fix/reset-password-email-language | 2026-08-10 20:05:09 +0100 | marwa
+  06dd1c422a9f391cc7870e6e20b445870be1a1a2 fix/session-user-serializer-worker-id | 2026-07-22 10:27:17 +0100 | marwa
+  7f376f1f6d104f2c494b7bb5b27d622f2a0405d0 fix/ticket-and-report-org-scoping | 2026-08-07 16:57:05 +0100 | Maroua Adem
+  3490e03a465be34f14b8dda39b94eef3efc35a57 fix/user-list-n-plus-one | 2026-08-05 11:52:14 +0100 | marwa
+  ef261c5856671d7314d1653a182615ecc958b443 fix/workcycle-task-model-required | 2026-08-10 20:30:23 +0100 | marwa
+  7af8dce08597104a3aaac799e4bbf0e8f7da58d6 hotfix/data-mismatch | 2026-06-29 14:50:25 +0100 | assia-mad
+  34aedf568914b10eda05189611ef895ace3a7d3a hotfix/fix-ramp-results | 2026-06-01 13:51:08 +0100 | assia-mad
+  23e3b738b721afb1b224bf556a256b771d0a5c0a i18n-emails-and-language | 2026-08-10 17:57:27 +0100 | marwa
+  6012492d11de4f3e3efba6ae70fcdca268d66cdc main | 2026-08-06 11:35:49 +0100 | assia-mad
+  c4a2e3ef983eda5acbebe08428f5e1a934b9f765 mec_farhad | 2025-10-01 21:39:01 +0200 | farhad-abtahi
+  5149f702e7aeaf9f75b71250efc5883a78bc4819 refactor/firebase-db-user-sync | 2026-06-30 13:57:47 +0100 | marwa
+  6ee0ecad6f01c1fa353a572308fddacee702df5a staging | 2026-08-03 12:06:18 +0100 | Maroua Adem
+  061a942e08e3387ac496d3c18204aa50ed58c8d5 wh-825-fix-session-profile-overwrite | 2026-08-11 13:15:56 +0100 | marwa
+  d0cff536e4790bb53f36e4b2eeb0b2a6b5b7a1d1 wh-829-remove-worker-logins | 2026-08-11 11:30:51 +0100 | marwa
+
+================================================================
+REPO: wergonic-flutter
+================================================================
+  14d2885427809afc49f7acdcf658ab7a562ca9c6 Fix/zip | 2026-03-16 15:23:20 +0100 | AbdelkaderBarhoumi21
+  477809f8ca7a1d9ae600ef2be56593940ef65f9c Refactor/app-sizes | 2026-03-03 15:03:45 +0100 | bboysidou
+  1ae189db6be5d06dd0fa18f9103c2c48665128aa Refactor/app-styles | 2026-03-10 15:31:12 +0100 | AbdelkaderBarhoumi21
+  28f0263c34afcdc50c5d7f4313b68f256cb96a16 Refactor/app-theme | 2026-03-11 11:25:22 +0100 | AbdelkaderBarhoumi21
+  165c13e3f457e78e6a55de8e6cd7c4cc704b0ec0 Refactor/config-names | 2026-03-02 11:54:56 +0100 | SidouXP3
+  53eb8433f0f81d7671f573e5f1ba997b20631a1c Refactor/dialog | 2026-04-03 14:12:28 +0100 | SidouXP3
+  c4bc16f06a7f8eec4e77bd72c2ff766879c7546d Refactor/lints-rules | 2026-03-03 10:38:12 +0100 | bboysidou
+  9e81aeb59a1bdeecff5817e7bada54f755554064 Refactor/sentry-usage | 2026-04-03 14:36:53 +0100 | AbdelkaderBarhoumi21
+  a246f73eaefa0e5a4a105740952d2e7c53173bf0 Refactor/session | 2026-03-26 11:23:36 +0100 | AbdelkaderBarhoumi21
+  a97b5c0a556ca4cf4dc0c828414e34a6fa6719b4 Refactor/theme | 2026-03-11 13:19:30 +0100 | AbdelkaderBarhoumi21
+  c1c7031bbfc963e3e89095a8308cb814afa0550a Refactor/work-cylce-ui | 2026-03-26 14:14:26 +0100 | AbdelkaderBarhoumi21
+  56e03ff3be948cd977e0bcd8815383c47c676bae Refactor/zip-session | 2026-03-12 13:47:41 +0100 | AbdelkaderBarhoumi21
+  2a3c4fcc7e3fec726d632b97c4b5f991876a1380 V/2.9.29 | 2025-06-03 18:05:48 +0100 | 84rrry
+  271e5320474b679ef2652598702d05cf4de60c08 backup/migration_to_native-pre-dev-merge | 2026-07-21 18:21:38 +0100 | bboysidou
+  65313599680a6972635835fda74900c13c5ff8e0 csv_bug | 2025-10-22 16:30:48 +0100 | bboysidou
+  7a808f6a2cf197f05876bedfd30fe288ad01116a dev | 2026-08-07 18:13:44 +0100 | SidouXP3
+  e43730d88a8d3f98dedb445ec327f04da1d48f86 dev_ble_improvements | 2026-01-30 23:27:12 +0100 | farhad-abtahi
+  c19f66c9b9f359b5b0074681e0f6675998ec4128 farhad_claude | 2026-04-20 19:42:33 +0200 | farhad-abtahi
+  5891eae0fa93a3aaea6846717af5630daf32a441 farhad_driftdatabase | 2025-08-30 19:53:36 +0200 | farhad-abtahi
+  f7690f85f11b2a25e54d928145f7174eaa774fca farhad_optimize | 2025-08-29 23:04:40 +0200 | farhad-abtahi
+  f7690f85f11b2a25e54d928145f7174eaa774fca farhad_optimize2 | 2025-08-29 23:04:40 +0200 | farhad-abtahi
+  de211087d460713c59543b439c7ac207a8cd14d9 farhad_test | 2025-08-27 22:15:22 +0200 | farhad-abtahi
+  dbb3d7993b00996c7ef9a018503143e3049e24d3 feat/work-cycle-new-struct | 2025-07-27 21:17:40 +0100 | 84rrry
+  ecf9dcf65dc9360bf430178d8d1daba23652e9c6 fix/3.3.3-issues | 2025-07-18 18:37:39 +0100 | 84rrry
+  df0e86b5d45fad1ffaaf59317f9529408cb4f1c7 fix/bearer-token-print | 2026-02-19 11:01:40 +0100 | AbdelkaderBarhoumi21
+  de5bd58de396bd4f8d20afe530420fc317d1ede8 fix/ble-scan-stream-disposal | 2026-03-02 11:31:13 +0100 | bboysidou
+  af926ba83d179a1c6ae4c6c6ec2f2859ade4df92 fix/lint-rules | 2026-03-09 16:48:12 +0100 | AbdelkaderBarhoumi21
+  0ec35e5c453373d163a9c8d00910967386f37e05 fix/permissions-issue | 2025-07-24 12:07:28 +0100 | 84rrry
+  ed03b28b8eee486bbc49ffc73b1fa140386f584a fix/work-cycles-flow | 2025-08-03 10:19:20 +0100 | 84rrry
+  909d47f8f6ac971a4c9b92b8947322d70a9b9b1e fix_bluetooth_farhad | 2026-01-18 12:54:55 +0100 | farhad-abtahi
+  243b53ad7029998da1a45d7a045ec7e6b83f6dff fix_blutooth | 2026-01-14 14:29:53 +0100 | bboysidou
+  a242673c682b63a648349704f29fa201f93e3e5f fix_work_cycle_task | 2025-12-22 13:16:56 +0100 | bboysidou
+  ca96a875b43e135bc0975adc4af03773f858bc42 limit_limb_tiles_and_replace_id | 2025-10-24 17:32:48 +0100 | bboysidou
+  cd684d45ab9606e8b38f60bbbe476dac95af6a2c main | 2026-08-07 18:16:52 +0100 | SidouXP3
+  de2e99d5d826fa1e27c41389da2aa1c19348a2a2 migration_new_ui | 2026-08-11 23:08:03 +0100 | bboysidou
+  83c973391421eb78b0b88adb26fc2b8f5c661f0d migration_to_native | 2026-07-21 18:53:59 +0100 | bboysidou
+  84f3b1579e554427a843f7a6e6ad7ec373dbdedd new_refactoring | 2026-06-05 16:02:42 +0100 | bboysidou
+  5e36c52a16ee00bb69a73b626b466f47dff4b007 new_ui | 2026-07-22 02:45:45 +0100 | bboysidou
+  bf7f78828b0f4c7d92b0c9e9f6c5d5a41e691223 perf/login-screen | 2026-03-25 12:33:20 +0100 | AbdelkaderBarhoumi21
+  9b8d78678cff448edce4f5bf7a86181324adf79e refactor/api-endpoints-constants | 2026-03-02 13:53:48 +0100 | AbdelkaderBarhoumi21
+  f3178ca7b0bff14f20a4b40dd6358c2b20f61ef6 refactor/centralize-asset-paths | 2026-03-04 11:58:37 +0100 | AbdelkaderBarhoumi21
+  66e41babe0b5bb9c66edc97ce793f44e81e6c5a5 refactor/centralize-colors-paths | 2026-02-26 13:57:43 +0100 | AbdelkaderBarhoumi21
+  aaa8978afd608824f42f41f3a855d62796982995 refactor/mds_paths-constants | 2026-02-20 15:08:28 +0100 | AbdelkaderBarhoumi21
+  ef15d9f8c592a6ed1cebef67d2443ef27ce5e0ee refactoring | 2025-11-24 08:10:38 +0100 | bboysidou
+  6c7da90450f5112fa975b3c711a007a7e5462ee9 sidali_dev | 2025-09-16 10:19:51 +0100 | bboysidou
+  42e83c4da24d846da93875cb10187fcce01fdb91 sidali_dev_2 | 2025-09-29 16:04:43 +0100 | bboysidou
+  e897c3eaff804f7626f3779149b37db8730b05fd sidali_refactore | 2025-10-15 10:41:22 +0100 | bboysidou
+  20bcdc609d3da4902769e130c442b14e17b3ce97 sidali_test | 2025-09-04 11:01:59 +0100 | bboysidou
+  c2a558a65ca435cba4b31c9c55722d0a40215a0d stability | 2026-02-02 10:35:15 +0100 | bboysidou
+  911e60fd2c3fffe80bd99bbf287eea657b89975b stability_check | 2026-02-05 08:10:21 +0100 | bboysidou
+  3e4b73816d5495e4af2c3cf2e64dfff5a2b8ab3e vibration-v2 | 2025-09-13 18:14:56 +0200 | farhad-abtahi
+
+================================================================
+REPO: wergonic-landing-page
+================================================================
+  182d9b487b23fff220648b1fffa9e174b006f4f3 chore/enhance-ui | 2026-04-15 00:55:58 +0100 | assia-mad
+  bb9952848b4a91513be71785612ea91c43ecfd8b dev | 2024-10-21 14:20:27 +0100 | Moozes
+  70bb8c5585121f99e841f6d9fe9743751bd7f80e fix-fix-ui | 2026-02-05 12:20:51 +0100 | assia-mad
+  4ccb7d6b5fc2c4842d31b7ee60453b027581b02a fix/fix-build-issue | 2026-02-06 09:38:37 +0100 | assia-mad
+  4276952769dc329f976d0ffe9654a74481a6282f fix/fix-ci-cd | 2026-01-22 01:15:11 +0100 | assia-mad
+  f1a5b675f995f991c1430fe910253ca756382ff3 fix/fix-links | 2026-02-24 10:45:56 +0100 | assia-mad
+  3726288b70d43f63ce0c7f396918c6f433d5241e fix/fix-margins | 2026-04-20 00:32:39 +0100 | assia-mad
+  f98b29f82232aa501464bc1ac34b6131c40fb873 fix/fix-port-error | 2026-02-06 09:27:36 +0100 | assia-mad
+  e6ba64d163334ded08ff3443dc7690f87d3993b2 khadidja-update | 2026-06-16 19:16:50 +0100 | khadidja
+  fa994b03ba4e8799b1adfd2f37d6ffc2843c5484 landing-page | 2026-01-21 18:16:14 +0100 | assia-mad
+  d49fbb05eeb8fee3e458297de2a4ef6f6b56308f legacy-landing | 2024-10-21 13:47:00 +0100 | Moozes
+  a3e9aee11c5930c59408fb5d18a2b6c1d1375dc7 main | 2026-04-20 00:33:38 +0100 | assia-mad
+  d49fbb05eeb8fee3e458297de2a4ef6f6b56308f v1-last-prod | 2024-10-21 13:47:00 +0100 | Moozes
+
+================================================================
+REPO: wergonic-web-apps
+================================================================
+  279fbbddb2c4bfc98640118e9a9f9a99400c0799 chore/react-query-v5-pilot | 2026-04-26 21:00:22 +0100 | Assia Madani Yousfi
+  87295adc9c7c4efab4df8d70703bbbd574ee0060 chore/refactoring | 2026-04-26 19:36:52 +0100 | Assia Madani Yousfi
+  7893f966e636b2284fd192fab744554abecf9291 dev | 2026-08-13 13:09:44 +0100 | Maroua Adem
+  c24bba5738e3268991c27220c5266fc76bb6d429 feat/WH-494-dashboard-v2-home | 2026-07-05 16:18:57 +0100 | assia-mad
+  515710ce73746bd2dd697d6172c95538eeb4ac7b feat/WH-548-home-components | 2026-07-05 11:41:15 +0100 | assia-mad
+  bd92ad635f68d9e91634975b66fb912b5057a5cc feat/assessment-naming-convention | 2026-07-16 17:54:59 +0100 | marwa
+  41a875e47c719691d89de7a830f362bf2e4aa029 feat/home-inbox-only | 2026-07-14 19:04:30 +0100 | marwa
+  4ce2c40fc68d0981d71839731f5120b32dab26b4 feat/measurement-details-timeseries-open-by-default | 2026-07-30 12:06:21 +0100 | marwa
+  ba0b5ee1ad5c54ae700559c907703b6b50ce4c22 feat/notifications-dropdown | 2026-07-09 11:58:55 +0100 | marwa
+  cfc66c49d48d05ef5fbd481f13fa849edab80a46 feat/passwordless-email-link-v2 | 2026-07-24 10:19:25 +0100 | marwa
+  3e074b7b9a9936f71a4d50eb9b15adc6a053c805 feat/ramp-generated-status | 2026-07-14 15:42:15 +0100 | marwa
+  3d41deb0a282c8a5ae5abcbf9b5539a4ae750323 feat/settings-cleanup | 2026-07-15 16:22:50 +0100 | marwa
+  3ec0a7dda458ea2b88d8cec60558e34bdad1835e feat/update-settings-page | 2026-07-08 20:08:05 +0100 | marwa
+  9f30d3c320a214a5931eec3d1e60d1981e5e3600 feat/wh-843-stuck-assessment-recovery | 2026-08-13 11:35:42 +0100 | marwa
+  82263cfbfa37452fb7034399be61ba9aa998d442 feature/add-profile-creation/#8696tx0yr | 2025-02-14 11:49:16 +0100 | moozes
+  6a9b4f6c5cbda1c0317756b5919a57d779846da7 feature/compare-sessions-modal-and-separated-tables | 2026-07-23 16:40:25 +0100 | marwa
+  7f101a821c0d3ee2c1542c8a006306421f1e4240 feature/org-tab-inline-toggles | 2026-07-24 21:59:29 +0100 | marwa
+  c74c0c3e261628ccc9872869778ec313d811753e feature/settings-organization-tab-translations | 2026-08-10 11:38:13 +0100 | marwa
+  593d00879b6aee1a29808f996dc60ba3879fc153 feature/temperature-celsius-unit | 2026-08-04 13:13:30 +0100 | marwa
+  c1b42c9b2b640f0af9919fc00eeb7a266861e2b6 fix/WH-503-remove-duplicate-lockfile | 2026-06-26 14:08:45 +0100 | assia-mad
+  e424c74c4b96f1a586a627a64f0edd969f8025e3 fix/ai-engine-consent-text-sync | 2026-07-16 22:03:24 +0100 | marwa
+  7067051be0c9f883b0ade970377ef068b0364dcf fix/ci-cd | 2026-06-12 11:08:43 +0100 | assia-mad
+  1a36565b069229b7bfb09cff2473d596987d5e9d fix/ci-cd-pipeline | 2026-05-18 09:04:12 +0100 | assia-mad
+  c55106911b6271d8afc7e75051600892d2de5422 fix/fix-auth-footer-links | 2026-07-28 16:53:59 +0100 | marwa
+  c067ddfa7b11a64cb35f47babf16700fe1f882aa fix/login-redirect-error-race | 2026-06-26 00:13:56 +0100 | assia-mad
+  3d70b1dd449646e33285ceb56efcdc14e3abae8e fix/mec-generated-status | 2026-07-17 12:29:05 +0100 | marwa
+  7224043bc51d8298621b38f061c1a961156f9563 fix/missing-translations | 2026-07-26 20:41:21 +0100 | marwa
+  d56ef9f3659612b5f42b041be2daebff00848f53 fix/multi-session-pdf-filename | 2026-07-16 23:01:42 +0100 | marwa
+  bbcac5c23a46e929f3361cee713abc8b352c40c3 fix/notification-title-from-backend | 2026-07-16 16:00:50 +0100 | marwa
+  92cf78b92166c56532d0c5449b9db76595a6009e fix/org-selector-dropdown-overflow | 2026-07-09 12:49:13 +0100 | marwa
+  390cd7bb647e8ebb129dc89c83c976779ce10062 fix/profile-load-failure-retry | 2026-08-10 19:39:28 +0100 | marwa
+  6b5737a043b5bbe846434798c2de595a78faf9dd fix/ramp-mec-view-session-stats-500 | 2026-07-01 11:46:15 +0100 | marwa
+  94f53f86d47a9f6c90bc64b368de137217a3d501 fix/sentry-error-reporting | 2026-07-07 15:21:04 +0100 | marwa
+  fa68082630a66005204587d12c81038bd0359a5a fix/sentry-sourcemaps-dev-deploy | 2026-07-07 16:28:14 +0100 | marwa
+  ea19d7f5b59bdc772e8565fb5d556506ac691fa9 fix/session-worker-id | 2026-07-22 10:32:04 +0100 | marwa
+  49ac5feb873a9cb6b6c3b5fb5359e98f84e53161 fix/users-table-row-selection | 2026-06-29 12:38:05 +0100 | marwa
+  082c66edab0fb1b4414d413dbf405ece87781fa4 fix/v2-list-table-error-state | 2026-07-29 09:54:24 +0100 | marwa
+  203cfa568da9e8a5c6e45e2bd010c03c0e7142fb fix/wh-853-merge-retire-warnings | 2026-08-13 13:06:06 +0100 | marwa
+  05f8738e9a6f86ab4274fb808cd1c63eb12f7d8d hotfix/add-web-header | 2026-06-01 21:49:04 +0100 | assia-mad
+  1d99fac304609dbd2907628e76aa8bce7cb7d80c i18n-emails-and-language | 2026-08-10 18:06:23 +0100 | marwa
+  89976f3f7d571740a94a05313e21b852fd6f0f5b main | 2026-08-05 10:46:34 +0100 | assia-mad
+  20041b658994c26ede1864a219afcb14d0841c51 remove-inbox-end-session | 2026-07-21 16:50:04 +0100 | marwa
+  d9eac949b1ba549174ed31f5e03195b33f0d6e45 selective-dev-to-main | 2025-08-07 17:37:24 +0100 | assia-mad
+  6288d95bd37cddcc577e4d6061d6b46c77abaa4b wh-829-remove-worker-logins | 2026-08-11 11:34:42 +0100 | marwa
+  b12ff1c591f2093ed78aa616ded97bc6a76b0d74 client-panel-v1.10.0 | 2024-08-08 18:30:12 +0100 | Moozes
+  a95079020583410d40657e1ba169fecab5f0f468 client-panel-v1.10.1 | 2024-08-12 17:17:46 +0100 | Moozes
+  fde1124260be19825ef517b751164bd7ae165a14 client-panel-v1.10.2 | 2024-08-16 11:35:18 +0100 | Moozes
+  c8cfeceac13964157d3301f34403802e105b6122 client-panel-v1.11.0 | 2024-09-18 11:42:27 +0100 | Moozes
+  5479b665467b7cc5c68d9a216a3f0630ea73ff8c client-panel-v1.11.1 | 2024-09-19 15:35:32 +0100 | Moozes
+  f998958184151f0b302084670db252dc6fe484bb client-panel-v1.12.0 | 2024-10-10 13:19:12 +0100 | Moozes
+  5519c0c8a0fc5e224a9d8f270446c2e32cac00f9 client-panel-v1.12.1 | 2024-10-16 10:33:33 +0100 | Moozes
+  d04ac004f881137a82310c686899df58031dadc7 client-panel-v1.13.0 | 2024-11-04 13:59:34 +0000 | Moozes
+  e95484847bef043d0af75a4ba93e269bf6e00300 client-panel-v1.14.0 | 2024-11-19 11:28:35 +0100 | Moozes
+  3bf46ad7b4749f74f2b24ac8e6be97ae0e3b3151 client-panel-v1.14.1 | 2024-12-05 13:02:23 +0100 | Moozes
+  1fcece8058ade9112d33b216bc542219535c9bc7 client-panel-v1.14.2 | 2024-12-18 14:36:27 +0100 | Moozes
+  ba7e42bf5bb190ab79e90c0ec6055fcb388e286b client-panel-v1.14.3 | 2025-01-09 15:16:09 +0100 | Moozes
+  12b9e860a4c23fdcd8fbf11503469af8760352fa client-panel-v1.14.4 | 2025-01-24 17:49:12 +0100 | Moozes
+  62352444b5ffa0cc86ee671619bcde750219497a client-panel-v1.15.0 | 2025-03-10 10:57:36 +0100 | Moozes
+  008e000068c2faefff57584b1d6c1d1427d59824 client-panel-v1.7.0 | 2024-04-10 22:42:53 +0200 | Moozes
+  2eb9615f607cb87a7e399f87bf3b1591618ba0ed client-panel-v1.8.0 | 2024-05-10 14:44:08 +0200 | Moozes
+  9ea1e0e35cd2cbd405db512acebdb3c99be19288 client-panel-v1.9.0 | 2024-07-02 11:38:08 +0200 | Khodja Moussa
+
