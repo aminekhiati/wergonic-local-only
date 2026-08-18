@@ -12,6 +12,7 @@
     --line: #E9EBF0; --tint: #F4EFFD;
     --amber: #B7791F; --amber-bg: #FFF8EC; --amber-line: #F2DFB8;
     --red: #B42318; --red-bg: #FEF3F2; --red-line: #FDA29B;
+    --green: #1B7F5A; --green-bg: #ECFAF4; --green-line: #A9E0C9;
   }
   * { box-sizing: border-box; }
   @page { size: A4; margin: 16mm 15mm 14mm 15mm; }
@@ -29,10 +30,10 @@
   .lede { color: var(--slate); font-size: 10pt; max-width: 172mm; margin-top: 8px; }
   .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; line-height: 1.55; }
 
-  h2 { font-size: 12pt; font-weight: 700; letter-spacing: -0.01em; margin: 24px 0 2px;
+  h2 { font-size: 12pt; font-weight: 700; letter-spacing: -0.01em; margin: 26px 0 2px;
        padding-bottom: 6px; border-bottom: 1.5px solid var(--line); break-after: avoid; }
 
-  .q { margin-top: 16px; break-inside: avoid; }
+  .q { margin-top: 17px; break-inside: avoid; }
   .q h3 { font-size: 10.5pt; font-weight: 700; color: var(--ink); margin: 0 0 5px; line-height: 1.35; break-after: avoid; }
   .q h3 .id { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8pt; font-weight: 500;
               color: var(--purple); background: var(--tint); padding: 2px 6px; border-radius: 4px;
@@ -43,7 +44,7 @@
   .q p { margin: 0; color: var(--slate); font-size: 9.5pt; }
   .q p + p { margin-top: 5px; }
   .q strong { color: var(--ink); font-weight: 600; }
-  .now { font-size: 9pt; color: var(--muted); margin-bottom: 5px !important; }
+  .now { font-size: 9pt; color: var(--muted); margin-bottom: 6px !important; }
   .now b { color: var(--slate); font-weight: 600; }
   .assume { margin-top: 6px; border-left: 3px solid #E3D5F7; background: #FBF9FE;
             padding: 7px 12px; border-radius: 0 6px 6px 0; break-inside: avoid; }
@@ -51,11 +52,12 @@
                  color: var(--purple); display: block; margin-bottom: 3px; }
   .assume p { margin: 0; font-size: 9pt; color: var(--slate); }
 
-  .box { margin-top: 14px; border: 1px solid var(--amber-line); border-radius: 8px;
-         background: var(--amber-bg); padding: 13px 17px; break-inside: avoid; }
-  .box h3 { margin: 0 0 4px; font-size: 11pt; color: var(--amber); }
-  .box .tag { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); }
-  .box p { margin: 4px 0 0; color: var(--slate); font-size: 9.5pt; }
+  table.t { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 8.8pt; }
+  table.t th { text-align: left; font-weight: 700; font-size: 7.5pt; letter-spacing: 0.06em;
+               text-transform: uppercase; color: var(--muted); border-bottom: 1.5px solid var(--line);
+               padding: 6px 10px 6px 0; }
+  table.t td { padding: 6px 10px 6px 0; border-bottom: 1px solid #F2F3F7; color: var(--slate); vertical-align: top; }
+  table.t td.k { color: var(--ink); font-weight: 600; width: 34%; }
 
   footer { margin-top: 26px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; }
 </style>
@@ -64,15 +66,15 @@
 
 <div class="masthead">
   <div class="eyebrow">Wergonic · Mobile · Accumulated Feedback</div>
-  <h1>Decisions Needed<br />Before We Build</h1>
+  <h1>Six Decisions<br />Before We Build</h1>
   <p class="lede">
-    Accumulated feedback already exists in the app. Your document changes how it is counted — from a share of
-    samples against a fixed percentage, to measured minutes against RAMP duration bands, plus an end-of-shift
-    forecast. Almost all of it is clear enough to build from.
+    Accumulated feedback already exists in the app. Your document changes how it is counted — measured minutes
+    against RAMP duration bands instead of a share of samples against a fixed percentage, plus an end-of-shift
+    forecast. Almost everything needed is either in the document or already in the app.
   </p>
   <p class="lede">
-    These are the points where we would have to guess, and guessing wrong means rework. Each one says what the
-    app does today and what we will assume if we do not hear back.
+    These six are what is left. Every other question we had turned out to be answered — either by the document
+    or by something the app already does. That list is at the end so you can see what we are not asking.
   </p>
   <div class="meta">
     18 August 2026 · against <em>Accumulated Feedback — Feature Description</em>, draft v1.3 (31 July 2026)<br />
@@ -80,87 +82,94 @@
   </div>
 </div>
 
-<div class="box">
-  <span class="tag">The one that costs the most</span>
-  <h3>The voice today is nine recorded clips. The new design needs sentences.</h3>
-  <p>
-    Right now the app plays a fixed MP3 per limb per colour — left arm, right arm, trunk × green, yellow, red,
-    in English and Swedish. The new messages contain live numbers ("still high — 35 minutes"), technique advice,
-    praise and escalation. That cannot be pre-recorded in any sensible number of files. Question&nbsp;4 is where
-    most of the effort in this feature sits.
-  </p>
-</div>
-
 <h2>The bands</h2>
 
 <div class="q">
   <h3><span class="id">1</span>What are the duration bands for trunk and head?<span class="badge">Blocker</span></h3>
-  <p class="now"><b>Today:</b> trunk and head both give accumulated feedback, on their own hardcoded percentages.</p>
-  <p>The document gives one verified table — RAMP II item 1.5, arm at or above shoulder. There is nothing equivalent for forward bending of the trunk, backward bending, or head down. We cannot invent those numbers; they need to come from you or from a RAMP source we can quote.</p>
-  <p>If they are not available, the alternative is to convert the arm only and leave trunk and head on the current logic for now — but then two body parts on the same screen are scored two different ways, which we would rather avoid.</p>
+  <p class="now"><b>In the app today:</b> trunk and head both give accumulated feedback, on their own fixed percentages.</p>
+  <p>The document gives one verified table — RAMP II item 1.5, arm at or above shoulder — and says the table must be stored per item, never globally. There is nothing equivalent for forward bending of the trunk, backward bending, or head down, and your own open-questions list says the per-item tables are not yet decided. We cannot invent them.</p>
+  <p>If they are not available yet, the alternative is to convert the arm only and leave trunk and head on the current logic. But then two body parts on the same screen are scored two different ways, which we would rather avoid.</p>
 </div>
 
 <div class="q">
-  <h3><span class="id">2</span>Which arm angle counts as "hand above shoulder"?<span class="badge">Blocker</span></h3>
-  <p class="now"><b>Today:</b> the arm has two bands — above 30° and above 60° — each with its own percentage limit.</p>
-  <p>RAMP has one condition: hand at or above shoulder height. So we need one angle. Is it 60°, or higher? And what happens to the 30–60° band — does it get its own duration table, or does it stop driving the colour and become display only?</p>
-</div>
-
-<div class="q">
-  <h3><span class="id">3</span>Confirm the new bands are far stricter than today.</h3>
-  <p class="now"><b>Today:</b> the arm turns red at 50&nbsp;% of the time above 30°, or 10&nbsp;% above 60°.</p>
-  <p>RAMP turns yellow at 30 minutes above shoulder in a day (about 6&nbsp;%) and red at one hour (about 12.5&nbsp;%). The same worker doing the same job will go red much earlier and much more often than they do now. That is the point of the change, but it will look like a regression to anyone using the app today, so we want it confirmed before we ship it.</p>
+  <h3><span class="id">2</span>Which arm elevation angle counts as "hand above shoulder"?<span class="badge">Blocker</span></h3>
+  <p class="now"><b>In the app today:</b> the arm has two bands, above 30° and above 60°, each with its own limit.</p>
+  <p>The document is explicit that RAMP defines this by hand height and that we measure arm angle, and lists the elbow-angle assumption as something each variable must document — but it never gives the angle. RAMP has one condition, so we need one number.</p>
+  <p>And what happens to the 30–60° band? Does it get its own duration table, or does it stop driving the colour and become display only?</p>
 </div>
 
 <h2>The voice</h2>
 
 <div class="q">
-  <h3><span class="id">4</span>Recorded clips, or text-to-speech?<span class="badge">Blocker</span></h3>
-  <p class="now"><b>Today:</b> nine MP3 files per language, one per limb per colour. No head clips at all.</p>
-  <p>Three ways to do the new messages:</p>
-  <p><strong>a.</strong> Switch to text-to-speech on the phone. Any sentence, any number, easy to change later, works for every language — but a synthetic voice, and it needs testing on the noise of a real floor.</p>
-  <p><strong>b.</strong> Record a larger fixed set. Natural voice, but it is roughly 30–40 clips per body part per language, minutes cannot be spoken, and every wording change means going back to the studio.</p>
-  <p><strong>c.</strong> Keep the three clips per limb and only change the counting. Cheapest by far, and the calculation still improves — but none of the coaching design in the document happens.</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>Text-to-speech, English and Swedish, with the sentence text kept in the app so wording can be changed without a new build.</p></div>
+  <h3><span class="id">3</span>Synthetic voice, and who writes the sentences?<span class="badge">Blocker</span></h3>
+  <p class="now"><b>In the app today:</b> nine recorded MP3s per language — left arm, right arm, trunk × green, yellow, red. No head clips at all.</p>
+  <p>The new messages contain live numbers ("still high — 35 minutes") and vary by event. That cannot be pre-recorded, so it has to be text-to-speech — a synthetic voice replacing the recorded one the app uses now. We read the document as already assuming that, but it is the thing a worker will notice most, so we want it said out loud before we build it.</p>
+  <p>Separately, your open-questions list leaves the final wording and localisation undecided. These sentences are the feature — a clumsy one spoken every ten minutes gets it switched off. Who writes and approves the English and Swedish?</p>
+</div>
+
+<h2>Time and the forecast</h2>
+
+<div class="q">
+  <h3><span class="id">4</span>How is a break logged?</h3>
+  <p class="now"><b>In the app today:</b> there is no break. A pause exists in the code but nothing in the app calls it.</p>
+  <p>The document defines valid time as elapsed minus <em>logged</em> breaks minus sensor dropout, and says the voice must stay quiet during a break. Dropout we can handle ourselves. Breaks have nothing to log them.</p>
+  <p>So: do we add a pause button to the recording screen, or do we say a break means stopping the session, and leave it out of this round?</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>We add a pause button, count paused time out of the denominator, and keep the voice silent while paused.</p></div>
 </div>
 
 <div class="q">
-  <h3><span class="id">5</span>Confirm the voice slows down a lot.</h3>
-  <p class="now"><b>Today:</b> the voice repeats every 30 seconds by default, after a 10-minute warm-up.</p>
-  <p>The document says one message every 10 minutes, at most six an hour, about one body part only — the worst one — and never two warnings at once. That is a very different experience. We think it is right, but it is a big change for anyone used to the current app.</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>We build 10 minutes as the default and leave the interval adjustable in settings, as it is today.</p></div>
-</div>
-
-<h2>Time and scope</h2>
-
-<div class="q">
-  <h3><span class="id">6</span>What time is excluded from the count?</h3>
-  <p class="now"><b>Today:</b> every sample counts; there is a pause on the session timer but it does not affect the feedback.</p>
-  <p>The document says the denominator is valid working time — minus breaks, minus any period with no usable sensor data. We plan to treat a paused session as a break, drop sensor-dropout time out of the count entirely, and keep the voice silent while paused.</p>
-  <p>Worth confirming, because it means a session with a lot of dropout will now show a higher percentage than it does today for the same work.</p>
-</div>
-
-<div class="q">
-  <h3><span class="id">7</span>Does the forecast split by task, or only by session?</h3>
-  <p class="now"><b>Today:</b> the app has work tasks and work cycles, but feedback is counted across the whole session.</p>
-  <p>The forecast is much better if it knows the current task is overhead work for one more hour and then bench work for six. The document treats that as first-class. The question is whether we reuse the existing work task and cycle structure for it in this round, or forecast from the whole session only and add tasks later.</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>Session-scope forecast in this round, built so task scope can be added on top without redoing it.</p></div>
-</div>
-
-<div class="q">
-  <h3><span class="id">8</span>How long is the shift, for the forecast?</h3>
-  <p class="now"><b>Today:</b> there is a session duration limit setting, default 8 hours.</p>
-  <p>The forecast needs planned working hours, not elapsed session time. We plan to reuse that 8-hour setting and assume 7 hours of actual work in it. If shifts vary by customer this should become a proper setting instead.</p>
+  <h3><span class="id">5</span>What fills the rest of the shift in the forecast?<span class="badge">Blocker</span></h3>
+  <p class="now"><b>In the app today:</b> a session is already split into work tasks with expected durations and a timeline — but that plan only covers the recording, not the whole day.</p>
+  <p>The forecast projects to an 8-hour workday. The app knows the tasks it is recording; it knows nothing about the other six or seven hours. Your open-questions list flags exactly this — the source of remaining planned time — and offers falling back to whole-session scope.</p>
+  <p>Two options. <strong>a.</strong> Assume the rest of the day looks like what we measured, and extrapolate over 7 active hours. Needs nothing new, but a 20-minute recording of the worst task in the day becomes a red 8-hour projection. <strong>b.</strong> Ask the ergonomist what fills the rest of the shift when setting up the session. More honest, more setup.</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>Option a, using the existing task structure for the recorded part, with the projection clearly marked as an estimate from a partial recording.</p></div>
 </div>
 
 <h2>The report</h2>
 
 <div class="q">
-  <h3><span class="id">9</span>Does the session report change too?</h3>
-  <p class="now"><b>Today:</b> the report shows time and percentage per angle band, calculated separately from the live feedback.</p>
-  <p>Two things to decide. First, whether the report should now also show the projected shift exposure and the RAMP colour, or stay as it is. Second, whether the report has to count breaks and dropouts exactly the way the live feedback will — because if it does not, a worker who was shown red all afternoon can open a report that says something different.</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>We align the report's time handling with the live calculation and leave the report layout alone for now.</p></div>
+  <h3><span class="id">6</span>Does the projection go into the session report, and per arm or worst arm?</h3>
+  <p class="now"><b>In the app today:</b> the report already shows time and percentage per angle band, calculated separately from the live feedback.</p>
+  <p>The document settles that the report and the live view must count breaks and dropouts identically — we will align them. What it leaves open is whether the report should also carry the projected shift exposure and the RAMP colour, and whether it shows both arms or only the worse one. RAMP itself scores only the worse arm; an ergonomist usually wants to see both.</p>
 </div>
+
+<h2>What we are not asking, and why</h2>
+
+<table class="t">
+  <tr><th>Question we dropped</th><th>Already answered by</th></tr>
+  <tr>
+    <td class="k">How much stricter the new bands are</td>
+    <td>The document. It states RAMP is yellow at 30 min and red at 1 h, calls the old 10&nbsp;% / 30&nbsp;% bands far more permissive, and sets RAMP-informed as the default.</td>
+  </tr>
+  <tr>
+    <td class="k">One threshold set or two</td>
+    <td>The document. RAMP-informed by default, with the looser set kept and clearly labelled as training thresholds.</td>
+  </tr>
+  <tr>
+    <td class="k">Whether we may call the output RAMP</td>
+    <td>The document. Until it is validated against observation it is described as a RAMP-aligned sensor proxy.</td>
+  </tr>
+  <tr>
+    <td class="k">How often the voice speaks</td>
+    <td>The document. Ten minutes, at most six an hour, one body part — the worst. The app already has the interval and warm-up as settings.</td>
+  </tr>
+  <tr>
+    <td class="k">What time is excluded from the count</td>
+    <td>The document. Elapsed minus breaks minus any period with no valid sensor sample, counted in seconds, never in samples. Only the break part needed asking — question&nbsp;4.</td>
+  </tr>
+  <tr>
+    <td class="k">Where shift length comes from</td>
+    <td>The document sets 8 h planned, 7 h active. The app already has an 8-hour session limit setting to hang it on.</td>
+  </tr>
+  <tr>
+    <td class="k">Whether the forecast splits by task</td>
+    <td>The app. Work tasks with expected durations and a timeline already exist, so we use them. Only the unrecorded rest of the shift needed asking — question&nbsp;5.</td>
+  </tr>
+  <tr>
+    <td class="k">Customer-written coaching messages</td>
+    <td>The document marks the whole message-library section as future scope, not part of this release.</td>
+  </tr>
+</table>
 
 <footer>
   Wergonic · Accumulated Feedback · decisions needed before development starts · 18 August 2026
