@@ -12,7 +12,6 @@
     --line: #E9EBF0; --tint: #F4EFFD;
     --amber: #B7791F; --amber-bg: #FFF8EC; --amber-line: #F2DFB8;
     --red: #B42318; --red-bg: #FEF3F2; --red-line: #FDA29B;
-    --green: #1B7F5A; --green-bg: #ECFAF4; --green-line: #A9E0C9;
   }
   * { box-sizing: border-box; }
   @page { size: A4; margin: 16mm 15mm 14mm 15mm; }
@@ -30,12 +29,11 @@
   .lede { color: var(--slate); font-size: 10pt; max-width: 172mm; margin-top: 8px; }
   .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; line-height: 1.55; }
 
-  h2 { font-size: 13.5pt; font-weight: 700; letter-spacing: -0.01em; margin: 26px 0 4px;
+  h2 { font-size: 12pt; font-weight: 700; letter-spacing: -0.01em; margin: 24px 0 2px;
        padding-bottom: 6px; border-bottom: 1.5px solid var(--line); break-after: avoid; }
-  .sectionnote { color: var(--slate); font-size: 9.5pt; margin: 6px 0 2px; break-after: avoid; }
 
-  .q { margin-top: 15px; break-inside: avoid; }
-  .q h3 { font-size: 10.5pt; font-weight: 700; color: var(--ink); margin: 0 0 4px; line-height: 1.35; break-after: avoid; }
+  .q { margin-top: 16px; break-inside: avoid; }
+  .q h3 { font-size: 10.5pt; font-weight: 700; color: var(--ink); margin: 0 0 5px; line-height: 1.35; break-after: avoid; }
   .q h3 .id { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8pt; font-weight: 500;
               color: var(--purple); background: var(--tint); padding: 2px 6px; border-radius: 4px;
               margin-right: 8px; vertical-align: 1.5px; }
@@ -45,28 +43,21 @@
   .q p { margin: 0; color: var(--slate); font-size: 9.5pt; }
   .q p + p { margin-top: 5px; }
   .q strong { color: var(--ink); font-weight: 600; }
+  .now { font-size: 9pt; color: var(--muted); margin-bottom: 5px !important; }
+  .now b { color: var(--slate); font-weight: 600; }
   .assume { margin-top: 6px; border-left: 3px solid #E3D5F7; background: #FBF9FE;
             padding: 7px 12px; border-radius: 0 6px 6px 0; break-inside: avoid; }
   .assume .tag { font-size: 7pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
                  color: var(--purple); display: block; margin-bottom: 3px; }
   .assume p { margin: 0; font-size: 9pt; color: var(--slate); }
 
-  .box { margin-top: 14px; border: 1px solid var(--line); border-radius: 8px;
-         background: #FAFAFC; padding: 13px 17px; break-inside: avoid; }
-  .box h3 { margin: 0 0 4px; font-size: 11pt; }
+  .box { margin-top: 14px; border: 1px solid var(--amber-line); border-radius: 8px;
+         background: var(--amber-bg); padding: 13px 17px; break-inside: avoid; }
+  .box h3 { margin: 0 0 4px; font-size: 11pt; color: var(--amber); }
+  .box .tag { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); }
   .box p { margin: 4px 0 0; color: var(--slate); font-size: 9.5pt; }
-  .box .tag { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-  .box.warn { border-color: var(--amber-line); background: var(--amber-bg); }
-  .box.warn h3, .box.warn .tag { color: var(--amber); }
-  .box ul { margin: 6px 0 0; padding-left: 18px; }
-  .box li { color: var(--slate); font-size: 9.5pt; margin: 4px 0; }
-  .box li strong { color: var(--ink); font-weight: 600; }
-
-  code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.5pt;
-         color: var(--ink); background: #F4F5F8; padding: 1px 4px; border-radius: 3px; }
 
   footer { margin-top: 26px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; }
-  .pb { break-before: page; }
 </style>
 </head>
 <body>
@@ -75,168 +66,100 @@
   <div class="eyebrow">Wergonic · Mobile · Accumulated Feedback</div>
   <h1>Decisions Needed<br />Before We Build</h1>
   <p class="lede">
-    The feature description is complete on the method — how exposure is measured, projected and turned into a
-    colour, and how the voice should behave. What it does not settle is a set of product choices that only you
-    can make. They are listed here, once, so we are not stopping every second day to ask.
+    Accumulated feedback already exists in the app. Your document changes how it is counted — from a share of
+    samples against a fixed percentage, to measured minutes against RAMP duration bands, plus an end-of-shift
+    forecast. Almost all of it is clear enough to build from.
   </p>
   <p class="lede">
-    Each question says what it blocks and what we will assume if we do not hear otherwise. The eight marked
-    <span class="badge">Blocker</span> genuinely stop work; the rest can be answered while we build the first parts.
+    These are the points where we would have to guess, and guessing wrong means rework. Each one says what the
+    app does today and what we will assume if we do not hear back.
   </p>
   <div class="meta">
-    18 August 2026 · against <em>Accumulated Feedback — Feature Description</em>, draft v1.3 (31 July 2026)
+    18 August 2026 · against <em>Accumulated Feedback — Feature Description</em>, draft v1.3 (31 July 2026)<br />
+    Read against mobile <code>dev</code>
   </div>
 </div>
 
-<div class="box warn">
-  <span class="tag">The short version</span>
-  <h3>Four things decide the size of this feature.</h3>
-  <ul>
-    <li><strong>How many body parts ship in v1.</strong> One (arm above shoulder) is a few weeks. Six is a different project — each one needs its own duration table and its own coaching phrases, written by an ergonomist, in two languages.</li>
-    <li><strong>Whether we have tasks.</strong> Without tasks we can only forecast from the whole session, which is rough on a mixed workday. With tasks, someone has to start and stop them.</li>
-    <li><strong>Whether we may call it RAMP.</strong> We measure arm angle; RAMP measures hand height. Until that is checked against real observation we can only honestly call it a RAMP-aligned estimate.</li>
-    <li><strong>Whether a supervisor may see one named worker's numbers.</strong> That is a labour-relations decision, not a technical one, and it is far cheaper to make now than after it is built.</li>
-  </ul>
+<div class="box">
+  <span class="tag">The one that costs the most</span>
+  <h3>The voice today is nine recorded clips. The new design needs sentences.</h3>
+  <p>
+    Right now the app plays a fixed MP3 per limb per colour — left arm, right arm, trunk × green, yellow, red,
+    in English and Swedish. The new messages contain live numbers ("still high — 35 minutes"), technique advice,
+    praise and escalation. That cannot be pre-recorded in any sensible number of files. Question&nbsp;4 is where
+    most of the effort in this feature sits.
+  </p>
 </div>
 
-<h2>A · What ships in version 1</h2>
+<h2>The bands</h2>
 
 <div class="q">
-  <h3><span class="id">A1</span>Which body parts and postures are in v1?<span class="badge">Blocker</span></h3>
-  <p>The description covers upper arm above shoulder, arm outside the work area, back bending, back twisting, neck forward and bent wrist. Every one of them needs its own duration bands, its own coaching sentences and its own testing.</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>We build upper arm above shoulder only, both arms, and design it so more can be added later without rework.</p></div>
-</div>
-
-<div class="q">
-  <h3><span class="id">A2</span>Who gives us the duration bands for each posture, and signs them off?<span class="badge">Blocker</span></h3>
-  <p>We have verified the table for arm above shoulder from the RAMP II guide. Every other posture needs the same, from someone who can be quoted. We are not comfortable inventing them.</p>
+  <h3><span class="id">1</span>What are the duration bands for trunk and head?<span class="badge">Blocker</span></h3>
+  <p class="now"><b>Today:</b> trunk and head both give accumulated feedback, on their own hardcoded percentages.</p>
+  <p>The document gives one verified table — RAMP II item 1.5, arm at or above shoulder. There is nothing equivalent for forward bending of the trunk, backward bending, or head down. We cannot invent those numbers; they need to come from you or from a RAMP source we can quote.</p>
+  <p>If they are not available, the alternative is to convert the arm only and leave trunk and head on the current logic for now — but then two body parts on the same screen are scored two different ways, which we would rather avoid.</p>
 </div>
 
 <div class="q">
-  <h3><span class="id">A3</span>Can we call the result "RAMP" at all?<span class="badge">Blocker</span></h3>
-  <p>RAMP scores <strong>hand height</strong>. Our sensors measure <strong>arm angle</strong>. They are close but not the same — bending the elbow changes hand height without changing arm angle. Nobody has checked how far apart they are in practice.</p>
-  <p>So: do we ship v1 labelled as an <strong>estimate aligned with RAMP</strong>, or hold the feature until someone films real work and compares? The second is more honest and much slower.</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>We ship it labelled as a RAMP-aligned estimate, and keep that wording away from anything that reads like a certified score.</p></div>
+  <h3><span class="id">2</span>Which arm angle counts as "hand above shoulder"?<span class="badge">Blocker</span></h3>
+  <p class="now"><b>Today:</b> the arm has two bands — above 30° and above 60° — each with its own percentage limit.</p>
+  <p>RAMP has one condition: hand at or above shoulder height. So we need one angle. Is it 60°, or higher? And what happens to the 30–60° band — does it get its own duration table, or does it stop driving the colour and become display only?</p>
 </div>
 
 <div class="q">
-  <h3><span class="id">A4</span>One threshold set or two?</h3>
-  <p>The description offers RAMP-based thresholds for assessment plus a second, looser set for technique training (the old 10&nbsp;% / 30&nbsp;% idea). Two sets means two configurations, two colours to explain, and a real risk of confusion.</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>v1 ships the RAMP-based set only.</p></div>
+  <h3><span class="id">3</span>Confirm the new bands are far stricter than today.</h3>
+  <p class="now"><b>Today:</b> the arm turns red at 50&nbsp;% of the time above 30°, or 10&nbsp;% above 60°.</p>
+  <p>RAMP turns yellow at 30 minutes above shoulder in a day (about 6&nbsp;%) and red at one hour (about 12.5&nbsp;%). The same worker doing the same job will go red much earlier and much more often than they do now. That is the point of the change, but it will look like a regression to anyone using the app today, so we want it confirmed before we ship it.</p>
 </div>
 
-<h2>B · Time, breaks and bad data</h2>
+<h2>The voice</h2>
 
 <div class="q">
-  <h3><span class="id">B1</span>How does the app know a break has started?<span class="badge">Blocker</span></h3>
-  <p>Everything hangs off this — the percentages, the forecast, and the fact that the voice must not talk during lunch. Is it a button the worker presses, something the ergonomist marks, a fixed schedule, or do we guess it from the sensors going quiet?</p>
-</div>
-
-<div class="q">
-  <h3><span class="id">B2</span>How much missing data before we refuse to show a colour?</h3>
-  <p>If a sensor drops for twenty minutes, the number we show is built on far less than it looks. We would rather grey it out and say "not enough data" than show a confident red. Where is that line — half the session, a quarter?</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>Below 70&nbsp;% valid data we show the value greyed out and marked incomplete, and the voice stays quiet.</p></div>
-</div>
-
-<div class="q">
-  <h3><span class="id">B3</span>Must the end-of-session report agree exactly with what the worker saw live?</h3>
-  <p>If yes — and it probably should be — the report has to count breaks and dropouts the same way this feature does, which means changing the report too. That is extra work worth knowing about now.</p>
-</div>
-
-<h2 class="pb">C · The forecast</h2>
-
-<p class="sectionnote">The colour is a forecast: "if you keep working like this, you will end the shift at X". That needs to know how long the shift is and what work is still coming.</p>
-
-<div class="q">
-  <h3><span class="id">C1</span>Do we have tasks in v1, and who starts them?<span class="badge">Blocker</span></h3>
-  <p>A worker doing overhead assembly for one hour and bench work for seven is not the same as one doing overhead work all day, but in the first twenty minutes the numbers look identical. Splitting the session into tasks is what makes the forecast defensible.</p>
-  <p>The question is who does the splitting: the worker taps start and stop on the phone, the ergonomist marks it, we detect it automatically, or we skip it in v1.</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>v1 forecasts from the whole session only, and tasks become the next step.</p></div>
+  <h3><span class="id">4</span>Recorded clips, or text-to-speech?<span class="badge">Blocker</span></h3>
+  <p class="now"><b>Today:</b> nine MP3 files per language, one per limb per colour. No head clips at all.</p>
+  <p>Three ways to do the new messages:</p>
+  <p><strong>a.</strong> Switch to text-to-speech on the phone. Any sentence, any number, easy to change later, works for every language — but a synthetic voice, and it needs testing on the noise of a real floor.</p>
+  <p><strong>b.</strong> Record a larger fixed set. Natural voice, but it is roughly 30–40 clips per body part per language, minutes cannot be spoken, and every wording change means going back to the studio.</p>
+  <p><strong>c.</strong> Keep the three clips per limb and only change the counting. Cheapest by far, and the calculation still improves — but none of the coaching design in the document happens.</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>Text-to-speech, English and Swedish, with the sentence text kept in the app so wording can be changed without a new build.</p></div>
 </div>
 
 <div class="q">
-  <h3><span class="id">C2</span>Where does shift length come from?</h3>
-  <p>An 8-hour shift with 7 hours of actual work is the assumption. Fixed per company, per worker, or typed in when the session starts? Real shifts vary and the forecast scales directly with this number.</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>A company-level setting, 8&nbsp;h / 7&nbsp;h active, overridable when starting a session.</p></div>
+  <h3><span class="id">5</span>Confirm the voice slows down a lot.</h3>
+  <p class="now"><b>Today:</b> the voice repeats every 30 seconds by default, after a 10-minute warm-up.</p>
+  <p>The document says one message every 10 minutes, at most six an hour, about one body part only — the worst one — and never two warnings at once. That is a very different experience. We think it is right, but it is a big change for anyone used to the current app.</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>We build 10 minutes as the default and leave the interval adjustable in settings, as it is today.</p></div>
+</div>
+
+<h2>Time and scope</h2>
+
+<div class="q">
+  <h3><span class="id">6</span>What time is excluded from the count?</h3>
+  <p class="now"><b>Today:</b> every sample counts; there is a pause on the session timer but it does not affect the feedback.</p>
+  <p>The document says the denominator is valid working time — minus breaks, minus any period with no usable sensor data. We plan to treat a paused session as a break, drop sensor-dropout time out of the count entirely, and keep the voice silent while paused.</p>
+  <p>Worth confirming, because it means a session with a lot of dropout will now show a higher percentage than it does today for the same work.</p>
 </div>
 
 <div class="q">
-  <h3><span class="id">C3</span>Does the colour follow the forecast or the minutes already worked?</h3>
-  <p>We propose the forecast, because a warning that arrives after the damage is done is useless. The cost is that the colour can get <strong>better</strong> while the minutes only ever go up, and people will ask why. We show both numbers side by side to soften it, but you should agree with the trade before we build it.</p>
-</div>
-
-<h2>D · The voice</h2>
-
-<div class="q">
-  <h3><span class="id">D1</span>What does the worker actually hear it on?<span class="badge">Blocker</span></h3>
-  <p>Phone speaker in a pocket, a headset, one earbud? A factory floor is loud, and the answer changes what we build and what we can promise. It also decides whether the worker can hear it at all with hearing protection on.</p>
+  <h3><span class="id">7</span>Does the forecast split by task, or only by session?</h3>
+  <p class="now"><b>Today:</b> the app has work tasks and work cycles, but feedback is counted across the whole session.</p>
+  <p>The forecast is much better if it knows the current task is overhead work for one more hour and then bench work for six. The document treats that as first-class. The question is whether we reuse the existing work task and cycle structure for it in this round, or forecast from the whole session only and add tasks later.</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>Session-scope forecast in this round, built so task scope can be added on top without redoing it.</p></div>
 </div>
 
 <div class="q">
-  <h3><span class="id">D2</span>Which languages at launch, and who approves the wording?<span class="badge">Blocker</span></h3>
-  <p>Swedish and English is the assumption. These are not strings a developer can translate — the tone is the whole feature, and a clumsy sentence spoken every ten minutes will get the feature switched off.</p>
+  <h3><span class="id">8</span>How long is the shift, for the forecast?</h3>
+  <p class="now"><b>Today:</b> there is a session duration limit setting, default 8 hours.</p>
+  <p>The forecast needs planned working hours, not elapsed session time. We plan to reuse that 8-hour setting and assume 7 hours of actual work in it. If shifts vary by customer this should become a proper setting instead.</p>
 </div>
 
-<div class="q">
-  <h3><span class="id">D3</span>Who writes the coaching sentences?<span class="badge">Blocker</span></h3>
-  <p>Lines like "try to raise your arm less" or "bring the work lower" have to come from an ergonomist — one per posture, plus a rest suggestion for each. We can draft them, but someone has to own and approve them.</p>
-</div>
+<h2>The report</h2>
 
 <div class="q">
-  <h3><span class="id">D4</span>Do you agree with the pacing?</h3>
-  <p>First message after 10 minutes, then every 10 minutes, never more than 6 an hour, always one message about one body part — the worst one. Never two warnings at once, and praise when the worker fixes something.</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>We build exactly those numbers, all adjustable in settings.</p></div>
-</div>
-
-<div class="q">
-  <h3><span class="id">D5</span>Who can switch it on and off?</h3>
-  <p>The worker, the ergonomist, or only a company admin? And is the whole feature off by default until someone turns it on?</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>Off by default; the ergonomist turns it on; the worker can mute the voice but not the measurement.</p></div>
-</div>
-
-<h2>E · Screen and report</h2>
-
-<div class="q">
-  <h3><span class="id">E1</span>Who is the live screen for?</h3>
-  <p>The worker glancing at their own phone, or the ergonomist standing beside them watching? They want very different amounts of detail — the worker wants a colour and a number, the ergonomist wants percentages and confidence.</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>One screen, worker-first, with the analyst detail behind a tap.</p></div>
-</div>
-
-<div class="q">
-  <h3><span class="id">E2</span>Does this appear in the end-of-session report, and how?</h3>
-  <p>Minutes accumulated per posture, the final colour, and the messages spoken? And per arm, or only the worse arm — RAMP itself scores only the worse one, but an ergonomist usually wants to see both.</p>
-</div>
-
-<div class="q">
-  <h3><span class="id">E3</span>Anything in the web panel in v1, or mobile only?</h3>
-  <p>A live view for an ergonomist watching from a desk, historical trends, threshold configuration — each is separate work on the web side. Mobile-only is the smaller v1.</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>Mobile only, plus whatever lands in the existing report.</p></div>
-</div>
-
-<h2>F · People and data</h2>
-
-<div class="q">
-  <h3><span class="id">F1</span>Can a supervisor see one named worker's exposure?<span class="badge">Blocker</span></h3>
-  <p>This feature produces, for the first time, a continuous per-person record of how someone worked all day, plus a log of every time they were corrected. In Sweden and most of Europe that is a works-council conversation, not a settings toggle.</p>
-  <p>We need to know now whether that data is visible per person, only to the ergonomist, or only as a group average — it changes the database, the permissions and the report.</p>
-</div>
-
-<div class="q">
-  <h3><span class="id">F2</span>Do we keep a log of every message spoken?</h3>
-  <p>Cheap to store now, and it is the only way to later answer "does saying this actually change anything". But it is also a record of a named person being corrected, so it is your call, not ours.</p>
-  <div class="assume"><span class="tag">If we hear nothing</span><p>We log messages against the session, visible to the ergonomist only.</p></div>
-</div>
-
-<h2>G · Confirming what is out</h2>
-
-<div class="q">
-  <h3><span class="id">G1</span>Customer-written coaching messages — out of v1?</h3>
-  <p>Letting each customer's own ergonomist write their own sentences ("use the lift table" instead of "bring the work lower") is described as a future feature. We assume it is out of v1 entirely, including the small first version where a company can override just the technique phrases. Confirm, because it is the difference between shipping one message set and shipping an editor.</p>
-</div>
-
-<div class="q">
-  <h3><span class="id">G2</span>Vibration stays instant-only?</h3>
-  <p>The buzz keeps meaning "your posture is bad right now" and never means "you have accumulated too much". Accumulated feedback speaks and shows, but never buzzes — otherwise the worker cannot tell the two apart.</p>
+  <h3><span class="id">9</span>Does the session report change too?</h3>
+  <p class="now"><b>Today:</b> the report shows time and percentage per angle band, calculated separately from the live feedback.</p>
+  <p>Two things to decide. First, whether the report should now also show the projected shift exposure and the RAMP colour, or stay as it is. Second, whether the report has to count breaks and dropouts exactly the way the live feedback will — because if it does not, a worker who was shown red all afternoon can open a report that says something different.</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>We align the report's time handling with the live calculation and leave the report layout alone for now.</p></div>
 </div>
 
 <footer>
