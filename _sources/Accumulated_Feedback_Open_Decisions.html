@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Accumulated Feedback — Decisions Needed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6; --ink: #181826; --slate: #5A6478; --muted: #98A1B3;
+    --line: #E9EBF0; --tint: #F4EFFD;
+    --amber: #B7791F; --amber-bg: #FFF8EC; --amber-line: #F2DFB8;
+    --red: #B42318; --red-bg: #FEF3F2; --red-line: #FDA29B;
+    --green: #1B7F5A; --green-bg: #ECFAF4; --green-line: #A9E0C9;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 16mm 15mm 14mm 15mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink); font-size: 10pt; line-height: 1.48;
+    -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+  }
+  h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 14px 16px; margin-bottom: 16px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 25pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; }
+  .lede { color: var(--slate); font-size: 10pt; max-width: 172mm; margin-top: 8px; }
+  .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; line-height: 1.55; }
+
+  h2 { font-size: 13.5pt; font-weight: 700; letter-spacing: -0.01em; margin: 26px 0 4px;
+       padding-bottom: 6px; border-bottom: 1.5px solid var(--line); break-after: avoid; }
+  .sectionnote { color: var(--slate); font-size: 9.5pt; margin: 6px 0 2px; break-after: avoid; }
+
+  .q { margin-top: 15px; break-inside: avoid; }
+  .q h3 { font-size: 10.5pt; font-weight: 700; color: var(--ink); margin: 0 0 4px; line-height: 1.35; break-after: avoid; }
+  .q h3 .id { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8pt; font-weight: 500;
+              color: var(--purple); background: var(--tint); padding: 2px 6px; border-radius: 4px;
+              margin-right: 8px; vertical-align: 1.5px; }
+  .badge { font-size: 7pt; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+           padding: 1.5px 6px; border-radius: 4px; margin-left: 6px; vertical-align: 1.5px;
+           color: var(--red); background: var(--red-bg); box-shadow: inset 0 0 0 1px var(--red-line); }
+  .q p { margin: 0; color: var(--slate); font-size: 9.5pt; }
+  .q p + p { margin-top: 5px; }
+  .q strong { color: var(--ink); font-weight: 600; }
+  .assume { margin-top: 6px; border-left: 3px solid #E3D5F7; background: #FBF9FE;
+            padding: 7px 12px; border-radius: 0 6px 6px 0; break-inside: avoid; }
+  .assume .tag { font-size: 7pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+                 color: var(--purple); display: block; margin-bottom: 3px; }
+  .assume p { margin: 0; font-size: 9pt; color: var(--slate); }
+
+  .box { margin-top: 14px; border: 1px solid var(--line); border-radius: 8px;
+         background: #FAFAFC; padding: 13px 17px; break-inside: avoid; }
+  .box h3 { margin: 0 0 4px; font-size: 11pt; }
+  .box p { margin: 4px 0 0; color: var(--slate); font-size: 9.5pt; }
+  .box .tag { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .box.warn { border-color: var(--amber-line); background: var(--amber-bg); }
+  .box.warn h3, .box.warn .tag { color: var(--amber); }
+  .box ul { margin: 6px 0 0; padding-left: 18px; }
+  .box li { color: var(--slate); font-size: 9.5pt; margin: 4px 0; }
+  .box li strong { color: var(--ink); font-weight: 600; }
+
+  code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.5pt;
+         color: var(--ink); background: #F4F5F8; padding: 1px 4px; border-radius: 3px; }
+
+  footer { margin-top: 26px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; }
+  .pb { break-before: page; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="eyebrow">Wergonic · Mobile · Accumulated Feedback</div>
+  <h1>Decisions Needed<br />Before We Build</h1>
+  <p class="lede">
+    The feature description is complete on the method — how exposure is measured, projected and turned into a
+    colour, and how the voice should behave. What it does not settle is a set of product choices that only you
+    can make. They are listed here, once, so we are not stopping every second day to ask.
+  </p>
+  <p class="lede">
+    Each question says what it blocks and what we will assume if we do not hear otherwise. The eight marked
+    <span class="badge">Blocker</span> genuinely stop work; the rest can be answered while we build the first parts.
+  </p>
+  <div class="meta">
+    18 August 2026 · against <em>Accumulated Feedback — Feature Description</em>, draft v1.3 (31 July 2026)
+  </div>
+</div>
+
+<div class="box warn">
+  <span class="tag">The short version</span>
+  <h3>Four things decide the size of this feature.</h3>
+  <ul>
+    <li><strong>How many body parts ship in v1.</strong> One (arm above shoulder) is a few weeks. Six is a different project — each one needs its own duration table and its own coaching phrases, written by an ergonomist, in two languages.</li>
+    <li><strong>Whether we have tasks.</strong> Without tasks we can only forecast from the whole session, which is rough on a mixed workday. With tasks, someone has to start and stop them.</li>
+    <li><strong>Whether we may call it RAMP.</strong> We measure arm angle; RAMP measures hand height. Until that is checked against real observation we can only honestly call it a RAMP-aligned estimate.</li>
+    <li><strong>Whether a supervisor may see one named worker's numbers.</strong> That is a labour-relations decision, not a technical one, and it is far cheaper to make now than after it is built.</li>
+  </ul>
+</div>
+
+<h2>A · What ships in version 1</h2>
+
+<div class="q">
+  <h3><span class="id">A1</span>Which body parts and postures are in v1?<span class="badge">Blocker</span></h3>
+  <p>The description covers upper arm above shoulder, arm outside the work area, back bending, back twisting, neck forward and bent wrist. Every one of them needs its own duration bands, its own coaching sentences and its own testing.</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>We build upper arm above shoulder only, both arms, and design it so more can be added later without rework.</p></div>
+</div>
+
+<div class="q">
+  <h3><span class="id">A2</span>Who gives us the duration bands for each posture, and signs them off?<span class="badge">Blocker</span></h3>
+  <p>We have verified the table for arm above shoulder from the RAMP II guide. Every other posture needs the same, from someone who can be quoted. We are not comfortable inventing them.</p>
+</div>
+
+<div class="q">
+  <h3><span class="id">A3</span>Can we call the result "RAMP" at all?<span class="badge">Blocker</span></h3>
+  <p>RAMP scores <strong>hand height</strong>. Our sensors measure <strong>arm angle</strong>. They are close but not the same — bending the elbow changes hand height without changing arm angle. Nobody has checked how far apart they are in practice.</p>
+  <p>So: do we ship v1 labelled as an <strong>estimate aligned with RAMP</strong>, or hold the feature until someone films real work and compares? The second is more honest and much slower.</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>We ship it labelled as a RAMP-aligned estimate, and keep that wording away from anything that reads like a certified score.</p></div>
+</div>
+
+<div class="q">
+  <h3><span class="id">A4</span>One threshold set or two?</h3>
+  <p>The description offers RAMP-based thresholds for assessment plus a second, looser set for technique training (the old 10&nbsp;% / 30&nbsp;% idea). Two sets means two configurations, two colours to explain, and a real risk of confusion.</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>v1 ships the RAMP-based set only.</p></div>
+</div>
+
+<h2>B · Time, breaks and bad data</h2>
+
+<div class="q">
+  <h3><span class="id">B1</span>How does the app know a break has started?<span class="badge">Blocker</span></h3>
+  <p>Everything hangs off this — the percentages, the forecast, and the fact that the voice must not talk during lunch. Is it a button the worker presses, something the ergonomist marks, a fixed schedule, or do we guess it from the sensors going quiet?</p>
+</div>
+
+<div class="q">
+  <h3><span class="id">B2</span>How much missing data before we refuse to show a colour?</h3>
+  <p>If a sensor drops for twenty minutes, the number we show is built on far less than it looks. We would rather grey it out and say "not enough data" than show a confident red. Where is that line — half the session, a quarter?</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>Below 70&nbsp;% valid data we show the value greyed out and marked incomplete, and the voice stays quiet.</p></div>
+</div>
+
+<div class="q">
+  <h3><span class="id">B3</span>Must the end-of-session report agree exactly with what the worker saw live?</h3>
+  <p>If yes — and it probably should be — the report has to count breaks and dropouts the same way this feature does, which means changing the report too. That is extra work worth knowing about now.</p>
+</div>
+
+<h2 class="pb">C · The forecast</h2>
+
+<p class="sectionnote">The colour is a forecast: "if you keep working like this, you will end the shift at X". That needs to know how long the shift is and what work is still coming.</p>
+
+<div class="q">
+  <h3><span class="id">C1</span>Do we have tasks in v1, and who starts them?<span class="badge">Blocker</span></h3>
+  <p>A worker doing overhead assembly for one hour and bench work for seven is not the same as one doing overhead work all day, but in the first twenty minutes the numbers look identical. Splitting the session into tasks is what makes the forecast defensible.</p>
+  <p>The question is who does the splitting: the worker taps start and stop on the phone, the ergonomist marks it, we detect it automatically, or we skip it in v1.</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>v1 forecasts from the whole session only, and tasks become the next step.</p></div>
+</div>
+
+<div class="q">
+  <h3><span class="id">C2</span>Where does shift length come from?</h3>
+  <p>An 8-hour shift with 7 hours of actual work is the assumption. Fixed per company, per worker, or typed in when the session starts? Real shifts vary and the forecast scales directly with this number.</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>A company-level setting, 8&nbsp;h / 7&nbsp;h active, overridable when starting a session.</p></div>
+</div>
+
+<div class="q">
+  <h3><span class="id">C3</span>Does the colour follow the forecast or the minutes already worked?</h3>
+  <p>We propose the forecast, because a warning that arrives after the damage is done is useless. The cost is that the colour can get <strong>better</strong> while the minutes only ever go up, and people will ask why. We show both numbers side by side to soften it, but you should agree with the trade before we build it.</p>
+</div>
+
+<h2>D · The voice</h2>
+
+<div class="q">
+  <h3><span class="id">D1</span>What does the worker actually hear it on?<span class="badge">Blocker</span></h3>
+  <p>Phone speaker in a pocket, a headset, one earbud? A factory floor is loud, and the answer changes what we build and what we can promise. It also decides whether the worker can hear it at all with hearing protection on.</p>
+</div>
+
+<div class="q">
+  <h3><span class="id">D2</span>Which languages at launch, and who approves the wording?<span class="badge">Blocker</span></h3>
+  <p>Swedish and English is the assumption. These are not strings a developer can translate — the tone is the whole feature, and a clumsy sentence spoken every ten minutes will get the feature switched off.</p>
+</div>
+
+<div class="q">
+  <h3><span class="id">D3</span>Who writes the coaching sentences?<span class="badge">Blocker</span></h3>
+  <p>Lines like "try to raise your arm less" or "bring the work lower" have to come from an ergonomist — one per posture, plus a rest suggestion for each. We can draft them, but someone has to own and approve them.</p>
+</div>
+
+<div class="q">
+  <h3><span class="id">D4</span>Do you agree with the pacing?</h3>
+  <p>First message after 10 minutes, then every 10 minutes, never more than 6 an hour, always one message about one body part — the worst one. Never two warnings at once, and praise when the worker fixes something.</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>We build exactly those numbers, all adjustable in settings.</p></div>
+</div>
+
+<div class="q">
+  <h3><span class="id">D5</span>Who can switch it on and off?</h3>
+  <p>The worker, the ergonomist, or only a company admin? And is the whole feature off by default until someone turns it on?</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>Off by default; the ergonomist turns it on; the worker can mute the voice but not the measurement.</p></div>
+</div>
+
+<h2>E · Screen and report</h2>
+
+<div class="q">
+  <h3><span class="id">E1</span>Who is the live screen for?</h3>
+  <p>The worker glancing at their own phone, or the ergonomist standing beside them watching? They want very different amounts of detail — the worker wants a colour and a number, the ergonomist wants percentages and confidence.</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>One screen, worker-first, with the analyst detail behind a tap.</p></div>
+</div>
+
+<div class="q">
+  <h3><span class="id">E2</span>Does this appear in the end-of-session report, and how?</h3>
+  <p>Minutes accumulated per posture, the final colour, and the messages spoken? And per arm, or only the worse arm — RAMP itself scores only the worse one, but an ergonomist usually wants to see both.</p>
+</div>
+
+<div class="q">
+  <h3><span class="id">E3</span>Anything in the web panel in v1, or mobile only?</h3>
+  <p>A live view for an ergonomist watching from a desk, historical trends, threshold configuration — each is separate work on the web side. Mobile-only is the smaller v1.</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>Mobile only, plus whatever lands in the existing report.</p></div>
+</div>
+
+<h2>F · People and data</h2>
+
+<div class="q">
+  <h3><span class="id">F1</span>Can a supervisor see one named worker's exposure?<span class="badge">Blocker</span></h3>
+  <p>This feature produces, for the first time, a continuous per-person record of how someone worked all day, plus a log of every time they were corrected. In Sweden and most of Europe that is a works-council conversation, not a settings toggle.</p>
+  <p>We need to know now whether that data is visible per person, only to the ergonomist, or only as a group average — it changes the database, the permissions and the report.</p>
+</div>
+
+<div class="q">
+  <h3><span class="id">F2</span>Do we keep a log of every message spoken?</h3>
+  <p>Cheap to store now, and it is the only way to later answer "does saying this actually change anything". But it is also a record of a named person being corrected, so it is your call, not ours.</p>
+  <div class="assume"><span class="tag">If we hear nothing</span><p>We log messages against the session, visible to the ergonomist only.</p></div>
+</div>
+
+<h2>G · Confirming what is out</h2>
+
+<div class="q">
+  <h3><span class="id">G1</span>Customer-written coaching messages — out of v1?</h3>
+  <p>Letting each customer's own ergonomist write their own sentences ("use the lift table" instead of "bring the work lower") is described as a future feature. We assume it is out of v1 entirely, including the small first version where a company can override just the technique phrases. Confirm, because it is the difference between shipping one message set and shipping an editor.</p>
+</div>
+
+<div class="q">
+  <h3><span class="id">G2</span>Vibration stays instant-only?</h3>
+  <p>The buzz keeps meaning "your posture is bad right now" and never means "you have accumulated too much". Accumulated feedback speaks and shows, but never buzzes — otherwise the worker cannot tell the two apart.</p>
+</div>
+
+<footer>
+  Wergonic · Accumulated Feedback · decisions needed before development starts · 18 August 2026
+</footer>
+
+</body>
+</html>
