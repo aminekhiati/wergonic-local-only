@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Accumulated Feedback — Answers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6; --ink: #181826; --slate: #5A6478; --muted: #98A1B3;
+    --line: #E9EBF0; --tint: #F4EFFD;
+    --amber: #B7791F; --amber-bg: #FFF8EC; --amber-line: #F2DFB8;
+    --red: #B42318; --red-bg: #FEF3F2; --red-line: #FDA29B;
+    --green: #1B7F5A; --green-bg: #ECFAF4; --green-line: #A9E0C9;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 16mm 15mm 14mm 15mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink); font-size: 10pt; line-height: 1.48;
+    -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+  }
+  h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 14px 16px; margin-bottom: 16px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 25pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; }
+  .lede { color: var(--slate); font-size: 10pt; max-width: 172mm; margin-top: 8px; }
+  .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; line-height: 1.55; }
+
+  h2 { font-size: 12pt; font-weight: 700; letter-spacing: -0.01em; margin: 26px 0 2px;
+       padding-bottom: 6px; border-bottom: 1.5px solid var(--line); break-after: avoid; }
+
+  .q { margin-top: 17px; break-inside: avoid; }
+  .q h3 { font-size: 10.5pt; font-weight: 700; color: var(--ink); margin: 0 0 5px; line-height: 1.35; break-after: avoid; }
+  .q h3 .id { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8pt; font-weight: 500;
+              color: var(--purple); background: var(--tint); padding: 2px 6px; border-radius: 4px;
+              margin-right: 8px; vertical-align: 1.5px; }
+  .badge { font-size: 7pt; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+           padding: 1.5px 6px; border-radius: 4px; margin-left: 6px; vertical-align: 1.5px;
+           color: var(--green); background: var(--green-bg); box-shadow: inset 0 0 0 1px var(--green-line); }
+  .badge.flip { color: var(--amber); background: var(--amber-bg); box-shadow: inset 0 0 0 1px var(--amber-line); }
+  p { margin: 0; color: var(--slate); font-size: 9.5pt; }
+  p + p { margin-top: 6px; }
+  .q strong, p strong { color: var(--ink); font-weight: 600; }
+  em { font-style: italic; }
+
+  .lead { font-size: 9.5pt; color: var(--ink); font-weight: 600; margin-bottom: 4px; }
+
+  .note { margin-top: 8px; border-left: 3px solid #E3D5F7; background: #FBF9FE;
+          padding: 8px 12px; border-radius: 0 6px 6px 0; break-inside: avoid; }
+  .note .tag { font-size: 7pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+               color: var(--purple); display: block; margin-bottom: 3px; }
+  .note p { margin: 0; font-size: 9pt; }
+  .note.warn { border-left-color: var(--amber-line); background: var(--amber-bg); }
+  .note.warn .tag { color: var(--amber); }
+
+  .quote { margin: 8px 0 0; padding: 8px 12px; background: #FAFBFC; border-left: 3px solid var(--line);
+           font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.2pt; color: var(--slate);
+           line-height: 1.5; border-radius: 0 6px 6px 0; }
+
+  ul { margin: 6px 0 0; padding-left: 16px; }
+  li { color: var(--slate); font-size: 9.5pt; margin-bottom: 3px; }
+  li strong { color: var(--ink); font-weight: 600; }
+  ol { margin: 6px 0 0; padding-left: 18px; }
+  ol li { margin-bottom: 4px; }
+
+  table.t { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 8.8pt; break-inside: avoid; }
+  table.t th { text-align: left; font-weight: 700; font-size: 7.5pt; letter-spacing: 0.06em;
+               text-transform: uppercase; color: var(--muted); border-bottom: 1.5px solid var(--line);
+               padding: 6px 10px 6px 0; }
+  table.t td { padding: 6px 10px 6px 0; border-bottom: 1px solid #F2F3F7; color: var(--slate); vertical-align: top; }
+  table.t td.k { color: var(--ink); font-weight: 600; }
+  table.t td.g { color: var(--green); font-weight: 600; }
+  table.t td.y { color: var(--amber); font-weight: 600; }
+  table.t td.r { color: var(--red); font-weight: 600; }
+  table.t td.n { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.4pt; }
+
+  footer { margin-top: 26px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="eyebrow">Wergonic · Mobile · Accumulated Feedback</div>
+  <h1>Answers to the<br />Six Decisions</h1>
+  <p class="lede">
+    All six are resolved. Two of the answers are larger than the questions that prompted them: the arm turns out
+    not to be a RAMP item at all, and breaks are not excluded from the count.
+  </p>
+  <div class="meta">
+    19 August 2026 · in reply to <em>Six Decisions Before We Build</em>, 18 August 2026<br />
+    Against <em>Accumulated Feedback — Feature Description</em>, draft v1.3 (31 July 2026)
+  </div>
+</div>
+
+<h2>Summary of what changed</h2>
+
+<div class="q">
+  <p class="lead">The arm is not a RAMP item.</p>
+  <p>It runs on the Lund action levels (AMM Syd, Report 18/2017), which measure upper-arm elevation from vertical
+  by inclinometry — the same quantity our sensors produce, by the same method. RAMP II item 1.5 uses hand height
+  because that is what a human observer can judge reliably across a workshop; the RAMP manual states plainly that
+  the item concerns load from <em>upper arm position</em>, and that hand height is a general correlate of it. So
+  hand-above-shoulder is RAMP's observational stand-in for the exposure we measure directly. We are not
+  approximating RAMP on the arm. RAMP 1.5 is out of scope because it is a coarser route to the same construct,
+  not because we failed to reach it.</p>
+</div>
+
+<div class="q">
+  <p class="lead">The trunk remains a RAMP proxy.</p>
+  <p>On items 1.3 and 1.4, and it stays described as a RAMP-aligned sensor proxy pending observational validation.
+  There the sensor genuinely stands in for the observation. That asymmetry is deliberate and should be stated
+  wherever the feature is described. The blanket "RAMP-aligned sensor proxy" wording in v1.3 is now correct for
+  the trunk and wrong for the arm.</p>
+</div>
+
+<div class="q">
+  <p class="lead">Breaks are not excluded from the count.</p>
+  <p>Both source instruments define their thresholds against a whole working day that includes breaks and
+  non-productive time, and that time functions as recovery. Removing it would make us stricter than either source
+  intends.</p>
+</div>
+
+<h2>1 · Duration bands for trunk and head</h2>
+
+<div class="q">
+  <h3>Trunk runs on RAMP II items 1.3 and 1.4<span class="badge">Resolved</span></h3>
+  <p><strong>Voice and accumulated feedback cover arms and trunk only.</strong> Head is out of the live feature
+  entirely, which disposes of the concern about two body parts on one screen being scored two different ways.</p>
+  <p>The form's wording is "moderate bending … or more", so any trunk angle at or above 20° accumulates against
+  1.3, and time above 45° accumulates against <strong>both</strong> 1.3 and 1.4. Two nested accumulators; one
+  sample can increment both. The trunk therefore holds two colours, and the worse of them is the one that speaks.</p>
+  <p>Tables verified against the RAMP II v1.03b workbook (sheet <em>1 Postures</em>):</p>
+
+  <table class="t">
+    <tr><th>Item</th><th>Green</th><th>Yellow</th><th>Red</th></tr>
+    <tr>
+      <td class="k">1.3 Trunk, moderate bending (≥20°)</td>
+      <td class="g n">&lt; 60 min</td><td class="y n">60 min</td><td class="r n">120 min</td>
+    </tr>
+    <tr>
+      <td class="k">1.4 Trunk, considerable bending (≥45°)</td>
+      <td class="g n">&lt; 30 min</td><td class="y n">30 min</td><td class="r n">60 min</td>
+    </tr>
+  </table>
+
+  <p style="margin-top:9px">In practice 1.4 drives nearly every warning, since it turns yellow at 30 minutes while
+  1.3 is still green at an hour. 1.3 becomes the louder of the two only when there is substantial time in the
+  20–45° range specifically.</p>
+</div>
+
+<div class="q">
+  <p class="lead">Backward bending is report-only and is not RAMP.</p>
+  <p>Our threshold is &gt;5° backward, which is a Wergonic measure — RAMP folds backward bending into 1.4 at a far
+  larger angle. It must not be coloured with the 1.4 table or labelled as RAMP-aligned. It appears in the report
+  as a separate quantity under its own name.</p>
+</div>
+
+<div class="q">
+  <p class="lead">Twist is not measured.</p>
+  <p>RAMP 1.4 includes torso twisting &gt;30° and side bending; the sensor set captures neither, so the proxy
+  systematically under-counts 1.4. Documented deviation, not a defect to fix later.</p>
+</div>
+
+<div class="q">
+  <p class="lead">Colours only.</p>
+  <p>Green, yellow and red are the entire output. RAMP's numeric scores are used internally to select the colour
+  and are not surfaced in the app, the voice, or the report.</p>
+</div>
+
+<div class="note">
+  <span class="tag">Head, for the record</span>
+  <p>Item 1.1 (head forward/side &gt;30°) has a verified table — yellow at 60 min, red at 120 min — available if
+  you ever want it in the report, but it drives nothing live. Item 1.2 (head backwards) is out: it is the
+  strictest table in the set, yellow at 5 minutes and red at 30, and too sensitive for feedback.</p>
+</div>
+
+<h2>2 · Arm elevation</h2>
+
+<div class="q">
+  <h3>Source: Lund action levels (AMM Syd 18/2017), elevation relative to vertical<span class="badge">Resolved</span></h3>
+  <p>No RAMP item number appears anywhere in the arm's report output. Two nested accumulators, ≥30° and ≥60°;
+  time above 60° also counts toward the 30° band, so the arm holds two colours and the worse speaks.</p>
+  <p><strong>Denominator: the full 8-hour working day, 480 minutes.</strong> Lund's percentages are shares of the
+  working day as measured — whole days, equipment left on, breaks included. Converting them against an
+  active-time denominator would silently make them stricter than published.</p>
+  <p><strong>Reds are Lund's published action levels. Yellows are ours, at half the red onset.</strong></p>
+
+  <table class="t">
+    <tr><th>Accumulator</th><th>Yellow</th><th>Red</th></tr>
+    <tr>
+      <td class="k">Arm ≥30° <span style="font-weight:400;color:var(--muted)">(includes all time above 60°)</span></td>
+      <td class="y n">120 min · 25% of shift</td><td class="r n">240 min · 50% of shift</td>
+    </tr>
+    <tr>
+      <td class="k">Arm ≥60°</td>
+      <td class="y n">24 min · 5% of shift</td><td class="r n">48 min · 10% of shift</td>
+    </tr>
+  </table>
+
+  <p style="margin-top:9px">Red at ≥30° is Lund's median-load level (exposure exceeded more than half the working
+  day); red at ≥60° is the peak-load level (more than a tenth of the day).</p>
+</div>
+
+<div class="q">
+  <p class="lead">Why yellow sits at half of red.</p>
+  <p>RAMP's own duration bands are built that way. Across every item in or near scope, yellow onset is exactly
+  half of red onset:</p>
+
+  <table class="t">
+    <tr><th>RAMP item</th><th>Yellow</th><th>Red</th><th>Ratio</th></tr>
+    <tr><td class="k">1.1 Head forward</td><td class="n">60 min</td><td class="n">120 min</td><td class="n">0.50</td></tr>
+    <tr><td class="k">1.3 Trunk moderate</td><td class="n">60 min</td><td class="n">120 min</td><td class="n">0.50</td></tr>
+    <tr><td class="k">1.4 Trunk considerable</td><td class="n">30 min</td><td class="n">60 min</td><td class="n">0.50</td></tr>
+    <tr><td class="k">1.5 Upper arm</td><td class="n">30 min</td><td class="n">60 min</td><td class="n">0.50</td></tr>
+  </table>
+
+  <p style="margin-top:9px">So the rule is not invented for the arm — it is RAMP's internal band structure,
+  transferred to a Lund-sourced item. Applied to the trunk it reproduces RAMP's published values exactly, so
+  nothing is overridden anywhere and one sentence describes the whole system.</p>
+</div>
+
+<div class="q">
+  <p class="lead">How to describe yellow in writing.</p>
+  <p>A coaching band positioned by structural analogy to RAMP's band spacing. Not an epidemiological claim that
+  risk changes at that point — no one has evidence for a half-of-action-level threshold. Yellow means
+  <em>approaching the action level</em>, never <em>moderate risk</em>. This constrains the voice copy directly.</p>
+</div>
+
+<div class="q">
+  <p class="lead">Provenance is printed per item in the report.</p>
+  <div class="quote">
+    Arm ≥60° — red 48 min (AMM Syd 18/2017, peak-load action level, 10% of 8 h day);<br />
+    yellow 24 min (Wergonic, half of action level per RAMP band structure).
+  </div>
+</div>
+
+<div class="q">
+  <p class="lead">Sanity check on the arm's numbers.</p>
+  <p>Lund's 48-minute red at ≥60° lands close to RAMP 1.5's 60-minute red, from two independent methods on the
+  same construct. Worth stating in the validation write-up.</p>
+</div>
+
+<div class="q">
+  <p class="lead">Unsupported arms — an inherited limitation, not a Wergonic one.</p>
+  <p>RAMP scores time without support; Lund's 30° level carries the same condition in footnote d. Neither the
+  inclinometer nor RAMP's observer distinguishes a resting forearm from a held one. Belongs in the deviations
+  list phrased as inherited.</p>
+</div>
+
+<div class="q">
+  <p class="lead">Elbow angle is a non-question.</p>
+  <p>Nothing in the arm logic depends on where the hand is, so there is no elbow assumption to document. The
+  requirement in v1.3 for each variable to declare it does not apply to the arm.</p>
+</div>
+
+<h2>3 · Synthetic voice and the sentences</h2>
+
+<div class="q">
+  <h3>Yes to TTS, replacing the nine recorded MP3s per language<span class="badge">Resolved</span></h3>
+  <p><strong>The voice speaks colour, direction and limb. No numbers.</strong> No minute counts, no percentages.
+  This removes the ambiguity that would otherwise arise from speaking a projected whole-day figure to a worker
+  forty minutes into a recording, who would reasonably hear it as time already spent.</p>
+  <p><em>Consequence worth noting:</em> without live numbers the message set is finite again and could in principle
+  be pre-recorded. TTS remains the choice — it makes the survey cheap to iterate and keeps localisation open —
+  but it is now a deliberate choice rather than a technical necessity. If synthetic Swedish sounds wrong in
+  testing, falling back to recordings is available.</p>
+  <p><strong>Wording is written in-house</strong>, three alternatives per message in English and Swedish, decided
+  by survey.</p>
+</div>
+
+<div class="q">
+  <p class="lead">Brief for whoever writes them</p>
+  <ul>
+    <li>Yellow means <strong>approaching the action level</strong>, not moderate risk.</li>
+    <li>Green with a rising direction must sound like encouragement, not warning, or the feature nags from the
+    first interval.</li>
+    <li>Swedish needs a native ergonomics voice, not a translation of the English.</li>
+  </ul>
+</div>
+
+<div class="q">
+  <p class="lead">Limb selection.</p>
+  <p>The voice reports the worst limb. The other arm may be used for positive feedback when it has improved.
+  Neither affects the report.</p>
+</div>
+
+<div class="note warn">
+  <span class="tag">Still to size before copy is commissioned</span>
+  <p>Whether the voice names the band (arm ≥30° vs ≥60°, trunk 1.3 vs 1.4 — four sources) or rolls up per limb
+  and reports the worse of each pair (three sources); and how many direction states exist (rising / steady /
+  improving). At three limbs × three colours × three directions × three alternatives, that is 81 sentences per
+  language — worth fixing the shape first.</p>
+</div>
+
+<h2>4 · How a break is logged</h2>
+
+<div class="q">
+  <h3>Breaks are not excluded from the count<span class="badge flip">Resolved — opposite to the default</span></h3>
+  <p>Both RAMP and Lund set their thresholds against a whole working day that includes breaks and non-productive
+  time, and that time is itself recovery — it reduces risk for the limb. Subtracting it would raise the exposure
+  proportion and make us stricter than either source intends.</p>
+  <p><strong>A break marker silences the voice. It does not stop the clock.</strong> No pause semantics, no
+  exclusion from the denominator. Break minutes stay in as low-exposure time, contributing exactly the recovery
+  effect the source instruments assume.</p>
+  <p><strong>Dropout remains the only exclusion</strong>, on different grounds: an absent sensor means the posture
+  is <em>unknown</em>, not known to be at rest.</p>
+  <div class="note">
+    <span class="tag">Document amendment required</span>
+    <p>v1.3 defines valid time as elapsed minus logged breaks minus dropout. It becomes <strong>elapsed minus
+    dropout</strong>. Worth correcting in the document itself, since that line will be implemented from the spec
+    long after this exchange is forgotten.</p>
+  </div>
+</div>
+
+<h2>5 · What fills the rest of the shift</h2>
+
+<div class="q">
+  <h3>Accumulated feedback is a projection throughout, not a running tally<span class="badge">Resolved</span></h3>
+  <p>The measured proportion of session time in a posture is scaled onto the 480-minute day and compared against
+  the fixed thresholds. The recording is treated as representative of the whole workday. Colour reflects estimated
+  whole-day exposure from the first feedback onwards.</p>
+  <p><strong>The denominator is elapsed session time including breaks</strong> — see question 4. Nothing is
+  subtracted except dropout.</p>
+  <p><strong>Accumulated feedback is always whole-session, never per-task.</strong> Work tasks structure the
+  recording; they do not partition the accumulation.</p>
+  <p><strong>The minimum-data guard already exists in settings.</strong> <em>Accumulated feedback first delay</em>
+  (typically 5 or 10 minutes, user-adjustable) governs when feedback starts, which prevents the early instability
+  where two minutes of arm-up at minute four would project to 240 minutes and turn red. Nothing new to build.</p>
+  <p><strong>Task-specific sessions: voice disabled, accumulated feedback still computed</strong> over the whole
+  session. Only the coaching layer is suppressed.</p>
+  <div class="note warn">
+    <span class="tag">Note a conflict to resolve</span>
+    <p>v1.3 specifies a ten-minute interval, at most six per hour. The app's <em>feedback interval</em> setting
+    ranges 2–30 minutes with a <strong>default of 5</strong>. At five minutes it is twelve per hour. This matters
+    for band width: the arm ≥60° yellow band spans 24 minutes of projected exposure, which at a 5-minute interval
+    gives a few utterances before red and at 30 minutes gives none. The sentence set should be written for the
+    interval that actually ships.</p>
+  </div>
+</div>
+
+<h2>6 · The report</h2>
+
+<div class="q">
+  <h3>End-of-session accumulated feedback matches the report<span class="badge">Resolved</span></h3>
+  <p>Same numbers, one definition of valid time across live view and report — elapsed minus dropout, breaks
+  included.</p>
+  <p><strong>The report is unchanged by the voice's limb selection.</strong> The voice picks the worst limb and
+  may use the improved arm for encouragement; the report is not affected by either.</p>
+  <p><strong>New metadata on the session and report</strong>, to let a reader interpret what they are looking at:</p>
+  <ul>
+    <li>whether accumulated feedback was enabled</li>
+    <li>whether voice feedback was enabled</li>
+    <li>the intervals at which the worker actually received feedback</li>
+  </ul>
+  <p>This matters because a report from a session where the worker was being coached every five minutes describes
+  a different thing from one where feedback was off.</p>
+</div>
+
+<h2>Still open</h2>
+
+<table class="t">
+  <tr><th style="width:4%">#</th><th style="width:44%">Item</th><th>Why it matters</th></tr>
+  <tr>
+    <td class="n">1</td>
+    <td class="k">Instantaneous vs projected colour. Does the existing live posture indicator (30–60° yellow,
+    &gt;60° red) coexist with the projected accumulated colour?</td>
+    <td>If both run, the arm carries two colours simultaneously and the voice needs to know which it reports.</td>
+  </tr>
+  <tr>
+    <td class="n">2</td>
+    <td class="k">Voice matrix shape. Band-level or limb-level; number of direction states.</td>
+    <td>Determines how many sentences get written and surveyed.</td>
+  </tr>
+  <tr>
+    <td class="n">3</td>
+    <td class="k">Feedback interval. Document says 10 min / max 6 per hour; app default is 5.</td>
+    <td>Changes how many utterances fit inside a yellow band.</td>
+  </tr>
+  <tr>
+    <td class="n">4</td>
+    <td class="k">Labelling of the projection in app and report.</td>
+    <td>A projection from a short or task-specific recording must never read as a measured shift.</td>
+  </tr>
+  <tr>
+    <td class="n">5</td>
+    <td class="k">Head 1.1 in the report?</td>
+    <td>Table is verified and available; drives nothing live.</td>
+  </tr>
+</table>
+
+<h2>Amendments to Feature Description v1.3</h2>
+
+<ol>
+  <li><strong>Valid time</strong> — remove the subtraction of logged breaks. Elapsed minus dropout.</li>
+  <li><strong>"RAMP-aligned sensor proxy"</strong> — now applies per body part. Trunk yes; arm is Lund-sourced and
+  direct, and must not carry the RAMP label or item numbers.</li>
+  <li><strong>Per-item threshold storage</strong> — extend to store the <em>source</em> per item, not only the
+  table, and print it in the report.</li>
+  <li><strong>Feedback interval</strong> — reconcile the ten-minute figure with the app's 5-minute default.</li>
+  <li><strong>Elbow-angle assumption</strong> — drop for the arm; no longer applicable.</li>
+  <li><strong>Deviations list</strong> — add: trunk rotation and side bending not measured (under-counts RAMP 1.4);
+  arm support not detectable (inherited from both RAMP and Lund, not introduced by us).</li>
+</ol>
+
+<h2>Sources</h2>
+
+<ul>
+  <li>RAMP II v1.03b, sheet <em>1 Postures</em>, items 1.1–1.5, and the RAMP manual text on item 1.5.</li>
+  <li>Arvidsson I, Dahlqvist C, Enquist H, Nordander C. <em>Åtgärdsnivåer mot belastningsskada.</em>
+  Arbets- och miljömedicin Syd, Report 18/2017, 2017-11-13.</li>
+</ul>
+
+<footer>
+  Wergonic · Accumulated Feedback · answers to the six decisions · 19 August 2026
+</footer>
+
+</body>
+</html>
