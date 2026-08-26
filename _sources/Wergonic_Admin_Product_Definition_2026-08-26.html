@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Wergonic Admin &mdash; Product Definition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6; --ink: #181826; --slate: #5A6478; --muted: #98A1B3;
+    --line: #E9EBF0; --tint: #F4EFFD;
+    --amber: #B7791F; --amber-bg: #FFF8EC; --amber-line: #F2DFB8;
+    --red: #B42318; --red-bg: #FEF3F2; --red-line: #FDA29B;
+    --green: #1B7F5A; --green-bg: #ECFAF4; --green-line: #A9E0C9;
+    --blue: #17539B; --blue-bg: #EFF6FE; --blue-line: #B3D3F5;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 16mm 15mm 14mm 15mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink); font-size: 10pt; line-height: 1.48;
+    -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+  }
+  h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 14px 16px; margin-bottom: 16px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 25pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; }
+  .lede { color: var(--slate); font-size: 10pt; max-width: 172mm; margin-top: 8px; }
+  .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; line-height: 1.55; }
+
+  h2 { font-size: 13.5pt; font-weight: 700; letter-spacing: -0.01em; margin: 26px 0 4px;
+       padding-bottom: 6px; border-bottom: 1.5px solid var(--line); break-after: avoid; }
+  h3.grp { font-size: 9pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+           color: var(--muted); margin: 20px 0 2px; break-after: avoid; }
+  .sectionnote { color: var(--slate); font-size: 9.5pt; margin: 6px 0 4px; }
+
+  .screen { margin-top: 16px; break-inside: avoid; }
+  .screen > h3 { font-size: 11.5pt; font-weight: 700; color: var(--ink); margin: 0 0 4px; break-after: avoid; }
+  .screen > h3 .id { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8pt; font-weight: 500;
+                 color: var(--purple); background: var(--tint); padding: 2px 6px; border-radius: 4px;
+                 margin-right: 8px; vertical-align: 1.5px; }
+  .purpose { margin: 0 0 2px; color: var(--slate); }
+
+  .badge { font-size: 7pt; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+           padding: 1.5px 6px; border-radius: 4px; margin-left: 6px; vertical-align: 1.5px;
+           color: var(--slate); background: #F1F2F6; }
+  .badge.new { color: var(--purple); background: var(--tint); box-shadow: inset 0 0 0 1px #E3D5F7; }
+  .badge.keep { color: var(--green); background: var(--green-bg); box-shadow: inset 0 0 0 1px var(--green-line); }
+  .badge.redo { color: var(--amber); background: var(--amber-bg); box-shadow: inset 0 0 0 1px var(--amber-line); }
+
+  .desc { margin: 6px 0 0; color: var(--slate); }
+  code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.5pt;
+         color: var(--ink); background: #F4F5F8; padding: 1px 4px; border-radius: 3px; }
+
+  .explain { margin-top: 8px; border-left: 3px solid #E3D5F7; background: #FBF9FE;
+             padding: 7px 12px; border-radius: 0 6px 6px 0; break-inside: avoid; }
+  .explain .tag { font-size: 7pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+                  color: var(--purple); display: block; margin-bottom: 3px; }
+  .explain p { margin: 0; font-size: 9pt; color: var(--slate); line-height: 1.5; }
+  .explain p + p { margin-top: 5px; }
+  .explain strong { color: var(--ink); font-weight: 600; }
+
+  .box { margin-top: 13px; border: 1px solid var(--line); border-radius: 8px;
+         background: #FAFAFC; padding: 13px 17px; break-inside: avoid; }
+  .box h3 { margin: 0 0 4px; font-size: 11pt; }
+  .box p { margin: 4px 0 0; color: var(--slate); font-size: 9.5pt; }
+  .box .tag { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .box.warn { border-color: var(--amber-line); background: var(--amber-bg); }
+  .box.warn h3, .box.warn .tag { color: var(--amber); }
+  .box.bad { border-color: var(--red-line); background: var(--red-bg); }
+  .box.bad h3, .box.bad .tag { color: var(--red); }
+  .box.good { border-color: var(--green-line); background: var(--green-bg); }
+  .box.good h3, .box.good .tag { color: var(--green); }
+
+  ul, ol { margin: 6px 0 0; padding-left: 18px; }
+  li { color: var(--slate); margin: 3px 0; font-size: 9.5pt; }
+  li strong { color: var(--ink); font-weight: 600; }
+  ul.tight li { margin: 2px 0; }
+
+  table.t { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 8.8pt; }
+  table.t th { text-align: left; font-weight: 700; font-size: 7.5pt; letter-spacing: 0.06em;
+               text-transform: uppercase; color: var(--muted); border-bottom: 1.5px solid var(--line);
+               padding: 6px 8px 6px 0; }
+  table.t td { padding: 5px 8px 5px 0; border-bottom: 1px solid #F2F3F7; color: var(--slate); vertical-align: top; }
+  table.t td.tid { font-weight: 600; color: var(--ink); }
+  .pill { display: inline-block; font-size: 7pt; font-weight: 700; letter-spacing: 0.05em;
+          text-transform: uppercase; padding: 1.5px 6px; border-radius: 4px; white-space: nowrap; }
+  .pill.ok { color: var(--green); background: var(--green-bg); }
+  .pill.sm { color: var(--amber); background: var(--amber-bg); }
+  .pill.new { color: var(--blue); background: var(--blue-bg); }
+
+  footer { margin-top: 26px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; }
+  .pb { break-before: page; }
+  .steps { counter-reset: st; margin: 8px 0 0; padding-left: 0; list-style: none; }
+  .steps li { counter-increment: st; position: relative; padding-left: 22px; margin: 5px 0; }
+  .steps li::before { content: counter(st); position: absolute; left: 0; top: 1px;
+      font-family: "JetBrains Mono", monospace; font-size: 7.5pt; font-weight: 600; color: var(--purple);
+      background: var(--tint); border-radius: 4px; width: 15px; height: 15px; line-height: 15px; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="eyebrow">Wergonic &middot; Internal admin platform</div>
+  <h1>Wergonic Admin<br />Product Definition</h1>
+  <p class="lede">What the internal admin platform is for, what it must contain, and what belongs on every screen. Written for design, and for anyone who needs to know what we are building. Every feature in here was checked against the running code first &mdash; nothing is proposed that the platform cannot actually do.</p>
+  <div class="meta">Version 1 &middot; 26 August 2026<br />Checked against <code>dev</code> on all four repositories</div>
+</div>
+
+<div class="box"><span class="tag">In one line</span>
+<h3>One place where the Wergonic team can see everything about a customer and act on it</h3>
+<p>Not a reporting tool, and not a second copy of the customer product. It is the tool our own team uses to run the platform: approve companies, manage their plan, look after their people and their hardware, publish releases, and fix things when they break.</p></div>
+
+<h2>Why we are starting over</h2>
+
+<p class="sectionnote">What exists today is five flat tables &mdash; Organizations, Users, Devices, Firmware, Translations. There is no home screen, nothing has a page of its own, and almost nothing can be acted on. It has fallen a long way behind what the platform actually does. Six concrete examples:</p>
+
+<ul>
+<li><strong>The organization table shows five columns. The server already sends twenty-eight fields</strong> for every organization &mdash; the plan limits, how much of each limit is used right now, the licence date, the subscription, every feature switch. None of it reaches the screen. The information is already there and is simply not being shown.</li>
+<li><strong>The status column is broken.</strong> It reads a field the server does not send, so every organization in the list is drawn as inactive, whatever it really is.</li>
+<li><strong>Companies can sign themselves up, and nobody sees it.</strong> A sign-up creates a company in a <em>pending</em> state, waiting for a Wergonic admin to approve or reject it. Approve, reject, suspend and reactivate are all built and working on the server. None of them exist in the panel &mdash; so a new customer sits in the database, invisible.</li>
+<li><strong>Support messages go nowhere.</strong> Customers can send a bug report or a help request from inside the product. Those messages are stored, and have never been shown to a single person.</li>
+<li><strong>The bell icon in the header does nothing.</strong> It is a button with no behaviour behind it.</li>
+<li><strong>When a recording breaks, a developer fixes it over SSH</strong> by running commands on the production server by hand. There are more than twenty of these scripts. That is not a support process.</li>
+</ul>
+
+<div class="box warn"><span class="tag">The real gap</span>
+<h3>It is not missing columns. It is missing the ability to act</h3>
+<p>Everything above has the same shape: the platform can already do the thing, and the panel gives nobody a way to do it. That is what this redesign is about. Adding fields to a table would not have fixed any of the six.</p></div>
+
+<h2>Five principles</h2>
+
+<ol class="steps">
+<li><strong>Every object gets its own page.</strong> An organization, a person, a device is not a row with a popup. It is a page you can open, link to, and send to a colleague.</li>
+<li><strong>Built for acting, not for browsing.</strong> Every screen should end in a button. A screen that only shows numbers and leads nowhere does not belong here.</li>
+<li><strong>One search box.</strong> Company name, email address, recording number, device serial, sensor id &mdash; one field at the top, and it takes you straight there.</li>
+<li><strong>Nothing that belongs to the customer.</strong> Results, charts, reports and their own configuration live in the customer product. This tool never duplicates them.</li>
+<li><strong>One admin role.</strong> Everyone on the Wergonic team with access has the same access. There is no permission matrix to design.</li>
+</ol>
+
+<h2>What this tool does not do</h2>
+
+<p class="sectionnote">Worth stating plainly, because the temptation is to keep adding. These are deliberately out of scope:</p>
+
+<ul class="tight">
+<li><strong>Recording results, charts, measurement data, assessment results, reports.</strong> That is the customer product. We do not rebuild it here.</li>
+<li><strong>Workers, work library, work cycles, categories and labels.</strong> Customers configure their own. We do not manage it for them.</li>
+<li><strong>Logging in as a customer to see what they see.</strong> Decided against.</li>
+<li><strong>The Django backend page.</strong> It stays exactly as it is, as the escape hatch for rare technical fixes. This tool does not have to cover everything.</li>
+</ul>
+
+<h2 class="pb">The navigation</h2>
+
+<p class="sectionnote">Nine places. The order matters &mdash; it is roughly how often each gets used.</p>
+
+<table class="t">
+<thead><tr><th style="width:36mm">Section</th><th style="width:24mm">Status</th><th>What it is for</th></tr></thead>
+<tbody>
+<tr><td class="tid">Home</td><td><span class="pill new">New</span></td><td>What needs attention today</td></tr>
+<tr><td class="tid">Organizations</td><td><span class="pill sm">Rebuilt</span></td><td>Our customers &mdash; approve them, run their plan, look after them</td></tr>
+<tr><td class="tid">Users</td><td><span class="pill sm">Rebuilt</span></td><td>Every person on the platform and what they can reach</td></tr>
+<tr><td class="tid">Health</td><td><span class="pill new">New</span></td><td>Recordings and assessments that broke, and the buttons to fix them</td></tr>
+<tr><td class="tid">Devices &amp; sensors</td><td><span class="pill sm">Rebuilt</span></td><td>The hardware register &mdash; which kit is where</td></tr>
+<tr><td class="tid">Releases</td><td><span class="pill sm">Rebuilt</span></td><td>Sensor firmware and mobile app version control</td></tr>
+<tr><td class="tid">Translations</td><td><span class="pill sm">Extended</span></td><td>Every word in the product, in every language</td></tr>
+<tr><td class="tid">Support</td><td><span class="pill new">New</span></td><td>Messages customers send from inside the product</td></tr>
+<tr><td class="tid">Activity</td><td><span class="pill new">New</span></td><td>A record of what the team did in this tool</td></tr>
+</tbody>
+</table>
+
+<h2>1 &middot; Home</h2>
+
+<div class="screen">
+<h3><span class="id">1.1</span>Today<span class="badge new">New</span></h3>
+<p class="purpose">Right now you log in and land on a table of companies. This replaces that with one screen answering a single question: is anything wrong, and what needs me?</p>
+
+<h3 class="grp">The attention list &mdash; the point of the page</h3>
+<p class="desc">Sits at the top and is the loudest thing on the screen. One row per problem, each with a count, one line of plain language, and a link that opens the filtered list behind it.</p>
+<ul class="tight">
+<li><strong>Companies waiting for approval</strong> &mdash; someone signed up and nobody has answered yet</li>
+<li><strong>Licences expiring in the next 30 days</strong></li>
+<li><strong>Companies over a plan limit</strong> &mdash; more people, recordings or assessments than they are allowed</li>
+<li><strong>Recordings that broke</strong> &mdash; never finished, or the calculations never completed</li>
+<li><strong>Assessments that failed</strong></li>
+<li><strong>Support messages nobody has answered</strong></li>
+</ul>
+
+<h3 class="grp">Platform numbers &mdash; second, and quieter</h3>
+<p class="desc">Active companies, people, recordings this month, assessments this month, each with the change against last month. These are for orientation, not for decisions, and the design should say so &mdash; they must not compete with the attention list.</p>
+
+<div class="explain"><span class="tag">Design note</span>
+<p>The all&#8209;clear state is the one that will be seen on most days, and it needs to feel good rather than empty. When there is nothing in the attention list, the page should say so plainly and give the numbers the space instead.</p></div>
+</div>
+
+<h2 class="pb">2 &middot; Organizations</h2>
+<p class="sectionnote">The centre of the tool. Most support questions start with "what is going on with this company", and today there is nowhere to go and look.</p>
+
+<div class="screen">
+<h3><span class="id">2.1</span>The list<span class="badge redo">Rebuilt</span></h3>
+<p class="purpose">Find any customer fast, and see the state of the whole book of business at a glance.</p>
+<p class="desc"><strong>Columns:</strong> logo and name, status, country, industry, subscription, licence expiry, number of people, recordings this month against their limit, and a marker for test companies.</p>
+<p class="desc"><strong>Status is four real states, not a dot:</strong> Pending, Active, Suspended, Archived. Each needs its own colour, used the same way everywhere in the tool.</p>
+<p class="desc"><strong>Filters:</strong> status, country, industry, licence expiring soon, over a limit, test companies, companies that came in through a referral.</p>
+<p class="desc"><strong>From a row:</strong> open the company, or suspend and reactivate without leaving the list.</p>
+</div>
+
+<div class="screen">
+<h3><span class="id">2.2</span>Sign-ups waiting for approval<span class="badge new">New</span></h3>
+<p class="purpose">Companies apply for an account themselves. Someone at Wergonic has to say yes or no. There is no screen for this today at all, and it is the most valuable missing piece in the whole tool.</p>
+<p class="desc">A card per application showing everything they told us: company name, admin email, phone, type, industry, how they heard about us, whether they already have the hardware kit, and when they applied.</p>
+<p class="desc"><strong>Two decisions:</strong></p>
+<ul class="tight">
+<li><strong>Approve</strong> &mdash; creates the company's admin account, emails them their login, and the company goes Active. The screen must say this in words before it happens, because it sends a real email to a real customer.</li>
+<li><strong>Reject</strong> &mdash; the application is deleted. Also needs saying out loud, because it cannot be undone.</li>
+</ul>
+<div class="explain"><span class="tag">Design note</span>
+<p>This should feel like a small queue you clear, not a table you scan. It sits at the top of the Organizations section and carries a count badge in the navigation whenever anything is waiting.</p></div>
+</div>
+
+<div class="screen">
+<h3><span class="id">2.3</span>The company page<span class="badge new">New</span></h3>
+<p class="purpose">Everything about one customer in one place. This page does not exist today in any form.</p>
+
+<p class="desc"><strong>Header, always visible:</strong> logo, name, status, country, licence expiry, and the lifecycle buttons that apply to the state it is in &mdash; suspend, reactivate, archive.</p>
+
+<h3 class="grp">Overview</h3>
+<p class="desc">Who they are and how to reach them: admin email, phone, company number, address, type, industry, country, how they found us, whether they have the hardware kit, and which company referred them in, if any.</p>
+
+<h3 class="grp">Plan &amp; usage</h3>
+<p class="desc">The four limits every company has &mdash; people, admins, recordings per month, assessments per month &mdash; each shown as used against allowed, so you can see at a glance who is near the edge. All four are editable here, along with the subscription name and the licence expiry date. AI usage per month sits here too.</p>
+<div class="explain"><span class="tag">Why this matters</span>
+<p>These limits already exist for every company and are already enforced. Nobody at Wergonic can currently see them or change them without a developer. This one tab removes a standing request on the dev team.</p></div>
+
+<h3 class="grp">People</h3>
+<p class="desc">Everyone in the company: name, role, when they were last seen, and whether they are still active. Invitations that were sent but never accepted appear here too, marked when they have expired. From here you can add someone, change their role, or remove them.</p>
+
+<h3 class="grp">Devices</h3>
+<p class="desc">The hardware assigned to this company &mdash; serial, model, who has it, which sensors are on it.</p>
+
+<h3 class="grp">Settings</h3>
+<p class="desc">The switches that are set per company: which AI engine they use, whether they consented to AI analysis, whether recordings auto-archive and after how many days, whether referral links are switched on for them, and whether this is a test company. Several of these can only be changed from the Django backend page today.</p>
+
+<h3 class="grp">Danger zone</h3>
+<p class="desc">Suspend, archive, delete. Visually separated from everything else, each one confirmed by name.</p>
+</div>
+
+<h2 class="pb">3 &middot; Users</h2>
+
+<div class="screen">
+<h3><span class="id">3.1</span>The list<span class="badge redo">Rebuilt</span></h3>
+<p class="purpose">Find any person on the platform, from any company.</p>
+<p class="desc"><strong>Columns:</strong> name, email, role, the companies they belong to, when they were last seen, whether their email is verified.</p>
+<p class="desc"><strong>Filters:</strong> role, company, never signed in, not seen in 30 or 90 days.</p>
+</div>
+
+<div class="screen">
+<h3><span class="id">3.2</span>The person page<span class="badge new">New</span></h3>
+<p class="purpose">Answer "what can this person reach, and why can't they do X" without asking a developer.</p>
+<p class="desc"><strong>Top:</strong> name, email, language, when the account was created, when they were last seen, verified or not.</p>
+<p class="desc"><strong>Memberships:</strong> one row per company they belong to, with the role they hold <em>in that company</em> and whether they have been deactivated there.</p>
+<p class="desc"><strong>Invitations:</strong> every invitation sent to this address, and whether it was accepted, is still open, or has expired.</p>
+<p class="desc"><strong>Actions:</strong> send a password reset, change their role in a company, add them to another company, deactivate them.</p>
+<div class="explain"><span class="tag">The thing today's design misses</span>
+<p>A person is not in one company with one role. They can belong to several, with a <strong>different role in each</strong> &mdash; a consultant working for three customers is normal. The current panel shows one role per person, which is simply wrong, and it is behind most of the "why can't they see it" questions. The person page has to make the per&#8209;company roles the main thing on the screen.</p></div>
+</div>
+
+<h2>4 &middot; Health</h2>
+
+<div class="screen">
+<h3><span class="id">4.1</span>Broken recordings and assessments<span class="badge new">New</span></h3>
+<p class="purpose">The list of things that went wrong, and the buttons that fix them. Today this work is done by a developer running commands on the production server.</p>
+
+<div class="box"><span class="tag">Scope, stated firmly</span>
+<h3>This is a repair queue, not a data screen</h3>
+<p>No results, no charts, no measurement data, no reports. If it is something a customer would look at, it is not on this screen. The only things here are: what broke, who it belongs to, and what to do about it.</p></div>
+
+<h3 class="grp">Recordings</h3>
+<p class="desc"><strong>Columns:</strong> number, company, who recorded it, when, how long it ran, and the problem written in plain language &mdash; never finished, stuck processing, calculations never completed, no measurement data, a limb missing.</p>
+<p class="desc"><strong>Filters:</strong> problem type, company, date range.</p>
+<p class="desc"><strong>Actions:</strong> run the calculations again, mark it finished, archive it, delete it. Available on a single row and in bulk.</p>
+
+<h3 class="grp">Assessments</h3>
+<p class="desc">Same shape: name, company, who created it, which type, when, and whether it failed or has been stuck part-finished. Actions: try again, delete.</p>
+
+<h3 class="grp">The detail view</h3>
+<p class="desc">Small and technical. The facts about the recording, the event log the app sent with it, what is wrong, and the same buttons. One screen, no tabs.</p>
+
+<div class="explain"><span class="tag">Design note</span>
+<p>This should read as a queue that gets emptied, and the empty state &mdash; <em>nothing is broken</em> &mdash; is the one we want to see. It deserves proper design attention, not a grey placeholder.</p></div>
+</div>
+
+<h2 class="pb">5 &middot; Devices &amp; sensors</h2>
+
+<div class="screen">
+<h3><span class="id">5.1</span>The hardware register<span class="badge redo">Rebuilt</span></h3>
+<p class="purpose">Which kit exists, which company has it, who is carrying it. Support questions usually start with a serial number or a sensor id.</p>
+<p class="desc"><strong>Device list:</strong> serial, model, company, assigned person, the sensors attached to it, when it was added. Searchable by serial and by sensor id.</p>
+<p class="desc"><strong>Device page:</strong> edit the details, assign or unassign it to a company or a person, attach and detach sensors.</p>
+<p class="desc"><strong>Sensors:</strong> a plain searchable list of sensor ids and which limb each one is set up for.</p>
+<div class="explain"><span class="tag">Deliberately not here</span>
+<p>No "which devices are out of date" dashboard. The firmware version on a device record is typed in by hand and is not reported automatically, so any screen built on it would be confidently wrong. Not worth designing until the hardware reports its own version.</p></div>
+</div>
+
+<h2>6 &middot; Releases</h2>
+
+<div class="screen">
+<h3><span class="id">6.1</span>Sensor firmware<span class="badge keep">Keep</span></h3>
+<p class="purpose">Publish the firmware the sensors download. This works today and only needs tidying.</p>
+<p class="desc">A list of published versions with release date, description, the mobile app version it requires, file size, and which one is currently live. Upload a new version, and mark a version as the current one.</p>
+</div>
+
+<div class="screen">
+<h3><span class="id">6.2</span>Mobile app version control<span class="badge new">New</span></h3>
+<p class="purpose">Two numbers that decide whether people can use the app at all: the <strong>minimum version</strong> allowed, and the <strong>latest version</strong> available. Anyone below the minimum is forced to update before they can continue.</p>
+<p class="desc">Today these are changed by hand in the Firebase console by a developer. They belong here, as two clearly labelled fields with the current values shown, and a confirmation that spells out the consequence.</p>
+<div class="box bad"><span class="tag">Handle with care</span>
+<h3>Setting the minimum too high locks every user out of the app</h3>
+<p>This is the single most dangerous control in the tool. It needs to look serious: current values stated, the change stated back before it is saved, and a plain warning of what happens to everyone below that number.</p></div>
+</div>
+
+<h2>7 &middot; Translations</h2>
+
+<div class="screen">
+<h3><span class="id">7.1</span>Import, export, auto-translate<span class="badge keep">Keep</span></h3>
+<p class="purpose">Works today. Upload the English file, fill the gaps in the other languages automatically, export a language back out. Keep it, present it better.</p>
+<p class="desc">Split by area of the product &mdash; web, customer panel, mobile app &mdash; with a completeness bar per language.</p>
+</div>
+
+<div class="screen">
+<h3><span class="id">7.2</span>Edit the words directly<span class="badge new">New</span></h3>
+<p class="purpose">Right now, changing one German sentence means exporting a file, editing it outside the tool, and importing it back. That is why translations drift.</p>
+<p class="desc">A table: the key, the English, and every language side by side. Search, filter to what is missing, edit in place, save. That is all it needs to be.</p>
+</div>
+
+<h2 class="pb">8 &middot; Support</h2>
+
+<div class="screen">
+<h3><span class="id">8.1</span>Messages from customers<span class="badge new">New</span></h3>
+<p class="purpose">Customers can already send a bug report, a feature request, a suggestion or a help request from inside the product. Every one of those has been stored and never shown to anybody.</p>
+<p class="desc"><strong>List:</strong> subject, type, who sent it, their company, when, and status.</p>
+<p class="desc"><strong>Message page:</strong> the full text, any attachments, and the context needed to answer it &mdash; which company, what role, when they were last seen, what plan they are on. Reply from the page.</p>
+<p class="desc"><strong>Needs adding:</strong> a status (New, Open, Closed) and an owner. Neither exists on a message today.</p>
+</div>
+
+<h2>9 &middot; Activity</h2>
+
+<div class="screen">
+<h3><span class="id">9.1</span>What the team did<span class="badge new">New</span></h3>
+<p class="purpose">This tool hands out buttons that approve companies, change plan limits, suspend accounts, force app updates and delete data. There has to be a record of who pressed them.</p>
+<p class="desc">A plain read-only list: who, what they did, which company or person it affected, when. Filterable by person, company and date. Also shown as a short recent-activity strip on the company page and the person page, so you can see what was done to that record without leaving it.</p>
+</div>
+
+<h2>Patterns that apply everywhere</h2>
+
+<p class="sectionnote">Worth designing once and properly, because they repeat on every screen in the tool.</p>
+
+<ul>
+<li><strong>Global search.</strong> One field at the top of every page. Company name, email, recording number, device serial, sensor id. Results grouped by what they are, and picking one opens that page. This is the single biggest time saver in a tool like this.</li>
+<li><strong>Tables.</strong> Sticky header, sortable, paged, choose your columns, export to CSV. The filters live in the address bar, so a filtered list can be pasted to a colleague.</li>
+<li><strong>Every state designed.</strong> Loading, empty, nothing-matched-your-filter, error. Empty states in this tool are often good news and should read that way.</li>
+<li><strong>Destructive actions.</strong> Anything that deletes, emails a customer, suspends an account or changes an app version gets a confirmation that names the thing and says what will happen. No bare "Are you sure?".</li>
+<li><strong>Status colours.</strong> One set for Pending, Active, Suspended, Archived and Failed, used identically everywhere.</li>
+<li><strong>Detail page shape.</strong> Every detail page looks the same: header with the key facts and the main actions, tabs underneath, activity at the bottom. Learn it once, use it everywhere.</li>
+<li><strong>Dark mode.</strong> Already exists in the current panel. Keep it.</li>
+<li><strong>Desktop first.</strong> This is a working tool used at a desk. It should not break on a tablet, but nothing here needs to be designed for a phone.</li>
+</ul>
+
+<h2 class="pb">What it takes to build</h2>
+
+<p class="sectionnote">For planning, not for design. Every feature above was checked against the running code. This is how much backend work each section needs on top of what already exists.</p>
+
+<table class="t">
+<thead><tr><th style="width:40mm">Section</th><th style="width:26mm">Backend work</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td class="tid">Organizations &mdash; list &amp; page</td><td><span class="pill ok">None</span></td><td>Everything on these screens is already sent by the server and already editable. Pure front-end work.</td></tr>
+<tr><td class="tid">Organizations &mdash; approvals</td><td><span class="pill ok">None</span></td><td>Approve, reject, suspend, reactivate and archive are all built and working. They have never had a screen.</td></tr>
+<tr><td class="tid">Users</td><td><span class="pill ok">None</span></td><td>Listing every user, per-company roles, invitations, password reset, role changes and removal all exist.</td></tr>
+<tr><td class="tid">Devices &amp; sensors</td><td><span class="pill ok">None</span></td><td>Full create, edit and delete already exists for both devices and sensors.</td></tr>
+<tr><td class="tid">Releases &mdash; firmware</td><td><span class="pill ok">None</span></td><td>Working today.</td></tr>
+<tr><td class="tid">Releases &mdash; app version</td><td><span class="pill sm">Small</span></td><td>Two fields, read and written where the app already reads them.</td></tr>
+<tr><td class="tid">Translations editor</td><td><span class="pill sm">Small</span></td><td>The words are already stored one by one and can already be listed. Saving an edit needs adding.</td></tr>
+<tr><td class="tid">Home</td><td><span class="pill sm">Small</span></td><td>One screen's worth of counts, all from data we already hold.</td></tr>
+<tr><td class="tid">Health</td><td><span class="pill new">Medium</span></td><td>Needs one new list that crosses companies, and the repair buttons opened up to the Wergonic team. The repairs themselves already exist.</td></tr>
+<tr><td class="tid">Support</td><td><span class="pill new">Medium</span></td><td>Messages exist. Needs a status, an owner, a reply, and visibility across companies.</td></tr>
+<tr><td class="tid">Activity</td><td><span class="pill new">Medium</span></td><td>Nothing is recorded today. Should be added as each action is built.</td></tr>
+</tbody>
+</table>
+
+<h2>Suggested order</h2>
+
+<div class="box good"><span class="tag">First</span>
+<h3>Organizations and Users</h3>
+<p>The biggest gain for the least work &mdash; there is essentially no backend work in either. It closes the approval gap, puts plan limits in our own hands, and answers most support questions on its own. If only one thing gets built, it is this.</p></div>
+
+<div class="box"><span class="tag">Second</span>
+<h3>Home, Health, Releases</h3>
+<p>Home gives the tool a front door. Health takes the repair work off SSH. Releases moves app version control out of the Firebase console.</p></div>
+
+<div class="box"><span class="tag">Third</span>
+<h3>Support, the translations editor, Activity</h3>
+<p>Each needs a little backend work first. Activity should be built alongside whichever actions ship, not bolted on afterwards.</p></div>
+
+<h2>What design needs to produce</h2>
+
+<ul>
+<li>The shell &mdash; navigation, header with global search, page frame, in dark and light.</li>
+<li>The shared table pattern, with all four states.</li>
+<li>The shared detail-page pattern &mdash; header, tabs, activity.</li>
+<li>Every screen listed in this document.</li>
+<li>Confirmation dialogs, in a normal and a dangerous variant.</li>
+<li>Status colours and badges, as a small set anyone can reuse.</li>
+</ul>
+
+<footer>
+Wergonic Admin &mdash; Product Definition &middot; Version 1 &middot; 26 August 2026<br />
+Every feature in this document was verified against the current code before being included. Anything the platform cannot support today was left out, with the reason noted.
+</footer>
+
+</body>
+</html>
