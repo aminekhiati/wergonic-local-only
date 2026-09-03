@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Wergonic &mdash; Landing Page GDPR Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6; --ink: #181826; --slate: #5A6478; --muted: #98A1B3;
+    --line: #E9EBF0; --tint: #F4EFFD;
+    --amber: #B7791F; --amber-bg: #FFF8EC; --amber-line: #F2DFB8;
+    --red: #B42318; --red-bg: #FEF3F2; --red-line: #FDA29B;
+    --green: #1B7F5A; --green-bg: #ECFAF4; --green-line: #A9E0C9;
+    --blue: #17539B; --blue-bg: #EFF6FE; --blue-line: #B3D3F5;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 16mm 15mm 14mm 15mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink); font-size: 10pt; line-height: 1.48;
+    -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+  }
+  h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 14px 16px; margin-bottom: 16px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 25pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; }
+  .lede { color: var(--slate); font-size: 10pt; max-width: 172mm; margin-top: 8px; }
+  .meta { color: var(--muted); font-size: 8.5pt; margin-top: 10px; line-height: 1.55; }
+
+  h2 { font-size: 13.5pt; font-weight: 700; letter-spacing: -0.01em; margin: 26px 0 4px;
+       padding-bottom: 6px; border-bottom: 1.5px solid var(--line); break-after: avoid; }
+  h3.grp { font-size: 9pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+           color: var(--muted); margin: 18px 0 2px; break-after: avoid; }
+  .sectionnote { color: var(--slate); font-size: 9.5pt; margin: 6px 0 4px; break-after: avoid; }
+
+  .task { margin-top: 13px; break-inside: avoid; }
+  .task h3 { font-size: 10.5pt; font-weight: 700; color: var(--ink); margin: 0 0 3px; break-after: avoid; }
+  .task h3 .id { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8pt; font-weight: 500;
+                 color: var(--purple); background: var(--tint); padding: 2px 6px; border-radius: 4px;
+                 margin-right: 8px; vertical-align: 1.5px; }
+  .badge { font-size: 7pt; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+           padding: 1.5px 6px; border-radius: 4px; margin-left: 6px; vertical-align: 1.5px;
+           color: var(--slate); background: #F1F2F6; }
+  .badge.p0 { color: var(--red); background: var(--red-bg); box-shadow: inset 0 0 0 1px var(--red-line); }
+  .badge.p1 { color: var(--amber); background: var(--amber-bg); box-shadow: inset 0 0 0 1px var(--amber-line); }
+  .badge.ok { color: var(--green); background: var(--green-bg); box-shadow: inset 0 0 0 1px var(--green-line); }
+  .badge.we { color: var(--purple); background: var(--tint); box-shadow: inset 0 0 0 1px #E3D5F7; }
+  .badge.li { color: var(--blue); background: var(--blue-bg); box-shadow: inset 0 0 0 1px var(--blue-line); }
+
+  .desc { margin: 0; color: var(--slate); }
+  .desc + .desc { margin-top: 5px; }
+  code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.5pt;
+         color: var(--ink); background: #F4F5F8; padding: 1px 4px; border-radius: 3px; }
+
+  .explain { margin-top: 6px; border-left: 3px solid #E3D5F7; background: #FBF9FE;
+             padding: 7px 12px; border-radius: 0 6px 6px 0; break-inside: avoid; }
+  .explain .tag { font-size: 7pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+                  color: var(--purple); display: block; margin-bottom: 3px; }
+  .explain p { margin: 0; font-size: 9pt; color: var(--slate); line-height: 1.5; }
+  .explain p + p { margin-top: 5px; }
+  .explain strong { color: var(--ink); font-weight: 600; }
+
+  .box { margin-top: 13px; border: 1px solid var(--line); border-radius: 8px;
+         background: #FAFAFC; padding: 13px 17px; break-inside: avoid; }
+  .box h3 { margin: 0 0 4px; font-size: 11pt; }
+  .box p { margin: 4px 0 0; color: var(--slate); font-size: 9.5pt; }
+  .box .tag { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .box.warn { border-color: var(--amber-line); background: var(--amber-bg); }
+  .box.warn h3, .box.warn .tag { color: var(--amber); }
+  .box.bad { border-color: var(--red-line); background: var(--red-bg); }
+  .box.bad h3, .box.bad .tag { color: var(--red); }
+  .box.good { border-color: var(--green-line); background: var(--green-bg); }
+  .box.good h3, .box.good .tag { color: var(--green); }
+
+  ul { margin: 6px 0 0; padding-left: 18px; }
+  li { color: var(--slate); margin: 3px 0; font-size: 9.5pt; }
+  li strong { color: var(--ink); font-weight: 600; }
+
+  table.t { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 8.8pt; }
+  table.t th { text-align: left; font-weight: 700; font-size: 7.5pt; letter-spacing: 0.06em;
+               text-transform: uppercase; color: var(--muted); border-bottom: 1.5px solid var(--line);
+               padding: 6px 8px 6px 0; }
+  table.t td { padding: 5px 8px 5px 0; border-bottom: 1px solid #F2F3F7; color: var(--slate); vertical-align: top; }
+  table.t td.tid { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8pt; color: var(--purple); white-space: nowrap; }
+  .pill { display: inline-block; font-size: 7pt; font-weight: 700; letter-spacing: 0.05em;
+          text-transform: uppercase; padding: 1.5px 6px; border-radius: 4px; white-space: nowrap; }
+  .pill.bad { color: var(--red); background: var(--red-bg); }
+  .pill.warn { color: var(--amber); background: var(--amber-bg); }
+  .pill.ok { color: var(--green); background: var(--green-bg); }
+  .pill.na { color: var(--slate); background: #F1F2F6; }
+
+  .kpis { display: flex; gap: 10px; margin: 14px 0 4px; }
+  .kpi { flex: 1; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: #FAFAFC; }
+  .kpi .n { font-family: "Hanken Grotesk", sans-serif; font-size: 20pt; font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+  .kpi .l { font-size: 7.5pt; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
+  .kpi.red .n { color: var(--red); } .kpi.amber .n { color: var(--amber); }
+  .kpi.grey .n { color: var(--slate); } .kpi.green .n { color: var(--green); }
+
+  footer { margin-top: 26px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.5pt; }
+  .pb { break-before: page; }
+  .steps { counter-reset: st; margin: 8px 0 0; padding-left: 0; list-style: none; }
+  .steps li { counter-increment: st; position: relative; padding-left: 22px; margin: 5px 0; }
+  .steps li::before { content: counter(st); position: absolute; left: 0; top: 1px;
+      font-family: "JetBrains Mono", monospace; font-size: 7.5pt; font-weight: 600; color: var(--purple);
+      background: var(--tint); border-radius: 4px; width: 15px; height: 15px; line-height: 15px; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="eyebrow">Wergonic &middot; Landing Page &middot; Data Protection</div>
+  <h1>GDPR Audit</h1>
+  <p class="lede">What EU law actually requires of a marketing website in 2026, checked line by line against the new Wergonic landing page &mdash; and against the site the public sees today. Every finding was verified in the code or against the live server; nothing here is carried over from an older document.</p>
+  <div class="meta">
+    3 September 2026<br />
+    New site read against <code>wergonic-landing-page</code> &middot; <code>main</code> &middot; <code>f66badc</code> (2 Sep 2026)<br />
+    Live site checked directly: <code>wergonic.com</code> &rarr; <code>wergonic.se</code>, plus <code>cloud.wergonic.com/privacy-policy</code>
+  </div>
+</div>
+
+<div class="box bad">
+  <span class="tag">Verdict</span>
+  <h3>Not compliant today &mdash; on either site. The new one is close; the live one is the real exposure.</h3>
+  <p>The new landing page is <strong>architecturally excellent</strong>: no cookies, no analytics, no trackers, no third-party requests of any kind, fonts self-hosted at build time. That is a better starting position than most companies ever reach, and it removes the single biggest source of GDPR fines. <strong>The gap is paperwork and consent mechanics, not architecture</strong> &mdash; roughly two to three days of work.</p>
+  <p>But the site the public reaches at <strong>wergonic.com right now is still the old WordPress site at wergonic.se</strong>, and its privacy policy is the <strong>unedited WordPress sample template</strong>. It talks about blog comments and Gravatar. It does not mention the contact forms that are actually on the page, does not name the company, and gives no legal basis, no retention and no complaint route. That is a plain Article 13 failure on the page the public actually loads.</p>
+  <p>Timing matters this year. The EDPB's 2026 coordinated enforcement action &mdash; 25 national regulators acting together &mdash; is <strong>specifically about transparency and privacy notices</strong> under Articles 12&ndash;14. This is the one thing being actively audited across Europe in 2026, and it is exactly where both sites fail.</p>
+</div>
+
+<div class="kpis">
+  <div class="kpi red"><div class="n">6</div><div class="l">Must fix before launch</div></div>
+  <div class="kpi amber"><div class="n">7</div><div class="l">Should fix</div></div>
+  <div class="kpi grey"><div class="n">5</div><div class="l">Minor</div></div>
+  <div class="kpi red"><div class="n">6</div><div class="l">On the live site</div></div>
+</div>
+
+<h2>Part A &middot; What the law actually requires</h2>
+<p class="sectionnote">The full set of obligations that apply to a B2B marketing website operated by a Swedish company. This is the checklist Part B is scored against.</p>
+
+<h3 class="grp">1 &middot; Tell people what you do with their data &mdash; Article 13</h3>
+<p class="desc">Whenever you collect personal data directly from someone &mdash; a contact form, a download form, a newsletter box &mdash; you must tell them, <em>at that moment</em>, all of the following: who the controller is (legal name, address, contact details), the DPO's contact details if you have one, what you collect, why, the legal basis for each purpose, who else receives it (including hosting and email providers), whether it leaves the EU and under what safeguard, how long you keep it, their rights, and their right to complain to the supervisory authority. In Sweden that is IMY, Integritetsskyddsmyndigheten.</p>
+<p class="desc">Two things regulators are strict about: the information must be <strong>accurate</strong> &mdash; a template that describes data you don't collect is itself a breach of Article 5(1)(a) &mdash; and one central policy page is <strong>not enough on its own</strong>. Each collection point needs its own short, contextual notice next to the form, linking to the full policy.</p>
+
+<h3 class="grp">2 &middot; Have a lawful basis for every purpose &mdash; Article 6</h3>
+<p class="desc">Replying to a business enquiry: legitimate interest, or steps prior to a contract. Sending a whitepaper somebody asked for: performance of a contract, or legitimate interest. Adding that person to a marketing list afterwards: <strong>consent</strong>, and consent only. These are three separate purposes and each needs to be named separately in the notice.</p>
+
+<h3 class="grp">3 &middot; If you rely on consent, it must be real &mdash; Articles 4(11) and 7</h3>
+<ul>
+  <li><strong>Freely given.</strong> You cannot make a download conditional on accepting marketing. If the person cannot get the resource without ticking the marketing box, the consent is invalid.</li>
+  <li><strong>Specific.</strong> One tick box per purpose. Bundling "send me this file" with "send me future emails" into a single checkbox does not work.</li>
+  <li><strong>Unambiguous.</strong> Active opt-in. No pre-ticked boxes, no implied consent.</li>
+  <li><strong>Provable.</strong> Article 7(1) puts the burden on you: you must be able to demonstrate <em>who</em> consented, <em>when</em>, and to <em>exactly what wording</em>. A checkbox that is only validated in the browser proves nothing.</li>
+  <li><strong>Withdrawable</strong>, and as easy to withdraw as it was to give &mdash; so a working unsubscribe link.</li>
+</ul>
+<p class="desc">Separately, Swedish marketing law (marknadsf&ouml;ringslagen &sect;19) requires prior opt-in for commercial email to individuals, with a narrow existing-customer exception. So the consent record is not optional in Sweden even for B2B addresses.</p>
+
+<h3 class="grp">4 &middot; Ask before storing anything on the visitor's device &mdash; ePrivacy Article 5(3)</h3>
+<p class="desc">This rule covers cookies <em>and</em> localStorage, sessionStorage, service-worker caches and fingerprinting. Consent is required before writing anything that is not strictly necessary to deliver what the visitor asked for. Two things are exempt: storage needed to make the site work, and a preference the visitor set themselves &mdash; a language or theme choice.</p>
+<p class="desc">Note on the 2026 state of play: the Commission's Digital Omnibus proposal (Nov 2025) would move these rules into the GDPR and relax parts of them, but it is <strong>still a proposal</strong>. Realistic adoption is late 2026 at the earliest, application 2027. Nothing has changed yet, and consent before non-essential storage is still the rule.</p>
+
+<h3 class="grp">5 &middot; Handle rights requests &mdash; Articles 15&ndash;22</h3>
+<p class="desc">Access, rectification, erasure, restriction, portability, objection, and withdrawal of consent. One working address, and a one-month response deadline. Objection to direct marketing is absolute &mdash; you must stop, no balancing test.</p>
+
+<h3 class="grp">6 &middot; Don't keep it forever &mdash; Article 5(1)(e)</h3>
+<p class="desc">Every category of data needs a defined retention period, stated in the notice and actually applied. "Until we no longer need it" is not a period. Form submissions sitting in a shared inbox indefinitely is the most common failure of this rule.</p>
+
+<h3 class="grp">7 &middot; Cover your processors and any transfers &mdash; Articles 28 and 44&ndash;49</h3>
+<p class="desc">Anyone who touches the data on your behalf is a processor and needs a data processing agreement: the host, the CDN, the email provider, the mailbox provider, the error tracker. They must be disclosed by category in the notice. Any transfer outside the EEA needs Standard Contractual Clauses plus a transfer impact assessment.</p>
+
+<h3 class="grp">8 &middot; Secure it &mdash; Article 32</h3>
+<p class="desc">TLS, current patched software, access control, and protection against abuse of any endpoint that sends mail or accepts input. An unpatched, end-of-life web server holding form submissions is a direct Article 32 problem, independent of anything on the page.</p>
+
+<h3 class="grp">9 &middot; Keep an internal record &mdash; Article 30</h3>
+<p class="desc">A record of processing activities. Not public, but the first thing a regulator asks for.</p>
+
+<h3 class="grp">10 &middot; The Swedish company-information duty &mdash; not GDPR, same footer</h3>
+<p class="desc">Lag (2002:562) om elektronisk handel &sect;8 requires any commercial website to make <strong>easily, directly and permanently accessible</strong>: the legal name, the geographic address, the email address, the corporate identity number (organisationsnummer) and the VAT number. This is separate from GDPR and often forgotten.</p>
+
+<h2 class="pb">Part B &middot; The new landing page</h2>
+<p class="sectionnote">Read against <code>main</code> at <code>f66badc</code>. This is the site that will replace wergonic.com.</p>
+
+<div class="box good">
+  <span class="tag">Verified good &mdash; do not change this</span>
+  <h3>Zero cookies, zero trackers, zero third-party requests</h3>
+  <p>I searched the whole source tree for analytics, tag managers, pixels, session recorders, chat widgets, reCAPTCHA, embedded video and external CDNs. There are <strong>none</strong>. The page sets no cookies. Fonts come through <code>next/font/google</code>, which downloads them at build time and serves them from your own server &mdash; so no visitor IP ever reaches Google, which is the single most common GDPR complaint against websites in Europe.</p>
+  <p><strong>The consequence: this site legitimately does not need a cookie banner.</strong> That is worth stating out loud on the page. It is a genuine selling point to a safety or works-council buyer, and it answers an auditor's first question before they ask it.</p>
+</div>
+
+<h3 class="grp">Must fix before launch</h3>
+
+<div class="task">
+  <h3><span class="id">H1</span>The website has no privacy notice of its own<span class="badge p0">Blocker</span></h3>
+  <p class="desc">The footer and both forms link to a "Privacy Policy" that lives on the cloud app. That document is the notice for the <em>product</em>. It never mentions the marketing website, the contact form, the whitepaper form, or the mailer that sends both. Nothing on wergonic.com tells a visitor who the controller is, what happens to what they typed, on what basis, for how long, or how to complain.</p>
+  <p class="desc">It is also <strong>dated 1 December 2022</strong> &mdash; almost four years stale &mdash; and it is generated boilerplate that is largely about <strong>California</strong> law: the California Customer Records statute, "Shine the Light", authorised agents, opt-out of sale. The GDPR content is a thin generic section bolted on the side.</p>
+  <div class="explain"><span class="tag">Fix</span><p>Write one real privacy notice for the website and host it on the landing page itself, at <code>/privacy</code>. It must be about this site: the two forms, the mailer, the hosting, the retention, the rights. The product notice stays where it is and gets linked from it.</p></div>
+</div>
+
+<div class="task">
+  <h3><span class="id">H2</span>That linked policy actively contradicts what the site does<span class="badge p0">Blocker</span></h3>
+  <p class="desc">The policy contains a table of data categories. It declares <strong>"Identifiers &mdash; Collected: NO"</strong>, where identifiers are defined in that same table as real name, postal address, phone number, IP address, email address. The contact form on this site collects first name, last name, email, phone and company. The table also says the company collects gender, date of birth, and audio/video recordings &mdash; none of which appear anywhere on the site.</p>
+  <p class="desc">So the notice is not merely incomplete, it is <strong>wrong in both directions</strong>. An inaccurate notice breaches the fairness and transparency principle in Article 5(1)(a) on its own, before you even get to Article 13.</p>
+  <div class="explain"><span class="tag">Fix</span><p>Replaced by H1. Do not patch this table &mdash; the whole document is generated boilerplate for the wrong jurisdiction and should be rewritten rather than edited.</p></div>
+</div>
+
+<div class="task">
+  <h3><span class="id">H3</span>The whitepaper consent is bundled, and it is never recorded<span class="badge p0">Blocker</span></h3>
+  <p class="desc">One mandatory checkbox reads: <em>"I agree to receive this resource <strong>and occasional updates</strong> from Wergonic."</em> The download will not proceed unless it is ticked. That is two different purposes &mdash; delivering the file the person asked for, and marketing &mdash; welded into one required tick. Consent obtained that way is not freely given and not specific, so the marketing consent is invalid.</p>
+  <p class="desc">Worse, the tick is checked in the browser and then <strong>thrown away</strong>. The value is never sent to the server, and the API never looks for it. There is no record of who consented, when, or to what wording &mdash; so Article 7(1) cannot be satisfied at all. If anyone ever complains, there is nothing to show.</p>
+  <div class="explain"><span class="tag">Fix</span><p>Split it. Delivering the requested file needs no consent &mdash; it is what they asked for. Add a <strong>separate, optional, unticked</strong> box for marketing. Send that flag to the server together with a timestamp, the IP or a request id, and a version string for the exact consent wording shown, and store it.</p></div>
+</div>
+
+<div class="task">
+  <h3><span class="id">H4</span>The success screen promises a double opt-in that does not exist<span class="badge p0">Blocker</span></h3>
+  <p class="desc">After a whitepaper download the page says: <em>"We've sent a confirmation to your@email &mdash; <strong>click the link in it to confirm</strong> and receive future Wergonic insights."</em></p>
+  <p class="desc">No such email is sent. The API mails the PDF straight to the address, with no confirmation step and no link. The site is describing a double opt-in process that has not been built &mdash; which is both an untrue statement made inside a consent flow, and a missed opportunity, because a real double opt-in would have solved H3 cleanly.</p>
+  <div class="explain"><span class="tag">Fix</span><p>Either build the confirmation email properly &mdash; which is the better answer and gives you a defensible consent record for free &mdash; or delete that sentence today. Leaving it as is, is the worst of the three options.</p></div>
+</div>
+
+<div class="task">
+  <h3><span class="id">H5</span>The processors that actually handle enquiries are not disclosed<span class="badge p0">Blocker</span></h3>
+  <p class="desc">The Data Protection page carries the heading <em>"Every party that touches your data &mdash; disclosed in full"</em> and lists three: AWS, Cloudflare, Sentry.</p>
+  <p class="desc">Every contact enquiry and every whitepaper lead is sent through <strong>Inleed</strong> (the SMTP host in the mailer config) and delivered into a <strong>Google Workspace</strong> mailbox &mdash; the MX record for wergonic.com is <code>smtp.google.com</code>. The site itself runs on <strong>DigitalOcean</strong>, not AWS. None of those three appear on the list. Google in particular sits badly next to the neighbouring claim of "No transfers outside the EU/EEA".</p>
+  <div class="explain"><span class="tag">Fix</span><p>Either add Google Workspace, Inleed and DigitalOcean to the list, or reword that section so it is explicitly scoped to <em>worker measurement data in the product</em> &mdash; and then put the website's own processors in the new website privacy notice. The current absolute wording is what makes this a finding.</p></div>
+</div>
+
+<div class="task">
+  <h3><span class="id">H6</span>The whitepaper endpoint will email anyone, on demand, with no limit<span class="badge p0">Blocker</span></h3>
+  <p class="desc"><code>POST /api/whitepaper</code> takes whatever email address it is given and sends a PDF attachment to it. There is no ownership check, no confirmation, no rate limit and no captcha. Anyone can script it to send Wergonic-branded attachments to a third party's inbox repeatedly, from Wergonic's own domain. <code>/api/contact</code> has only a hidden honeypot field, which stops naive bots and nothing else.</p>
+  <p class="desc">This is both an abuse channel and an Article 32 failure &mdash; it is a technical measure that should exist and does not. The reputational damage lands on the sending domain, which is also the domain the product's transactional email uses.</p>
+  <div class="explain"><span class="tag">Fix</span><p>Rate-limit both routes by IP. For whitepapers, confirm the address before sending anything, or send a download link instead of an attachment. Adding a captcha would mean adding a third-party tracker to a site that currently has none &mdash; prefer rate limiting and confirmation.</p></div>
+</div>
+
+<h3 class="grp">Should fix</h3>
+
+<div class="task">
+  <h3><span class="id">M1</span>Nothing is ever deleted, and no retention period is stated<span class="badge p1">Medium</span></h3>
+  <p class="desc">There is no database. Enquiries and leads are emailed to a shared inbox and stay there forever. No period is stated anywhere on the site, and none is applied. Article 5(1)(e) needs both.</p>
+  <div class="explain"><span class="tag">Fix</span><p>Pick a period, publish it, and apply it &mdash; for example enquiries deleted after 12 months, marketing consent held until withdrawn plus 3 years of proof. A Google Workspace retention rule on the support inbox does the enforcement.</p></div>
+</div>
+
+<div class="task">
+  <h3><span class="id">M2</span>The site makes strong compliance claims that need verifying<span class="badge p1">Medium</span></h3>
+  <p class="desc">The Data Protection and DPA pages state, as fact: annual penetration testing by an independent EU provider, with results shared under NDA; breach notification within 24 hours; a DPIA template included for customers; quarterly access reviews; twice-yearly incident-response drills; mandatory security training for every employee; a DPA at "v1.2, in force"; and a "GDPR Compliant" badge in the footer.</p>
+  <p class="desc">These are contractual representations to enterprise buyers, not marketing copy. If any is not true today, it is a misrepresentation that a procurement team will test in due diligence and that a regulator would read as an aggravating factor. I have no way to verify them from the code &mdash; that is a question for Farhad.</p>
+  <div class="explain"><span class="tag">Fix</span><p>Go through the list with Farhad. Anything true stays. Anything not yet true gets softened to intent ("we are working towards") or removed. The 24-hour breach commitment in particular is a promise three times stricter than the law requires and it will be held to.</p></div>
+</div>
+
+<div class="task">
+  <h3><span class="id">M3</span>The contact form's notice is one sentence and covers almost nothing<span class="badge p1">Medium</span></h3>
+  <p class="desc">It reads: <em>"By submitting this form you agree to our Privacy Policy. We use your details only to reply to this enquiry."</em> The second half is good and honest. The first half is the problem &mdash; a privacy policy is not something you agree to, it is something you are informed of, and the linked document does not describe this form anyway.</p>
+  <p class="desc">Missing at the point of collection: who the controller is, the legal basis, how long it is kept, who else sees it, and the right to object and to complain to IMY. This contextual just-in-time notice is precisely the focus of the 2026 enforcement action.</p>
+  <div class="explain"><span class="tag">Fix</span><p>Replace with a short factual block: who we are, why we hold this, on what basis, for how long, who else touches it, your rights, link to the full notice. Four lines is enough.</p></div>
+</div>
+
+<div class="task">
+  <h3><span class="id">M4</span>Lead details are written to browser storage without asking<span class="badge p1">Medium</span></h3>
+  <p class="desc">After a whitepaper download the visitor's name, email, company, industry and job title are written to <code>localStorage</code> under <code>wg_lead_v1</code>, to pre-fill the form next time. Nobody is told and nobody is asked.</p>
+  <p class="desc">The theme preference and the offline service-worker cache are both fine &mdash; a preference the user set, and storage needed to deliver the service. This one is a convenience, so it falls under the consent rule for device storage rather than the exemption.</p>
+  <div class="explain"><span class="tag">Fix</span><p>Simplest option is to drop it &mdash; it saves a repeat visitor about fifteen seconds. Otherwise add a small "remember my details on this device" tick, off by default.</p></div>
+</div>
+
+<div class="task">
+  <h3><span class="id">M5</span>No security headers at all<span class="badge p1">Medium</span></h3>
+  <p class="desc"><code>next.config.mjs</code> sets redirects and nothing else. There is no Content-Security-Policy, no Strict-Transport-Security, no X-Content-Type-Options, no Referrer-Policy and no Permissions-Policy. Referrer-Policy matters here specifically: without it, full URLs leak to any external site a visitor clicks through to.</p>
+  <div class="explain"><span class="tag">Fix</span><p>One <code>headers()</code> block in <code>next.config.mjs</code>. A tight CSP is genuinely easy on this site because there are no third-party scripts to allow &mdash; the absence of trackers pays off twice.</p></div>
+</div>
+
+<div class="task">
+  <h3><span class="id">M6</span>Four different contact addresses across the site<span class="badge p1">Medium</span></h3>
+  <p class="desc">The footer shows <code>farhad@wergonic.com</code>. The Data Protection page gives <code>support@wergonic.com</code> for privacy, legal and DPO matters. The contact form's error message tells people to write to <code>contact@wergonic.com</code>. The linked privacy policy uses <code>info@wergonic.com</code> for rights requests, and names the DPO as Farhad Abtahi at yet another address. Article 13 wants one clear controller contact and one clear DPO contact.</p>
+  <div class="explain"><span class="tag">Fix</span><p>One address for privacy and rights, published consistently everywhere. <code>privacy@wergonic.com</code> aliased to the support inbox is the clean version, and it also stops rights requests landing in a personal mailbox.</p></div>
+</div>
+
+<div class="task">
+  <h3><span class="id">M7</span>The footer is missing the address and the VAT number<span class="badge p1">Medium</span></h3>
+  <p class="desc">The footer has the legal name and org.nr &mdash; <em>&copy; 2026 Wergonic AB &middot; Org.nr 559201-5530</em> &mdash; plus an email and "Stockholm, Sweden". The Swedish e-commerce act also requires a <strong>geographic address</strong> and the <strong>VAT number</strong>. "Stockholm, Sweden" is a location, not an address, and the registered address on the privacy policy is in fact Kvalitetsv&auml;gen 12, 146 31 Tullinge.</p>
+  <div class="explain"><span class="tag">Fix</span><p>Add the street address and <code>SE559201553001</code>-style VAT number to the footer, or to a short legal page linked from it.</p></div>
+</div>
+
+<h3 class="grp">Minor</h3>
+<table class="t">
+  <thead><tr><th style="width:34mm">Item</th><th>What it is</th></tr></thead>
+  <tbody>
+    <tr><td class="tid">L1</td><td>Say on the site that it sets no cookies and runs no analytics. It is true, it is unusual, and it is the fastest way to close the question for a buyer's security review.</td></tr>
+    <tr><td class="tid">L2</td><td>The consent-checkbox error message is the untranslated literal string <code>"required"</code>, so a user who skips the box sees a raw developer token.</td></tr>
+    <tr><td class="tid">L3</td><td>"Your details are kept private and GDPR-compliant" under the download form is a vague claim that says nothing. Replace with the specific sentence: what you do with it and for how long.</td></tr>
+    <tr><td class="tid">L4</td><td>"No spam, unsubscribe anytime" appears above the whitepaper list, but there is no unsubscribe mechanism anywhere. It becomes true once H3 is fixed &mdash; not before.</td></tr>
+    <tr><td class="tid">L5</td><td>The About page publishes five people's names, roles, photos, bios and profile links. That is fine on legitimate interest, but confirm each person has seen it and knows they can ask for removal. Board members and academics are the ones who tend to object.</td></tr>
+  </tbody>
+</table>
+
+<h2 class="pb">Part C &middot; The site the public sees right now</h2>
+
+<div class="box bad">
+  <span class="tag">Important</span>
+  <h3>wergonic.com does not serve the new landing page &mdash; it redirects to the old WordPress site</h3>
+  <p><code>wergonic.com</code> returns a 301 to <code>wergonic.se</code>, a WordPress site running Elementor, WPForms and Contact Form 7. Everything in Part B describes a site that is not live yet. Everything below is live today, on the domain on every business card and in every email signature.</p>
+</div>
+
+<div class="task">
+  <h3><span class="id">C1</span>The privacy policy is the unedited WordPress sample template<span class="badge p0">Urgent</span></h3>
+  <p class="desc">The page at <code>/privacy-policy-2/</code> is the default text WordPress ships with, published without a single edit. It opens <em>"Who we are &mdash; Our website address is: https://wergonic.se"</em> and then discusses blog comments, Gravatar avatars, EXIF location data in uploaded images, and login cookies for site administrators.</p>
+  <p class="desc">It does not mention the WPForms contact forms that are actually on the page. It does not name Wergonic AB, give the org.nr or an address, state a single legal basis, give a retention period for form submissions, name a DPO, or mention the right to complain to IMY. It says comment data is <em>"retained indefinitely"</em>.</p>
+  <div class="explain"><span class="tag">Fix</span><p>This is the single most urgent item in this document, and it is a copy-paste job. Write the real notice once (H1) and put it on both sites today.</p></div>
+</div>
+
+<div class="task">
+  <h3><span class="id">C2</span>Google Fonts is hotlinked from Google's servers<span class="badge p0">Urgent</span></h3>
+  <p class="desc">The theme pulls fonts from <code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code> on every page load, with no consent. Every visitor's IP address is transmitted to Google as a result. This is the most warning-lettered GDPR issue in Europe: a Munich court awarded damages for exactly this in 2022 and it started an industry of automated claim letters, particularly out of Germany &mdash; which is a market Wergonic sells into.</p>
+  <div class="explain"><span class="tag">Fix</span><p>Self-host the font files. The new site already does this correctly, which is why it does not appear in Part B.</p></div>
+</div>
+
+<div class="task">
+  <h3><span class="id">C3</span>Running end-of-life PHP<span class="badge p0">Urgent</span></h3>
+  <p class="desc">The server reports <code>PHP/7.4.33</code>. PHP 7.4 reached end of life in November 2022 and has had <strong>no security patches for nearly four years</strong>. This server receives and stores contact form submissions. Under Article 32 that is a failure to apply appropriate technical measures, and unlike the paperwork items it is an actual breach risk rather than a documentation gap.</p>
+</div>
+
+<div class="task">
+  <h3><span class="id">C4</span>No consent mechanism of any kind<span class="badge p1">Medium</span></h3>
+  <p class="desc">There is no cookie banner and no consent layer. Given the Google Fonts calls and the YouTube player script that loads on the page, third-party requests happen before the visitor has any say. Fixing C2 removes most of this; the YouTube player needs checking to confirm it only loads on click.</p>
+</div>
+
+<div class="task">
+  <h3><span class="id">C5</span>Two different privacy policies are live simultaneously<span class="badge p1">Medium</span></h3>
+  <p class="desc">The WordPress template at <code>wergonic.se/privacy-policy-2/</code> and the 2022 Termly document at <code>cloud.wergonic.com/privacy-policy</code>. They describe different companies doing different things, and the web app links to <em>a third</em> URL &mdash; <code>wergonic.se/privacy-policy-2/</code> &mdash; from its login screens.</p>
+</div>
+
+<div class="task">
+  <h3><span class="id">C6</span>No security headers on the live site either<span class="badge p1">Medium</span></h3>
+  <p class="desc">No HSTS, no CSP, no X-Content-Type-Options, no Referrer-Policy. Same as M5, on an unpatched server.</p>
+</div>
+
+<h2 class="pb">Part D &middot; What to do, in order</h2>
+
+<h3 class="grp">This week &mdash; the live site is what is exposed</h3>
+<ol class="steps">
+  <li><strong>Write the real privacy notice once.</strong> Controller: Wergonic AB, org.nr 559201-5530, Kvalitetsv&auml;gen 12, 146 31 Tullinge. DPO: Farhad Abtahi, one address. Then: what each form collects, the purpose and legal basis for each, the recipients (Google Workspace, Inleed, DigitalOcean, Cloudflare), the retention period, the rights, and the right to complain to IMY. Publish it on wergonic.se immediately, and ship it with the new site.</li>
+  <li><strong>Self-host the fonts on wergonic.se</strong> and remove the Google calls.</li>
+  <li><strong>Update PHP</strong> on the WordPress host.</li>
+</ol>
+<p class="desc" style="margin-top:8px">If the new site is within a few weeks of launch, cutting over sooner is a cleaner fix than repairing WordPress &mdash; it retires C2, C3, C4 and C6 in one move. That is a scheduling call, but the privacy notice cannot wait for it either way.</p>
+
+<h3 class="grp">Before the new site goes live</h3>
+<ol class="steps">
+  <li>Ship the privacy notice at <code>/privacy</code> and link it from the footer and both forms, replacing the cloud-app link. <span class="pill bad">H1 H2</span></li>
+  <li>Split the whitepaper consent into required delivery and optional marketing, and record the marketing consent server-side with timestamp and wording version. <span class="pill bad">H3</span></li>
+  <li>Build the confirmation email, or delete the sentence that promises it. <span class="pill bad">H4</span></li>
+  <li>Add a working unsubscribe path. <span class="pill bad">H3</span> <span class="pill warn">L4</span></li>
+  <li>Rate-limit both API routes; confirm the address before mailing a whitepaper, or send a link instead of an attachment. <span class="pill bad">H6</span></li>
+  <li>Fix the sub-processor list, or scope its wording to product data. <span class="pill bad">H5</span></li>
+  <li>Add security headers in <code>next.config.mjs</code>. <span class="pill warn">M5</span></li>
+</ol>
+
+<h3 class="grp">Shortly after</h3>
+<ol class="steps">
+  <li>Go through the compliance claims with Farhad and correct anything not true today. <span class="pill warn">M2</span></li>
+  <li>Set and apply a retention rule on the support inbox. <span class="pill warn">M1</span></li>
+  <li>One privacy address everywhere. <span class="pill warn">M6</span></li>
+  <li>Full address and VAT number in the footer. <span class="pill warn">M7</span></li>
+  <li>Proper just-in-time notice under each form. <span class="pill warn">M3</span></li>
+  <li>Drop the localStorage lead cache, or make it opt-in. <span class="pill warn">M4</span></li>
+  <li>State on the site that it uses no cookies and no analytics. <span class="pill na">L1</span></li>
+  <li>Write the Article 30 record of processing. It is internal, it takes an afternoon, and it is the first document a regulator asks for.</li>
+</ol>
+
+<div class="box">
+  <span class="tag">Worth saying</span>
+  <h3>The hard part is already done</h3>
+  <p>Most GDPR remediation on a marketing site is about ripping out tracking that marketing does not want to lose. There is none of that here. Every finding above is a document to write or a form to rewire &mdash; no architectural change, no vendor to replace, no feature to sacrifice. Two to three days of developer time plus half a day of writing closes the whole list.</p>
+</div>
+
+<footer>
+  Wergonic &mdash; Landing Page GDPR Audit &middot; 3 September 2026<br />
+  Sources checked: <code>wergonic-landing-page</code> at <code>main</code>/<code>f66badc</code>; <code>wergonic-web-apps</code> client-panel privacy notice; live responses from <code>wergonic.com</code>, <code>wergonic.se</code> and <code>cloud.wergonic.com</code>; DNS MX and SPF records for <code>wergonic.com</code>.<br />
+  Legal basis for the requirements in Part A: GDPR Articles 5, 6, 7, 12&ndash;22, 28, 30, 32, 44&ndash;49; ePrivacy Directive Article 5(3); EDPB Coordinated Enforcement Framework 2026 (transparency and information obligations); Lag (2002:562) om elektronisk handel &sect;8; marknadsf&ouml;ringslagen &sect;19.<br />
+  This is an engineering and process review, not legal advice. Have the final privacy notice read by a Swedish data-protection lawyer before publishing.
+</footer>
+
+</body>
+</html>
