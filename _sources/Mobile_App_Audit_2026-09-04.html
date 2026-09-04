@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Wergonic &mdash; Mobile App Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6; --ink: #181826; --slate: #5A6478; --muted: #98A1B3;
+    --line: #E9EBF0; --tint: #F4EFFD;
+    --amber: #B7791F; --amber-bg: #FFF8EC; --amber-line: #F2DFB8;
+    --red: #B42318; --red-bg: #FEF3F2; --red-line: #FDA29B;
+    --green: #1B7F5A; --green-bg: #ECFAF4; --green-line: #A9E0C9;
+    --blue: #17539B; --blue-bg: #EFF6FE; --blue-line: #B3D3F5;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 15mm 14mm 13mm 14mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink); font-size: 9.6pt; line-height: 1.46;
+    -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+  }
+  h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 13px 16px; margin-bottom: 14px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 25pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; }
+  .lede { color: var(--slate); font-size: 9.8pt; max-width: 174mm; margin-top: 8px; }
+  .meta { color: var(--muted); font-size: 8.4pt; margin-top: 10px; line-height: 1.55; }
+
+  h2 { font-size: 13pt; font-weight: 700; letter-spacing: -0.01em; margin: 24px 0 3px;
+       padding-bottom: 6px; border-bottom: 1.5px solid var(--line); break-after: avoid; }
+  h2 .cnt { font-family: "Inter", sans-serif; font-size: 8pt; font-weight: 600; color: var(--muted); margin-left: 8px; vertical-align: 2px; }
+  .sectionnote { color: var(--slate); font-size: 9.2pt; margin: 7px 0 2px; break-after: avoid; }
+
+  .item { margin-top: 11px; break-inside: avoid; }
+  .item h3 { font-size: 10pt; font-weight: 700; color: var(--ink); margin: 0 0 3px; break-after: avoid; line-height: 1.3; }
+  .item h3 .id { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 7.8pt; font-weight: 500;
+                 color: var(--purple); background: var(--tint); padding: 2px 6px; border-radius: 4px;
+                 margin-right: 7px; vertical-align: 1.5px; }
+  .badge { font-size: 6.8pt; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+           padding: 1.5px 5px; border-radius: 4px; margin-left: 6px; vertical-align: 2px; white-space: nowrap; }
+  .badge.p0 { color: var(--red); background: var(--red-bg); box-shadow: inset 0 0 0 1px var(--red-line); }
+  .badge.p1 { color: var(--amber); background: var(--amber-bg); box-shadow: inset 0 0 0 1px var(--amber-line); }
+  .badge.p2 { color: var(--slate); background: #F1F2F6; box-shadow: inset 0 0 0 1px #E2E4EA; }
+
+  .desc { margin: 0; color: var(--slate); }
+  .desc + .desc { margin-top: 4px; }
+  .where { margin: 4px 0 0; font-family: "JetBrains Mono", ui-monospace, monospace;
+           font-size: 7.8pt; color: var(--muted); }
+  code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.3pt;
+         color: var(--ink); background: #F4F5F8; padding: 1px 4px; border-radius: 3px; }
+
+  .box { margin-top: 12px; border: 1px solid var(--line); border-radius: 8px;
+         background: #FAFAFC; padding: 12px 16px; break-inside: avoid; }
+  .box h3 { margin: 0 0 4px; font-size: 10.5pt; }
+  .box p { margin: 4px 0 0; color: var(--slate); font-size: 9.2pt; }
+  .box .tag { font-size: 7.6pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .box.warn { border-color: var(--amber-line); background: var(--amber-bg); }
+  .box.warn h3, .box.warn .tag { color: var(--amber); }
+  .box.bad { border-color: var(--red-line); background: var(--red-bg); }
+  .box.bad h3, .box.bad .tag { color: var(--red); }
+  .box.info { border-color: var(--blue-line); background: var(--blue-bg); }
+  .box.info h3, .box.info .tag { color: var(--blue); }
+
+  ul { margin: 5px 0 0; padding-left: 17px; }
+  li { color: var(--slate); margin: 3px 0; font-size: 9.2pt; }
+  li strong { color: var(--ink); font-weight: 600; }
+
+  .kpis { display: flex; gap: 9px; margin: 13px 0 4px; }
+  .kpi { flex: 1; border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; background: #FAFAFC; }
+  .kpi .n { font-family: "Hanken Grotesk", sans-serif; font-size: 19pt; font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+  .kpi .l { font-size: 7.2pt; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
+  .kpi.red .n { color: var(--red); } .kpi.amber .n { color: var(--amber); }
+  .kpi.grey .n { color: var(--slate); } .kpi.purple .n { color: var(--purple); }
+
+  footer { margin-top: 24px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.4pt; }
+  .pb { break-before: page; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="eyebrow">Wergonic &middot; Mobile App &middot; Code Audit</div>
+  <h1>Full Audit &mdash; Things To Check</h1>
+  <p class="lede">A fresh read of the whole mobile app: Flutter session flow, BLE, the native Kotlin engine, CSV recording, report maths, database and Android configuration. Every item below is something found in the code that looks wrong, risky, or needs a decision. <strong>Nothing here has been reproduced on a device.</strong> Treat each one as a claim to verify, not a fact. Some will turn out to be intentional &mdash; say so and we close them.</p>
+  <div class="meta">
+    4 September 2026 &middot; audited <code>wergonic-flutter</code> &middot; <code>dev</code> &middot; <code>c9ec2c4</code> (1 Sep 2026)<br />
+    Scope: <code>lib/</code> (1,117 Dart files), <code>android/app/src/main/kotlin/</code> (40 Kotlin files), manifest and Gradle config.<br />
+    <strong>P0</strong> = can lose or corrupt session data &middot; <strong>P1</strong> = wrong behaviour a user would notice &middot; <strong>P2</strong> = smaller / cleanup / decision needed
+  </div>
+</div>
+
+<div class="kpis">
+  <div class="kpi red"><div class="n">14</div><div class="l">P0 &mdash; data risk</div></div>
+  <div class="kpi amber"><div class="n">21</div><div class="l">P1 &mdash; wrong behaviour</div></div>
+  <div class="kpi grey"><div class="n">22</div><div class="l">P2 &mdash; smaller</div></div>
+  <div class="kpi purple"><div class="n">6</div><div class="l">Areas</div></div>
+</div>
+
+<div class="box bad">
+  <span class="tag">Read this first</span>
+  <h3>Three things stand out above everything else.</h3>
+  <p><strong>1. The app has no Android foreground service.</strong> It records for hours over BLE with nothing telling Android to keep the process alive. The wakelock keeps the screen on while the app is in front, but the moment it is backgrounded there is nothing protecting it. This is the classic cause of "the session just stopped" on Samsung and Xiaomi devices.</p>
+  <p><strong>2. Files are routed by searching the file path for words like "Arm", "hand", "trunk", "head" and "hr".</strong> The path contains the workplace name and the worker's name. A client called <em>Handelsbanken</em>, <em>Armatec</em> or <em>Head Office</em>, or a worker called <em>Christoffer</em>, gets their data parsed as the wrong body part or written with the wrong headers. There is already a comment in the code saying this exact pattern was fixed in one place &mdash; it was not fixed everywhere.</p>
+  <p><strong>3. One transient BLE error can silently disable a sensor for the rest of the app run.</strong> If a subscription gets three 503s in a row (which the code's own comment says happens under radio contention), that sensor is marked "unsupported" for the whole process and records nothing &mdash; for that session and every session after it, until the app is restarted. Only a log line says so.</p>
+</div>
+
+<h2>A &middot; Recording &amp; data loss<span class="cnt">14 items</span></h2>
+<p class="sectionnote">Anything here can mean a session comes back with missing or short data.</p>
+
+<div class="item">
+  <h3><span class="id">A1</span>No foreground service &mdash; Android can kill the app mid-session<span class="badge p0">P0</span></h3>
+  <p class="desc">The manifest declares no service at all, and there is no <code>FOREGROUND_SERVICE</code>, <code>FOREGROUND_SERVICE_CONNECTED_DEVICE</code>, <code>WAKE_LOCK</code> or <code>POST_NOTIFICATIONS</code> permission. A multi-hour BLE recording with the app in the background is subject to Doze, App Standby and OEM battery killers. Check what actually happens when the user presses Home or turns the screen off mid-session on a Samsung device.</p>
+  <p class="where">android/app/src/main/AndroidManifest.xml</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A2</span>Three 503s permanently disable a sensor stream for the whole app run<span class="badge p0">P0</span></h3>
+  <p class="desc"><code>DataSubscriber</code> retries a 503 three times, then adds the sensor+stream to an <code>unsupported</code> set that is never cleared &mdash; deliberately, per the comment, and it survives session restarts. But 503 also happens transiently under radio contention. Once it triggers, that limb records nothing for every session until the app is restarted, with no UI signal.</p>
+  <p class="where">android/.../ble/data/source/transport/DataSubscriber.kt</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A3</span><code>waitForQueueEmpty</code> returns instantly after the first time it is used<span class="badge p0">P0</span></h3>
+  <p class="desc"><code>_writeQueueEmpty</code> is a single <code>Completer</code> created once per writer and completed the first time the queue drains. Every later call &mdash; including the one in <code>closeAll()</code> at session end &mdash; returns immediately even with batches still queued, and then the sinks are closed. Verify what happens when the queue is non-empty at finish.</p>
+  <p class="where">core/services/csv_recording/writing/limb_csv_writer/wait_for_queue_empty.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A4</span>CSV error reporting is dead from the second session onward<span class="badge p0">P0</span></h3>
+  <p class="desc"><code>CsvWriterManager</code> is a lazy singleton. <code>closeAll()</code> closes <code>_globalErrorController</code>, which is a <code>final</code> field and never recreated. The next session subscribes writers to a closed controller, so write errors either throw or vanish &mdash; and the "Data save error" snackbar never fires again until the app restarts.</p>
+  <p class="where">core/services/csv_recording/writing/csv_writer/csv_writer_manager.dart + close_all.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A5</span>Legacy CSV fallback loses the last buffer<span class="badge p0">P0</span></h3>
+  <p class="desc">If <code>initializeCsvWriterSystem()</code> throws, writers fall back to the legacy buffer, which only writes when it overflows. At finish, <code>stopCsvWriting()</code> runs before <code>stopReadings()</code> and <code>stopWriting()</code> clears <code>writeBuffer</code> &mdash; so the flush that follows has nothing left. Up to a minute of data per limb, silently. <code>flushLegacyBuffer()</code> exists but nothing calls it.</p>
+  <p class="where">sessions/session/domain/usecases/data_processing/write_data_to_csv.usecase.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A6</span>Native engine events are dropped when the buffer fills<span class="badge p0">P0</span></h3>
+  <p class="desc">The Kotlin engine emits with <code>tryEmit()</code> on a <code>SharedFlow</code> with 64 slots and no overflow strategy. <code>tryEmit</code> returns false and drops the event silently when there is no room, and the return value is ignored. The Dart side already has a workaround for this (<code>_reconcileConnectedFromRssi</code> repairs the map when a CONNECTED event goes missing) &mdash; the root cause is here.</p>
+  <p class="where">android/.../ble/data/session/SensorStateMachine.kt</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A7</span>One throwing RSSI read kills RSSI sampling for the whole process<span class="badge p0">P0</span></h3>
+  <p class="desc"><code>batteryLoop()</code> wraps its work in try/catch. <code>rssiLoop()</code> does not &mdash; the <code>try/finally</code> in it is only for diagnostics. If <code>rssiReader.read()</code> or <code>scheduler.withRadio</code> throws, the coroutine ends and never restarts. RSSI stops, and so does the reconnect self-heal that depends on it.</p>
+  <p class="where">android/.../ble/data/session/SensorStateMachine.kt &mdash; rssiLoop()</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A8</span>CSV write failures are effectively invisible<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>sink.write()</code> is buffered and does not throw on failure &mdash; errors surface later on flush or close. But <code>_totalSamplesWritten</code> is incremented right after the <code>write()</code> call, inside a try/catch that will rarely fire. So <code>rows_written</code> in the integrity manifest can report rows that never reached disk.</p>
+  <p class="where">core/services/csv_recording/writing/limb_csv_writer/process_write_queue.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A9</span>A session killed while recording is never recovered<span class="badge p1">P1</span></h3>
+  <p class="desc">The splash sweep only picks up sessions marked <code>finishing</code> &mdash; i.e. the app died during close-out. A session killed while still recording has no finish state at all, so it is never swept, never marked, and the user is never told. Its <code>endedAt</code> stays null, so it shows a duration of 00:00:00.</p>
+  <p class="where">sessions/session/domain/usecases/flow/sweep_interrupted_sessions.usecase.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A10</span>Zip files from the auto-upload path are never deleted<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>syncWorkSession</code> deletes the zip on both success and failure. <code>uploadSessionFiles</code> (the automatic path) never does. They accumulate in <code>/zips</code>. Worse: <code>createZipForSessionData</code> reuses any existing non-empty zip at the same path, so a stale zip from an earlier failed attempt gets uploaded again instead of a fresh one.</p>
+  <p class="where">sessions/session_sync/data/repositories/work_session_sync.data.repository.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A11</span>Ceiling and completion can both settle the same session, out of order<span class="badge p1">P1</span></h3>
+  <p class="desc">In <code>SessionFinalizerCubit._run</code>, when the 120 s ceiling fires it calls <code>_settle(failed)</code> while the real sequence is still running. When that sequence lands it calls <code>_settle()</code> again. Both are async DB writes with no ordering guarantee, so the final stored state is a race. The intent (self-heal back to closed) is right; the sequencing is not guaranteed.</p>
+  <p class="where">sessions/session/presentation/logic/cubits/finalizer/session_finalizer_cubit.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A12</span>Recording page teardown runs while the close-out is still draining<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>_finishSession</code> starts the close-out unawaited, then navigates. The page's <code>dispose()</code> then calls <code>stopAllStreams()</code> &mdash; concurrently with the finalizer's <code>closeFiles</code> step. The comment says this is safe; worth confirming no sample in flight is lost when the two overlap.</p>
+  <p class="where">sessions/session/presentation/pages/recording/work_session_recording.page.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A13</span>Sinks are reused for existing files without checking the header shape<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>getOrCreateSink</code> opens an existing file in append mode and skips header writing entirely. If the row shape changed (for example vibration detection toggled between the file being created and reopened), rows with a different column count get appended under the old header, and the whole file then fails the report's exact column-count check.</p>
+  <p class="where">core/services/csv_recording/writing/file_handle_manager/get_or_create_sink.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A14</span>Queue overflow drops the oldest batch with only a warning<span class="badge p2">P2</span></h3>
+  <p class="desc">When the write queue hits <code>maxQueueDepth</code> (10 buffers) the oldest is discarded. The comment says "Maximum 10 minutes of buffered data" but it is 10 <em>buffers</em>, each <code>bleDataBufferSize</code> samples &mdash; not minutes. Worth confirming the real capacity, and whether dropping the oldest rather than the newest is the right choice.</p>
+  <p class="where">core/services/csv_recording/writing/limb_csv_writer/limb_csv_writer.dart</p>
+</div>
+
+<h2 class="pb">B &middot; Report numbers<span class="cnt">14 items</span></h2>
+<p class="sectionnote">These change the values that end up in front of the client.</p>
+
+<div class="item">
+  <h3><span class="id">B1</span>CSV files are routed to the wrong parser by name matching<span class="badge p0">P0</span></h3>
+  <p class="desc">The report picks the processor by searching the <em>full file path</em> for <code>Arm</code> (case-sensitive), then <code>hand</code>, <code>trunk</code>, <code>head</code>, <code>hr</code> &mdash; in that order. The path contains the workplace folder and the worker's name twice. A workplace called <em>Armatec</em> or <em>Handelsbanken</em>, or one called <em>Head Office</em>, sends every limb file to the wrong processor and produces a report built from the wrong columns. Because <code>Arm</code> is checked first, an "Arm" hit wins over everything else.</p>
+  <p class="where">core/services/report/process_file_in_isolate.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B2</span>Header type is picked by <code>path.contains('hr')</code> with no limb guard<span class="badge p0">P0</span></h3>
+  <p class="desc"><code>FileHandleManager._writeHeaders</code> writes HR headers to any file whose lowercased path contains "hr" &mdash; which includes <em>Christoffer</em>, <em>Ahr&eacute;n</em>, <em>Ehrling</em>. The same decision in <code>createCSVForSession</code> is written correctly (it checks <code>limb == null</code> first), and <code>CsvRowShape</code> carries a comment explaining exactly why the filename must not be trusted. This path was missed. It fires whenever a limb file did not already exist &mdash; e.g. a sensor connected after the session was created.</p>
+  <p class="where">core/services/csv_recording/writing/file_handle_manager/file_handle_manager.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B3</span>Break time is recorded into the CSV and counted as posture<span class="badge p0">P0</span></h3>
+  <p class="desc">Pausing a session does not stop samples reaching the writers: <code>mode</code> stays <code>recording</code>, and <code>CsvWriterManager.pauseSession()</code> only cancels the flush timer &mdash; <code>addData</code> still queues rows. On top of that, <code>pauseCsvWriting()</code> is gated behind the <code>useNewCsvSystem</code> setting, which defaults to <strong>false</strong>, so it is usually a no-op anyway. The report's angle calculations read every row in the file with no break filter.</p>
+  <p class="where">measurements/.../measurements_manager_cubit.dart + csv_writer/pause_session.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B4</span>Head and side-bending do not filter sensor dropouts &mdash; trunk and arm do<span class="badge p0">P0</span></h3>
+  <p class="desc"><code>calculateTrunkBendingRisk</code> and <code>calculateArmElevationAngleTimePercentage</code> both drop readings whose duration exceeds <code>dropoutGapMs</code>, with a comment saying the report must count the same time as the live view. <code>calculateHeadBendingRisk</code> and <code>calculateTrunkSideBendingRisk</code> have no such filter. So in the same report, head and side-bending count sensor-absence gaps as posture and trunk/arm do not.</p>
+  <p class="where">core/utils/calculations_utils.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B5</span>Trunk side-bending times are doubled on purpose<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>processTrunkCsv</code> adds every side-bending value to the list twice, with a comment saying not to deduplicate it because it matches the backend. Percentages are unaffected, but the reported <em>durations</em> are exactly 2&times; reality. Confirm whether the displayed side-bending times are meant to be doubled, or whether the backend has the same bug and both need fixing.</p>
+  <p class="where">core/services/report/process_trunk_csv.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B6</span>Angular velocity uses a 30 threshold but the fields are called under60/over60<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>calculateAverageGeneralizedAngularVelocity</code> splits at <code>velocity &lt; 30</code> and writes the result into fields named <code>under60</code> and <code>over60</code>. Either the threshold or the field names is wrong. Whichever it is, the report label and the number probably disagree.</p>
+  <p class="where">core/utils/calculations_utils.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B7</span>Angular velocity has no dropout filter either<span class="badge p1">P1</span></h3>
+  <p class="desc">Same function as B6. Unlike arm elevation, it does not exclude readings longer than the dropout gap, so a sensor drop is counted as low-velocity time and pulls the average down.</p>
+  <p class="where">core/utils/calculations_utils.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B8</span>Total session duration is computed and then thrown away<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>terminateSession()</code> carefully calculates <code>totalDuration</code> and passes it to <code>updateWorkSessionStatus</code>, which declares the parameter and never uses it. Nothing reads it anywhere. Either wire it up or delete it &mdash; but first check whether the server is supposed to be receiving it.</p>
+  <p class="where">sessions/session/presentation/logic/cubits/ongoing_work_session/work_session_cubit.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B9</span>Local <code>startedAt</code> is set after the API call, so it differs from the server's<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>startWorkSession</code> sends <code>started_at</code> to the API, then afterwards overwrites the local session with <code>DateTime.now()</code> &mdash; which is now later by however long the request took. The on-device duration is short by that amount, and the two records disagree. On a slow connection this is seconds.</p>
+  <p class="where">sessions/session/presentation/logic/cubits/ongoing_work_session/work_session_cubit.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B10</span>Report parsing keys off a hardcoded column count that differs by build flavour<span class="badge p1">P1</span></h3>
+  <p class="desc">Rows are only counted when <code>row.length</code> exactly equals a constant &mdash; and that constant is <code>17</code> in dev and <code>15</code> in prod, because dev adds two extra columns. Any mismatch silently skips every row and produces an empty report with no error. The header row is right there; the indices should come from it, not from a constant. Also: <code>handCsvRowLength</code> is defined but never used.</p>
+  <p class="where">core/config.dart + core/services/report/process_*_csv.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B11</span>No guard for a missing column &mdash; <code>row[-1]</code> crashes the report<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>headers.indexOf(...)</code> returns <code>-1</code> when a column is absent. Only <code>processHeadCsv</code> checks one of them (<code>rollColumnSideBendingIndex</code>). Trunk, arm and hand do not check any, and hand's <code>row.length &gt; index</code> guard passes trivially for <code>-1</code>. Any header drift throws a RangeError inside the isolate.</p>
+  <p class="where">core/services/report/process_arm_csv.dart, process_trunk_csv.dart, process_hand_csv.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B12</span>Report rows are read as <code>dynamic</code> with no type check<span class="badge p1">P1</span></h3>
+  <p class="desc">The CSV parser returns <code>int</code> for a whole number and <code>double</code> otherwise. The values go straight into <code>(double, int)</code> records. If any angle is ever serialised without a decimal point, the record construction throws a TypeError mid-report. Worth a defensive <code>num.toDouble()</code>.</p>
+  <p class="where">core/services/report/process_*_csv.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B13</span><code>calculatePercentiles</code> throws on an empty list<span class="badge p2">P2</span></h3>
+  <p class="desc">With an empty input the index goes negative and indexing throws. Every current caller guards it, but the function itself does not &mdash; and it is a shared utility. One line to make it safe.</p>
+  <p class="where">core/utils/calculations_utils.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B14</span>HR risk has no guard on resting heart rate<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>hrCapacity = (220 - age) - restingHr</code>. Age is clamped to 1&ndash;119 but resting HR is not validated at all. A resting HR of 0 (not entered) or one above max produces a nonsensical or negative capacity, and every threshold derived from it is wrong. Check what the app does when the field is left blank.</p>
+  <p class="where">core/utils/calculations_utils.dart &mdash; calculateHrRisk</p>
+</div>
+
+<h2 class="pb">C &middot; Session &amp; work cycle flow<span class="cnt">12 items</span></h2>
+
+<div class="item">
+  <h3><span class="id">C1</span>Work Cycle sessions never auto-finish at the time limit<span class="badge p1">P1</span></h3>
+  <p class="desc">The timer listener does <code>isWorkCycle ? switchTask(...) : checkMaxSessionTime(...)</code>. In Work Cycle mode the max-session check is never called, so <code>sessionDurationLimit</code> (default 8 h) is not enforced and the session runs until someone stops it.</p>
+  <p class="where">sessions/session/presentation/widgets/recording/session_auto_control.widget.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C2</span>A failed work cycle event stops auto-advance for the rest of the session<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>_isCreatingEvent</code> is set to <code>true</code> before creating the event and reset only by the <code>onComplete</code> callback, which fires inside the happy path. If <code>createWorkCycleEvent</code> throws, the catch block does not reset the flag &mdash; so <code>switchTask</code> is blocked forever and tasks stop advancing automatically.</p>
+  <p class="where">sessions/session/presentation/widgets/recording/session_auto_control.widget.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C3</span>Duplicate-task race: <code>onComplete</code> fires before the index advances<span class="badge p1">P1</span></h3>
+  <p class="desc">In <code>createWorkCycleEvent</code>, <code>onComplete?.call()</code> (which clears <code>_isCreatingEvent</code>) runs <em>before</em> <code>await moveToNextTask()</code>. The 1-second timer tick can fire in that window and create a second event for the same task index.</p>
+  <p class="where">sessions/session/presentation/logic/utils/work_cycle_event_helper.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C4</span>Work cycle task switching loses the network round-trip as unaccounted time<span class="badge p2">P2</span></h3>
+  <p class="desc">The event's <code>endTime</code> is stamped before <code>addSessionEvent</code>, and the next stint's start is stamped after it returns. The gap between them is the request latency, and it is attributed to nothing. Over a long cycle with many switches this accumulates.</p>
+  <p class="where">sessions/session/presentation/logic/utils/work_cycle_event_helper.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C5</span>The session timer resets on every work cycle task<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>resetTimer()</code> is called on each task change and again when tasks are re-fetched. So in Work Cycle mode what is displayed and used as "session duration" is really "time since the last task change". It is also what the feedback warm-up countdown reads. Confirm which behaviour is intended and label it accordingly.</p>
+  <p class="where">work_cycle_event_helper.dart + session_auto_control.widget.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C6</span>The session timer keeps running through breaks<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>SessionTimerCubit.pauseTimer()</code> and <code>resumeTimer()</code> exist but <strong>nothing calls them</strong>. The pause flow stops CSV writing and the work task stopwatch, but not the session timer. If break time is meant to sit inside the total that is fine &mdash; but the feedback warm-up countdown also runs off this timer, so a break counts toward "feedback in M:SS".</p>
+  <p class="where">sessions/session/presentation/logic/cubits/session_timer/session_timer_cubit.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C7</span>"Calibration is stale because a sensor dropped" can never trigger<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>lastUnintentionalDisconnectAt</code> is only written in <code>listenToDevicesStream</code>, the old MDS path. With <code>useNativeEngine = true</code> that stream never emits a disconnect &mdash; it only fires on connect, reconfigure and unpair. So the field stays null and <code>CalibrationReuseVerdict.disconnectedSinceCalibration</code> is unreachable: Quick Start will happily reuse a calibration taken before a sensor fell off and was put back on.</p>
+  <p class="where">bluetooth/.../sensor_connection_cubit.dart + measurements/domain/entities/calibration_reuse.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C8</span>A devices push in <code>dispose()</code> can race the completed-status write<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>SessionBlocListeners.dispose()</code> flushes a pending device-list update if the session has not been marked finished. Because the close-out runs in the background, <code>sessionTerminated</code> may not have arrived yet &mdash; so a write can land against a session that is being completed at the same moment.</p>
+  <p class="where">sessions/session/presentation/widgets/recording/session_bloc_listeners.widget.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C9</span>Lite mode can record a session with zero limbs<span class="badge p1">P1</span></h3>
+  <p class="desc">In <code>updateWorkSessionStatus</code>, if lite mode is on and either <code>deviceInfo</code> or <code>selectedLimb</code> is null, the connected devices list is set to empty. Since there are no paired BLE devices in lite mode either, <code>missingLimbs</code> comes out empty too &mdash; so the session reports neither recorded nor missing limbs, silently.</p>
+  <p class="where">sessions/session/presentation/logic/cubits/ongoing_work_session/work_session_cubit.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C10</span>The Firestore live-session document is never marked completed<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>updateWorkSessionStatus</code> writes to Firestore only when the status is <em>not</em> completed; completion goes to the REST API instead. So the live document keeps whatever state it last had. Check whether the web panel's live view leaves finished sessions showing as still recording.</p>
+  <p class="where">sessions/session/data/sources/remote/session.remote.datasource.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C11</span><code>ended_at</code> falls back to "now" on a late retry<span class="badge p2">P2</span></h3>
+  <p class="desc">When the completed-status write runs and <code>session.endedAt</code> is null, the code sends <code>DateTime.now()</code>. If that write is retried later &mdash; after backoff, or via the retry-finish path on the summary &mdash; the server records the retry time as the session end, not the real one.</p>
+  <p class="where">sessions/session/data/sources/remote/session.remote.datasource.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C12</span>Pause and resume call <code>setState</code> after awaits with no <code>mounted</code> check<span class="badge p2">P2</span></h3>
+  <p class="desc">Both <code>onPauseWorkSession</code> and <code>onResumeWorkSession</code> await several async calls and then call <code>setState</code> unguarded. If the page is disposed in between (auto-finish, navigation) that throws. Also, <code>pauseCsvWriting()</code> is awaited but <code>resumeCsvWriting()</code> is not &mdash; worth making symmetric.</p>
+  <p class="where">sessions/session/presentation/pages/recording/work_session_recording.page.dart</p>
+</div>
+
+<h2 class="pb">D &middot; What the user sees<span class="cnt">7 items</span></h2>
+
+<div class="item">
+  <h3><span class="id">D1</span>A limb that stops recording is announced by a 2-second snackbar, in English<span class="badge p1">P1</span></h3>
+  <p class="desc">Sensor data timeout, stream error, CSV write error and retry attempts are all surfaced as a 2-second snackbar with a hardcoded English string &mdash; in an app localised to five languages. After three failed retries the app gives up silently and keeps recording with nothing from that limb. There is no persistent indicator anywhere that a limb has stopped.</p>
+  <p class="where">sessions/session/presentation/widgets/recording/session_bloc_listeners.widget.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">D2</span>Shaking the phone opens the "report a problem" sheet &mdash; during recording<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>ShakeDetector.autoStart</code> is registered globally in <code>_AppState</code> with a 5-shake threshold, so it is live on every screen including the recording page. The whole point of the app is that the worker is moving. Check whether this can fire mid-session and cover the screen &mdash; and consider disabling it while recording.</p>
+  <p class="where">app.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">D3</span>Exposure colours can go red in the first seconds of a recording<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>PostureExposureTracker._project</code> extrapolates whatever has been measured so far to a full 480-minute working day, with no minimum sample requirement. Ten seconds spent above 60&deg; projects to the entire day above 60&deg;. There is a warm-up countdown widget, but it only hides the panels &mdash; it does not stop the tracker counting or the projection being unstable.</p>
+  <p class="where">sessions/session/presentation/logic/utils/exposure/posture_exposure_tracker.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">D4</span>The wakelock is never released<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>WakelockPlus.enable()</code> is called on entering the kiosk wrapper and there is no <code>disable()</code> anywhere in the app. Kiosk mode has a proper release guard; the wakelock does not. The screen will not sleep for as long as the app is in the foreground, including on Home and Settings after a session.</p>
+  <p class="where">core/gesture_lock_wrapper.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">D5</span>Session folders are named "Firstname-null" when there is no last name<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>createPath</code> interpolates <code>"$firstName $lastName"</code> directly, so a null last name becomes the literal string <code>null</code> in the directory name. The <em>file</em> names use <code>fullName</code>, which handles it correctly &mdash; so the folder and the files inside it disagree.</p>
+  <p class="where">core/functions/generate_path.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">D6</span>Workplace name goes into the file path unsanitised<span class="badge p2">P2</span></h3>
+  <p class="desc">Same function. Only spaces are stripped. A workplace containing a slash creates nested directories; other characters can produce paths the zip or the report cannot find again.</p>
+  <p class="where">core/functions/generate_path.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">D7</span>The summary screen decides online/offline once and never updates<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>_isOnline</code> is read in <code>initState</code> and stored in a <code>late final</code>. If the connection comes back while the user is on the summary, the screen still behaves as if offline.</p>
+  <p class="where">sessions/session/presentation/pages/session_summary/session_summary.page.dart</p>
+</div>
+
+<h2 class="pb">E &middot; Edge cases worth reproducing<span class="cnt">10 items</span></h2>
+
+<div class="item">
+  <h3><span class="id">E1</span>A break shorter than 2 seconds is counted as exposure<span class="badge p2">P2</span></h3>
+  <p class="desc">The exposure tracker discards a sample gap only if it exceeds <code>dropoutGapMs</code> (2 s). Pausing and immediately resuming leaves a sub-2-second gap that is counted as continuous posture at the pre-break angle.</p>
+  <p class="where">exposure/posture_exposure_tracker.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E2</span>The exposure tracker records a frozen angle on non-reading states<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>_listenForExposure</code> fires on <em>every</em> state a measurement cubit emits &mdash; including <code>error</code> and <code>dataTimeout</code> &mdash; and reads the last known angle each time with a fresh <code>DateTime.now()</code>. A sensor that has stopped sending but keeps emitting state changes can keep accumulating exposure at its last posture.</p>
+  <p class="where">measurements/.../measurements_manager_cubit.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E3</span>Filters reset to zero on every stream restart<span class="badge p2">P2</span></h3>
+  <p class="desc">The Butterworth filters start from a zero state, so after every reconnect or stream restart the first handful of samples ramp up from zero instead of the true gravity vector &mdash; producing wrong angles for a fraction of a second. Check whether that shows as a spike in the live feedback or in the CSV.</p>
+  <p class="where">core/utils/butterworth_filter.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E4</span>Sensor serial is derived by stripping non-digits from the device name<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>BleDeviceEntity.serial</code> is <code>name.replaceAll(RegExp('[^0-9]'), '')</code>. Two sensors from different manufacturers with the same digits collide, and a device whose name has no digits gets an empty serial. Battery tracking, battery alerts and the Kotlin <code>isSerialConnected</code> check all key off this.</p>
+  <p class="where">bluetooth/domain/entities/ble_device.entity.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E5</span>Breaks are detected by the literal English string "Work Break"<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>breakDuration</code> matches <code>event.name == "Work Break"</code>. A custom activity named exactly that would be counted as a break, and if the label is ever localised or renamed on the backend all break time silently becomes work time. Give it an id or a flag instead of a name comparison.</p>
+  <p class="where">work_session.entity.dart, work_session_model.dart, session_timeline_builder.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E6</span>Enums are persisted by <code>.name</code>, against the repo's own rule<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>AGENTS.md</code> says never to persist an enum by <code>.name</code> or <code>.index</code> and to use an explicit <code>code</code> field. But <code>syncStatus</code>, <code>finishState</code>, <code>finishFailure</code>, <code>role</code>, <code>limb</code> and <code>battery</code> are all written to Drift by <code>.name</code>. Renaming any of those values silently orphans every stored row.</p>
+  <p class="where">core/database/daos/</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E7</span>No downgrade or corruption path for the local database<span class="badge p1">P1</span></h3>
+  <p class="desc">Schema is at 22 with no <code>onDowngrade</code> and no recovery if the file is corrupt. Since the app is offline-first and holds unsynced sessions, an unopenable database means unrecoverable data. Also worth checking: the upgrade chain has no branches for versions 4, 5, 6 and 17 &mdash; confirm those were genuinely covered by the surrounding steps.</p>
+  <p class="where">core/database/database.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E8</span>The native engine never forgets a limb<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>connections</code> and <code>macToLimb</code> in <code>SensorStateMachine</code> are only ever written, never removed &mdash; <code>disconnect()</code> just flips the status. So <code>ownsConnections()</code> stays true forever after the first pairing, and <code>resync()</code> replays entries for limbs that were unpaired. <code>setPhase</code> on an unknown limb also creates a placeholder entry with an empty MAC.</p>
+  <p class="where">android/.../ble/data/session/SensorStateMachine.kt</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E9</span>Dead legacy BLE path that conflicts with the live one<span class="badge p2">P2</span></h3>
+  <p class="desc">With the native engine on, <code>listenToDevicesStream</code>'s disconnect branch is unreachable &mdash; including its 30-second reconnect watchdog. If that path is ever re-enabled it will fight the 2-minute "offer a Stop" timer: the watchdog marks the limb disconnected at 30 s, and the stop offer only appears if the limb is still marked reconnecting. Either delete the dead branch or reconcile the two timeouts.</p>
+  <p class="where">bluetooth/.../sensor_connection_cubit.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E10</span>The 208 Hz filter has a DC gain of 0.86 instead of 1.0<span class="badge p2">P2</span></h3>
+  <p class="desc">All five sampling rates were checked numerically. 13, 26, 52 and 104 Hz all give a clean 5 Hz low-pass with unity DC gain. 208 Hz comes out at 0.861 &mdash; the coefficients look truncated. Angles are computed from normalised vectors so it should not affect them, but anything using absolute magnitude would be off by 14%. Confirm whether 208 Hz is used at all.</p>
+  <p class="where">core/utils/calculations_utils.dart &mdash; _blpCoefficients / _alpCoefficients</p>
+</div>
+
+<h2 class="pb">F &middot; Cleanup &amp; small stuff<span class="cnt">10 items</span></h2>
+
+<div class="item">
+  <h3><span class="id">F1</span>Auth interceptor has no error handling and no 401 retry<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>AuthInterceptor.onRequest</code> calls <code>await user.getIdToken()</code> with no try/catch. If the token refresh fails (no network mid-refresh), the exception escapes <code>onRequest</code> instead of being turned into a rejection. There is also no 401 handling anywhere &mdash; no forced refresh, no retry, no sign-out.</p>
+  <p class="where">core/network/auth_interceptor.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F2</span>All Dio errors are dropped before reaching Sentry<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>beforeSend</code> returns null for every <code>DioException</code>, on the grounds that the backend reports them. That also hides client-side failures the backend never sees &mdash; timeouts, DNS failures, cancelled requests. Worth confirming this is still the right trade.</p>
+  <p class="where">main.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F3</span>Debug noise left in a production code path<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>initialize_session.dart</code> opens with sixteen lines of leftover <code>debugPrint</code> calls, several of them printing "CSV writing session closed" at the point where a session is being <em>opened</em>. Confusing in any log someone reads later.</p>
+  <p class="where">core/services/csv_recording/writing/csv_writer/initialize_session.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F4</span>Dead code to remove<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>handCsvRowLength</code> (never read), <code>_workTasksRemoteDataSource</code> in the sync repository (marked <code>ignore: unused_field</code>), <code>safeIndex</code> in <code>switchTask</code> (computed then ignored), <code>pauseTimer</code>/<code>resumeTimer</code> (never called), and the <code>totalDuration</code> parameter from B8.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F5</span>TODOs sitting in live paths<span class="badge p2">P2</span></h3>
+  <p class="desc">Eleven of them, including <code>//TODO : take a look at this</code> directly above <code>updateWorkSessionStatus</code> in the remote data source &mdash; the method that decides whether a session is marked completed. Worth triaging: each is either a real task or noise to delete.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F6</span>Typos in public names<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>calculateAngularVilocity</code>, <code>nintiethPercentile</code>, <code>isFristStart</code>, <code>onDiconnect</code>, <code>chronologicallyOrdredEvents</code>, <code>rrCollumnIndex</code>. Cosmetic, but <code>nintiethPercentile</code> is a model field name that ends up in stored data and possibly in exports &mdash; check before renaming it.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F7</span><code>WorkTaskEntity.copyWith</code> silently resets the stopwatch<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>copyWith</code> builds a brand-new entity, and the constructor creates a fresh paused <code>Stopwatch</code>. Any <code>copyWith</code> on a running task loses its elapsed time. The class is also <code>Equatable</code> on <code>[id, name]</code> only, so two tasks with different elapsed times compare equal.</p>
+  <p class="where">work_labels/domain/entities/work_task.entity.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F8</span>Stale-unpair guard only ignores one event<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>_unpairedDeviceIds.remove(bleDevice.id)</code> consumes the id on the first matching event, so a second stale callback for the same device is processed normally. If MDS can emit more than one, the guard does not hold.</p>
+  <p class="where">bluetooth/.../sensor_connection_cubit.dart</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F9</span>Location is requested but there is no background location permission<span class="badge p2">P2</span></h3>
+  <p class="desc">Sessions can enable location, but the manifest declares only <code>ACCESS_FINE_LOCATION</code>. Without <code>ACCESS_BACKGROUND_LOCATION</code>, location updates stop as soon as the app is backgrounded on Android 10+. Related to A1 &mdash; both are fixed by the same foreground service.</p>
+  <p class="where">android/app/src/main/AndroidManifest.xml</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F10</span>Deep links point at staging<span class="badge p2">P2</span></h3>
+  <p class="desc">Two of the three intent filters are hardcoded to <code>staging.cloud.wergonic.com</code> &mdash; the mobile login and password-reset links. Only the generic one uses <code>cloud.wergonic.com</code>. Confirm production builds handle production links.</p>
+  <p class="where">android/app/src/main/AndroidManifest.xml</p>
+</div>
+
+<footer>
+  Wergonic mobile app audit &mdash; 4 September 2026 &middot; <code>wergonic-flutter</code> &middot; <code>dev</code> &middot; <code>c9ec2c4</code><br />
+  Static code read only. No item here has been reproduced on a device. Please verify each one and push back on anything that is intentional.
+</footer>
+
+</body>
+</html>
