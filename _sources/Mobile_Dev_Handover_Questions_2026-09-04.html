@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Wergonic &mdash; Mobile Dev Handover</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6; --ink: #181826; --slate: #5A6478; --muted: #98A1B3;
+    --line: #E9EBF0; --tint: #F4EFFD;
+    --amber: #B7791F; --amber-bg: #FFF8EC; --amber-line: #F2DFB8;
+    --red: #B42318; --red-bg: #FEF3F2; --red-line: #FDA29B;
+    --green: #1B7F5A; --green-bg: #ECFAF4; --green-line: #A9E0C9;
+    --blue: #17539B; --blue-bg: #EFF6FE; --blue-line: #B3D3F5;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 15mm 14mm 13mm 14mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink); font-size: 9.7pt; line-height: 1.47;
+    -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+  }
+  h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 13px 16px; margin-bottom: 14px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 25pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; }
+  .lede { color: var(--slate); font-size: 9.8pt; max-width: 174mm; margin-top: 8px; }
+  .meta { color: var(--muted); font-size: 8.4pt; margin-top: 10px; line-height: 1.55; }
+
+  h2 { font-size: 13pt; font-weight: 700; letter-spacing: -0.01em; margin: 24px 0 3px;
+       padding-bottom: 6px; border-bottom: 1.5px solid var(--line); break-after: avoid; }
+  h2 .cnt { font-family: "Inter", sans-serif; font-size: 8pt; font-weight: 600; color: var(--muted); margin-left: 8px; vertical-align: 2px; }
+  .sectionnote { color: var(--slate); font-size: 9.2pt; margin: 7px 0 2px; break-after: avoid; }
+
+  .item { margin-top: 11px; break-inside: avoid; }
+  .item h3 { font-size: 10pt; font-weight: 700; color: var(--ink); margin: 0 0 3px; break-after: avoid; line-height: 1.3; }
+  .item h3 .id { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 7.8pt; font-weight: 500;
+                 color: var(--purple); background: var(--tint); padding: 2px 6px; border-radius: 4px;
+                 margin-right: 7px; vertical-align: 1.5px; }
+  .desc { margin: 0; color: var(--slate); }
+  .desc + .desc { margin-top: 4px; }
+  .ctx { margin: 4px 0 0; font-size: 8.8pt; color: var(--muted); border-left: 2px solid var(--line); padding-left: 9px; }
+  code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.3pt;
+         color: var(--ink); background: #F4F5F8; padding: 1px 4px; border-radius: 3px; }
+
+  .box { margin-top: 12px; border: 1px solid var(--line); border-radius: 8px;
+         background: #FAFAFC; padding: 12px 16px; break-inside: avoid; }
+  .box h3 { margin: 0 0 4px; font-size: 10.5pt; }
+  .box p { margin: 4px 0 0; color: var(--slate); font-size: 9.2pt; }
+  .box .tag { font-size: 7.6pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .box.warn { border-color: var(--amber-line); background: var(--amber-bg); }
+  .box.warn h3, .box.warn .tag { color: var(--amber); }
+  .box.bad { border-color: var(--red-line); background: var(--red-bg); }
+  .box.bad h3, .box.bad .tag { color: var(--red); }
+  .box.good { border-color: var(--green-line); background: var(--green-bg); }
+  .box.good h3, .box.good .tag { color: var(--green); }
+
+  ul { margin: 5px 0 0; padding-left: 17px; }
+  li { color: var(--slate); margin: 3px 0; font-size: 9.2pt; }
+  li strong { color: var(--ink); font-weight: 600; }
+
+  table.t { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 8.6pt; }
+  table.t th { text-align: left; font-weight: 700; font-size: 7.4pt; letter-spacing: 0.06em;
+               text-transform: uppercase; color: var(--muted); border-bottom: 1.5px solid var(--line);
+               padding: 6px 8px 6px 0; }
+  table.t td { padding: 5px 8px 5px 0; border-bottom: 1px solid #F2F3F7; color: var(--slate); vertical-align: top; }
+  table.t td.mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8pt; color: var(--ink); white-space: nowrap; }
+
+  footer { margin-top: 24px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.4pt; }
+  .pb { break-before: page; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="eyebrow">Wergonic &middot; Mobile App &middot; Offboarding</div>
+  <h1>What Only He Knows</h1>
+  <p class="lede">The mobile codebase is unusually well documented &mdash; 40+ markdown docs, thorough "why" comments, a clean architecture guide. Almost everything about <em>how the app works</em> is recoverable from the repo. This document is only the things that are <strong>not</strong>: operational access, vendor and hardware knowledge, empirically tuned numbers, work in flight, and code whose purpose cannot be read off the code itself. 29 questions, grouped. Ask them before his last day.</p>
+  <div class="meta">
+    4 September 2026 &middot; based on <code>wergonic-flutter</code> &middot; <code>dev</code> &middot; <code>c9ec2c4</code><br />
+    Nothing here duplicates the audit &mdash; the audit is "what is wrong", this is "what we cannot find out on our own".
+  </div>
+</div>
+
+<div class="box bad">
+  <span class="tag">Do this regardless of the answers</span>
+  <h3>The signing keystores and their passwords are committed to the git repository.</h3>
+  <p><code>android/keystore.jks</code>, <code>android/keystore.dev.jks</code>, <code>android/app/key.properties</code> and <code>android/app/key.dev.properties</code> are all tracked in git and have been for a long time. The <code>.gitignore</code> tries to exclude them but the patterns miss by one directory level &mdash; it ignores <code>android/app/*.jks</code> and <code>android/key.properties</code>, while the real files sit at <code>android/*.jks</code> and <code>android/app/key.properties</code>.</p>
+  <p>That means the Play Store upload key and its password are in every clone anyone has ever made of this repo, and revoking GitHub access on his last day does not take them back. The same applies to the three Google service-account JSONs in <code>secrets/</code>.</p>
+  <p><strong>Decide before he leaves:</strong> whether to rotate the upload key with Google (straightforward if Play App Signing is enabled &mdash; question R6), rotate the service accounts, and move all four files out of git into whatever the CI uses.</p>
+</div>
+
+<h2>1 &middot; Release &amp; signing<span class="cnt">7 questions</span></h2>
+<p class="sectionnote">Nobody can ship a build without these answers. This is the first thing to get.</p>
+
+<div class="item">
+  <h3><span class="id">R1</span>What is the exact command that builds a production release?</h3>
+  <p class="desc">The API the app talks to is chosen by <code>String.fromEnvironment('env')</code>, and it <strong>defaults to <code>dev</code></strong>. Nothing in the repo passes <code>--dart-define=env=production</code> &mdash; not the Gradle files, not the one GitHub workflow. So a production-flavour build made without that flag ships pointing at the staging API and writing 17-column CSVs instead of 15.</p>
+  <p class="ctx">Ask for the literal command line, and get it written into the README.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">R2</span>How does Codemagic build and publish, and who owns the account?</h3>
+  <p class="desc">There are two Codemagic service-account files in <code>secrets/</code> (production and staging) but <strong>no <code>codemagic.yaml</code> in the repo</strong>, so the entire build configuration lives in Codemagic's web UI and is not backed up anywhere. Which workflows exist, what triggers them, what environment variables they set, which Google Play track they publish to, and whose email owns the account.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">R3</span>How does release signing actually resolve?</h3>
+  <p class="desc"><code>build.gradle</code> reads <code>rootProject.file('key.properties')</code>, which is <code>android/key.properties</code>. The committed files are at <code>android/app/key.properties</code>. On a fresh clone the properties load empty and <code>storeFile</code> comes out null. Either something copies the file, or Codemagic supplies its own. Find out which, because right now a new dev cannot sign a build.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">R4</span>Is Play App Signing enabled, and where else do the keystores exist?</h3>
+  <p class="desc">Decides whether the upload key can be rotated cleanly or whether losing control of it is permanent. Also: does he hold copies outside the repo, and does anyone else at Wergonic have them.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">R5</span>Where does <code>google-services.json</code> come from for each flavour?</h3>
+  <p class="desc">It is gitignored and not in the repo, but the build needs it. Are dev and production separate Firebase projects, or one project with two package names (<code>com.wergonic.wergo</code> and <code>com.wergonic.wergo.dev</code>)? Who can regenerate them.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">R6</span>Play Console access, track and cadence.</h3>
+  <p class="desc">Which accounts have access and at what role, which track releases go to (internal / closed / production), whether staged rollout is used, and who actually presses publish today.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">R7</span>What are the three service accounts in <code>secrets/</code> for?</h3>
+  <p class="desc"><code>codemagic-service-account.json</code>, <code>codemagic-staging-service-account.json</code>, <code>gpc-api-key.json</code>. What each one is authorised to do, and which need rotating when he goes.</p>
+</div>
+
+<h2>2 &middot; Hardware, firmware &amp; the sensor vendor<span class="cnt">5 questions</span></h2>
+<p class="sectionnote">None of this is discoverable from the code. It is the area where the new dev will be most stuck.</p>
+
+<div class="item">
+  <h3><span class="id">H1</span>Where does <code>mdslib-3.33.1-release.aar</code> come from and how do we get a newer one?</h3>
+  <p class="desc">The Movesense SDK is a binary <code>.aar</code> checked into <code>android/libs/</code>. It was recently bundled directly (replacing the <code>mdsflutter</code> plugin). There is no note on where the file was obtained, whether a Movesense developer account or licence is involved, or how to upgrade it. Without this, the app is stuck on 3.33.1 forever.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">H2</span>What is "Komposti" and what happens if disabling it fails?</h3>
+  <p class="desc">The BLE repository calls <code>setKompostiAutoReconnect(enabled: false)</code> at startup and logs <code>CRITICAL: ... native may still reconnect silently</code> if it fails. It is clearly a Movesense-internal auto-reconnect the app deliberately turns off so its own reconnector can own the job &mdash; but what it actually does, and what breaks when the disable does not land, is only in his head.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">H3</span>The full list of WERGONIC-unit vs Movesense-unit differences.</h3>
+  <p class="desc"><code>bug.md</code> records one: the WERGONIC-branded sensors answer 503 for <code>/Meas/Temp</code> and never give temperature. There are almost certainly others he has hit. This matters directly &mdash; the code permanently disables a stream after three 503s, so hardware quirks turn into silent data loss.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">H4</span>Firmware: who builds it, where do the update files live, why is 2.0.0 the minimum?</h3>
+  <p class="desc">The app downloads firmware from a <code>firmware_url</code> and flashes it over Nordic DFU, and refuses sensors below <code>minSensorFirmwareVersion = '2.0.0'</code>. Who produces those builds, where they are hosted, what changed at 2.0.0, and what the current shipping version is.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">H5</span>Where is the test rig and does it come back?</h3>
+  <p class="desc"><code>bug.md</code> lists six sensors by serial and MAC (right arm, trunk, head, left arm, hand, forearm) plus a Pixel 9a used for on-device debugging. Confirm what hardware he physically holds, that it is returned, and that the new dev gets an equivalent rig &mdash; almost nothing in this app can be tested without sensors.</p>
+</div>
+
+<h2 class="pb">3 &middot; Work in flight<span class="cnt">4 questions</span></h2>
+
+<div class="item">
+  <h3><span class="id">W1</span>What is the state of <code>migration_new_ui</code>?</h3>
+  <p class="desc">It sits <strong>4 commits ahead of <code>dev</code></strong>, last touched 3 September &mdash; two days after dev. It contains a release bump to <code>5.2.3+299</code> and three ticket fixes: WH-1026 (dominant arm in the report and PDF), WH-1027 (cancelled requests reported as server errors), WH-1024 (reconfigure an unconfigured sensor on reconnect). Is it finished, tested, and ready to merge, or was it left mid-flight?</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">W2</span>Which of the 51 branches still contain work we want?</h3>
+  <p class="desc">Twenty-odd branches are ahead of <code>dev</code> and most are a year old. We only need to know which ones hold something not yet in dev that is still wanted; everything else can be deleted. The ones with real divergence:</p>
+  <table class="t">
+    <tr><th>Branch</th><th>Commits ahead of dev</th><th>Last touched</th></tr>
+    <tr><td class="mono">V/2.9.29</td><td>80</td><td>Jun 2025</td></tr>
+    <tr><td class="mono">refactoring</td><td>14</td><td>Nov 2025</td></tr>
+    <tr><td class="mono">sidali_dev_2</td><td>11</td><td>Sep 2025</td></tr>
+    <tr><td class="mono">sidali_refactore</td><td>8</td><td>Oct 2025</td></tr>
+    <tr><td class="mono">stability_check</td><td>6</td><td>Feb 2026</td></tr>
+    <tr><td class="mono">fix_bluetooth_farhad</td><td>6</td><td>Jan 2026</td></tr>
+    <tr><td class="mono">fix_blutooth</td><td>5</td><td>Jan 2026</td></tr>
+    <tr><td class="mono">migration_new_ui</td><td>4</td><td>Sep 2026 &mdash; see W1</td></tr>
+    <tr><td class="mono">stability, sidali_test</td><td>4 each</td><td>Feb 2026 / Sep 2025</td></tr>
+    <tr><td class="mono">Fix/zip, dev_ble_improvements, vibration-v2, fix_work_cycle_task</td><td>3 each</td><td>2025&ndash;2026</td></tr>
+    <tr><td class="mono">farhad_driftdatabase, Refactor/zip-session, farhad_claude</td><td>2 each</td><td>2025&ndash;2026</td></tr>
+  </table>
+  <p class="ctx"><code>V/2.9.29</code> at 80 commits is the one worth a direct answer: is that an abandoned old release line, or work that was never brought forward?</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">W3</span>What is he part-way through that is not on any branch?</h3>
+  <p class="desc">Uncommitted work, a fix he has diagnosed but not written, an experiment on his machine. Ask plainly, and ask him to push anything unfinished to a clearly named branch before he goes rather than deleting it.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">W4</span>Is anything blocked on the backend?</h3>
+  <p class="desc">Any API field, endpoint or Firestore change the app already expects but the backend has not shipped &mdash; or the reverse. These are invisible in the mobile repo and will surface as mystery bugs later.</p>
+</div>
+
+<h2>4 &middot; Code whose purpose we cannot read<span class="cnt">6 questions</span></h2>
+<p class="sectionnote">Each of these is something in the repo that looks deliberate but has no explanation attached.</p>
+
+<div class="item">
+  <h3><span class="id">C1</span>Why are two dependencies forked, and what was changed?</h3>
+  <p class="desc"><code>sensors_plus</code> comes from <code>github.com/wergonic/plus_plugins</code> and <code>shake</code> from <code>github.com/wergonic/shake</code>, both pinned to a commit SHA. There is no note anywhere in the repo about what was patched or why. Until someone knows, neither can ever be safely updated &mdash; and <code>sensors_plus</code> is what lite mode records with.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C2</span>Is <code>CsvWriterSettings</code> dead, or was it meant to be wired up?</h3>
+  <p class="desc">It is a complete 732-line settings screen that <strong>nothing in the app references</strong>. It is also the only place <code>useNewCsvSystem</code> can be turned on &mdash; so that setting is permanently <code>false</code> in production, which in turn makes pausing CSV writing on a break a no-op. Was the screen removed on purpose, or dropped by accident during a refactor?</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C3</span>Which developer-mode toggles are meant to be on in production?</h3>
+  <p class="desc">Developer mode is unlocked by <strong>tapping the "App Configuration" header in Settings seven times</strong> &mdash; itself worth writing down. Behind it: two-point calibration, vibration detection, "improved" vibration detection, IMU sampling rates, sensor ranges, Mahony filter gains, extra tiles, performance overlay, verbose splash. Nearly all default to off. Which are finished features awaiting a decision, and which are experiments that should be removed?</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C4</span>Vibration detection &mdash; shipped feature or experiment?</h3>
+  <p class="desc">It has a database column, CSV columns, two separate dev toggles (plain and "improved"), and five hardcoded thresholds &mdash; but it defaults to off and there is a stale <code>vibration-v2</code> branch. Is it validated against anything, and is it meant to reach customers?</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C5</span>Is the TNO report live, and who asked for it?</h3>
+  <p class="desc">There is a full TNO pipeline: its own use case, cubit, page, database table and a 535-line PDF layout. Whether it is in front of customers, who requested it, and what standard it implements is not written down anywhere in the repo.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C6</span>Which of the 40+ markdown docs are current?</h3>
+  <p class="desc"><code>doc/</code> and <code>docs/</code> hold architecture guides, a refactor roadmap, edge-case analyses, a BLE migration decision, a dev-team migration guide and more. Some clearly describe the app as it is; others read as historical plans. The new dev &mdash; and I &mdash; will treat all of them as true. Ask him to mark each as <strong>current</strong>, <strong>historical</strong> or <strong>stale</strong>. This is probably the single highest-value hour of his remaining week.</p>
+</div>
+
+<h2 class="pb">5 &middot; Numbers that were tuned, not chosen<span class="cnt">4 questions</span></h2>
+<p class="sectionnote">Several constants in this app were clearly arrived at by measuring on real hardware. Some carry an excellent comment explaining exactly that &mdash; <code>batteryPrimeTimeout</code> is a model of how it should be done. Most do not. Without the reasoning, the next person will "clean these up" and break BLE.</p>
+
+<div class="item">
+  <h3><span class="id">N1</span>The BLE timing constants &mdash; measured or guessed?</h3>
+  <p class="desc"><code>blePairingTimeout</code> 50s, <code>blePairingPipelineTimeout</code> 70s, <code>blePreConnectDelayMs</code> 1500, <code>bleStaleGattRetryDelay</code> 3s, <code>bleAutoReconnectMaxAttempts</code> 9, <code>bleAutoReconnectBudgetSeconds</code> 300, <code>bleStabilizingWindowSeconds</code> 30, the backoff base/max/jitter, <code>bleHandRestartDebounceMs</code> 1200, <code>bleInSessionRetryCooldownMs</code> 30000, <code>bleDataStaleSeconds</code> 3. Which of these came from measurement on a loaded radio, and which are safe to change?</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">N2</span>Where do the Mahony filter gains and vibration thresholds come from?</h3>
+  <p class="desc">Mahony <code>kp = 5.0</code>, <code>ki = 0.1</code>. Vibration: confidence 0.7 / 0.4, acceleration 2.0, gyro 50.0, weights 0.7 / 0.3. Literature, vendor recommendation, or trial and error?</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">N3</span>The calibration timings.</h3>
+  <p class="desc">6 seconds for a sensor calibration, 2 for the internal one, plus <code>calibrationWarmupStaggerMs</code> 300, <code>calibrationWarmupSettleMs</code> 500, <code>calibrationStreamStaggerMs</code> 600, and the accelerometer threshold 0.3. Were these measured against a reference, and is 6 seconds a clinical requirement or a practical one?</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">N4</span>Who generated the Butterworth coefficients, and with what?</h3>
+  <p class="desc">Five sampling rates with hardcoded filter coefficients and no source. Checked numerically, 13 / 26 / 52 / 104 Hz all give a clean 5 Hz low-pass with unity gain at DC; 208 Hz comes out at 0.861 instead of 1.0. Ask for the design script or tool, and whether 208 Hz is used at all &mdash; otherwise nobody can ever add a sampling rate.</p>
+</div>
+
+<h2>6 &middot; Process &amp; the things around the code<span class="cnt">3 questions</span></h2>
+
+<div class="item">
+  <h3><span class="id">P1</span>The WH ticket system.</h3>
+  <p class="desc">Commit messages reference <code>WH-1024</code>, <code>WH-1026</code>, <code>WH-1027</code> and so on. Confirm which tracker that is, that the new dev gets access, and get a list of WH tickets that are <em>fixed but not verified</em> and <em>open but not started</em> &mdash; those two states are invisible from the repo.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">P2</span>Who writes the translations?</h3>
+  <p class="desc">Five locale files (en, nl, sv, de, es), roughly 55&ndash;61 KB each, all updated recently. Whether the Swedish, Dutch, German and Spanish strings are reviewed by native speakers or machine-translated changes how much we can trust them &mdash; and Swedish is the customer-facing one.</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">P3</span>What does he work around without having written it down?</h3>
+  <p class="desc">The catch-all, and usually the most valuable answer. Any device that behaves differently, any step he always does before a release, any state he knows to avoid, any bug he has learned to live with. Ask it as an open question and let him talk.</p>
+</div>
+
+<div class="box good">
+  <span class="tag">Worth saying</span>
+  <h3>The code itself is in good shape.</h3>
+  <p>Almost every non-obvious decision in the session, BLE and CSV layers already carries a comment explaining <em>why</em>, not just what &mdash; the finaliser's retry policy, the exposure tracker's reset rules, the reason forearm gets its own writer, why the work-library window is closed at the break's own timestamp. That is unusual and it is why this list is 29 questions rather than a hundred. The gaps are almost entirely outside the source: accounts, hardware, the vendor SDK, and which of the many documents and branches still count.</p>
+</div>
+
+<footer>
+  Wergonic mobile handover &mdash; 4 September 2026 &middot; <code>wergonic-flutter</code> &middot; <code>dev</code> &middot; <code>c9ec2c4</code><br />
+  Companion to <em>Mobile App Audit &mdash; Things To Check</em>, same date. That one is for him to verify; this one is for him to answer.
+</footer>
+
+</body>
+</html>
