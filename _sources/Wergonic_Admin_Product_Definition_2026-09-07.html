@@ -95,27 +95,7 @@
   <div class="eyebrow">Wergonic &middot; Internal admin platform</div>
   <h1>Wergonic Admin<br />Product Definition</h1>
   <p class="lede">One place where the Wergonic team can see everything about a customer and act on it. Not a reporting tool, and not a second copy of the customer product &mdash; the tool our own team uses to run the platform: approve companies, manage their plan, look after their people and their hardware, publish releases, and fix things when they break.</p>
-  <div class="meta">Version 2 &middot; 7 September 2026</div>
-</div>
-
-<div class="box warn"><span class="tag">What changed in version 2</span>
-<h3>Written after clicking through the designed prototype and checking it against the code.</h3>
-<p>Nothing was removed from the product. These are corrections, and the reasons are in the sections themselves.</p>
-<ul class="tight">
-<li><strong>The hardware register is read-only</strong> &mdash; no attach, no detach, no add device.</li>
-<li><strong>Approving a company sends an invitation</strong>, not a generated password. Rejecting emails nobody.</li>
-<li><strong>Archive is not offered on an active company.</strong> Suspend first, then archive.</li>
-<li><strong>Industry is the official 21-category list</strong>, not free text.</li>
-<li><strong>The languages are English, Swedish, German, Spanish and Dutch.</strong> Five, not six, and not the six that were shown.</li>
-<li><strong>The area is chosen once at the top of Translations</strong>, and fill-the-gaps asks before it runs.</li>
-<li><strong>Support:</strong> where messages come from, who owns them, and that the reply is an email.</li>
-<li><strong>AI usage is a count with no limit.</strong></li>
-<li><strong>Assessments get the filters the recordings tab already has.</strong></li>
-<li><strong>The recording detail page opens for any recording</strong>, not only a broken one.</li>
-<li><strong>Changing a role is confirmed</strong>, and an empty block is not drawn at all.</li>
-<li><strong>The app version gate lives in Firebase</strong>, not in the main API.</li>
-<li><strong>Sign out exists.</strong></li>
-</ul>
+  <div class="meta">7 September 2026</div>
 </div>
 
 <h2>Five principles</h2>
@@ -223,13 +203,13 @@
 
 <h3 class="grp">Plan &amp; usage</h3>
 <p class="desc">The four limits every company has &mdash; people, admins, recordings per month, assessments per month &mdash; each shown as used against allowed, so you can see at a glance who is near the edge. All four are editable here, along with the subscription name and the licence expiry date.</p>
-<p class="desc"><strong>AI usage is a count, not a limit.</strong> There is no AI quota and nothing is capped. Show the number of AI reports this month and the change against last month, the same way the platform numbers on Home are shown. Never as "61 / 250".</p>
+<p class="desc"><strong>AI usage is a count, not a limit.</strong> There is no AI quota and nothing is capped. Show the number of AI reports this month and the change against last month, the same way the platform numbers on Home are shown.</p>
 <div class="explain"><span class="tag">Why this tab matters</span>
 <p>These limits apply to every company and are enforced on everything they do. Being able to read them and change them without going through a developer is the single most useful thing on the company page.</p></div>
 
 <h3 class="grp">People</h3>
 <p class="desc">Everyone in the company: name, role, when they were last seen, and whether they are still active. From here you can add someone, change their role, or remove them.</p>
-<p class="desc"><strong>Invitations that were sent but never accepted appear here too</strong>, marked when they have expired, each with <strong>resend, copy link and cancel</strong> &mdash; the same three the customer product already has. The invitations block only appears when there is at least one. When there are none it is not drawn at all: no heading, no "nothing here" line.</p>
+<p class="desc"><strong>Invitations that were sent but never accepted appear here too</strong>, marked when they have expired, each with <strong>resend, copy link and cancel</strong> &mdash; the same three the customer product already has. The invitations block only appears when there is at least one; when there are none it is not drawn at all.</p>
 
 <h3 class="grp">Devices</h3>
 <p class="desc">The hardware assigned to this company &mdash; serial, model, who has it, which sensors are on it.</p>
@@ -256,7 +236,7 @@
 <p class="purpose">Answer "what can this person reach, and why can't they do X" without asking a developer.</p>
 <p class="desc"><strong>Top:</strong> name, email, language, when the account was created, when they were last seen, verified or not.</p>
 <p class="desc"><strong>Memberships:</strong> one row per company they belong to, with the role they hold <em>in that company</em> and whether they have been deactivated there.</p>
-<p class="desc"><strong>Invitations:</strong> any invitation sent to this address that is still open or has expired, each with <strong>resend, copy link and cancel</strong>. <strong>Only shown when there is one</strong> &mdash; for the ordinary person who accepted long ago, the block is not drawn at all. No heading, no "no invitations on record" line.</p>
+<p class="desc"><strong>Invitations:</strong> any invitation sent to this address that is still open or has expired, each with <strong>resend, copy link and cancel</strong>. <strong>Only shown when there is one.</strong> For someone who accepted their invitation long ago the block is not drawn at all &mdash; no heading, no line saying there is nothing.</p>
 <p class="desc"><strong>Actions:</strong> send a password reset, change their role in a company, add them to another company, deactivate them.</p>
 <p class="desc"><strong>Changing a role is confirmed like every other consequential action.</strong> It decides what that person can do inside a customer's account and it is easy to hit by mistake in a dropdown. Name the person, the company, the old role and the new one, then apply.</p>
 <div class="explain"><span class="tag">The thing to get right</span>
@@ -280,7 +260,7 @@
 
 <h3 class="grp">Assessments</h3>
 <p class="desc"><strong>Columns:</strong> name, company, who created it, which type, when, and whether it failed or has been stuck part-finished.</p>
-<p class="desc"><strong>Filters:</strong> company, date range, assessment type (RAMP, MEC, RULA, REBA), and state &mdash; failed or stuck. The recordings tab has filters and this one must have them too; an assessment only has two failure states, so the list is shorter, not absent.</p>
+<p class="desc"><strong>Filters:</strong> company, date range, assessment type (RAMP, MEC, RULA, REBA), and state &mdash; failed or stuck. An assessment has only those two failure states, so the state filter is shorter here than on the recordings tab.</p>
 <p class="desc"><strong>Actions:</strong> try again, delete. On a single row and in bulk, the same as recordings.</p>
 
 <h3 class="grp">The detail view</h3>
@@ -327,7 +307,7 @@
 <div class="screen">
 <h3><span class="id">7.1</span>Files and automatic translation</h3>
 <p class="purpose">Get the words in and out in bulk.</p>
-<p class="desc"><strong>The languages are English, Swedish, German, Spanish and Dutch.</strong> Those five and no others &mdash; they are what the product actually ships. Danish, Norwegian and Polish do not exist anywhere in the product and must not appear.</p>
+<p class="desc"><strong>The languages are English, Swedish, German, Spanish and Dutch.</strong> Those five and no others &mdash; they are what the product ships.</p>
 <p class="desc"><strong>Pick the area once, at the top of the page.</strong> The words are split into three areas &mdash; web, customer panel, mobile app &mdash; each with its own set of keys from its own codebase. There is no file that holds all three. One selector at the top, and everything below it (the completeness bars, the table, upload, export, fill the gaps) works on that area. This is how the current admin panel already works.</p>
 <p class="desc">Upload the English file, fill the gaps in the other languages automatically, export a language back out. A completeness bar per language for the selected area.</p>
 <p class="desc"><strong>Fill the gaps asks first.</strong> It machine-translates into a live product and cannot be undone. The confirmation names the area, how many strings and which languages, then continues or cancels.</p>
@@ -393,7 +373,7 @@
 <p>Activity should be built alongside whichever actions ship, not bolted on afterwards.</p></div>
 
 <footer>
-Wergonic Admin &mdash; Product Definition &middot; Version 2 &middot; 7 September 2026
+Wergonic Admin &mdash; Product Definition &middot; 7 September 2026
 </footer>
 
 </body>
