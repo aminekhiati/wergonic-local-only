@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Wergonic &mdash; Web App Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #670DD6; --ink: #181826; --slate: #5A6478; --muted: #98A1B3;
+    --line: #E9EBF0; --tint: #F4EFFD;
+    --amber: #B7791F; --amber-bg: #FFF8EC; --amber-line: #F2DFB8;
+    --red: #B42318; --red-bg: #FEF3F2; --red-line: #FDA29B;
+    --green: #1B7F5A; --green-bg: #ECFAF4; --green-line: #A9E0C9;
+    --blue: #17539B; --blue-bg: #EFF6FE; --blue-line: #B3D3F5;
+  }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 15mm 14mm 13mm 14mm; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink); font-size: 9.6pt; line-height: 1.46;
+    -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+  }
+  h1, h2, h3 { font-family: "Hanken Grotesk", "Inter", sans-serif; margin: 0; }
+
+  .masthead { border-left: 5px solid var(--purple); padding: 4px 0 13px 16px; margin-bottom: 14px; }
+  .eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 6px; }
+  h1 { font-size: 25pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; }
+  .lede { color: var(--slate); font-size: 9.8pt; max-width: 174mm; margin-top: 8px; }
+  .meta { color: var(--muted); font-size: 8.4pt; margin-top: 10px; line-height: 1.55; }
+
+  h2 { font-size: 13pt; font-weight: 700; letter-spacing: -0.01em; margin: 24px 0 3px;
+       padding-bottom: 6px; border-bottom: 1.5px solid var(--line); break-after: avoid; }
+  h2 .cnt { font-family: "Inter", sans-serif; font-size: 8pt; font-weight: 600; color: var(--muted); margin-left: 8px; vertical-align: 2px; }
+  .sectionnote { color: var(--slate); font-size: 9.2pt; margin: 7px 0 2px; break-after: avoid; }
+
+  .item { margin-top: 11px; break-inside: avoid; }
+  .item h3 { font-size: 10pt; font-weight: 700; color: var(--ink); margin: 0 0 3px; break-after: avoid; line-height: 1.3; }
+  .item h3 .id { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 7.8pt; font-weight: 500;
+                 color: var(--purple); background: var(--tint); padding: 2px 6px; border-radius: 4px;
+                 margin-right: 7px; vertical-align: 1.5px; }
+  .badge { font-size: 6.8pt; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+           padding: 1.5px 5px; border-radius: 4px; margin-left: 6px; vertical-align: 2px; white-space: nowrap; }
+  .badge.p0 { color: var(--red); background: var(--red-bg); box-shadow: inset 0 0 0 1px var(--red-line); }
+  .badge.p1 { color: var(--amber); background: var(--amber-bg); box-shadow: inset 0 0 0 1px var(--amber-line); }
+  .badge.p2 { color: var(--slate); background: #F1F2F6; box-shadow: inset 0 0 0 1px #E2E4EA; }
+  .badge.sec { color: var(--blue); background: var(--blue-bg); box-shadow: inset 0 0 0 1px var(--blue-line); }
+
+  .desc { margin: 0; color: var(--slate); }
+  .desc + .desc { margin-top: 4px; }
+  .where { margin: 4px 0 0; font-family: "JetBrains Mono", ui-monospace, monospace;
+           font-size: 7.8pt; color: var(--muted); }
+  code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8.3pt;
+         color: var(--ink); background: #F4F5F8; padding: 1px 4px; border-radius: 3px; }
+
+  .box { margin-top: 12px; border: 1px solid var(--line); border-radius: 8px;
+         background: #FAFAFC; padding: 12px 16px; break-inside: avoid; }
+  .box h3 { margin: 0 0 4px; font-size: 10.5pt; }
+  .box p { margin: 4px 0 0; color: var(--slate); font-size: 9.2pt; }
+  .box .tag { font-size: 7.6pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .box.warn { border-color: var(--amber-line); background: var(--amber-bg); }
+  .box.warn h3, .box.warn .tag { color: var(--amber); }
+  .box.bad { border-color: var(--red-line); background: var(--red-bg); }
+  .box.bad h3, .box.bad .tag { color: var(--red); }
+  .box.info { border-color: var(--blue-line); background: var(--blue-bg); }
+  .box.info h3, .box.info .tag { color: var(--blue); }
+
+  ul { margin: 5px 0 0; padding-left: 17px; }
+  li { color: var(--slate); margin: 3px 0; font-size: 9.2pt; }
+  li strong { color: var(--ink); font-weight: 600; }
+
+  .kpis { display: flex; gap: 9px; margin: 13px 0 4px; }
+  .kpi { flex: 1; border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; background: #FAFAFC; }
+  .kpi .n { font-family: "Hanken Grotesk", sans-serif; font-size: 19pt; font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+  .kpi .l { font-size: 7.2pt; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
+  .kpi.red .n { color: var(--red); } .kpi.amber .n { color: var(--amber); }
+  .kpi.grey .n { color: var(--slate); } .kpi.purple .n { color: var(--purple); }
+  .kpi.blue .n { color: var(--blue); }
+
+  footer { margin-top: 24px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.4pt; }
+  .pb { break-before: page; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="eyebrow">Wergonic &middot; Client Panel + Backend &middot; Code Audit</div>
+  <h1>Full Audit &mdash; Things To Check</h1>
+  <p class="lede">A fresh read of the whole web product: the Django backend (report maths, sessions, scheduled jobs, access control, deployment) and the client panel (reports and exports, data fetching, auth, charts). Every item below is something found in the code that looks wrong, risky, or needs a decision. <strong>Nothing here has been reproduced in the running app.</strong> Treat each one as a claim to verify, not a fact. Some will turn out to be intentional and some will not be worth changing &mdash; say so and we close them.</p>
+  <div class="meta">
+    7 September 2026 &middot; audited <code>wergonic-django-backend</code> <code>dev</code> <code>f5eee68</code> and <code>wergonic-web-apps</code> <code>dev</code> <code>674ad24c</code> (both 6 Sep 2026)<br />
+    Scope: 286 backend Python files (migrations and tests excluded), 1,853 client-panel TypeScript files, the shared <code>packages/ui</code>, and the DigitalOcean app specs.<br />
+    Not in scope: the admin panel (on hold) and the <code>/prototype</code> folder.<br />
+    <strong>P0</strong> = wrong or lost data a client could act on &middot; <strong>P1</strong> = wrong behaviour a user would notice &middot; <strong>P2</strong> = smaller, cleanup, or a decision needed &middot; <strong>Access</strong> = nobody hits it by using the product; it needs a deliberately crafted request
+  </div>
+</div>
+
+<div class="kpis">
+  <div class="kpi red"><div class="n">5</div><div class="l">P0</div></div>
+  <div class="kpi amber"><div class="n">21</div><div class="l">P1</div></div>
+  <div class="kpi grey"><div class="n">32</div><div class="l">P2</div></div>
+  <div class="kpi blue"><div class="n">4</div><div class="l">Access</div></div>
+  <div class="kpi purple"><div class="n">7</div><div class="l">Areas</div></div>
+</div>
+
+<div class="box bad">
+  <span class="tag">Read this first</span>
+  <h3>Three things stand out above everything else.</h3>
+  <p><strong>1. Nothing runs cron, in production or in staging.</strong> Each app spec has three components: a migrate job, the web service and a Celery worker. None of them starts <code>cron</code>, and <code>cron-entrypoint.sh</code> is never used. So the four jobs listed in <code>CRONJOBS</code> never fire &mdash; including <em>session_check</em>, which ends a session that has run past its time limit, and <em>recover_stuck_assessments</em>, which unsticks a RAMP assessment left at "in progress" after a worker restart. Both were written to fix real problems.</p>
+  <p><strong>2. Staging runs with DEBUG on.</strong> <code>DEBUG: 'True'</code> in the staging app spec. Anyone who triggers an error on <code>staging.cloud.wergonic.com</code> gets a full Django error page with the traceback, the settings and the SQL. And because Sentry is only started when DEBUG is off, <strong>no staging error has ever reached Sentry</strong> &mdash; even though we set up Sentry alerting for it. Django also keeps every SQL query in memory while DEBUG is on, so the process grows all day.</p>
+  <p><strong>3. A task report can be built from a different task's numbers.</strong> The PDF export waits on <code>isLoading</code>, but React Query is configured globally with <code>keepPreviousData</code>, so when the task changes <code>isLoading</code> stays false and the previous task's data is still what is in hand. The export then fires on a 100&nbsp;ms timer. Heart rate, temperature, TNO and per-task stats are not waited on at all.</p>
+</div>
+
+<h2>A &middot; Report numbers<span class="cnt">10 items</span></h2>
+<p class="sectionnote">These change the values that end up in front of the client.</p>
+
+<div class="item">
+  <h3><span class="id">A1</span>A whole limb's angles are sign-flipped when the average leans backward<span class="badge p0">P0</span></h3>
+  <p class="desc"><code>detect_and_correct_inversion</code> takes the mean of the forward-bending series and, if it is below &minus;5&deg;, negates <em>every</em> value. It runs on head and trunk before the posture bands are counted. A worker who genuinely spends most of a task leaning back has all of that reported as bending forward. There is no log line, no flag on the session, and nothing in the report that says it happened.</p>
+  <p class="where">user_sessions/calculations/correct_inversion.py + risk_assessment_posture.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A2</span>Missing angles are counted as 0&deg;, and angles are cut off rather than rounded<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>_to_int</code> does <code>to_numeric(errors="coerce").fillna(0).astype(int)</code>. Two things follow from that one line. Any row whose angle could not be read becomes a perfect neutral 0&deg; and lands in the "0&ndash;10&deg;" band instead of being dropped. And <code>astype(int)</code> truncates toward zero, so 10.9&deg; counts as 10&deg; and &minus;10.9&deg; counts as &minus;10&deg; &mdash; the rounding goes in opposite directions above and below zero, which moves values across band boundaries.</p>
+  <p class="where">user_sessions/calculations/risk_assessment_posture.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A3</span>Bar chart percentages are cut to whole numbers, then averaged instead of added<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>calculate_bar_data</code> works out each angle's share of the time, casts it with <code>int()</code> (0.9&nbsp;% becomes 0), then casts the angle itself to an integer &mdash; which merges 10.2&deg; and 10.7&deg; into one label. The two shares for that merged label are then <em>averaged</em>, not summed. The bars under-report and the chart does not add up to 100&nbsp;%. <code>calculate_bar_speed_of_mouvement</code> has the identical code.</p>
+  <p class="where">user_sessions/calculations/stats.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A4</span>The "Total" row of the task table is measured over different data than the rows above it<span class="badge p1">P1</span></h3>
+  <p class="desc">Each task row is built from readings inside the task window and inside the session's own start and end. The Total row calls <code>calculate_percentiles</code>, which is raw SQL filtered on <code>measurement_id</code> alone &mdash; no session bounds, no task windows. So Total can include readings from before the session started or after it ended, and it is not the total of what is listed above it. Its duration column, meanwhile, <em>is</em> the sum of the task durations.</p>
+  <p class="where">user_sessions/calculations/stats.py &mdash; calculate_tasks_percentiles</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A5</span>The same session percentiles are calculated twice, two different ways<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>calculate_percentiles</code> uses Postgres <code>percentile_cont</code> with no session bounds. <code>calculate_session_total_percentiles</code> pulls every row into Python and uses <code>numpy.percentile</code>, bounded by the session. They are stored in different fields and can disagree for the same session and the same limb. The numpy one also loads the whole measurement into memory &mdash; millions of rows for a long recording.</p>
+  <p class="where">user_sessions/calculations/stats.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A6</span>Wrist velocity percentiles read a different column than the wrist velocity charts<span class="badge p1">P1</span></h3>
+  <p class="desc">The bar and line charts switch to <code>ref_gyro_angular_velocity</code> when the limb is the hand. The percentile calculations always read <code>angular_velocity</code>. So the wrist's median and 90th-percentile velocity come from one signal while the chart beside them is drawn from another.</p>
+  <p class="where">user_sessions/calculations/stats.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A7</span>Hand-distance zone times are scaled up to the full session length<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>calculate_wrist_distance_line_data</code> measures green / yellow / red time from the samples it has, converts to percentages, then multiplies by the whole session duration. If the forearm sensor only recorded 20 minutes of an 8-hour session, the report still shows zone times adding up to 8 hours. Confirm whether that projection is the intended presentation.</p>
+  <p class="where">user_sessions/calculations/stats.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A8</span>Negative velocities fall outside every bin but stay in the denominator<span class="badge p2">P2</span></h3>
+  <p class="desc">Movement bins start at 0 and the denominator is the total time of all non-null velocity rows. Any negative angular velocity counts toward the denominator but into no bin, so the bars quietly sum to less than 100&nbsp;%. Check first whether negative values can occur at all &mdash; if they cannot, this is nothing.</p>
+  <p class="where">user_sessions/calculations/risk_assessment_posture.py &mdash; _vel_rows</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A9</span>Head at exactly &minus;5&deg; is counted in two places<span class="badge p2">P2</span></h3>
+  <p class="desc">The distribution puts &minus;5&deg; in the "&minus;5&ndash;0&deg;" band (<code>&gt;= -5</code>), while the risk figure "Head bending backward &le; &minus;5&deg;" includes it (<code>&lt;= -5</code>). Angles are stored as whole degrees, so &minus;5 is a value that really occurs. Small, but the two numbers on the same page disagree by whatever time sits at exactly that angle.</p>
+  <p class="where">user_sessions/calculations/risk_assessment_posture.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">A10</span>The RAMP 0&ndash;7 score averages two unrelated percentages<span class="badge p2">P2</span></h3>
+  <p class="desc">For questions 1.1 and 1.3 the score is <code>int((mean of the two percentages / 100) * 7)</code> &mdash; the forward-bending share and the side-bending share averaged together, then truncated. That is a different number from the RAMP verdict itself, which comes from <code>calculate_postures_1</code>. Confirm what this score is used for and whether averaging is what it should do.</p>
+  <p class="where">ramp/calculations/ramp_calculator.py</p>
+</div>
+
+<h2 class="pb">B &middot; Scheduled jobs &amp; session data<span class="cnt">11 items</span></h2>
+<p class="sectionnote">Backend work that runs on its own, and the places where session data can be lost or mangled.</p>
+
+<div class="item">
+  <h3><span class="id">B1</span>No cron component exists, so four scheduled jobs never run<span class="badge p0">P0</span></h3>
+  <p class="desc">The production and staging app specs each contain a migrate job, the web service and a Celery worker &mdash; nothing that runs <code>cron</code>, and nothing that uses <code>cron-entrypoint.sh</code>. The <code>CRONJOBS</code> block in settings is therefore dead configuration. The two that matter: <strong>session_check</strong> (ends a session that has passed its <code>max_duration_minutes</code>) and <strong>recover_stuck_assessments</strong> (marks a RAMP assessment that has been "in progress" for over an hour as failed so it can be retried). Check what actually happens today to a session nobody stopped, and to an assessment whose worker was killed mid-run.</p>
+  <p class="where">.do/app.production.yaml, .do/app.staging.yaml, core/settings.py &mdash; CRONJOBS</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B2</span>The in-process scheduler starts once per web instance, and production scales to three<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>SchedulerConfig.ready()</code> calls <code>start_scheduler()</code>, so every web process gets its own APScheduler. The production service is set to <code>min_instance_count: 1, max_instance_count: 3</code>. Under load, <em>archive_sessions</em>, <em>session_status_check</em> and the Sentry poller all run up to three times at once. The <code>threading.Lock</code> guards only protect one process, so they do not help here. Duplicate Google Chat alerts are the visible symptom; the archive job is the one worth checking properly.</p>
+  <p class="where">scheduler/apps.py + scheduler/jobs.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B3</span>Two scheduling systems are configured for overlapping jobs<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>CRONJOBS</code> (django-crontab) and <code>start_scheduler</code> (APScheduler) both schedule <em>session_status_check</em> and <em>archive_sessions</em>, at different intervals &mdash; every minute versus every five hours, and midnight in both. Only APScheduler currently runs (see B1). Pick one system and delete the other, so what is scheduled matches what happens.</p>
+  <p class="where">core/settings.py + scheduler/jobs.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B4</span>An Excel import in "override" mode deletes the organisation's entire work-cycle tree<span class="badge p0">P0</span></h3>
+  <p class="desc"><code>safe_delete_all_entities</code> is <code>Factory.objects.filter(organization=...).delete()</code>. Every foreign key down the chain cascades, so it removes all lines, workstations, operators, work cycles and tasks &mdash; and because <code>WorkCycleEvent.task</code> also cascades, <strong>the work-cycle events of past recorded sessions go with them</strong>. Old sessions lose their task timeline permanently. Confirm what "override" is meant to replace, and whether the UI warns about it.</p>
+  <p class="where">workcycles/views.py &mdash; ImportWorkCyclesExcelView.safe_delete_all_entities</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B5</span>The two work-cycle importers read the time column in different units<span class="badge p1">P1</span></h3>
+  <p class="desc">Task duration is stored in whole seconds. The Excel importer does <code>float(row["Time"]) * 60</code>, so it treats the column as minutes. The Avix JSON importer does <code>int(round(float(time)))</code>, so it treats the same idea as seconds. One of the two produces durations 60&times; off. Check what unit Avix actually exports.</p>
+  <p class="where">workcycles/views.py &mdash; ImportWorkCyclesView vs ImportWorkCyclesExcelView</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B6</span>Editing part of a work-cycle event returns a 500<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>WorkCycleEventSerializer.validate</code> reads <code>data['start_time']</code> and <code>data['end_time']</code> directly. On a PATCH that sends only one of them, the other key is not in the validated data and the lookup raises <code>KeyError</code> &mdash; which surfaces as a 500, not a validation error.</p>
+  <p class="where">workcycles/serializers.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B7</span>Removing a team member can delete the account and their worker profiles outright<span class="badge p1">P1</span></h3>
+  <p class="desc">The bulk delete strips the membership, then &mdash; if that was the person's only membership &mdash; deletes every <code>WorkerProfile</code> they own and the user record itself, including from Firebase. Sessions survive (both foreign keys are <code>SET_NULL</code>), but they come back with no worker and no recorder attached. Check whether "remove from team" is supposed to be a permanent account deletion, or whether it should just end the membership.</p>
+  <p class="where">organizations/views/org_user/list_create_delete.py &mdash; delete()</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B8</span>Searching the team list by name may return a 500<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>search_fields</code> starts with <code>"=id"</code>, which DRF turns into <code>id__iexact</code>. Django prepares that lookup by converting the search term to an integer, and a name is not one. Try searching the team page for a person's name and see what comes back; if it errors, dropping <code>"=id"</code> (or moving it behind a numeric check) is the fix.</p>
+  <p class="where">organizations/views/org_user/list_create_delete.py &mdash; OrganizationUserView</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B9</span>Merging sessions picks an assessment type at random when they disagree<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>merged_assessment_type = list(assessment_types)[0]</code> takes an arbitrary element out of a Python set. Merge the same two sessions twice and you can get a different answer. Decide the rule: first session wins, or refuse the merge when they differ.</p>
+  <p class="where">user_sessions/views/session_views.py &mdash; MergeSessions.merge_sessions</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B10</span>The import success message counts rows attempted, not tasks created<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>bulk_create(..., ignore_conflicts=True)</code> returns the objects it was handed, including the ones the database skipped. So "imported successfully (N tasks processed)" reports the file's row count, and a re-import of a file that changes nothing still says it processed everything.</p>
+  <p class="where">workcycles/views.py &mdash; ImportWorkCyclesExcelView</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">B11</span>Every authenticated request writes a row to the users table<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>FirebaseAuthentication</code> updates <code>last_seen</code> on every single API call. Loading one dashboard page is a dozen writes to the same row. It also uses <code>datetime.now()</code> rather than <code>timezone.now()</code>, which is a naive timestamp in a project that has time zones enabled. Consider only writing it when the stored value is more than a few minutes old.</p>
+  <p class="where">firebase_auth/authentication.py</p>
+</div>
+
+<h2 class="pb">C &middot; Access &amp; organisation scoping<span class="cnt">8 items</span></h2>
+<p class="sectionnote">None of these are reached by using the product normally &mdash; our own apps never send the requests involved. They are here so we can decide priority, not because a customer is about to hit them.</p>
+
+<div class="item">
+  <h3><span class="id">C1</span>Work-cycle writes accept a parent from any organisation<span class="badge sec">Access</span></h3>
+  <p class="desc">Reading factories, lines, workstations, operators, work cycles and tasks is scoped to the caller's organisation. Writing is not: the serializers accept the parent id from an unrestricted queryset (<code>Operator.objects.all()</code>, <code>TaskModel.objects.all()</code>, and plain model fields for the rest). So a crafted request can hang a new line under another company's factory, or move one of ours into their tree. <code>FactorySerializer</code> also exposes <code>organization</code> as a writable field on update.</p>
+  <p class="where">workcycles/serializers.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C2</span>The websocket endpoint can change any session by id<span class="badge sec">Access</span></h3>
+  <p class="desc"><code>SessionStatusConsumer.status_message</code> takes an id off the socket message, loads that session and writes its status and device list &mdash; with no check that it belongs to the caller's organisation. It also keys the room off <code>user.organization</code>, the legacy single field, rather than the active organisation. The middleware in front of it is commented "not used, replaced by firebase firestore", but it is still wired up in <code>core/asgi.py</code>. If nothing uses it any more, deleting the whole websocket path is the cleanest answer.</p>
+  <p class="where">user_sessions/consumers.py + core/asgi.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C3</span>Bulk team delete accepts any user id<span class="badge sec">Access</span></h3>
+  <p class="desc">The endpoint checks that the <em>caller</em> is an admin, then loops over whatever ids were sent without checking the targets belong to the organisation. Removing the membership is harmless in that case (there is none), but the next step deletes any user who ends up with no memberships at all &mdash; which includes another organisation's pending invitee or someone mid-way through referral registration.</p>
+  <p class="where">organizations/views/org_user/list_create_delete.py &mdash; delete()</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C4</span>Role checks ask "in any organisation", not "in this one"<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>LevelOnePermission</code> and <code>LevelTwoPermission</code> pass if the user holds the role in <em>any</em> live membership. Someone who is an org admin at company A and an ergonomist at company B satisfies the admin check while working in B. Most views narrow it again with an organisation-scoped queryset, so the practical effect is limited &mdash; but the permission itself is not saying what it reads as. The client panel has the mirror of this: see E6.</p>
+  <p class="where">users/permissions/level_1.py, level_2.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C5</span>Any signed-in user can list every organisation on the platform<span class="badge sec">Access</span></h3>
+  <p class="desc"><code>ListAllOrganizationNames</code> is <code>IsAuthenticated</code> and returns the names of every active organisation. Any customer account can read our full client list. Check what the endpoint is for &mdash; if it exists for a sign-up or request-access flow, it probably belongs behind a search term with a minimum length, or on the unauthenticated side with a rate limit.</p>
+  <p class="where">organizations/views/organizationView.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C6</span>The API documentation and the OpenAPI schema are public<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>/api/v1/docs/</code> and <code>/api/v1/openapi.json</code> are served with <code>AllowAny</code> and <code>public=True</code>, in every environment. Anyone can browse the full surface of the API. Confirm whether that is deliberate; if not, the usual answer is to serve them on staging only.</p>
+  <p class="where">core/urls.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C7</span>A session can be recorded against any user id<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>StartSession.post</code> does <code>User.objects.get(id=ergonomist_id)</code> with no organisation check, so the "recorded by" field can be set to somebody outside the organisation. The worker is checked properly two lines later. If that id does not exist the exception is swallowed by the outer handler and comes back as a 500 rather than a 400.</p>
+  <p class="where">user_sessions/views/session_views.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">C8</span>Every view is public by default<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>DEFAULT_PERMISSION_CLASSES</code> is <code>AllowAny</code>, so a view is only protected if it sets <code>permission_classes</code> itself. Today they all do except the sign-in-link and register endpoints, which is correct &mdash; but the default means the next view someone adds is open unless they remember. Flipping the default to <code>IsAuthenticated</code> and marking the three public views explicitly removes the whole class of mistake.</p>
+  <p class="where">core/settings.py &mdash; REST_FRAMEWORK</p>
+</div>
+
+<h2 class="pb">D &middot; Client panel &mdash; reports &amp; exports<span class="cnt">8 items</span></h2>
+<p class="sectionnote">The PDF and Excel exports a client actually receives.</p>
+
+<div class="item">
+  <h3><span class="id">D1</span>A task report can contain the previous task's numbers<span class="badge p0">P0</span></h3>
+  <p class="desc">The export waits on <code>isReducedStatsLoading</code>. React Query is configured globally with <code>keepPreviousData: true</code>, so on a task switch that flag stays false while the old data is still being served &mdash; <code>isFetching</code> is what turns true. The export then runs on a <code>setTimeout(..., 100)</code>. Pick a task, generate its report, and check the numbers against the on-screen values for that task.</p>
+  <p class="where">features/sessions/components/SingleSessionReportExportButton/ReportExportButton/ReportExportButton.tsx</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">D2</span>Only the posture query is waited on; four others are not<span class="badge p1">P1</span></h3>
+  <p class="desc">Same export. Heart rate, temperature, TNO and per-task stats are read straight out of <code>useTabData2</code> with no loading check at all. On a slow connection the PDF can be built before any of them have arrived, and those sections come out empty with no error.</p>
+  <p class="where">ReportExportButton.tsx + features/sessions/hooks/useTabData.tsx</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">D3</span>The heart-rate page and the assessment summary never appear in the session PDF<span class="badge p1">P1</span></h3>
+  <p class="desc">The template gates its pages on <code>includedSections["hr_stats"]</code> and <code>includedSections["assessment_summary"]</code>. The object the export builds contains neither key, so both are always false. It does contain <code>risk_level_indicators</code> and <code>intervention_suggestions</code>, which nothing reads. Check what the exported PDF is supposed to contain and line the two lists up.</p>
+  <p class="where">ReportExportButton.tsx + features/sessions/components/ResultsPdfTemplate/ResultsPdfTemplate.tsx</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">D4</span>The assessment summary page has no data source, and its labels match nothing<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>AssessmentResultPage</code> renders from a <code>groupedRAMPData</code> prop that no caller passes. The only function that could build it, <code>transformSessionStatsToGroupedAssessmentData</code>, is exported but never called anywhere in the repo. And if it were called, its three velocity groups would come out empty: it filters for labels <code>"&gt; 60&deg;/s"</code>, <code>"30&deg;/s - 60&deg;/s"</code>, <code>"&lt; 30&deg;/s"</code>, while the backend sends <code>"&gt; 30&deg;/s"</code>, <code>"15&deg;/s - 30&deg;/s"</code>, <code>"0&deg;/s - 15&deg;/s"</code> for arms and a different set again for the wrist. Decide whether this page is wanted; if it is, the labels need fixing too.</p>
+  <p class="where">features/sessions/utils/PdfAssessmentFormatter.ts</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">D5</span>The exported PDF has no file extension and ignores the app's own naming rules<span class="badge p2">P2</span></h3>
+  <p class="desc">The download name is built inline as <code>measurement_&lt;id&gt;_&lt;datetime&gt;_&lt;worker&gt;</code>, with no <code>.pdf</code> on the end. <code>src/utils/fileNames.ts</code> exists precisely to keep export names consistent with the backend's, and this export does not use it. Download one and see what the file is called on disk.</p>
+  <p class="where">ReportExportButton.tsx vs utils/fileNames.ts</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">D6</span>The comparison PDF is rendered on page load, not on click<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>DownloadReportsButton</code> calls <code>usePDF</code> during render, so opening the multi-session comparison page builds the whole PDF whether or not anyone wants it &mdash; and rebuilds it every time the data changes. It also passes <code>data!</code>, which is undefined on the first render.</p>
+  <p class="where">pages/dashboard/MultiSessionDetailsPage/DownloadReportsButton/DownloadReportsButton.tsx</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">D7</span>Two report exports, one honours the saved template and one ignores it<span class="badge p2">P2</span></h3>
+  <p class="desc">The "generate report" flow lets a user pick a saved report template and reads it back before building the report. The PDF/Excel export button next to it hardcodes every section to <code>true</code>. Whichever behaviour is right, having both is confusing &mdash; a user who unticks sections in their template still gets them in the PDF.</p>
+  <p class="where">ReportExportButton.tsx vs FinishedSessionSettingsButton/GenerateReportButton</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">D8</span>The comparison filename is stamped twice<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>comparisonName</code> and <code>comparisonPdf</code> are each given their own <code>new Date()</code>. Only the date is used, so the two can only differ if the page is open across midnight. Listed for completeness &mdash; probably not worth changing.</p>
+  <p class="where">DownloadReportsButton.tsx</p>
+</div>
+
+<h2 class="pb">E &middot; Client panel &mdash; behaviour<span class="cnt">7 items</span></h2>
+
+<div class="item">
+  <h3><span class="id">E1</span>Any 401 signs the user out<span class="badge p1">P1</span></h3>
+  <p class="desc">The response interceptor calls <code>forceSignOut</code> on every 401, whatever the reason. The backend answers 401 for a deactivated membership (which is what this was built for) but also for an expired or malformed token and for "authentication service unavailable" &mdash; which is what it returns when Firebase itself is having a bad minute. In that case every signed-in user is thrown out to the login page. Check whether the sign-out should be limited to the <code>membership_revoked</code> code.</p>
+  <p class="where">services/axios.ts + services/forcedSignOut.ts</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E2</span>The error boundary resets itself while rendering<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>ErrorFallback</code> calls <code>resetErrorBoundary()</code> in its own render body and then redirects to the error page. Resetting means the children are retried, so an error that happens every time will throw, reset, throw again. Worth reproducing with a component that always fails and seeing whether the page loops or settles.</p>
+  <p class="where">providers/GlobalAppProvider.tsx</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E3</span>Line charts average their buckets, so short peaks never show<span class="badge p1">P1</span></h3>
+  <p class="desc"><code>downsample</code> splits the series into as many buckets as there are target points and plots the mean of each. A brief extreme posture inside a bucket is averaged away and never reaches the screen. It also takes the first timestamp of the bucket as the x value, so points drift left. If the chart is meant to show worst cases, min/max-preserving downsampling is the usual answer.</p>
+  <p class="where">utils/downsampling/algorithm.ts</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E4</span>The notifications listener subscribes before it knows who the user is<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>useSubscribeToNotifications</code> runs its effect with no guard, so on first render it listens on <code>organizations/undefined/users/undefined/notifications</code>. There is also no error callback on <code>onSnapshot</code>, so a permission failure goes nowhere. Add the guard and an error handler.</p>
+  <p class="where">features/dashboard/.../NotificationsButton/NotificationsButton.hooks.ts</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E5</span>Errors are only ever a three-second snackbar<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>autoHideDuration={3000}</code> for everything, success and failure alike, with no error state left on the page afterwards. A failed save, a failed export and a failed load all vanish in three seconds with nothing to go back to. Consider keeping error snackbars until dismissed.</p>
+  <p class="where">providers/NotistackProvider.tsx</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E6</span>Write permission falls back to the account's global role<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>useVerifyWritePermission</code> reads <code>consulting_role</code>, and when that is missing falls back to <code>role</code> &mdash; which is the account-level field, not the role in the organisation being viewed. The team list deliberately does the opposite and shows a dash rather than another client's role. Worth making the two consistent. Separately: this hook only grants write to admins, while the backend lets ergonomists write &mdash; confirm which is intended.</p>
+  <p class="where">hooks/permissions.ts</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">E7</span>Session status is written from the socket without checking the organisation<span class="badge p2">P2</span></h3>
+  <p class="desc">Client-panel side of C2. Nothing in the client panel opens that websocket any more &mdash; live sessions come from Firestore. If that is settled, the socket route, the consumer and the middleware can all go.</p>
+  <p class="where">no client-panel caller found; server side in user_sessions/consumers.py</p>
+</div>
+
+<h2 class="pb">F &middot; Configuration &amp; deployment<span class="cnt">8 items</span></h2>
+
+<div class="item">
+  <h3><span class="id">F1</span>Staging runs with DEBUG on, so it reports nothing to Sentry<span class="badge p0">P0</span></h3>
+  <p class="desc"><code>DEBUG: 'True'</code> in the staging app spec. Three consequences. Django serves full error pages with traceback, settings and SQL to anyone who triggers a 500 on the public staging host. Sentry is initialised inside <code>if not DEBUG</code>, so staging errors have never been reported &mdash; despite <code>environment = "staging"</code> being set up for exactly that. And Django accumulates every SQL query in memory for the life of the process.</p>
+  <p class="where">.do/app.staging.yaml + core/settings.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F2</span>None of Django's HTTPS and cookie settings are set<span class="badge p1">P1</span></h3>
+  <p class="desc">No <code>SECURE_SSL_REDIRECT</code>, <code>SESSION_COOKIE_SECURE</code>, <code>CSRF_COOKIE_SECURE</code> or HSTS anywhere in settings, while <code>/api/v1/admin/</code> is served publicly and uses session cookies. <code>SECURE_PROXY_SSL_HEADER</code> is set, so Django knows the request came in over TLS &mdash; the cookies just are not marked secure.</p>
+  <p class="where">core/settings.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F3</span><code>ALLOWED_HOSTS = ["*"]</code>, and staging allows every CORS origin<span class="badge p2">P2</span></h3>
+  <p class="desc">Hosts are unrestricted in every environment. On anything that is not PROD, <code>CORS_ALLOW_ALL_ORIGINS = True</code> &mdash; so any website can make browser calls to the staging API with the caller's credentials. Staging holds real-shaped data.</p>
+  <p class="where">core/settings.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F4</span>Throttling is set high enough to have no effect<span class="badge p2">P2</span></h3>
+  <p class="desc">1,000 requests per minute for anonymous callers and 2,000 for authenticated ones. The public endpoints that matter &mdash; password reset, sign-in link, invitation lookup by token &mdash; are all covered by the anonymous rate. The <code>custom_post</code> scope of 10/minute exists but check where it is actually applied.</p>
+  <p class="where">core/settings.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F5</span>A local checkout points at the staging database by default<span class="badge p1">P1</span></h3>
+  <p class="desc">The database block is "PROD or staging" &mdash; anything that is not <code>ENVIRONMENT=PROD</code> uses the <code>STAGING_DATABASE_*</code> credentials. So running the backend locally connects to the shared staging database, and a stray migration or management command lands there. A local Postgres should be the default and staging should be opt-in.</p>
+  <p class="where">core/settings.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F6</span>The health endpoint returns the raw database error<span class="badge p2">P2</span></h3>
+  <p class="desc">On failure it responds with <code>{"detail": str(exc)}</code> to an unauthenticated caller. A psycopg error string can carry the host, the database name and the user. Log the detail, return only the status.</p>
+  <p class="where">core/health.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F7</span>The Dockerfile does not run <code>entrypoint.sh</code><span class="badge p2">P2</span></h3>
+  <p class="desc"><code>entrypoint.sh</code> starts Daphne with <code>--proxy-headers</code> and tuned ping timeouts; the Dockerfile's <code>CMD</code> starts a plain Daphne with none of that. Confirm which one DigitalOcean actually runs, then delete the one that does not. Related to B1: <code>cron-entrypoint.sh</code> is not run by anything either.</p>
+  <p class="where">Dockerfile, entrypoint.sh, cron-entrypoint.sh</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">F8</span>Channels is configured with an in-memory layer<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>InMemoryChannelLayer</code> is per-process, so nothing published on one web instance reaches a socket held by another. With autoscaling up to three, the websocket path cannot work reliably. If C2/E7 end in deleting the websocket, this goes with it &mdash; along with the <code>channels</code> dependency.</p>
+  <p class="where">core/settings.py + core/asgi.py</p>
+</div>
+
+<h2 class="pb">G &middot; Cleanup &amp; dead code<span class="cnt">10 items</span></h2>
+
+<div class="item">
+  <h3><span class="id">G1</span><code>pie_stats_swapped.py</code> &mdash; 661 lines, deprecated, imported nowhere<span class="badge p2">P2</span></h3>
+  <p class="desc">A near-copy of <code>pie_stats.py</code> with its own header saying it was merged into the other one and is kept "for backwards compatibility". Nothing imports it. It also rounds differently from the file that replaced it, so anyone who does import it by accident gets different numbers. Delete it.</p>
+  <p class="where">user_sessions/calculations/pie_stats_swapped.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">G2</span><code>useFirestoreListener</code> is unused &mdash; and leaks a listener when it errors<span class="badge p2">P2</span></h3>
+  <p class="desc">No component calls it. If it were used, its error path schedules <code>setTimeout(subscribe, 3000)</code> with no way to cancel, so a component unmounted between the error and the retry ends up with a Firestore listener nobody can unsubscribe, retrying forever. Delete the file.</p>
+  <p class="where">hooks/useFirestoreListener.ts</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">G3</span>React Query Devtools is still rendered and still a runtime dependency<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>&lt;ReactQueryDevtools /&gt;</code> is rendered unconditionally in the global provider, and <code>@tanstack/react-query-devtools</code> sits in <code>dependencies</code> rather than <code>devDependencies</code>. The component no-ops in a production build, but the package is still shipped. This one has been on the list for a while.</p>
+  <p class="where">providers/GlobalAppProvider.tsx + package.json</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">G4</span>Two declared dependencies are never imported<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>file-saver</code> and <code>html-react-parser</code> appear in the client panel's dependencies with no import anywhere in <code>apps/client-panel</code> or <code>packages/ui</code>. <code>@types/file-saver</code> can go with them.</p>
+  <p class="where">apps/client-panel/package.json</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">G5</span><code>logging.basicConfig</code> at import time overrides the project's logging config<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>stats.py</code> calls <code>logging.basicConfig(level=INFO, format=...)</code> when it is imported, which reconfigures the root logger for the whole process and undoes the structured setup in settings. It also uses the bare <code>logging.info</code> rather than a named logger.</p>
+  <p class="where">user_sessions/calculations/stats.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">G6</span>Matplotlib and a debug plotter live in the MEC calculation path<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>mec_mapping.py</code> imports <code>matplotlib.pyplot</code> at module level and carries <code>plot_peaks_and_static_periods</code>, which writes a PNG. Pyplot keeps global figure state and is not safe to call from more than one thread. If the plots are still useful for debugging, put the import inside the function; if not, delete both.</p>
+  <p class="where">user_sessions/utils/mec_mapping.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">G7</span>The websocket middleware is marked unused but is still wired up<span class="badge p2">P2</span></h3>
+  <p class="desc">First line of the file: "not used, replaced by firebase firestore in real time tasks". It is still installed in <code>core/asgi.py</code>. It swallows every failure with a bare <code>except:</code> and then returns <code>None</code>, which is not a valid ASGI response. Same decision as C2 and E7.</p>
+  <p class="where">user_sessions/middleware.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">G8</span>Debug logging left in a scheduled command<span class="badge p2">P2</span></h3>
+  <p class="desc"><code>session_check</code> does a bare <code>print(session.id)</code> for every candidate session on every run. Not currently a problem only because the command never runs (B1).</p>
+  <p class="where">user_sessions/management/commands/session_check.py</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">G9</span>Timing hacks holding the report export together<span class="badge p2">P2</span></h3>
+  <p class="desc">Three <code>setTimeout</code> calls (50&nbsp;ms, 50&nbsp;ms, 100&nbsp;ms) used to sequence state updates before the PDF is generated, plus <code>/* eslint-disable react-hooks/rules-of-hooks */</code> at the top of the PDF template because hooks are called conditionally inside it. This is the same code as D1 and D2 &mdash; worth restructuring once rather than patching three times.</p>
+  <p class="where">ReportExportButton.tsx + MultiSessionPDFTemplate.tsx</p>
+</div>
+
+<div class="item">
+  <h3><span class="id">G10</span>142 <code>as any</code> casts outside the prototype<span class="badge p2">P2</span></h3>
+  <p class="desc">Counted across the client panel with the prototype folder excluded. Several are on API responses, where the cast is what lets a shape mismatch through to the screen instead of failing the build &mdash; D4's label mismatch is that pattern. Not a task on its own; worth agreeing that new code does not add to it.</p>
+  <p class="where">apps/client-panel/src</p>
+</div>
+
+<div class="box info">
+  <span class="tag">Checked and fine</span>
+  <h3>Things that looked wrong on first read and are not.</h3>
+  <p>Recorded here so nobody re-reports them. <strong>Snackbar <code>severity</code></strong>: notistack normally takes <code>variant</code>, but the app registers a custom <code>NotistackAlert</code> that declares <code>severity</code> as a variant override &mdash; correct as written. <strong>Active-session statuses</strong>: the Firestore query mixes enum members and bare strings, which reads like duplicates; the enum maps <code>ONGOING</code> to <code>"RECORDING"</code> and <code>INTERRUPTED</code> to <code>"DISCONNECTED"</code>, so the list is five distinct values as intended. <strong>Assessment PDF posture labels</strong>: these do match what the backend sends &mdash; only the velocity labels do not (D4). <strong>Logo upload on organisation update</strong>: mutating <code>request.data</code> looks like it would fail on an immutable QueryDict, but DRF hands back a mutable copy whenever files are present. <strong>Session deletion and team deletion</strong>: <code>recorded_by</code> and <code>worker</code> are both <code>SET_NULL</code>, so removing a person does not delete their sessions (B7 is about the profile and the account, not the sessions).</p>
+</div>
+
+<footer>
+  Wergonic web app audit &mdash; 7 September 2026 &middot; <code>wergonic-django-backend</code> <code>f5eee68</code> &middot; <code>wergonic-web-apps</code> <code>674ad24c</code><br />
+  Static code read only. No item here has been reproduced in the running app. Please verify each one and push back on anything that is intentional or not worth the change.
+</footer>
+
+</body>
+</html>
